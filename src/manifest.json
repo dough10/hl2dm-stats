@@ -1,0 +1,12 @@
+{
+  "name": "hl2dm.dough10.me",
+  "short_name": "hl2dm.dough10.me",
+  "icons": [
+
+  ],
+  "start_url": "/?standalone=true",
+  "background_color": "#e8e6eb",
+  "display": "standalone",
+  "theme_color": "#b51d1d",
+  "orientation": "portrait"
+}

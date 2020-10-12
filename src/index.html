@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-control" content="public">
+    <link rel="manifest" href="../manifest.json">
+    <link rel="icon" href="../favicon.ico?" type="image/x-icon">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="dough10.js">
+    <!-- <link rel="icon" sizes="192x192" href="../images/dough10.webp"> -->
+    <meta name="theme-color" content="#b51d1d">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="dough10.js">
+    <!-- <link rel="apple-touch-icon" href="../images/dough10152.webp"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Description" content="T">
+    <style media="screen">
+      :root {
+        --header-height: 128px;
+        --avatar-size: 165px;
+        --main-color: #4c72b9;
+        --theme-color: #272727;
+        --background-color: rgb(179, 179, 179);
+      }
+      @font-face {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        src: url('../fonts/roboto-v15-latin-regular.eot'); /* IE9 Compat Modes */
+        src: local('Roboto'), local('Roboto-Regular'),
+           url('../fonts/roboto-v15-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+           url('../fonts/roboto-v15-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+           url('../fonts/roboto-v15-latin-regular.woff') format('woff'), /* Modern Browsers */
+           url('../fonts/roboto-v15-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+           url('../fonts/roboto-v15-latin-regular.svg#Roboto') format('svg'); /* Legacy iOS */
+      }
+      @font-face {
+        font-family: "HL2MP";
+        src: url("../fonts/hl2mp.ttf");
+      }
+      @font-face {
+        font-family: "HL2";
+        src: url("../fonts/halflife2.ttf");
+      }
+      .HL2 {
+        font-family: "HL2"
+      }
+      body {
+        position: absolute;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+        background: var(--background-color);
+        font-family: 'Roboto', 'Noto', sans-serif;
+        font-size: 13px;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        user-select: none;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding:0;
+        margin:0;
+      }
+      header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--header-height);
+        background: var(--main-color);
+        color: #333333;
+      }
+      .header-shadow {
+        height: 6px;
+        box-shadow: inset 0px 5px 6px -3px rgba(0,0,0,0.4);
+        position: absolute;
+        top: var(--header-height);
+        left: 0;
+        right: 0;
+        pointer-events: none;
+        z-index: 1;
+      }
+      .wrapper {
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: auto;
+        padding:8px;
+        transform: translateZ(0);
+        -webkit-overflow-scrolling: touch;
+        text-align: center;
+        background: var(--background-color);
+      }
+      .av-wrapper {
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 0
+        right: 0;
+        padding: 10px;
+      }
+      .avatar {
+        border-radius: 50%;
+        height: var(--avatar-size);
+        width: var(--avatar-size);
+        display: flex;
+        background-color: #ccc;
+        background-image: url("../images/avatar.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: var(--avatar-size);
+        z-index: 2;
+        border: 2px solid #fff;
+        transform-origin: 50% 0%;
+        box-shadow:0 4px 5px 0 rgba(0,0,0,0.14),0 1px 10px 0 rgba(0,0,0,0.12),0 2px 4px -1px rgba(0,0,0,0.4);
+      }
+      .fab {
+        background: var(--main-color);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        box-sizing: border-box;
+        color: #fff;
+        cursor: pointer;
+        height: 56px;
+        min-width: 0;
+        outline: none;
+        padding: 16px;
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        width: 56px;
+        -webkit-tap-highlight-color: transparent;
+        box-shadow:0 4px 5px 0 rgba(0,0,0,0.14),0 1px 10px 0 rgba(0,0,0,0.12),0 2px 4px -1px rgba(0,0,0,0.4);
+        z-index: 2;
+        overflow: hidden;
+      }
+      .fab:active {
+        box-shadow:0 8px 10px 1px rgba(0,0,0,0.14),0 3px 14px 2px rgba(0,0,0,0.12),0 5px 5px -3px rgba(0,0,0,0.4);
+      }
+      .stat:hover {
+        box-shadow:0 8px 10px 1px rgba(0,0,0,0.14),0 3px 14px 2px rgba(0,0,0,0.12),0 5px 5px -3px rgba(0,0,0,0.4);
+        transform: scale(1.25);
+      }
+      .card {
+        max-width: 600px;
+        min-width: 280px;
+        padding: 20px;
+        background: #fff;
+        z-index: 1;
+        position: relative;
+        margin: auto;
+        border-radius: 3px;
+        margin-bottom: 8px;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
+        margin-bottom: 8px;
+        text-align: center;
+      }
+      .head-text {
+        margin-top: 16px;
+        margin-bottom: 16px;
+        font-size: 1.7em;
+      }
+      .hostname {
+        margin-bottom: 16px;
+        font-size: 20px;
+      }
+      .button {
+        display: inline-flex;
+        min-width: 5.14em;
+        margin: 0.29em 0.29em;
+        text-align: center;
+        text-transform: uppercase;
+        outline-width: 0;
+        border-radius: 3px;
+        padding: 0.7em 0.57em;
+        cursor: pointer;
+        position: relative;
+        box-sizing:border-box;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
+        -webkit-user-select: none;
+        user-select: none;
+        overflow: hidden;
+        pointer-events: all;
+        justify-content: center;
+        align-items: center;
+      }
+      .button.disabled {
+        background: rgba(84, 84, 84, 0.4);
+        box-shadow: none;
+        cursor: none;
+        pointer-events: none;
+      }
+      .button:active {
+        box-shadow:0 8px 10px 1px rgba(0,0,0,0.14),0 3px 14px 2px rgba(0,0,0,0.12),0 5px 5px -3px rgba(0,0,0,0.4);
+      }
+      .button.disabled:active {
+        box-shadow: none;
+      }
+      .statinfo {
+        font-size: 7pt;
+      }
+      .spacer {
+        margin-top: 16px;
+        border-top: 1px solid #cccccc61;
+        min-height: 16px;
+      }
+      .no-shadow {
+        box-shadow: none;
+      }
+      #blog {
+        margin-top: 24px;
+      }
+      a {
+        color: #000000;
+        text-decoration: none;
+      }
+      .playeronline {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      #load {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgb(255, 255, 255);
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+        z-index:3;
+        pointer-events: all;
+        overflow: hidden;
+      }
+      @media only screen and (min-width: 500px) {
+        .phone-only {
+          display: none;
+        }
+      }
+      .or1 {
+        background-color: #8bb2ec;
+      }
+      .or2 {
+        background-color: #ecb98b;
+      }
+      .or3 {
+        background-color: #ec8b8f;
+      }
+      .or4 {
+        background-color: #8becb6;
+      }
+      .or5 {
+        background-color: #b58bec;
+      }
+      .favWeapon {
+        font-family: "HL2";
+        margin: '0 0.2em';
+        font-size: 34px;
+      }
+      .foot {
+        min-height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="load">
+      <div style="max-width: 360px;">
+        <img src="/images/logo.png" alt="">
+        <div class='head-text'><span class="HL2">HALF-LIFE 2</span></div>
+      </div>
+    </div>
+    <header></header>
+    <div class="header-shadow"></div>
+    <div class="av-wrapper">
+      <div class="avatar"></div>
+    </div>
+    <div class="wrapper" id="container">
+      <div id="content">
+        <div id="info" class="card" style="margin-bottom: 30px; margin-top: 30px;">
+          <div class='head-text'><span class="HL2">HALF-LIFE 2</span></div>
+          <div class='hostname'></div>
+          <div class="spacer"></div>
+          <div class="bio-text">
+            A US based <span id="numPlayers"></span> player Low gravity deathmatch server. 24/7 <span id="map"></span> a buggy but fun and compact map. Fast action and a lot of explosions.
+            <div class="pContainer">
+              <div class="spacer"></div>
+              <div id="players"></div>
+            </div>
+            <p class="statinfo">Players with 100 or more kills in the server will have their stats tracked on this page. Scroll down to see stats.</p>
+          </div>
+          <div class="spacer"></div>
+          <div class="button or1" id="join">
+            <svg style="width:24px;height:24px;margin-right:8px;" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M21,6H3A2,2 0 0,0 1,8V16A2,2 0 0,0 3,18H21A2,2 0 0,0 23,16V8A2,2 0 0,0 21,6M11,13H8V16H6V13H3V11H6V8H8V11H11M15.5,15A1.5,1.5 0 0,1 14,13.5A1.5,1.5 0 0,1 15.5,12A1.5,1.5 0 0,1 17,13.5A1.5,1.5 0 0,1 15.5,15M19.5,12A1.5,1.5 0 0,1 18,10.5A1.5,1.5 0 0,1 19.5,9A1.5,1.5 0 0,1 21,10.5A1.5,1.5 0 0,1 19.5,12Z" />
+            </svg>
+            Join Game
+          </div>
+          <div class="button or2" id="discord">
+            <svg style="width:24px;height:24px;margin-right:8px;" viewBox="0 0 24 24">
+              <path fill="#000000" d="M9,5A4,4 0 0,1 13,9A4,4 0 0,1 9,13A4,4 0 0,1 5,9A4,4 0 0,1 9,5M9,15C11.67,15 17,16.34 17,19V21H1V19C1,16.34 6.33,15 9,15M16.76,5.36C18.78,7.56 18.78,10.61 16.76,12.63L15.08,10.94C15.92,9.76 15.92,8.23 15.08,7.05L16.76,5.36M20.07,2C24,6.05 23.97,12.11 20.07,16L18.44,14.37C21.21,11.19 21.21,6.65 18.44,3.63L20.07,2Z" />
+            </svg>
+            DISCORD
+          </div>
+          <div class="button or3" id="github">
+            <svg style="width:24px;height:24px;margin-right:8px;" viewBox="0 0 24 24">
+              <path fill="#000000" d="M20.38,8.53C20.54,8.13 21.06,6.54 20.21,4.39C20.21,4.39 18.9,4 15.91,6C14.66,5.67 13.33,5.62 12,5.62C10.68,5.62 9.34,5.67 8.09,6C5.1,3.97 3.79,4.39 3.79,4.39C2.94,6.54 3.46,8.13 3.63,8.53C2.61,9.62 2,11 2,12.72C2,19.16 6.16,20.61 12,20.61C17.79,20.61 22,19.16 22,12.72C22,11 21.39,9.62 20.38,8.53M12,19.38C7.88,19.38 4.53,19.19 4.53,15.19C4.53,14.24 5,13.34 5.8,12.61C7.14,11.38 9.43,12.03 12,12.03C14.59,12.03 16.85,11.38 18.2,12.61C19,13.34 19.5,14.23 19.5,15.19C19.5,19.18 16.13,19.38 12,19.38M8.86,13.12C8.04,13.12 7.36,14.12 7.36,15.34C7.36,16.57 8.04,17.58 8.86,17.58C9.69,17.58 10.36,16.58 10.36,15.34C10.36,14.11 9.69,13.12 8.86,13.12M15.14,13.12C14.31,13.12 13.64,14.11 13.64,15.34C13.64,16.58 14.31,17.58 15.14,17.58C15.96,17.58 16.64,16.58 16.64,15.34C16.64,14.11 16,13.12 15.14,13.12Z" />
+            </svg>
+            GITHUB
+          </div>
+          <div class="button or4" id="paypal">
+            <svg style="width:24px;height:24px;margin-right:8px;" viewBox="0 0 24 24">
+              <path fill="#000000" d="M8.32,21.97C8.21,21.92 8.08,21.76 8.06,21.65C8.03,21.5 8,21.76 8.66,17.56C9.26,13.76 9.25,13.82 9.33,13.71C9.46,13.54 9.44,13.54 10.94,13.53C12.26,13.5 12.54,13.5 13.13,13.41C16.38,12.96 18.39,11.05 19.09,7.75C19.13,7.53 19.17,7.34 19.18,7.34C19.18,7.33 19.25,7.38 19.33,7.44C20.36,8.22 20.71,9.66 20.32,11.58C19.86,13.87 18.64,15.39 16.74,16.04C15.93,16.32 15.25,16.43 14.05,16.46C13.25,16.5 13.23,16.5 13,16.65C12.83,16.82 12.84,16.79 12.45,19.2C12.18,20.9 12.08,21.45 12.04,21.55C11.97,21.71 11.83,21.85 11.67,21.93L11.56,22H10C8.71,22 8.38,22 8.32,21.97V21.97M3.82,19.74C3.63,19.64 3.5,19.47 3.5,19.27C3.5,19 6.11,2.68 6.18,2.5C6.27,2.32 6.5,2.13 6.68,2.06L6.83,2H10.36C14.27,2 14.12,2 15,2.2C17.62,2.75 18.82,4.5 18.37,7.13C17.87,10.06 16.39,11.8 13.87,12.43C13,12.64 12.39,12.7 10.73,12.7C9.42,12.7 9.32,12.71 9.06,12.85C8.8,13 8.59,13.27 8.5,13.6C8.46,13.67 8.23,15.07 7.97,16.7C7.71,18.33 7.5,19.69 7.5,19.72L7.47,19.78H5.69C4.11,19.78 3.89,19.78 3.82,19.74V19.74Z" />
+            </svg>
+            DONATE
+          </div>
+          <div class="button or5" id="demos">
+            <svg style="width:24px;height:24px;margin-right:8px;" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
+            </svg>
+            demos
+          </div>
+        </div>
+        <div style="min-height:25px"></div>
+        <div id="cardsWrapper" style="min-height:1000px"></div>
+        <div class="foot"></div>
+      </div>
+    </div>
+    <div id="fab" class="fab" style="transform: translateY(80px);">
+      <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M15,20H9V12H4.16L12,4.16L19.84,12H15V20Z" />
+      </svg>
+    </div>
+    <script type="module" async defer="true" src="../js/main.js"></script>
+  </body>
+</html>
