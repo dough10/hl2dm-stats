@@ -104,7 +104,23 @@ function uglyCSS() {
   });
 }
 
+var imgFolder = './html/images';
+var cssFolder = './html/css';
+var fontFolder ='./html/fonts';
+var jsFolder = './html/js';
 
+if (!fs.existsSync(imgFolder)){
+  fs.mkdirSync(imgFolder);
+}
+if (!fs.existsSync(cssFolder)){
+  fs.mkdirSync(cssFolder);
+}
+if (!fs.existsSync(fontFolder)){
+  fs.mkdirSync(fontFolder);
+}
+if (!fs.existsSync(jsFolder)){
+  fs.mkdirSync(jsFolder);
+}
 bundleImports()
 .then(uglifyJavaScript)
 .then(minifyHTML)

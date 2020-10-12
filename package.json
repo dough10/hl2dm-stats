@@ -1,0 +1,29 @@
+{
+  "name": "hl2dm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dough10/hl2dm-stats.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dough10/hl2dm-stats/issues"
+  },
+  "homepage": "https://github.com/dough10/hl2dm-stats#readme",
+  "dependencies": {
+    "autoprefixer": "^10.0.1",
+    "esperanto": "^0.7.6",
+    "express": "^4.17.1",
+    "gamedig": "^2.0.23",
+    "html-minifier": "^4.0.0",
+    "postcss": "^8.1.1",
+    "uglify-es": "^3.3.9",
+    "uglifycss": "0.0.29"
+  }
+}
