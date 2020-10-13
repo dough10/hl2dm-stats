@@ -263,7 +263,7 @@ qs('#join').onClick(_ => {
 });
 
 qs('#discord').onClick(_ => {
-  window.location.href = 'https://discord.gg/CW3b92';
+  window.location.href = 'https://discord.gg/ZBTqwvw';
 });
 
 qs('#github').onClick(_ => {
