@@ -20,7 +20,8 @@ const files = [
   'fonts/roboto-v15-latin-regular.woff2',
   'fonts/roboto-v15-latin-regular.woff',
   'fonts/roboto-v15-latin-regular.ttf',
-  'fonts/hl2mp.ttf',
+  'fonts/roboto-v15-latin-regular.svg',
+  'fonts/roboto-v15-latin-regular.eot',
   'fonts/halflife2.ttf'
 ];
 

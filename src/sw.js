@@ -1,4 +1,4 @@
-var CACHE_NAME = 'cache-v1.3';
+var CACHE_NAME = 'cache-v1.3.1';
 var urlsToCache = [
   '/index.html',
   '/manifest.json',
@@ -7,8 +7,14 @@ var urlsToCache = [
   '/js/paper-ripple.min.js',
   '/images/avatar.png',
   '/images/logo.png',
+  '/images/logo152.png',
+  '/images/logo192.png',
   '/fonts/halflife2.ttf',
-  '/fonts/roboto-v15-latin-regular.woff2'
+  'fonts/roboto-v15-latin-regular.woff2',
+  'fonts/roboto-v15-latin-regular.woff',
+  'fonts/roboto-v15-latin-regular.ttf',
+  'fonts/roboto-v15-latin-regular.svg',
+  'fonts/roboto-v15-latin-regular.eot'
 ];
 
 self.addEventListener('install', event => {
