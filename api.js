@@ -10,10 +10,13 @@ const serverDir = '/var/www/hl2dm';
 var users = {};
 var totalFiles = 0;
 var top = [];
+var weapons = {};
 
 function cacheResponse() {
   parseLogs().then(stats => {
     top = stats;
+    console.log(weapons);
+    weapons = {};
   });
 }
 
@@ -128,6 +131,10 @@ function scanLine(line) {
       users[killerID][weapon] = 0;
     }
     users[killerID][weapon] = users[killerID][weapon] + 1;
+    if (!weapons[weapon]) {
+      weapons[weapon] = 0;
+    }
+    weapons[weapon] = weapons[weapon] + 1;
     // calculate KDR
     users[killerID].kdr = Number((users[killerID].kills / users[killerID].deaths).toFixed(2));
     if (users[killerID].kdr === Infinity) {
@@ -176,6 +183,10 @@ function scanLine(line) {
       users[killerID][weapon] = 0;
     }
     users[killerID][weapon] = users[killerID][weapon] + 1;
+    if (!weapons[weapon]) {
+      weapons[weapon] = 0;
+    }
+    weapons[weapon] = weapons[weapon] + 1;
     // calculate KDR
     users[killerID].kdr = Number((users[killerID].kills / users[killerID].deaths).toFixed(2));
     if (users[killerID].kdr === Infinity) {
@@ -224,6 +235,10 @@ function scanLine(line) {
       users[killerID][weapon] = 0;
     }
     users[killerID][weapon] = users[killerID][weapon] + 1
+    if (!weapons[weapon]) {
+      weapons[weapon] = 0;
+    }
+    weapons[weapon] = weapons[weapon] + 1;
     return;
   }
   if (word[6] === 'committed') {
@@ -240,6 +255,10 @@ function scanLine(line) {
       users[killerID][weapon] = 0;
     }
     users[killerID][weapon] = users[killerID][weapon] + 1
+    if (!weapons[weapon]) {
+      weapons[weapon] = 0;
+    }
+    weapons[weapon] = weapons[weapon] + 1;
     return;
   }
 }
@@ -322,8 +341,5 @@ app.get('/demos', (reg,res) => {
    res.send(html + '</table>');
  });
 });
-
-
-
 
 app.listen(3000);
