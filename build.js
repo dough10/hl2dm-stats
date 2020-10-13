@@ -13,6 +13,8 @@ const files = [
   'sw.js',
   'images/avatar.png',
   'images/logo.png',
+  'images/logo192.png',
+  'images/logo152.png',
   'css/paper-ripple.min.css',
   'js/paper-ripple.min.js',
   'fonts/roboto-v15-latin-regular.woff2',

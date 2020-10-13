@@ -267,7 +267,7 @@ qs('#discord').onClick(_ => {
 });
 
 qs('#github').onClick(_ => {
-  window.location.href = 'https://github.com/dough10';
+  window.location.href = 'https://github.com/dough10/hl2dm-stats';
 });
 
 qs('#paypal').onClick(_ => {
@@ -275,7 +275,10 @@ qs('#paypal').onClick(_ => {
 });
 
 qs('#demos').onClick(_ => {
-  window.location.href = 'https://hl2dm.dough10.me/api/demos';
+  var load = qs('#load');
+  animations.animateElement(load, 'translateY(0%)', 350).then(_ => {
+    window.location.href = 'https://hl2dm.dough10.me/api/demos';
+  });
 });
 
 qs('#fab').onClick(animations.animateScroll);

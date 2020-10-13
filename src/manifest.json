@@ -2,11 +2,19 @@
   "name": "hl2dm.dough10.me",
   "short_name": "hl2dm.dough10.me",
   "icons": [
-
+    {
+      "src": "images/logo152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    }, {
+      "src": "images/logo192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
   ],
   "start_url": "/?standalone=true",
-  "background_color": "#e8e6eb",
+  "background_color": "#ffffff",
   "display": "standalone",
-  "theme_color": "#b51d1d",
+  "theme_color": "#4c72b9",
   "orientation": "portrait"
 }
