@@ -1,5 +1,5 @@
 {
-  "name": "hl2dm.dough10.me",
+  "name": "Lo-g Deathmatch Hoedown",
   "short_name": "hl2dm.dough10.me",
   "icons": [
     {
@@ -14,6 +14,7 @@
   ],
   "start_url": "/?standalone=true",
   "background_color": "#ffffff",
+  "scope": "/",
   "display": "standalone",
   "theme_color": "#4c72b9",
   "orientation": "portrait"

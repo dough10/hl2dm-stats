@@ -75,6 +75,9 @@ function getName(word) {
 }
 
 function getID(word) {
+  if (!word) {
+    return false;
+  }
   var u = word.search("U:1:");
   if (u < 0) {
     return false;
