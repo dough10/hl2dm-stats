@@ -124,7 +124,6 @@ function scanLine(line) {
         kdr: 0
       };
     }
-
     // add kill
     users[killerID].kills = users[killerID].kills + 1;
     // add death
@@ -319,7 +318,7 @@ function bytesToSize(bytes) {
    return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 }
 
-cacheResponse()
+cacheResponse();
 
 app.get('/stats', (req, res) => {
   res.send(JSON.stringify([top, weapons]));
