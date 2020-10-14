@@ -68,7 +68,7 @@ function getName(word) {
     return false;
   }
   word = word.replace('"', '');
-  var end = word.search('<');
+  var end = word.search(/<([1-9][0-9]{0,2}|1000)>/);
   var str = '';
   for (var i = 0; i < end; i++) {
     str = str + word[i];
