@@ -68,7 +68,7 @@ function getName(word) {
     return false;
   }
   word = word.replace('"', '');
-  var end = word.search('<');
+  var end = word.search('^<([1-9][0-9]{0,2}|1000)>$');
   var str = '';
   for (var i = 0; i < end; i++) {
     str = str + word[i];
@@ -80,11 +80,11 @@ function getID(word) {
   if (!word) {
     return false;
   }
-  var u = word.search("U:1:");
+  var u = word.search("[U:1:");
   if (u < 0) {
     return false;
   }
-  var start = u + 4;
+  var start = u + 5;
   var end = word.search(']');
   var str = '';
   for (var i = start; i < end; i++) {
@@ -184,7 +184,7 @@ function scanLine(line) {
     // add death
     users[killedID].deaths = users[killedID].deaths + 1
     // add weapon
-    if (word.length >= 8) {      
+    if (word.length >= 8) {
       var weapon = word[word.length - 1].replace('"', '');
       weapon = weapon.replace('"', '');
       if (!users[killerID][weapon]) {
