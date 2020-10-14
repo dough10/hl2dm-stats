@@ -65,6 +65,9 @@ function parseLogs() {
 }
 
 function getName(word) {
+  if (!word) {
+    return false;
+  }
   word = word.replace('"', '');
   var end = word.search('<');
   var str = '';
