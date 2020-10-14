@@ -15,8 +15,6 @@ var weapons = {};
 function cacheResponse() {
   parseLogs().then(stats => {
     top = stats;
-    console.log(weapons);
-    weapons = {};
   });
 }
 
@@ -28,6 +26,7 @@ function parseLogs() {
       if (err) {
         return console.log('Unable to scan directory: ' + err);
       }
+      weapons = {};
       totalFiles = files.length;
       files.forEach(function (file) {
         try {
@@ -319,7 +318,7 @@ function bytesToSize(bytes) {
 cacheResponse()
 
 app.get('/stats', (req, res) => {
-  res.send(JSON.stringify(top));
+  res.send(JSON.stringify([top, weapons]));
 });
 
 app.get('/status', (reg, res) => {

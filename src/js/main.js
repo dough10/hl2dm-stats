@@ -76,11 +76,13 @@ function createSVG(d, count, title) {
   return wrapper;
 }
 
-function parseTopData(top) {
+function parseTopData(data) {
   setTimeout(_ => {
     var load = qs('#load');
     animations.animateElement(load, 'translateY(-102%)', 350);
   }, 1000);
+  console.log(data[1]);
+  top = data[0];
   for (let i = 0; i < top.length; i++) {
     const wrapper = createWrapper();
     const card = createCard();
