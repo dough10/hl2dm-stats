@@ -132,18 +132,16 @@ function scanLine(line) {
     // add death
     users[killedID].deaths = users[killedID].deaths + 1
     // add weapon
-    if (word.length >= 8) {
-      var weapon = word[word.length - 1].replace('"', '');
-      weapon = weapon.replace('"', '');
-      if (!users[killerID][weapon]) {
-        users[killerID][weapon] = 0;
-      }
-      users[killerID][weapon] = users[killerID][weapon] + 1;
-      if (!weapons[weapon]) {
-        weapons[weapon] = 0;
-      }
-      weapons[weapon] = weapons[weapon] + 1;
+    var weapon = word[word.length - 1].replace('"', '');
+    weapon = weapon.replace('"', '');
+    if (!users[killerID][weapon]) {
+      users[killerID][weapon] = 0;
     }
+    users[killerID][weapon] = users[killerID][weapon] + 1;
+    if (!weapons[weapon]) {
+      weapons[weapon] = 0;
+    }
+    weapons[weapon] = weapons[weapon] + 1;
     // calculate KDR
     users[killerID].kdr = Number((users[killerID].kills / users[killerID].deaths).toFixed(2));
     if (users[killerID].kdr === Infinity) {
@@ -186,18 +184,16 @@ function scanLine(line) {
     // add death
     users[killedID].deaths = users[killedID].deaths + 1
     // add weapon
-    if (word.length >= 8) {
-      var weapon = word[word.length - 1].replace('"', '');
-      weapon = weapon.replace('"', '');
-      if (!users[killerID][weapon]) {
-        users[killerID][weapon] = 0;
-      }
-      users[killerID][weapon] = users[killerID][weapon] + 1;
-      if (!weapons[weapon]) {
-        weapons[weapon] = 0;
-      }
-      weapons[weapon] = weapons[weapon] + 1;
+    var weapon = word[word.length - 1].replace('"', '');
+    weapon = weapon.replace('"', '');
+    if (!users[killerID][weapon]) {
+      users[killerID][weapon] = 0;
     }
+    users[killerID][weapon] = users[killerID][weapon] + 1;
+    if (!weapons[weapon]) {
+      weapons[weapon] = 0;
+    }
+    weapons[weapon] = weapons[weapon] + 1;
     // calculate KDR
     users[killerID].kdr = Number((users[killerID].kills / users[killerID].deaths).toFixed(2));
     if (users[killerID].kdr === Infinity) {
