@@ -132,9 +132,18 @@ function scanLine(line) {
     users[killerID].kills = users[killerID].kills + 1;
     // add death
     users[killedID].deaths = users[killedID].deaths + 1
+    // calculate KDR
+    users[killerID].kdr = Number((users[killerID].kills / users[killerID].deaths).toFixed(2));
+    if (users[killerID].kdr === Infinity) {
+      users[killerID].kdr = users[killerID].kills;
+    }
+    users[killedID].kdr = Number((users[killedID].kills / users[killedID].deaths).toFixed(2));
     // add weapon
     var weapon = word[word.length - 1].replace('"', '');
     weapon = weapon.replace('"', '');
+    if (weapon === '5394425)') {
+      return;
+    }
     if (!users[killerID][weapon]) {
       users[killerID][weapon] = 0;
     }
@@ -143,12 +152,6 @@ function scanLine(line) {
       weapons[weapon] = 0;
     }
     weapons[weapon] = weapons[weapon] + 1;
-    // calculate KDR
-    users[killerID].kdr = Number((users[killerID].kills / users[killerID].deaths).toFixed(2));
-    if (users[killerID].kdr === Infinity) {
-      users[killerID].kdr = users[killerID].kills;
-    }
-    users[killedID].kdr = Number((users[killedID].kills / users[killedID].deaths).toFixed(2));
     return;
   }
   if (word[6] === 'killed') {
@@ -184,9 +187,19 @@ function scanLine(line) {
     users[killerID].kills = users[killerID].kills + 1;
     // add death
     users[killedID].deaths = users[killedID].deaths + 1
+
+    // calculate KDR
+    users[killerID].kdr = Number((users[killerID].kills / users[killerID].deaths).toFixed(2));
+    if (users[killerID].kdr === Infinity) {
+      users[killerID].kdr = users[killerID].kills;
+    }
+    users[killedID].kdr = Number((users[killedID].kills / users[killedID].deaths).toFixed(2));
     // add weapon
     var weapon = word[word.length - 1].replace('"', '');
     weapon = weapon.replace('"', '');
+    if (weapon === '5394425)') {
+      return;
+    }
     if (!users[killerID][weapon]) {
       users[killerID][weapon] = 0;
     }
@@ -195,12 +208,6 @@ function scanLine(line) {
       weapons[weapon] = 0;
     }
     weapons[weapon] = weapons[weapon] + 1;
-    // calculate KDR
-    users[killerID].kdr = Number((users[killerID].kills / users[killerID].deaths).toFixed(2));
-    if (users[killerID].kdr === Infinity) {
-      users[killerID].kdr = users[killerID].kills;
-    }
-    users[killedID].kdr = Number((users[killedID].kills / users[killedID].deaths).toFixed(2));
     return;
   }
   if (word[5] === 'connected,') {
@@ -239,6 +246,9 @@ function scanLine(line) {
     users[killerID].kdr = Number((users[killerID].kills / users[killerID].deaths).toFixed(2));
     var weapon = word[word.length - 1].replace('"', '');
     weapon = weapon.replace('"', '');
+    if (weapon === '5394425)') {
+      return;
+    }
     if (!users[killerID][weapon]) {
       users[killerID][weapon] = 0;
     }
@@ -259,6 +269,9 @@ function scanLine(line) {
     users[killerID].kdr = Number((users[killerID].kills / users[killerID].deaths).toFixed(2));
     var weapon = word[word.length - 1].replace('"', '');
     weapon = weapon.replace('"', '');
+    if (weapon === '5394425)') {
+      return;
+    }
     if (!users[killerID][weapon]) {
       users[killerID][weapon] = 0;
     }
