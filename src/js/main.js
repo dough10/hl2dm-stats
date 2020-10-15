@@ -79,28 +79,40 @@ function createSVG(d, count, title) {
 function getWeaponIcon(weapon) {
   switch (weapon) {
     case "grenade_frag":
-      return '_';
+      return '4';
       break;
     case "357":
-      return '$';
+      return '.';
       break;
     case "shotgun":
-      return '(';
+      return '0';
       break;
     case "pistol":
-      return '%';
+      return '-';
       break;
     case "smg1":
-      return '&';
+      return '/';
+      break;
+    case "smg1_grenade":
+      return '7';
       break;
     case "crowbar":
-      return '^';
+      return '6';
       break;
     case "crossbow_bolt":
-      return ')';
+      return '1';
       break;
     case "combine_ball":
-      return 'z';
+      return '8';
+      break;
+    case "ar2":
+      return '2';
+      break;
+    case "rpg":
+      return '3';
+      break;
+    case "physbox":
+      return '9';
       break;
   }
 }
