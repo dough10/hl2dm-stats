@@ -317,6 +317,20 @@ function bytesToSize(bytes) {
    return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 }
 
+function cleanUp() {
+  const directoryPath = path.join(dir, 'logs');
+  fs.readdir(directoryPath, (err, files) => {
+    files.forEach(fs.unlinkSync);
+  });
+  fs.readdir(dir, (err, files) => {
+    files.forEach(file => {
+      if (path.extname(file) === '.dem') {
+        fs.unlinkSync(file);
+      }
+    });
+  });
+;}
+
 cacheResponse();
 
 app.get('/stats', (req, res) => {
