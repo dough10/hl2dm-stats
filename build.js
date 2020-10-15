@@ -24,7 +24,8 @@ const files = [
   'fonts/roboto-v15-latin-regular.ttf',
   'fonts/roboto-v15-latin-regular.svg',
   'fonts/roboto-v15-latin-regular.eot',
-  'fonts/halflife2.ttf'
+  'fonts/halflife2.ttf',
+  'fonts/hl2mp.ttf'
 ];
 
 
