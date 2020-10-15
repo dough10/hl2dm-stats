@@ -147,19 +147,19 @@ function parseTopData(top) {
     card.appendChild(wrapper);
     qs('#cardsWrapper').appendChild(card);
   }
-  const allWeaponsCard = createCard();
-  for (var weapon in top[1]) {
-    var wrapper = createWrapper();
-    var l = document.createElement('div');
-    var r = document.createElement('div');
-    l.classList.add('favWeapon');
-    l.textContent = getWeaponIcon(weapon);
-    r.textContent = top[1][weapon];
-    wrapper.appendChild(l);
-    wrapper.appendChild(r);
-    allWeaponsCard.appendChild(wrapper);
-  }
-  qs('#cardsWrapper').appendChild(allWeaponsCard);
+  // const allWeaponsCard = createCard();
+  // for (var weapon in top[1]) {
+  //   var wrapper = createWrapper();
+  //   var l = document.createElement('div');
+  //   var r = document.createElement('div');
+  //   l.classList.add('favWeapon');
+  //   l.textContent = getWeaponIcon(weapon);
+  //   r.textContent = top[1][weapon];
+  //   wrapper.appendChild(l);
+  //   wrapper.appendChild(r);
+  //   allWeaponsCard.appendChild(wrapper);
+  // }
+  // qs('#cardsWrapper').appendChild(allWeaponsCard);
 }
 
 function parseServerStatus(status) {
