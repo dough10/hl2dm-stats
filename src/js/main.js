@@ -76,12 +76,31 @@ function createSVG(d, count, title) {
   return wrapper;
 }
 
+function getWeaponIcon(weapon) {
+  switch (weapon) {
+    case "grenade_frag":
+      return '_';
+      break;
+    case "357":
+      return '$';
+      break;
+    case "shotgun":
+      return '(';
+      break;
+    case "pistol":
+      return '%';
+      break;
+    case "smg1":
+      return '&';
+      break;
+  }
+}
+
 function parseTopData(top) {
   setTimeout(_ => {
     var load = qs('#load');
     animations.animateElement(load, 'translateY(-102%)', 350);
   }, 1000);
-  console.log(top[1]);
   for (let i = 0; i < top[0].length; i++) {
     const wrapper = createWrapper();
     const card = createCard();
@@ -116,23 +135,7 @@ function parseTopData(top) {
     l.style.marginRight = '8px';
     l.style.marginLeft = '8px';
     l.classList.add('favWeapon');
-    switch (fav[0]) {
-      case "grenade_frag":
-        l.textContent = '_';
-        break;
-      case "357":
-        l.textContent = '$';
-        break;
-      case "shotgun":
-        l.textContent = '(';
-        break;
-      case "pistol":
-        l.textContent = '%';
-        break;
-      case "smg1":
-        l.textContent = '&';
-        break;
-    }
+    l.textContent = getWeaponIcon(fav[0]);
     r.textContent = fav[1]
     favWrapper.appendChild(l);
     favWrapper.appendChild(r);
@@ -144,6 +147,19 @@ function parseTopData(top) {
     card.appendChild(wrapper);
     qs('#cardsWrapper').appendChild(card);
   }
+  const allWeaponsCard = createCard();
+  for (var weapon in top[1]) {
+    var wrapper = document.createElement('div');
+    var l = document.createElement('div');
+    var r = document.createElement('div');
+    l.classList.add('favWeapon');
+    l.textContent = getWeaponIcon(weapon);
+    r.textContent = top[1][weapon];
+    wrapper.appendChild(l);
+    wrapper.appendChild(r);
+    allWeaponsCard.appendChild(wrapper);
+  }
+  qs('#cardsWrapper').appendChild(allWeaponsCard);
 }
 
 function parseServerStatus(status) {

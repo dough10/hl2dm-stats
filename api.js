@@ -13,6 +13,26 @@ var totalFiles = 0;
 var top = [];
 var weapons = {};
 
+function isWeapon(weapon) {
+  var w = [
+    '357',
+    'ar2',
+    'combine_ball',
+    'crossbow_bolt',
+    'crowbar',
+    'grenade_frag',
+    'physbox',
+    'physics',
+    'pistol',
+    'shotgun',
+    'smg1',
+    'smg1_grenade',
+    'stunstick',
+    'world'
+  ];
+  return w.includes(weapon);
+}
+
 function cacheResponse() {
   parseLogs().then(stats => {
     top = stats;
@@ -21,13 +41,13 @@ function cacheResponse() {
 
 function parseLogs() {
   return new Promise((resolve, reject) => {
+    weapons = {};
     const directoryPath = path.join(dir, 'logs');
     fs.readdir(directoryPath, (err, files) => {
       var remaining = '';
       if (err) {
         return console.log('Unable to scan directory: ' + err);
       }
-      weapons = {};
       totalFiles = files.length;
       files.forEach(function (file) {
         try {
@@ -138,7 +158,7 @@ function scanLine(line) {
     // add weapon
     var weapon = word[word.length - 1].replace('"', '');
     weapon = weapon.replace('"', '');
-    if (weapon === '5394425)') {
+    if (!isWeapon(weapon)) {
       return;
     }
     if (!users[killerID][weapon]) {
@@ -194,7 +214,7 @@ function scanLine(line) {
     // add weapon
     var weapon = word[word.length - 1].replace('"', '');
     weapon = weapon.replace('"', '');
-    if (weapon === '5394425)') {
+    if (!isWeapon(weapon)) {
       return;
     }
     if (!users[killerID][weapon]) {
@@ -243,7 +263,7 @@ function scanLine(line) {
     users[killerID].kdr = Number((users[killerID].kills / users[killerID].deaths).toFixed(2));
     var weapon = word[word.length - 1].replace('"', '');
     weapon = weapon.replace('"', '');
-    if (weapon === '5394425)') {
+    if (!isWeapon(weapon)) {
       return;
     }
     if (!users[killerID][weapon]) {
@@ -266,7 +286,7 @@ function scanLine(line) {
     users[killerID].kdr = Number((users[killerID].kills / users[killerID].deaths).toFixed(2));
     var weapon = word[word.length - 1].replace('"', '');
     weapon = weapon.replace('"', '');
-    if (weapon === '5394425)') {
+    if (!isWeapon(weapon)) {
       return;
     }
     if (!users[killerID][weapon]) {
