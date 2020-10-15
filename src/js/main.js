@@ -150,6 +150,7 @@ function parseTopData(top) {
   const allWeaponsCard = createCard();
   for (var weapon in top[1]) {
     var wrapper = document.createElement('div');
+    wrapper.style.display = "inline-flex";
     var l = document.createElement('div');
     var r = document.createElement('div');
     l.classList.add('favWeapon');
