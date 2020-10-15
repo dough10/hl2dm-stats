@@ -51,9 +51,6 @@ function parseLogs() {
             totalFiles = totalFiles - 1;
             if (totalFiles === 0) {
               resolve(sortUsersByKDR());
-              setTimeout(_ => {
-                cacheResponse()
-              }, 600000);
             }
           });
         } catch (e) {
@@ -345,7 +342,7 @@ function cleanUp() {
   });
 ;}
 
-cacheResponse();
+setInterval(cacheResponse, 600000);
 
 app.get('/stats', (req, res) => {
   res.send(JSON.stringify([top, weapons]));
