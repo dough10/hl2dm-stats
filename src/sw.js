@@ -10,6 +10,7 @@ var urlsToCache = [
   '/images/logo152.png',
   '/images/logo192.png',
   '/fonts/halflife2.ttf',
+  '/fonts/hl2mp.ttf',
   'fonts/roboto-v15-latin-regular.woff2',
   'fonts/roboto-v15-latin-regular.woff',
   'fonts/roboto-v15-latin-regular.ttf',
