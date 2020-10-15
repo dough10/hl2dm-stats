@@ -95,6 +95,9 @@ function getID(word) {
 
 function scanLine(line) {
   var word  = line.split(' ');
+  if (word[5] === 'Log') {
+    return;
+  }
   if (word[5] === 'killed') {
     var killerID = getID(word[4]);
     var killerName = getName(word[4]);
