@@ -93,6 +93,15 @@ function getWeaponIcon(weapon) {
     case "smg1":
       return '&';
       break;
+    case "crowbar":
+      return '^';
+      break;
+    case "crossbow_bolt":
+      return ')';
+      break;
+    case "combine_ball":
+      return 'z';
+      break;
   }
 }
 
