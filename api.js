@@ -342,7 +342,7 @@ function cleanUp() {
   });
 ;}
 
-setInterval(cacheResponse, 600000);
+setInterval(cacheResponse(), 600000);
 
 app.get('/stats', (req, res) => {
   res.send(JSON.stringify([top, weapons]));
