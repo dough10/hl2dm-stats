@@ -3,6 +3,7 @@ const fs = require('fs');
 const express = require('express')
 const app = express();
 const Gamedig = require('gamedig');
+var schedule = require('node-schedule');
 
 const dir = "/appdata/hl2dm/hl2mp";
 const serverDir = '/var/www/hl2dm';
@@ -364,3 +365,5 @@ app.get('/demos', (reg,res) => {
 });
 
 app.listen(3000);
+
+var j = schedule.scheduleJob('* * * 1 * *', cleanUp);
