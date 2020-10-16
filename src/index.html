@@ -81,11 +81,13 @@
         height: var(--header-height);
         background: var(--main-color);
         color: #333333;
+        will-change: auto;
       }
       .header-shadow {
         height: 6px;
         box-shadow: inset 0px 5px 6px -3px rgba(0,0,0,0.4);
         position: absolute;
+        will-change: auto;
         top: var(--header-height);
         left: 0;
         right: 0;
@@ -94,6 +96,7 @@
       }
       .wrapper {
         position: fixed;
+        will-change: auto;
         top: var(--header-height);
         left: 0;
         right: 0;
