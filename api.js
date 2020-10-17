@@ -28,7 +28,7 @@ function isWeapon(weapon) {
     'smg1',
     'smg1_grenade',
     'stunstick',
-    'rpg'
+    'rpg_missile'
   ];
   return w.includes(weapon);
 }

@@ -120,7 +120,7 @@ function getWeaponIcon(weapon) {
     case "ar2":
       return '2';
       break;
-    case "rpg":
+    case "rpg_missile":
       return '3';
       break;
     case "physbox":
