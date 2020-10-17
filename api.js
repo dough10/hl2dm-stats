@@ -14,6 +14,7 @@ var top = [];
 var weapons = {};
 
 function isWeapon(weapon) {
+  console.log(weapon);
   var w = [
     '357',
     'ar2',
@@ -166,7 +167,8 @@ function scanLine(line) {
     weapon = weapon.replace('"', '');
     if (!isWeapon(weapon)) {
       return;
-    }
+    } else {
+      console.log(weapon)}
     if (!users[killerID][weapon]) {
       users[killerID][weapon] = 0;
     }
