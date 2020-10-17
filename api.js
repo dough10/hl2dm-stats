@@ -118,20 +118,71 @@ function getID(word) {
   return str;
 }
 
+function buildKillerNameString(line, end)  {
+  var name = '';
+  for (var i = 4; i < end; i++) {
+    name = name + line[i] + ' ';
+  }
+  return name
+}
+
+function buildKilledNameString(line, start) {
+  var end = 7;
+  for (var i = start; i < line.length; i++) {
+    if (line[i] === 'with') {
+      end = i;
+    }
+  }
+  var name = '';
+  for (var i = start; i < end; i++) {
+    name = name + line[i] + ' ';
+  }
+  return name;
+}
+
+function lineIsKill(line) {
+  for (var i = 0; i < line.length; i++) {
+    if (line[i] === 'killed') {
+      return i;
+    }
+  }
+  return false;
+}
+
+function lineIsConnect(line) {
+  for (var i = 0; i < line.length; i++) {
+    if (line[i] === 'connected,') {
+      return i;
+    }
+  }
+  return false;
+}
+
+function lineIsSuicide(line) {
+  for (var i = 0; i < line.length; i++) {
+    if (line[i] === 'committed') {
+      return i;
+    }
+  }
+  return false;
+}
+
 function scanLine(line) {
   var word  = line.split(' ');
   if (word[5] === 'Log') {
     return;
   }
-  if (word[5] === 'killed') {
-    var killerID = getID(word[4]);
-    var killerName = getName(word[4]);
-    var killedID = getID(word[6]);
-    var killedName = getName(word[6]);
-    if (!killedID) {
-      killedID = getID(word[6] + ' ' + word[7]);
-      killedName = getName(word[6] + ' ' + word[7]);
-    }
+  var isKill = lineIsKill(word);
+  var isConnect = lineIsConnect(word);
+  var isSuicide = lineIsSuicide(word);
+
+  if (isKill) {
+    var killerNameString = buildKillerNameString(word, isKill);
+    var killerID = getID(killerNameString);
+    var killerName = getName(killerNameString);
+    var killedNameString = buildKilledNameString(word, isKill + 1);
+    var killedID = getID(killedNameString);
+    var killedName = getName(killedNameString);
     // killer
     if (!users[killerID]) {
       users[killerID] = {
@@ -166,62 +217,7 @@ function scanLine(line) {
     var weapon = word[word.length - 1].replace('"', '');
     weapon = weapon.replace('"', '');
     if (!isWeapon(weapon)) {
-      return;
-    } else {
-      console.log(weapon)}
-    if (!users[killerID][weapon]) {
-      users[killerID][weapon] = 0;
-    }
-    users[killerID][weapon] = users[killerID][weapon] + 1;
-    if (!weapons[weapon]) {
-      weapons[weapon] = 0;
-    }
-    weapons[weapon] = weapons[weapon] + 1;
-    return;
-  }
-  if (word[6] === 'killed') {
-    var killerID = getID(word[4] + ' ' + word[5]);
-    var killerName = getName(word[4] + ' ' + word[5]);
-    var killedID = getID(word[7]);
-    var killedName = getName(word[7]);
-    if (!killedID) {
-      killedID = getID(word[7] + ' ' + word[8]);
-      killedName = getName(word[7] + ' ' + word[8]);
-    }
-    // killer
-    if (!users[killerID]) {
-      users[killerID] = {
-        name: killerName,
-        id:killerID,
-        kills: 0,
-        deaths: 0,
-        kdr: 0
-      };
-    }
-    // killed
-    if (!users[killedID]) {
-      users[killedID] = {
-        name: killedName,
-        id: killedID,
-        kills: 0,
-        deaths: 0,
-        kdr: 0
-      };
-    }
-    // add kill
-    users[killerID].kills = users[killerID].kills + 1;
-    // add death
-    users[killedID].deaths = users[killedID].deaths + 1
-    // calculate KDR
-    users[killerID].kdr = Number((users[killerID].kills / users[killerID].deaths).toFixed(2));
-    if (users[killerID].kdr === Infinity) {
-      users[killerID].kdr = users[killerID].kills;
-    }
-    users[killedID].kdr = Number((users[killedID].kills / users[killedID].deaths).toFixed(2));
-    // add weapon
-    var weapon = word[word.length - 1].replace('"', '');
-    weapon = weapon.replace('"', '');
-    if (!isWeapon(weapon)) {
+      console.log(line)
       return;
     }
     if (!users[killerID][weapon]) {
@@ -234,12 +230,13 @@ function scanLine(line) {
     weapons[weapon] = weapons[weapon] + 1;
     return;
   }
-  if (word[5] === 'connected,') {
-    var connectedUser = getID(word[4]);
-    var connectedUserName = getName(word[4]);
-    var ip = word[7].replace('"', '');
+  if (isConnect) {
+    var connectedNameString = buildKillerNameString(word, isConnect);
+    var connectedUser = getID(connectedNameString);
+    var connectedUserName = getName(connectedNameString);
+    var ip = word[isConnect  + 2].replace('"', '');
     ip = ip.replace('"', '');
-    ip = ip.replace(':27005', '');
+    ip = ip.replace(/:\d{4,5}$/, '');
     if (validateIPaddress(ip)) {
       if (!users[connectedUser]) {
         users[connectedUser] = {name: connectedUserName, id:connectedUser, ip: ip, kills: 0, deaths: 0, kdr: 0};
@@ -247,48 +244,11 @@ function scanLine(line) {
         users[connectedUser].ip = ip;
       }
     }
-    return;
   }
-  if (word[6] === 'connected,') {
-    var connectedUser = getID(word[4] + ' ' + word[5]);
-    var connectedUserName = getName(word[4] + ' ' + word[5]);
-    var ip = word[8].replace('"', '')
-    ip = ip.replace('"', '')
-    ip = ip.replace(':27005', '')
-    if (!users[connectedUser]) {
-      users[connectedUser] = {name: connectedUserName, id:connectedUser, ip: ip, kills: 0, deaths: 0, kdr: 0};
-    } else {
-      users[connectedUser].ip = ip;
-    }
-    return;
-  }
-  if (word[5] === 'committed') {
-    var killerID = getID(word[4]);
-    var killerName = getName(word[4]);
-    if (!users[killerID]) {
-      users[killerID] = {name: killerName, id:killerID, kills: 0, deaths: 0, kdr: 0};
-    }
-    users[killerID].kills = users[killerID].kills - 1;
-    users[killerID].deaths = users[killerID].deaths + 1;
-    users[killerID].kdr = Number((users[killerID].kills / users[killerID].deaths).toFixed(2));
-    var weapon = word[word.length - 1].replace('"', '');
-    weapon = weapon.replace('"', '');
-    if (!isWeapon(weapon)) {
-      return;
-    }
-    if (!users[killerID][weapon]) {
-      users[killerID][weapon] = 0;
-    }
-    users[killerID][weapon] = users[killerID][weapon] + 1
-    if (!weapons[weapon]) {
-      weapons[weapon] = 0;
-    }
-    weapons[weapon] = weapons[weapon] + 1;
-    return;
-  }
-  if (word[6] === 'committed') {
-    var killerID = getID(word[4] + ' ' + word[5]);
-    var killerName = getName(word[4] + ' ' + word[5]);
+  if (isSuicide) {
+    var killerNameString = buildKillerNameString(word, isKill);
+    var killerID = getID(killerNameString);
+    var killerName = getName(killerNameString);
     if (!users[killerID]) {
       users[killerID] = {name: killerName, id:killerID, kills: 0, deaths: 0, kdr: 0};
     }
