@@ -4,6 +4,8 @@ const express = require('express')
 const app = express();
 const Gamedig = require('gamedig');
 var schedule = require('node-schedule');
+var chokidar = require('chokidar');
+
 
 const dir = "/appdata/hl2dm/hl2mp";
 const serverDir = '/var/www/hl2dm';
@@ -372,12 +374,12 @@ function cleanUp() {
 cacheResponse();
 setInterval(cacheResponse, 600000);
 
-fs.watch(path.join(dir, 'logs'), (eventType, filename) => {
-  console.log(eventType);
-  // could be either 'rename' or 'change'. new file event and delete
-  // also generally emit 'rename'
-  console.log(filename);
-});
+var watcher = chokidar.watch(path.join(dir, 'logs'), {ignored: /^\./, persistent: true});
+watcher
+  .on('add', function(path) {console.log('File', path, 'has been added');})
+  .on('change', function(path) {console.log('File', path, 'has been changed');})
+  .on('unlink', function(path) {console.log('File', path, 'has been removed');})
+  .on('error', function(error) {console.error('Error happened', error);})
 
 app.get('/stats', (req, res) => {
   res.send(JSON.stringify([top, weapons]));
