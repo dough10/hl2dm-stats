@@ -108,7 +108,7 @@ function getID(word) {
   if (u < 0) {
     return false;
   }
-  var start = u + 5;
+  var start = u + 4;
   var end = word.search(']');
   var str = '';
   for (var i = start; i < end; i++) {

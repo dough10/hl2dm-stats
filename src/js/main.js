@@ -212,6 +212,7 @@ function parseServerStatus(status) {
     qs('.hostname').textContent = status.name;
     qs('#numPlayers').textContent = status.maxplayers;
     qs('#map').textContent = status.map;
+    qs('#next_map').textContent = status.raw.rules.sm_nextmap;
     var pContainer = qs('#players');
     pContainer.innerHTML = '';
     if (status.players.length === 0) {
