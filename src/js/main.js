@@ -203,6 +203,7 @@ function parseTopData(top) {
     container.title = weapon + ': ' + top[1][weapon];
     container.appendChild(l);
     container.appendChild(r);
+    console.log(document.innerWidth, c === 7)
     if (document.innerWidth < 605 && c === 7) {
       wrapper.appendChild(document.createElement('br'));
     }

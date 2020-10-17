@@ -210,7 +210,6 @@ function scanLine(line) {
     users[killerID].kills = users[killerID].kills + 1;
     // add death
     users[killedID].deaths = users[killedID].deaths + 1
-
     // calculate KDR
     users[killerID].kdr = Number((users[killerID].kills / users[killerID].deaths).toFixed(2));
     if (users[killerID].kdr === Infinity) {
