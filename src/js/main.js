@@ -194,7 +194,6 @@ function parseTopData(top) {
   for (var weapon in top[1]) {
     c = c + 1;
     var container = document.createElement('div');
-    container.classlist.add('w');
     var l = document.createElement('div');
     l.style.marginBottom = "8px";
     var r = document.createElement('div');
