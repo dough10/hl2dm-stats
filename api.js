@@ -14,7 +14,6 @@ var top = [];
 var weapons = {};
 
 function isWeapon(weapon) {
-  console.log(weapon);
   var w = [
     '357',
     'ar2',
