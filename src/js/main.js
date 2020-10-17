@@ -190,8 +190,11 @@ function parseTopData(top) {
   }
   const allWeaponsCard = createNoCard();
   const wrapper = createWrapper();
+  var c = 0;
   for (var weapon in top[1]) {
+    c = c + 1;
     var container = document.createElement('div');
+    container.classlist.add('w');
     var l = document.createElement('div');
     l.style.marginBottom = "8px";
     var r = document.createElement('div');
@@ -201,6 +204,9 @@ function parseTopData(top) {
     container.title = weapon + ': ' + top[1][weapon];
     container.appendChild(l);
     container.appendChild(r);
+    if (document.innerWidth < 605 && c === 7) {
+      wrapper.appendChild(document.createElement('br'));
+    }
     wrapper.appendChild(container);
   }
   allWeaponsCard.appendChild(wrapper);
