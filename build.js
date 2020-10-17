@@ -94,31 +94,22 @@ function uglyCSS() {
   return new Promise((resolve, reject) => {
     var uglified = uglifycss.processFiles(
         [
-          './tmp/base.css'
+          './src/css/base.css'
         ],
         {
           maxLineLen: 500,
           expandVars: true
         }
     );
-    fs.writeFile( './html/css/base.css', uglified, _ => {
-      fs.unlink('./tmp/base.css', (err) => {
-        if (err) throw err;
-        resolve();
-      });
-    });
+    fs.writeFile( './html/css/base.css', uglified, resolve);
   });
 }
 
-var tmpFolder = './tmp';
 var imgFolder = './html/images';
 var cssFolder = './html/css';
 var fontFolder ='./html/fonts';
 var jsFolder = './html/js';
 
-if (!fs.existsSync(tmpFolder)){
-  fs.mkdirSync(tmpFolder);
-}
 if (!fs.existsSync(imgFolder)){
   fs.mkdirSync(imgFolder);
 }
@@ -131,8 +122,7 @@ if (!fs.existsSync(fontFolder)){
 if (!fs.existsSync(jsFolder)){
   fs.mkdirSync(jsFolder);
 }
-prefixCSS()
-.then(uglyCSS)
+uglyCSS()
 .then(bundleImports)
 .then(uglifyJavaScript)
 .then(minifyHTML)
