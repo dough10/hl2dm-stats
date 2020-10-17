@@ -117,9 +117,6 @@ function getWeaponIcon(weapon) {
     case "stunstick":
       return '!';
       break;
-    case "world":
-      return 'v';
-      break;
     case "physics":
       return '9';
       break;
@@ -179,6 +176,7 @@ function parseTopData(top) {
   }
   const allWeaponsCard = createCard();
   const wrapper = createWrapper();
+  var p = 0;
   for (var weapon in top[1]) {
     var container = document.createElement('div');
     var l = document.createElement('div');
