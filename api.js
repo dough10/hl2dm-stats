@@ -110,9 +110,10 @@ function getID(word) {
     return false;
   }
   var start = u + 4;
+  word = word.substring(start)
   var end = word.search(']');
   var str = '';
-  for (var i = start; i < end; i++) {
+  for (var i = 0; i < end; i++) {
     str = str + word[i];
   }
   return str;
@@ -167,6 +168,15 @@ function lineIsSuicide(line) {
   return false;
 }
 
+function lineIsChat(line) {
+  for (var i = 0; i < line.length; i++) {
+    if (line[i] === 'say') {
+      return i;
+    }
+  }
+  return false;
+}
+
 function scanLine(line) {
   var word  = line.split(' ');
   if (word[5] === 'Log') {
@@ -175,6 +185,7 @@ function scanLine(line) {
   var isKill = lineIsKill(word);
   var isConnect = lineIsConnect(word);
   var isSuicide = lineIsSuicide(word);
+  var isChat = lineIsChat(word);
 
   if (isKill) {
     var killerNameString = buildKillerNameString(word, isKill);
@@ -190,7 +201,8 @@ function scanLine(line) {
         id:killerID,
         kills: 0,
         deaths: 0,
-        kdr: 0
+        kdr: 0,
+        chat: []
       };
     }
     // killed
@@ -200,7 +212,8 @@ function scanLine(line) {
         id: killedID,
         kills: 0,
         deaths: 0,
-        kdr: 0
+        kdr: 0,
+        chat: []
       };
     }
     // add kill
@@ -239,7 +252,7 @@ function scanLine(line) {
     ip = ip.replace(/:\d{4,5}$/, '');
     if (validateIPaddress(ip)) {
       if (!users[connectedUser]) {
-        users[connectedUser] = {name: connectedUserName, id:connectedUser, ip: ip, kills: 0, deaths: 0, kdr: 0};
+        users[connectedUser] = {name: connectedUserName, id:connectedUser, ip: ip, kills: 0, deaths: 0, kdr: 0, chat: []};
       } else {
         users[connectedUser].ip = ip;
       }
@@ -250,7 +263,7 @@ function scanLine(line) {
     var killerID = getID(killerNameString);
     var killerName = getName(killerNameString);
     if (!users[killerID]) {
-      users[killerID] = {name: killerName, id:killerID, kills: 0, deaths: 0, kdr: 0};
+      users[killerID] = {name: killerName, id:killerID, kills: 0, deaths: 0, kdr: 0, chat: []};
     }
     users[killerID].kills = users[killerID].kills - 1;
     users[killerID].deaths = users[killerID].deaths + 1;
@@ -269,6 +282,23 @@ function scanLine(line) {
     }
     weapons[weapon] = weapons[weapon] + 1;
     return;
+  }
+  if (isChat) {
+    var nameString = buildKillerNameString(word, isChat);
+    var id = getID(nameString);
+    var name = getName(nameString);
+
+    if (!users[id]) {
+      users[id] = {
+        name: name,
+        id: id,
+        kills: 0,
+        deaths: 0,
+        kdr: 0,
+        chat: []
+      };
+    }
+    users[id].chat.push();
   }
 }
 
