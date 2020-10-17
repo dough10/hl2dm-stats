@@ -372,6 +372,13 @@ function cleanUp() {
 cacheResponse();
 setInterval(cacheResponse, 600000);
 
+fs.watch(path.join(dir, 'logs'), (eventType, filename) => {
+  console.log(eventType);
+  // could be either 'rename' or 'change'. new file event and delete
+  // also generally emit 'rename'
+  console.log(filename);
+});
+
 app.get('/stats', (req, res) => {
   res.send(JSON.stringify([top, weapons]));
 });
