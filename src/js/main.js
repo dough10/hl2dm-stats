@@ -146,7 +146,7 @@ function parseTopData(top) {
     const name = document.createElement('div');
     name.textContent = top[0][i].name;
     ipLookup(top[0][i].ip).then(res => {
-      name.textContent = name.textContent + '(' + res.country + ')';
+      name.textContent = name.textContent + ' (' + res.country + ')';
     });
     name.title = top[0][i].name;
     name.style = "text-align: left; font-size: 14pt; overflow: hidden;";
