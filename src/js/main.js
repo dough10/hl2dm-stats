@@ -179,6 +179,7 @@ function parseTopData(top) {
   var p = 0;
   for (var weapon in top[1]) {
     var container = document.createElement('div');
+    container.style.display = 'inline-flex';
     var l = document.createElement('div');
     var r = document.createElement('div');
     l.classList.add('favWeapon');
