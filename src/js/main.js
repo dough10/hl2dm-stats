@@ -114,6 +114,15 @@ function getWeaponIcon(weapon) {
     case "physbox":
       return '9';
       break;
+    case "stunstick":
+      return '!';
+      break;
+    case "world":
+      return 'v';
+      break;
+    case "physics":
+      return '9';
+      break;
   }
 }
 
@@ -177,6 +186,7 @@ function parseTopData(top) {
     l.classList.add('favWeapon');
     l.textContent = getWeaponIcon(weapon);
     r.textContent = top[1][weapon];
+    container.title = weapon + ': ' + top[1][weapon];
     container.appendChild(l);
     container.appendChild(r);
     wrapper.appendChild(container);
