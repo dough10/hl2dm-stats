@@ -3,11 +3,11 @@ import {qs, qsa} from './modules/helpers.js';
 import * as ripples from './modules/ripples.js';
 import {loadCSSFile, loadJSFile} from './modules/loadFiles.js';
 
-HTMLElement.prototype.onClick = (cb) => {
+HTMLElement.prototype.onClick = function (cb) {
   this.addEventListener('click', cb, false);
 };
 
-HTMLElement.prototype.atZero = (cb) => {
+HTMLElement.prototype.atZero = function (cb) {
   this.addEventListener('zero', cb, false);
 };
 
