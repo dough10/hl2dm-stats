@@ -168,7 +168,7 @@ function parseTopData(top) {
     card.appendChild(wrapper);
     qs('#cardsWrapper').appendChild(card);
   }
-  const allWeaponsCard = createCard();
+  //const allWeaponsCard = createCard();
   const wrapper = createWrapper();
   for (var weapon in top[1]) {
     var container = document.createElement('div');
@@ -181,8 +181,8 @@ function parseTopData(top) {
     container.appendChild(r);
     wrapper.appendChild(container);
   }
-  allWeaponsCard.appendChild(wrapper);
-  qs('#cardsWrapper').appendChild(allWeaponsCard);
+  //allWeaponsCard.appendChild(wrapper);
+  qs('#cardsWrapper').appendChild(wrapper);
 }
 
 function parseServerStatus(status) {
