@@ -298,6 +298,8 @@ function scanLine(line) {
     for (var i = (isChat + 1); i < word.length; i++) {
       said = said + word[i] + ' ';
     }
+    said.replace('"', '');
+    said.replace('"', '');
     users[id].chat.push(said);
   }
 }
