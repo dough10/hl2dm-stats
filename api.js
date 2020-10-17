@@ -376,13 +376,13 @@ setInterval(cacheResponse, 600000);
 
 var watcher = chokidar.watch(path.join(dir, 'logs'), {ignored: /^\./, persistent: true});
 watcher.on('add', function(path) {
-  console.log('File', path, 'has been added');
+  console.log('File', path, 'has been added at ', new Date());
 })
 watcher.on('change', function(path) {
-  console.log('File', path, 'has been changed');
+  console.log('File', path, 'has been changed at ', new Date());
 })
 watcher.on('unlink', function(path) {
-  console.log('File', path, 'has been removed');
+  console.log('File', path, 'has been removed at ', new Date());
 })
 watcher.on('error', function(error) {
   console.error('Error happened', error);
