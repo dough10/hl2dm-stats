@@ -140,12 +140,14 @@ function parseTopData(top) {
     animations.animateElement(qs('#load'), 'translateY(-102%)', 350);
   }, 1000);
   for (let i = 0; i < top[0].length; i++) {
-    ipLookup(top[0][i].ip).then(console.log)
     const wrapper = createWrapper();
     const card = createCard();
     card.classList.add('stat');
     const name = document.createElement('div');
     name.textContent = top[0][i].name;
+    ipLookup(top[0][i].ip).then(res => {
+      name.textContent = name.textContent + '(' + res.country + ')';
+    });
     name.title = top[0][i].name;
     name.style = "text-align: left; font-size: 14pt; overflow: hidden;";
     var stats = document.createElement('div');
@@ -246,8 +248,22 @@ function fetchServerStatus() {
   });
 }
 
+function isLocalIP(ip) {
+  var rx = /(^127\.)|(^192\.168\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^::1$)|(^[fF][cCdD])/;
+  return rx.test(ip);
+}
+
 function ipLookup(ip) {
   return new Promise((resolve, reject) => {
+    if (isLocalIP(ip)) {
+      resolve({
+        country: "US",
+        country_3: "USA",
+        ip: ip,
+        name: "United States"
+      });
+      return;
+    }
     fetch('https://get.geojs.io/v1/ip/country/' + ip + '.json').then(response => {
       if (response.status !== 200) {
         reject(response.status);
