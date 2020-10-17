@@ -298,7 +298,11 @@ function scanLine(line) {
         chat: []
       };
     }
-    users[id].chat.push();
+    var said = '';
+    for (var i = (isChat + 1); i < word.length; i++) {
+      said = said + word[i] + ' ';
+    }
+    users[id].chat.push(said);
   }
 }
 
