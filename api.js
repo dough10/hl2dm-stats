@@ -76,7 +76,7 @@ function parseLogs() {
           log.on('close', _ => {
             totalFiles = totalFiles - 1;
             if (totalFiles === 0) {
-              // console.log(users)
+              console.log(users)
               resolve(sortUsersByKDR());
             }
           });
@@ -179,14 +179,10 @@ function lineIsChat(line) {
 
 function scanLine(line) {
   var word  = line.split(' ');
-  if (word[5] === 'Log') {
-    return;
-  }
   var isKill = lineIsKill(word);
   var isConnect = lineIsConnect(word);
   var isSuicide = lineIsSuicide(word);
   var isChat = lineIsChat(word);
-
   if (isKill) {
     var killerNameString = buildKillerNameString(word, isKill);
     var killerID = getID(killerNameString);
@@ -194,9 +190,6 @@ function scanLine(line) {
     var killedNameString = buildKilledNameString(word, isKill + 1);
     var killedID = getID(killedNameString);
     var killedName = getName(killedNameString);
-    if (!killerID) {
-      console.log(line)
-    }
     // killer
     if (!users[killerID]) {
       users[killerID] = {
