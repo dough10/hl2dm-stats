@@ -248,7 +248,7 @@ function fetchServerStatus() {
 
 function ipLookup(ip) {
   return new Promise((resolve, reject) => {
-    fetch(`https://get.geojs.io/v1/ip/country/{ip}.json`).then(response => {
+    fetch('https://get.geojs.io/v1/ip/country/' + ip + '.json').then(response => {
       if (response.status !== 200) {
         reject(response.status);
         return;
