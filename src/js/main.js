@@ -35,6 +35,7 @@ function cascadeCards(container) {
       cards[i].style.display = 'block';
       animations.animateElement(cards[i], 'translateX(0)', 200, 1, i * 50);
     }
+    animations.animateElement(qs('.nocard'), 'translateX(0)', 200, 1, i * 100);
   });
 }
 
@@ -49,6 +50,15 @@ function createWrapper() {
 function createCard() {
   const card = document.createElement('div');
   card.classList.add('card');
+  card.style.transform = 'translateX(50%)';
+  card.style.opacity = 0;
+  card.style.display = 'none';
+  return card;
+}
+
+function createNoCard() {
+  const card = document.createElement('div');
+  card.classList.add('nocard');
   card.style.transform = 'translateX(50%)';
   card.style.opacity = 0;
   card.style.display = 'none';
@@ -124,10 +134,7 @@ function getWeaponIcon(weapon) {
 }
 
 function parseTopData(top) {
-  setTimeout(_ => {
-    var load = qs('#load');
-    animations.animateElement(load, 'translateY(-102%)', 350);
-  }, 1000);
+  setTimeout(animations.animateElement(qs('#load'), 'translateY(-102%)', 350), 1000);
   for (let i = 0; i < top[0].length; i++) {
     const wrapper = createWrapper();
     const card = createCard();
@@ -174,9 +181,8 @@ function parseTopData(top) {
     card.appendChild(wrapper);
     qs('#cardsWrapper').appendChild(card);
   }
-  const allWeaponsCard = createCard();
+  const allWeaponsCard = createNoCard();
   const wrapper = createWrapper();
-  var p = 0;
   for (var weapon in top[1]) {
     var container = document.createElement('div');
     var l = document.createElement('div');
