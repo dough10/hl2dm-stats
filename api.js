@@ -266,6 +266,7 @@ function scanLine(line) {
     if (!users[killerID]) {
       users[killerID] = {name: killerName, id:killerID, kills: 0, deaths: 0, kdr: 0};
     }
+    users[killerID].kills = users[killerID].kills - 1;
     users[killerID].deaths = users[killerID].deaths + 1;
     users[killerID].kdr = Number((users[killerID].kills / users[killerID].deaths).toFixed(2));
     var weapon = word[word.length - 1].replace('"', '');
@@ -289,6 +290,7 @@ function scanLine(line) {
     if (!users[killerID]) {
       users[killerID] = {name: killerName, id:killerID, kills: 0, deaths: 0, kdr: 0};
     }
+    users[killerID].kills = users[killerID].kills - 1;
     users[killerID].deaths = users[killerID].deaths + 1;
     users[killerID].kdr = Number((users[killerID].kills / users[killerID].deaths).toFixed(2));
     var weapon = word[word.length - 1].replace('"', '');
@@ -371,11 +373,6 @@ function cleanUp() {
 
 cacheResponse();
 setInterval(cacheResponse, 600000);
-
-fs.watch(path.join(dir, 'logs'), (eventType, filename) => {
-  console.log(eventType);
-  console.log(filename);
-});
 
 app.get('/stats', (req, res) => {
   res.send(JSON.stringify([top, weapons]));
