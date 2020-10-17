@@ -4,8 +4,6 @@ const express = require('express')
 const app = express();
 const Gamedig = require('gamedig');
 var schedule = require('node-schedule');
-var chokidar = require('chokidar');
-
 
 const dir = "/appdata/hl2dm/hl2mp";
 const serverDir = '/var/www/hl2dm';
@@ -35,8 +33,8 @@ function isWeapon(weapon) {
   return w.includes(weapon);
 }
 
-function validateIPaddress(ipaddress) {
-  return /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress);
+function validateIPaddress(ip) {
+  return /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ip);
 }
 
 function cacheResponse() {
@@ -374,19 +372,10 @@ function cleanUp() {
 cacheResponse();
 setInterval(cacheResponse, 600000);
 
-var watcher = chokidar.watch(path.join(dir, 'logs'), {ignored: /^\./, persistent: true});
-watcher.on('add', function(path) {
-  console.log('File', path, 'has been added at ', new Date());
-})
-watcher.on('change', function(path) {
-  console.log('File', path, 'has been changed at ', new Date());
-})
-watcher.on('unlink', function(path) {
-  console.log('File', path, 'has been removed at ', new Date());
-})
-watcher.on('error', function(error) {
-  console.error('Error happened', error);
-})
+fs.watch(path.join(dir, 'logs'), (eventType, filename) => {
+  console.log(eventType);
+  console.log(filename);
+});
 
 app.get('/stats', (req, res) => {
   res.send(JSON.stringify([top, weapons]));

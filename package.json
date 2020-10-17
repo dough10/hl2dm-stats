@@ -17,15 +17,11 @@
   },
   "homepage": "https://github.com/dough10/hl2dm-stats#readme",
   "dependencies": {
-    "autoprefixer": "^10.0.1",
-    "chokidar": "^3.4.3",
     "esperanto": "^0.7.6",
     "express": "^4.17.1",
     "gamedig": "^2.0.23",
     "html-minifier": "^4.0.0",
     "node-schedule": "^1.3.2",
-    "postcss": "^8.1.1",
-    "uglify-es": "^3.3.9",
-    "uglifycss": "0.0.29"
+    "uglify-es": "^3.3.9"
   }
 }
