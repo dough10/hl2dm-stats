@@ -217,7 +217,7 @@ function scanLine(line) {
     var weapon = word[word.length - 1].replace('"', '');
     weapon = weapon.replace('"', '');
     if (!isWeapon(weapon)) {
-      console.log(line)
+      console.log(line);
       return;
     }
     if (!users[killerID][weapon]) {
@@ -246,7 +246,7 @@ function scanLine(line) {
     }
   }
   if (isSuicide) {
-    var killerNameString = buildKillerNameString(word, isKill);
+    var killerNameString = buildKillerNameString(word, isSuicide);
     var killerID = getID(killerNameString);
     var killerName = getName(killerNameString);
     if (!users[killerID]) {
