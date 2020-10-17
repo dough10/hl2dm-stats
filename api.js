@@ -194,6 +194,9 @@ function scanLine(line) {
     var killedNameString = buildKilledNameString(word, isKill + 1);
     var killedID = getID(killedNameString);
     var killedName = getName(killedNameString);
+    if (!killerID) {
+      console.log(line)
+    }
     // killer
     if (!users[killerID]) {
       users[killerID] = {

@@ -74,8 +74,8 @@ function parseLogs() {
           log.on('close', _ => {
             totalFiles = totalFiles - 1;
             if (totalFiles === 0) {
-              // console.log(users)
-              resolve(sortUsersByKDR());
+              console.log(users)
+              // resolve(sortUsersByKDR());
             }
           });
         } catch (e) {
@@ -142,7 +142,6 @@ function buildKilledNameString(line, start) {
 function lineIsKill(line) {
   for (var i = 0; i < line.length; i++) {
     if (line[i] === 'killed') {
-      // console.log(line)
       return i;
     }
   }
@@ -161,7 +160,6 @@ function lineIsConnect(line) {
 function lineIsSuicide(line) {
   for (var i = 0; i < line.length; i++) {
     if (line[i] === 'committed') {
-      // console.log(line)
       return i;
     }
   }
@@ -171,7 +169,6 @@ function lineIsSuicide(line) {
 function lineIsChat(line) {
   for (var i = 0; i < line.length; i++) {
     if (line[i] === 'say') {
-      // console.log(line)
       return i;
     }
   }
