@@ -63,21 +63,6 @@ function minifyHTML() {
 }
 
 
-function prefixCSS() {
-  return new Promise((resolve, reject) => {
-    fs.readFile('./src/css/base.css', 'utf8', (err, css) => {
-      postcss([ autoprefixer ]).process(css).then(result => {
-        result.warnings().forEach(warn => {
-          console.warn(warn.toString());
-          return;
-        });
-        fs.writeFile( './tmp/base.css', result.css, resolve);
-      });
-    });
-  });
-}
-
-
 function uglifyJavaScript(js) {
   return new Promise((resolve, reject) => {
     var uglyCode = uglifyJS.minify(js);
@@ -86,22 +71,6 @@ function uglifyJavaScript(js) {
       return;
     }
     fs.writeFile( './html/js/main.js', uglyCode.code, resolve);
-  });
-}
-
-
-function uglyCSS() {
-  return new Promise((resolve, reject) => {
-    var uglified = uglifycss.processFiles(
-        [
-          './src/css/base.css'
-        ],
-        {
-          maxLineLen: 500,
-          expandVars: true
-        }
-    );
-    fs.writeFile( './html/css/base.css', uglified, resolve);
   });
 }
 
@@ -122,8 +91,8 @@ if (!fs.existsSync(fontFolder)){
 if (!fs.existsSync(jsFolder)){
   fs.mkdirSync(jsFolder);
 }
-uglyCSS()
-.then(bundleImports)
+
+bundleImports()
 .then(uglifyJavaScript)
 .then(minifyHTML)
 .then(_ => files.forEach(copyFile));

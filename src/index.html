@@ -6,7 +6,6 @@
     <meta http-equiv="Cache-control" content="public">
     <link rel="manifest" href="../manifest.json">
     <link rel="preload" href="../css/paper-ripple.min.css" as="style">
-    <link rel="preload" href="../css/base.css" as="style">
     <link rel="icon" href="../favicon.ico?" type="image/x-icon">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="dough10.js">
@@ -18,7 +17,281 @@
     <link rel="apple-touch-icon" href="../images/logo152.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="Description" content="Low gravity HL2DM game server">
-    <link rel="stylesheet" href="../css/base.css" type="text/css">
+    <style media="screen">
+      :root {
+        --header-height: 128px;
+        --avatar-size: 165px;
+        --main-color: #4c72b9;
+        --theme-color: #4c72b9;
+        --background-color: rgb(179, 179, 179);
+      }
+      @font-face {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        font-display: fallback;
+        src: url('../fonts/roboto-v15-latin-regular.eot'); /* IE9 Compat Modes */
+        src: local('Roboto'), local('Roboto-Regular'),
+           url('../fonts/roboto-v15-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+           url('../fonts/roboto-v15-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+           url('../fonts/roboto-v15-latin-regular.woff') format('woff'), /* Modern Browsers */
+           url('../fonts/roboto-v15-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+           url('../fonts/roboto-v15-latin-regular.svg#Roboto') format('svg'); /* Legacy iOS */
+      }
+      @font-face {
+        font-family: "HL2";
+        src: url("../fonts/halflife2.ttf");
+        font-display: fallback;
+      }
+      @font-face {
+        font-family: "HL2Weapons";
+        src: url("../fonts/hl2mp.ttf");
+        font-display: fallback;
+      }
+      .HL2 {
+        font-family: "HL2"
+      }
+      .HL2Weapons {
+        font-family: "HL2Weapons"
+      }
+      body {
+        position: absolute;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+        background: var(--background-color);
+        font-family: 'Roboto', 'Noto', sans-serif;
+        font-size: 13px;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        user-select: none;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding:0;
+        margin:0;
+      }
+      header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--header-height);
+        background: var(--main-color);
+        color: #333333;
+        will-change: auto;
+      }
+      .header-shadow {
+        height: 6px;
+        box-shadow: inset 0px 5px 6px -3px rgba(0,0,0,0.4);
+        position: absolute;
+        will-change: auto;
+        top: var(--header-height);
+        left: 0;
+        right: 0;
+        pointer-events: none;
+        z-index: 1;
+      }
+      .wrapper {
+        position: fixed;
+        will-change: auto;
+        top: var(--header-height);
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: auto;
+        padding:8px;
+        transform: translateZ(0);
+        -webkit-overflow-scrolling: touch;
+        text-align: center;
+        background: var(--background-color);
+      }
+      .av-wrapper {
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 0
+        right: 0;
+        padding: 10px;
+      }
+      .avatar {
+        border-radius: 50%;
+        height: var(--avatar-size);
+        width: var(--avatar-size);
+        display: flex;
+        background-color: #ccc;
+        background-image: url("../images/avatar.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: var(--avatar-size);
+        z-index: 2;
+        border: 2px solid #fff;
+        transform-origin: 50% 0%;
+        box-shadow:0 4px 5px 0 rgba(0,0,0,0.14),0 1px 10px 0 rgba(0,0,0,0.12),0 2px 4px -1px rgba(0,0,0,0.4);
+      }
+      .fab {
+        background: var(--main-color);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        box-sizing: border-box;
+        color: #fff;
+        cursor: pointer;
+        height: 56px;
+        min-width: 0;
+        outline: none;
+        padding: 16px;
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        width: 56px;
+        -webkit-tap-highlight-color: transparent;
+        box-shadow:0 4px 5px 0 rgba(0,0,0,0.14),0 1px 10px 0 rgba(0,0,0,0.12),0 2px 4px -1px rgba(0,0,0,0.4);
+        z-index: 2;
+        overflow: hidden;
+      }
+      .fab:active {
+        box-shadow:0 8px 10px 1px rgba(0,0,0,0.14),0 3px 14px 2px rgba(0,0,0,0.12),0 5px 5px -3px rgba(0,0,0,0.4);
+      }
+      .stat:hover {
+        box-shadow:0 8px 10px 1px rgba(0,0,0,0.14),0 3px 14px 2px rgba(0,0,0,0.12),0 5px 5px -3px rgba(0,0,0,0.4);
+      }
+      .card {
+        max-width: 600px;
+        min-width: 280px;
+        padding: 20px;
+        background: #fff;
+        z-index: 1;
+        position: relative;
+        margin: auto;
+        border-radius: 3px;
+        margin-bottom: 8px;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
+        text-align: center;
+      }
+      .nocard {
+        max-width: 600px;
+        min-width: 280px;
+        padding: 20px;
+        z-index: 1;
+        position: relative;
+        margin: auto;
+        margin-bottom: 8px;
+        text-align: center;
+      }
+      .head-text {
+        margin-top: 16px;
+        margin-bottom: 16px;
+        font-size: 1.7em;
+      }
+      .hostname {
+        margin-bottom: 16px;
+        font-size: 20px;
+      }
+      .button {
+        display: inline-flex;
+        min-width: 5.14em;
+        margin: 0.29em 0.29em;
+        text-align: center;
+        text-transform: uppercase;
+        outline-width: 0;
+        border-radius: 3px;
+        padding: 0.7em 0.57em;
+        cursor: pointer;
+        position: relative;
+        box-sizing:border-box;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
+        -webkit-user-select: none;
+        user-select: none;
+        overflow: hidden;
+        pointer-events: all;
+        justify-content: center;
+        align-items: center;
+      }
+      .button.disabled {
+        background: rgba(84, 84, 84, 0.4);
+        box-shadow: none;
+        cursor: none;
+        pointer-events: none;
+      }
+      .button:active {
+        box-shadow:0 8px 10px 1px rgba(0,0,0,0.14),0 3px 14px 2px rgba(0,0,0,0.12),0 5px 5px -3px rgba(0,0,0,0.4);
+      }
+      .button.disabled:active {
+        box-shadow: none;
+      }
+      .statinfo {
+        font-size: 7pt;
+      }
+      .spacer {
+        margin-top: 16px;
+        border-top: 1px solid #cccccc61;
+        min-height: 16px;
+      }
+      .no-shadow {
+        box-shadow: none;
+      }
+      #blog {
+        margin-top: 24px;
+      }
+      a {
+        color: #000000;
+        text-decoration: none;
+      }
+      .playeronline {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      #load {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgb(255, 255, 255);
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+        z-index:3;
+        pointer-events: all;
+        overflow: hidden;
+      }
+      @media only screen and (min-width: 500px) {
+        .phone-only {
+          display: none;
+        }
+      }
+      .or1 {
+        background-color: #beec8b;
+      }
+      .or2 {
+        background-color: #ecb98b;
+      }
+      .or3 {
+        background-color: #ec8b8f;
+      }
+      .or4 {
+        background-color: #8becb6;
+      }
+      .or5 {
+        background-color: #b58bec;
+      }
+      .favWeapon {
+        font-family: "HL2Weapons";
+        margin: '0 0.2em';
+        font-size: 34px;
+        height: 18px;
+      }
+      .foot {
+        min-height: 100px;
+      }
+    </style>
   </head>
   <body>
     <div id="load">
