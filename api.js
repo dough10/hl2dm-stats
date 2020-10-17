@@ -226,7 +226,6 @@ function scanLine(line) {
     var weapon = word[word.length - 1].replace('"', '');
     weapon = weapon.replace('"', '');
     if (!isWeapon(weapon)) {
-      console.log(line);
       return;
     }
     if (!users[killerID][weapon]) {
