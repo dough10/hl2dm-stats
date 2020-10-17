@@ -375,10 +375,18 @@ cacheResponse();
 setInterval(cacheResponse, 600000);
 
 var watcher = chokidar.watch(path.join(dir, 'logs'), {ignored: /^\./, persistent: true});
-watcher.on('add', function(path) {console.log('File', path, 'has been added');})
-watcher.on('change', function(path) {console.log('File', path, 'has been changed');})
-watcher.on('unlink', function(path) {console.log('File', path, 'has been removed');})
-watcher.on('error', function(error) {console.error('Error happened', error);})
+watcher.on('add', function(path) {
+  console.log('File', path, 'has been added');
+})
+watcher.on('change', function(path) {
+  console.log('File', path, 'has been changed');
+})
+watcher.on('unlink', function(path) {
+  console.log('File', path, 'has been removed');
+})
+watcher.on('error', function(error) {
+  console.error('Error happened', error);
+})
 
 app.get('/stats', (req, res) => {
   res.send(JSON.stringify([top, weapons]));
