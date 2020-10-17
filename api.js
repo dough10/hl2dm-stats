@@ -33,6 +33,10 @@ function isWeapon(weapon) {
   return w.includes(weapon);
 }
 
+function validateIPaddress(ipaddress) {
+  return /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress)
+}
+
 function cacheResponse() {
   parseLogs().then(stats => {
     top = stats;
@@ -230,13 +234,15 @@ function scanLine(line) {
   if (word[5] === 'connected,') {
     var connectedUser = getID(word[4]);
     var connectedUserName = getName(word[4]);
-    var ip = word[7].replace('"', '')
-    ip = ip.replace('"', '')
-    ip = ip.replace(':27005', '')
-    if (!users[connectedUser]) {
-      users[connectedUser] = {name: connectedUserName, id:connectedUser, ip: ip, kills: 0, deaths: 0, kdr: 0};
-    } else {
-      users[connectedUser].ip = ip;
+    var ip = word[7].replace('"', '');
+    ip = ip.replace('"', '');
+    ip = ip.replace(':27005', '');
+    if (validateIPaddress(ip)) {
+      if (!users[connectedUser]) {
+        users[connectedUser] = {name: connectedUserName, id:connectedUser, ip: ip, kills: 0, deaths: 0, kdr: 0};
+      } else {
+        users[connectedUser].ip = ip;
+      }
     }
     return;
   }
