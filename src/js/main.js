@@ -37,7 +37,7 @@ function cascadeCards(container) {
     }
     var nocard = qs('.nocard')
     nocard.style.display = 'block';
-    animations.animateElement(nocard, 'translateX(0)', 200, 1, i * 100);
+    animations.animateElement(nocard, 'translateX(0)', 200, 1, i * 50);
   });
 }
 
@@ -136,7 +136,9 @@ function getWeaponIcon(weapon) {
 }
 
 function parseTopData(top) {
-  setTimeout(animations.animateElement(qs('#load'), 'translateY(-102%)', 350), 1000);
+  setTimeout(_ => {
+    animations.animateElement(qs('#load'), 'translateY(-102%)', 350);
+  }, 1000);
   for (let i = 0; i < top[0].length; i++) {
     const wrapper = createWrapper();
     const card = createCard();
