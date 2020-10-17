@@ -3,6 +3,7 @@ var urlsToCache = [
   '/index.html',
   '/manifest.json',
   '/js/main.js',
+  '/css/base.css',
   '/css/paper-ripple.min.css',
   '/js/paper-ripple.min.js',
   '/images/avatar.png',

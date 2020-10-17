@@ -110,11 +110,15 @@ function uglyCSS() {
   });
 }
 
+var tmpFolder = './tmp';
 var imgFolder = './html/images';
 var cssFolder = './html/css';
 var fontFolder ='./html/fonts';
 var jsFolder = './html/js';
 
+if (!fs.existsSync(tmpFolder)){
+  fs.mkdirSync(tmpFolder);
+}
 if (!fs.existsSync(imgFolder)){
   fs.mkdirSync(imgFolder);
 }
@@ -127,7 +131,9 @@ if (!fs.existsSync(fontFolder)){
 if (!fs.existsSync(jsFolder)){
   fs.mkdirSync(jsFolder);
 }
-bundleImports()
+prefixCSS()
+.then(uglyCSS)
+.then(bundleImports)
 .then(uglifyJavaScript)
 .then(minifyHTML)
 .then(_ => files.forEach(copyFile));
