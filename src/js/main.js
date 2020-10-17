@@ -140,6 +140,7 @@ function parseTopData(top) {
     animations.animateElement(qs('#load'), 'translateY(-102%)', 350);
   }, 1000);
   for (let i = 0; i < top[0].length; i++) {
+    ipLookup(top[0][i].ip).then(console.log)
     const wrapper = createWrapper();
     const card = createCard();
     card.classList.add('stat');
@@ -242,6 +243,18 @@ function fetchServerStatus() {
       return;
     }
     response.json().then(parseServerStatus);
+  });
+}
+
+function ipLookup(ip) {
+  return new Promise((resolve, reject) => {
+    fetch(`https://get.geojs.io/v1/ip/country/{ip}.json`).then(response => {
+      if (response.status !== 200) {
+        reject(response.status);
+        return;
+      }
+      response.json().then(resolve);
+    });
   });
 }
 
