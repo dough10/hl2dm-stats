@@ -44,7 +44,7 @@ function cacheResponse() {
     keys = Object.keys(weapons);
 
     keys.sort(function (a, b) {
-      return obj[a][1] - obj[b][1];
+      return weapons[a][1] - weapons[b][1];
     });
 
     console.log(keys);
