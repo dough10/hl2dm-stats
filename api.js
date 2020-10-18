@@ -367,13 +367,16 @@ function bytesToSize(bytes) {
 }
 
 function getServerStatus() {
-  console.log(new Date() + ' - Getting game server info');
   Gamedig.query({
     type: 'hl2dm',
     host: 'hl2dm.dough10.me'
   }).then((state) => {
-    console.log(new Date() + ' - Game server info cached');
     serverStatus = state;
+    if (serverStatus.players.length > 0) {
+      for (var i = 0; i < serverStatus.players.length; i++) {
+        console.log(new Date() + ' - Player: ' + serverStatus.players[i].name + ' Score: ' + serverStatus.players[i].score);
+      }
+    }
   }).catch((error) => {
     serverStatus = 'offline';
     console.log(new Date() + " - hl2dm server is offline", error);
