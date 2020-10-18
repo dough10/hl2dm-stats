@@ -62,7 +62,7 @@ function parseLogs() {
           log = fs.createReadStream(path.join(logFolder, file));
           log.on('data', data => {
             remaining += data;
-            var index = remaining.indexOf(/\r?\n/);
+            var index = remaining.indexOf('\n');
             while (index > -1) {
               var line = remaining.substring(0, index);
               remaining = remaining.substring(index + 1);
