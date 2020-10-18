@@ -70,34 +70,12 @@ async function parseLogs() {
             crlfDelay: Infinity
           });
           rl.on('line', scanLine);
-          rl.on('close', () => {
+          rl.on('close', _ => {
             totalFiles = totalFiles - 1;
             if (totalFiles === 0) {
               resolve(sortUsersByKDR());
             }
           });
-          // log = fs.createReadStream(path.join(logFolder, file));
-          // log.on('data', data => {
-          //   remaining += data;
-          //   var index = remaining.indexOf('\n');
-          //   while (index > -1) {
-          //     var line = remaining.substring(0, index);
-          //     remaining = remaining.substring(index + 1);
-          //     scanLine(line);
-          //     index = remaining.indexOf('\n');
-          //   }
-          // });
-          // log.on('end', _ => {
-          //   if (remaining.length > 0) {
-          //     scanLine(remaining);
-          //   }
-          // });
-          // log.on('close', _ => {
-          //   totalFiles = totalFiles - 1;
-          //   if (totalFiles === 0) {
-          //     resolve(sortUsersByKDR());
-          //   }
-          // });
         } catch (e) {
           console.error(e);
         }
@@ -399,14 +377,18 @@ function getServerStatus() {
 
 function cleanUp() {
   console.log(new Date() + ' - Running file clean up');
+  var numFiles = 0;
   fs.readdir(logFolder, (err, files) => {
+    numFiles = numFiles + files.length;
     files.forEach(fs.unlinkSync);
-  });
-  fs.readdir(dir, (err, files) => {
-    files.forEach(file => {
-      if (path.extname(file) === '.dem') {
-        fs.unlinkSync(file);
-      }
+    fs.readdir(dir, (err, files) => {
+      files.forEach(file => {
+        numFiles = numFiles + files.length;
+        if (path.extname(file) === '.dem') {
+          fs.unlinkSync(file);
+          console.log(new Date() + ' - Clean up complete. Removed ' + numFiles + ' files');
+        }
+      });
     });
   });
 ;}
