@@ -361,7 +361,7 @@ function bytesToSize(bytes) {
 }
 
 function cleanUp() {
-  console.log('Running file clean up ', new Date());
+  console.log(new Date(), ' - Running file clean up');
   const directoryPath = path.join(dir, 'logs');
   fs.readdir(directoryPath, (err, files) => {
     files.forEach(fs.unlinkSync);
