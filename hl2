@@ -1,0 +1,52 @@
+
+server {
+    listen 443 ssl http2;
+    server_name hl2dm.dough10.me;
+    ssl_certificate /etc/letsencrypt/live/hl2dm.dough10.me/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/hl2dm.dough10.me/privkey.pem;
+    add_header Strict-Transport-Security "max-age=31536000";
+    access_log /home/crumb/hl2dm.log;
+    error_log /home/crumb/hl2dm_errors.log;
+    index index.html index.php;
+    add_header X-Content-Type-Options nosniff;
+    add_header X-Frame-Options SAMEORIGIN always;
+    add_header "X-XSS-Protection" "1; mode=block";
+    gzip on;
+    gzip_types application/javascript application/rss+xml application/vnd.ms-fontobject application/x-font application/x-font-opentype application/x-font-otf application/x-font-truetype application/x-font-ttf application/x-javascript application/xhtml+xml application/xml font/opentype font/otf font/ttf image/svg+xml image/x-icon text/css text/javascript text/plain text/xml;
+    gunzip on;
+    server_tokens off;
+    root /var/www/hl2dm/html/;
+    location /index.html {
+        http2_push /manifest.json;
+        http2_push /sw.js;
+        http2_push /favicon.ico;
+        http2_push /manifest.json;
+        http2_push /js/main.js;
+        http2_push /images/avatar.png;
+        http2_push /images/logo.png;
+        http2_push /images/logo152.png;
+        http2_push /images/logo192.png;
+        http2_push /css/paper-ripple.min.css;
+        http2_push /js/paper-ripple.min.js;
+        http2_push /fonts/halflife2.ttf;
+        http2_push /fonts/hl2mp.ttf;
+        http2_push /fonts/roboto-v15-latin-regular.woff2;
+        proxy_set_header Accept-Encoding "";
+    }
+    location /api {
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-NginX-Proxy true;
+        rewrite ^/api/?(.*) /$1 break;
+        proxy_pass http://LOCALHOST:3000;
+        proxy_redirect off;
+    }
+    location ~* \.(webp|jpg|jpeg|png|gif|ico|woff2|woff|ttf|svg|eot)$ {
+       expires 30d;
+    }
+    location ~* \.(css|js|json)$ {
+       expires 7d;
+    }
+ }
+
