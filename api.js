@@ -7,6 +7,7 @@ var schedule = require('node-schedule');
 
 const dir = "/appdata/hl2dm/hl2mp";
 const serverDir = '/var/www/hl2dm';
+const logFolder = path.join(dir, 'logs');
 
 var users = {};
 var totalFiles = 0;
@@ -50,8 +51,7 @@ function cacheResponse() {
 function parseLogs() {
   return new Promise((resolve, reject) => {
     weapons = {};
-    const directoryPath = path.join(dir, 'logs');
-    fs.readdir(directoryPath, (err, files) => {
+    fs.readdir(logFolder, (err, files) => {
       var remaining = '';
       if (err) {
         return console.log('Unable to scan directory: ' + err);
@@ -59,7 +59,7 @@ function parseLogs() {
       totalFiles = files.length;
       files.forEach(function (file) {
         try {
-          log = fs.createReadStream(path.join(dir, 'logs', file));
+          log = fs.createReadStream(path.join(logFolder, file));
           log.on('data', data => {
             remaining += data;
             var index = remaining.indexOf('\n');
@@ -193,10 +193,10 @@ function scanLine(line) {
     var killedID = getID(killedNameString);
     var killedName = getName(killedNameString);
     if (!killerID) {
-      console.log(line, 'killer');
+      console.log(line, 'killer error');
     }
     if (!killedID) {
-      console.log(line, 'killed');
+      console.log(line, 'killed error');
     }
     // killer
     if (!users[killerID]) {
@@ -266,7 +266,7 @@ function scanLine(line) {
     var id = getID(nameString);
     var name = getName(nameString);
     if (!id) {
-      console.log(line);
+      console.log(line, 'id error');
     }
     if (!users[id]) {
       users[id] = {name: name, id: id, kills: 0, deaths: 0, kdr: 0, chat: []};
@@ -378,6 +378,8 @@ function cleanUp() {
 cacheResponse();
 setInterval(cacheResponse, 600000);
 
+var j = schedule.scheduleJob('* * * 1 * *', cleanUp);
+
 app.get('/stats', (req, res) => {
   res.send(JSON.stringify([top, weapons]));
 });
@@ -410,5 +412,5 @@ app.get('/demos', (reg,res) => {
 });
 
 app.listen(3000);
-
-var j = schedule.scheduleJob('* * * 1 * *', cleanUp);
+console.log('API active on port 3000');
+console.log('log folder = ', logFolder)
