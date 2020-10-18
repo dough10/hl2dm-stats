@@ -131,7 +131,7 @@ function buildKillerNameString(line, end)  {
   var isTime = /^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d):$/;
   for (var i = 0; i < line.length; i++) {
     if (isTime.test(line[i])) {
-      start = i + 9;
+      start = i + 1;
     }
   }
   for (var i = start; i < end; i++) {
