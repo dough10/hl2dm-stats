@@ -205,7 +205,8 @@ function parseTopData(top) {
 }
 
 function parseServerStatus(status) {
-  if (status !== "Server is offline") {
+  if (status !== "offline") {
+    document.title = status.name;
     qs('.hostname').textContent = status.name;
     qs('#numPlayers').textContent = status.maxplayers;
     qs('#map').textContent = status.map;
@@ -232,7 +233,6 @@ function parseServerStatus(status) {
         pContainer.appendChild(spacer);
       }
     }
-    document.title = status.name;
   }
 }
 

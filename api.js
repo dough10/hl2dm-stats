@@ -366,12 +366,13 @@ function bytesToSize(bytes) {
 
 function getServerStatus() {
   Gamedig.query({
-      type: 'hl2dm',
-      host: 'hl2dm.dough10.me'
+    type: 'hl2dm',
+    host: 'hl2dm.dough10.me'
   }).then((state) => {
-      serverStatus = state;
+    serverStatus = state;
   }).catch((error) => {
-      console.log(new Date() + " - hl2dm server is offline");
+    serverStatus = 'offline';
+    console.log(new Date() + " - hl2dm server is offline", error);
   });
 }
 
