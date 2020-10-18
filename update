@@ -2,3 +2,6 @@
 foreverOutput=$(forever list)
 uid=$(echo $foreverOutput | cut -d ' ' -f18)
 forever stop $uid
+git pull
+node build.js
+forever start /var/www/hl2dm/api.js -l -o -e
