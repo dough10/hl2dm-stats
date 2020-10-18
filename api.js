@@ -13,6 +13,7 @@ var users = {};
 var totalFiles = 0;
 var top = [];
 var weapons = {};
+var serverStatus;
 
 function isWeapon(weapon) {
   var w = [
@@ -326,7 +327,6 @@ function sortUsersByKDR() {
   });
   arr.reverse();
   for (var u in users) {
-    delete users[u].chat;
     console.log(u);
     console.log(users[u]);
   }
@@ -366,6 +366,17 @@ function bytesToSize(bytes) {
    return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 }
 
+function getServerStatus() {
+  Gamedig.query({
+      type: 'hl2dm',
+      host: 'hl2dm.dough10.me'
+  }).then((state) => {
+      serverStatus = state;
+  }).catch((error) => {
+      console.log(new Date() + " - hl2dm server is offline");
+  });
+}
+
 function cleanUp() {
   console.log(new Date() + ' - Running file clean up');
   fs.readdir(logFolder, (err, files) => {
@@ -383,6 +394,9 @@ function cleanUp() {
 cacheTopResponse();
 setInterval(cacheTopResponse, 600000);
 
+getServerStatus();
+setInterval(getServerStatus, 5000);
+
 var j = schedule.scheduleJob('* * * 1 * *', cleanUp);
 
 app.get('/stats', (req, res) => {
@@ -390,14 +404,7 @@ app.get('/stats', (req, res) => {
 });
 
 app.get('/status', (reg, res) => {
-  Gamedig.query({
-      type: 'hl2dm',
-      host: 'hl2dm.dough10.me'
-  }).then((state) => {
-      res.send(state);
-  }).catch((error) => {
-      res.send("Server is offline");
-  });
+  res.send(serverStatus);
 });
 
 app.get('/download/:file', (reg, res) => {
