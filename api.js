@@ -374,7 +374,7 @@ function getServerStatus() {
     serverStatus = state;
     if (serverStatus.players.length > 0) {
       for (var i = 0; i < serverStatus.players.length; i++) {
-        if (serverStatus.players[i].score >== 60) {
+        if (serverStatus.players[i].score === 60) {
           cacheTopResponse();
         }
       }
