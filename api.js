@@ -397,7 +397,7 @@ app.get('/status', (reg, res) => {
 
 app.get('/download/:file', (reg, res) => {
   var dl = dir + '/' + reg.params.file;
-  console.log('File downloaded ', dl, new Date());
+  console.log(new Date(), ' - File downloaded ', dl);
   res.download(dl, reg.params.file);
 });
 
