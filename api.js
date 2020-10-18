@@ -1,3 +1,4 @@
+console.log(new Date() + ' - Loading imports');
 const path = require('path');
 const fs = require('fs');
 const readline = require('readline');
@@ -16,6 +17,7 @@ var top = [];
 var weapons = {};
 var serverStatus;
 
+console.log(new Date() + ' - Load Functions');
 function isWeapon(weapon) {
   var w = [
     '357',
@@ -394,6 +396,7 @@ function cleanUp() {
   });
 ;}
 
+console.log(new Date() + ' - Getting data');
 cacheTopResponse();
 setInterval(cacheTopResponse, 600000);
 
@@ -402,6 +405,7 @@ setInterval(getServerStatus, 5000);
 
 var j = schedule.scheduleJob('* * * 1 * *', cleanUp);
 
+console.log(new Date() + ' - Load API backend calls');
 app.get('/stats', (req, res) => {
   res.send(JSON.stringify([top, weapons]));
 });
@@ -428,6 +432,6 @@ app.get('/demos', (reg,res) => {
 
 app.listen(3000);
 
-console.log(new Date() + ' - API active on port 3000');
+console.log(new Date() + ' - API is now active on port 3000');
 console.log(new Date() + ' - log folder = ' + logFolder);
 console.log(new Date() + ' - application root folder = ' + serverDir);
