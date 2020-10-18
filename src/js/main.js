@@ -7,10 +7,6 @@ HTMLElement.prototype.onClick = function (cb) {
   this.addEventListener('click', cb, false);
 };
 
-HTMLElement.prototype.atZero = function (cb) {
-  this.addEventListener('zero', cb, false);
-};
-
 function applyRipples() {
   return new Promise(resolve => {
     qsa('.button').forEach(ripples.attachButtonRipple);
