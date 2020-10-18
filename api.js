@@ -39,7 +39,7 @@ function validateIPaddress(ip) {
 }
 
 function cacheResponse() {
-  console.log('Running log parser ', new Date());
+  console.log(new Date(), ' - Running log parser');
   parseLogs().then(stats => {
     weapons.physics = weapons.physics + weapons.physbox;
     delete weapons.physbox;
