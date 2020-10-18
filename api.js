@@ -38,7 +38,7 @@ function validateIPaddress(ip) {
   return /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ip);
 }
 
-function cacheResponse() {
+function cacheTopResponse() {
   console.log(new Date() + ' - Running log parser');
   parseLogs().then(stats => {
     weapons.physics = weapons.physics + weapons.physbox;
@@ -192,11 +192,18 @@ function scanLine(line) {
     var killedNameString = buildKilledNameString(word, isKill + 1);
     var killedID = getID(killedNameString);
     var killedName = getName(killedNameString);
+    var weapon = word[word.length - 1].replace('"', '');
+    weapon = weapon.replace('"', '');
+    if (!isWeapon(weapon)) {
+      return;
+    }
     if (!killerID) {
-      console.log(new Date() + line +  ' killer error');
+      console.log(line +  ' killer error');
+      return;
     }
     if (!killedID) {
-      console.log(new Date() + line +  ' killed error');
+      console.log(line +  ' killed error');
+      return;
     }
     // killer
     if (!users[killerID]) {
@@ -231,11 +238,7 @@ function scanLine(line) {
     }
     users[killedID].kdr = Number((users[killedID].kills / users[killedID].deaths).toFixed(2));
     // add weapon
-    var weapon = word[word.length - 1].replace('"', '');
-    weapon = weapon.replace('"', '');
-    if (!isWeapon(weapon)) {
-      return;
-    }
+
     if (!users[killerID][weapon]) {
       users[killerID][weapon] = 0;
     }
@@ -374,8 +377,8 @@ function cleanUp() {
   });
 ;}
 
-cacheResponse();
-setInterval(cacheResponse, 600000);
+cacheTopResponse();
+setInterval(cacheTopResponse, 600000);
 
 var j = schedule.scheduleJob('* * * 1 * *', cleanUp);
 
