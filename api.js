@@ -193,10 +193,10 @@ function scanLine(line) {
     var killedID = getID(killedNameString);
     var killedName = getName(killedNameString);
     if (!killerID) {
-      console.log(line, 'killer error');
+      console.log(new Date() + line +  ' killer error');
     }
     if (!killedID) {
-      console.log(line, 'killed error');
+      console.log(new Date() + line +  ' killed error');
     }
     // killer
     if (!users[killerID]) {
@@ -266,7 +266,7 @@ function scanLine(line) {
     var id = getID(nameString);
     var name = getName(nameString);
     if (!id) {
-      console.log(line, 'id error');
+      console.log(new Date() + line +  ' id error');
     }
     if (!users[id]) {
       users[id] = {name: name, id: id, kills: 0, deaths: 0, kdr: 0, chat: []};
