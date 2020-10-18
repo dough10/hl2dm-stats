@@ -24,6 +24,9 @@ then
     apt-get install nginx
 fi
 
+echo "-------------ssl cert install--------------"
+certbot certonly -a webroot --webroot-path=/var/www/html -d hl2dm.dough10.me
+
 
 echo "----------install nginx site file----------"
 cp -u -p /var/www/hl2dm/hl2 /etc/nginx/sites-enabled/hl2
