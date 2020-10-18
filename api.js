@@ -39,12 +39,12 @@ function validateIPaddress(ip) {
 }
 
 function cacheResponse() {
-  console.log(new Date(), ' - Running log parser');
+  console.log(new Date() + ' - Running log parser');
   parseLogs().then(stats => {
     weapons.physics = weapons.physics + weapons.physbox;
     delete weapons.physbox;
     top = stats;
-    console.log(new Date(), ' - Results cached');
+    console.log(new Date() + ' - Results cached');
   });
 }
 
@@ -54,7 +54,7 @@ function parseLogs() {
     fs.readdir(logFolder, (err, files) => {
       var remaining = '';
       if (err) {
-        return console.log('Unable to scan directory: ' + err);
+        return console.log(new Date() + ' - Unable to scan directory: ' + err);
       }
       totalFiles = files.length;
       files.forEach(function (file) {
@@ -361,7 +361,7 @@ function bytesToSize(bytes) {
 }
 
 function cleanUp() {
-  console.log(new Date(), ' - Running file clean up');
+  console.log(new Date() + ' - Running file clean up');
   const directoryPath = path.join(dir, 'logs');
   fs.readdir(directoryPath, (err, files) => {
     files.forEach(fs.unlinkSync);
@@ -397,7 +397,7 @@ app.get('/status', (reg, res) => {
 
 app.get('/download/:file', (reg, res) => {
   var dl = dir + '/' + reg.params.file;
-  console.log(new Date(), ' - File downloaded ', dl);
+  console.log(new Date() + ' - File downloaded ', dl);
   res.download(dl, reg.params.file);
 });
 
@@ -412,5 +412,5 @@ app.get('/demos', (reg,res) => {
 });
 
 app.listen(3000);
-console.log(new Date(), ' - API active on port 3000');
-console.log(new Date(), ' - log folder = ', logFolder)
+console.log(new Date() + ' - API active on port 3000');
+console.log(new Date() + ' - log folder = ' + logFolder)
