@@ -4,7 +4,10 @@
   "description": "",
   "main": "api.js",
   "scripts": {
-    "start": "forever start api.js -l -o -e"
+    "start": "forever start api.js -l -o -e",
+    "build": "node build.js",
+    "monitor": "./monitor.sh",
+    "update-app": "./update.sh"
   },
   "repository": {
     "type": "git",
