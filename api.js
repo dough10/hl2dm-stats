@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const readline = require('readline');
 const express = require('express')
 const app = express();
 const Gamedig = require('gamedig');
@@ -53,7 +54,7 @@ function cacheTopResponse() {
   });
 }
 
-function parseLogs() {
+async function parseLogs() {
   return new Promise((resolve, reject) => {
     weapons = {};
     fs.readdir(logFolder, (err, files) => {
@@ -64,28 +65,39 @@ function parseLogs() {
       totalFiles = files.length;
       files.forEach(function (file) {
         try {
-          log = fs.createReadStream(path.join(logFolder, file));
-          log.on('data', data => {
-            remaining += data;
-            var index = remaining.indexOf('\n');
-            while (index > -1) {
-              var line = remaining.substring(0, index);
-              remaining = remaining.substring(index + 1);
-              scanLine(line);
-              index = remaining.indexOf('\n');
-            }
+          const rl = readline.createInterface({
+            input: fs.createReadStream(path.join(logFolder, file)),
+            crlfDelay: Infinity
           });
-          log.on('end', _ => {
-            if (remaining.length > 0) {
-              scanLine(remaining);
-            }
-          });
-          log.on('close', _ => {
+          rl.on('line', scanLine);
+          rl..on('close', () => {
             totalFiles = totalFiles - 1;
             if (totalFiles === 0) {
               resolve(sortUsersByKDR());
             }
           });
+          // log = fs.createReadStream(path.join(logFolder, file));
+          // log.on('data', data => {
+          //   remaining += data;
+          //   var index = remaining.indexOf('\n');
+          //   while (index > -1) {
+          //     var line = remaining.substring(0, index);
+          //     remaining = remaining.substring(index + 1);
+          //     scanLine(line);
+          //     index = remaining.indexOf('\n');
+          //   }
+          // });
+          // log.on('end', _ => {
+          //   if (remaining.length > 0) {
+          //     scanLine(remaining);
+          //   }
+          // });
+          // log.on('close', _ => {
+          //   totalFiles = totalFiles - 1;
+          //   if (totalFiles === 0) {
+          //     resolve(sortUsersByKDR());
+          //   }
+          // });
         } catch (e) {
           console.error(e);
         }
