@@ -78,11 +78,11 @@ function parseLogs() {
           log.on('close', _ => {
             totalFiles = totalFiles - 1;
             if (totalFiles === 0) {
-              resolve(sortUsersByKDR());
               for (var u in users) {
                 delete users[u].chat;
                 console.log(users[u]);
               }
+              resolve(sortUsersByKDR());
             }
           });
         } catch (e) {
