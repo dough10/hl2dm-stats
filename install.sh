@@ -10,32 +10,33 @@ echo     '\|_______|\|_______|\|_______|\|_______|\|__|\|__|    \|__|\|_______|'
 echo ''
 echo 'https://github.com/dough10/hl2dm-stats'
 
-echo "---------------stopping API---------------"
-foreverOutput=$(forever list)
-uid=$(echo $foreverOutput | cut -d ' ' -f18)
-forever stop $uid
-
-
-echo "-------------pull from github-------------"
 cd /var/www/hl2dm
-git stash
-git pull
+echo "-----------install npm modules------------"
+npm install
 
 
 echo "-----------build app from source----------"
 node build.js
 
 
-echo "----------------restart API---------------"
-forever start api.js -l -o -e
+echo "------------check nginx install-----------"
+if ! command -v nginx &> /dev/null
+then
+    apt-get install nginx
+    exit
+fi
 
 
-echo "----------update nginx site file----------"
+echo "----------install nginx site file----------"
 cp -u -p /var/www/hl2dm/hl2 /etc/nginx/sites-enabled/hl2
 
 
 echo "--------------restart nginx---------------"
 systemctl restart nginx
+
+
+echo "-----------------start API----------------"
+forever start api.js -l -o -e
 
 
 echo "---------chmod sh files executable--------"
