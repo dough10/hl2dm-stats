@@ -79,6 +79,7 @@ function parseLogs() {
             totalFiles = totalFiles - 1;
             if (totalFiles === 0) {
               for (var u in users) {
+                delete users[u].chat;
                 console.log(users[u]);
               }
               resolve(sortUsersByKDR());
