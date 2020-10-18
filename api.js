@@ -128,8 +128,9 @@ function getID(word) {
 function buildKillerNameString(line, end)  {
   var name = '';
   var start = 4;
+  var isTime = /^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d):$/;
   for (var i = 0; i < line.length; i++) {
-    if (line[i].test(/^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d):$/)) {
+    if (istime.test(line[i])) {
       start = i;
     }
   }
