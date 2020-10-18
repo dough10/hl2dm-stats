@@ -425,6 +425,7 @@ app.get('/demos', (reg,res) => {
 });
 
 app.listen(3000);
+
 console.log(new Date() + ' - API active on port 3000');
 console.log(new Date() + ' - log folder = ' + logFolder);
 console.log(new Date() + ' - application root folder = ' + serverDir);
