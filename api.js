@@ -40,12 +40,16 @@ function validateIPaddress(ip) {
 }
 
 function cacheTopResponse() {
-  console.log(new Date() + ' - Running log parser');
+  console.log(new Date() + ' - Parsing logs');
   parseLogs().then(stats => {
+    top = stats;
     weapons.physics = weapons.physics + weapons.physbox;
     delete weapons.physbox;
-    top = stats;
-    console.log(new Date() + ' - Results cached');
+    for (var i = 0; i < top.length; i++) {
+      top[i].physics = top[i].physics + top[i].physbox;
+      delete top[i].physbox;
+    }
+    console.log(new Date() + ' - Logs parsed & cached');
   });
 }
 
@@ -328,7 +332,7 @@ function sortUsersByKDR() {
   });
   arr.reverse();
   for (var u in users) {
-    if (users[u].kills >= 100) {      
+    if (users[u].kills >= 100) {
       console.log(u);
       console.log(users[u]);
     }
