@@ -203,6 +203,7 @@ function scanLine(line) {
       return;
     }
     if (!isWeapon(weapon)) {
+      console.log(line +  ' weapon error');
       return;
     }
     // killer
@@ -327,8 +328,10 @@ function sortUsersByKDR() {
   });
   arr.reverse();
   for (var u in users) {
-    console.log(u);
-    console.log(users[u]);
+    if (users[u].kills >= 100) {      
+      console.log(u);
+      console.log(users[u]);
+    }
   }
   users = {};
   return arr;
