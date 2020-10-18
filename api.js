@@ -373,6 +373,11 @@ function getServerStatus() {
   }).then((state) => {
     serverStatus = state;
     if (serverStatus.players.length > 0) {
+      for (var i = 0; i < serverStatus.players.length; i++) {
+        if (serverStatus.players[i].score >== 60) {
+          cacheTopResponse();
+        }
+      }
       console.log(new Date() + ' - ', serverStatus.players);
     }
   }).catch((error) => {
@@ -401,7 +406,7 @@ function cleanUp() {
 
 console.log(new Date() + ' - Getting data');
 cacheTopResponse();
-setInterval(cacheTopResponse, 600000);
+setInterval(cacheTopResponse, 3600000);
 
 getServerStatus();
 setInterval(getServerStatus, 5000);
