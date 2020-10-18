@@ -22,7 +22,6 @@ echo "------------check nginx install-----------"
 if ! command -v nginx &> /dev/null
 then
     apt-get install nginx
-    exit
 fi
 
 
