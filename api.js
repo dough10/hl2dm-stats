@@ -62,7 +62,7 @@ function parseLogs() {
           log = fs.createReadStream(path.join(logFolder, file));
           log.on('data', data => {
             remaining += data;
-            var index = remaining.indexOf('\n');
+            var index = remaining.indexOf(/\r?\n/);
             while (index > -1) {
               var line = remaining.substring(0, index);
               remaining = remaining.substring(index + 1);
@@ -194,15 +194,15 @@ function scanLine(line) {
     var killedName = getName(killedNameString);
     var weapon = word[word.length - 1].replace('"', '');
     weapon = weapon.replace('"', '');
-    if (!isWeapon(weapon)) {
-      return;
-    }
     if (!killerID) {
       console.log(line +  ' killer error');
       return;
     }
     if (!killedID) {
       console.log(line +  ' killed error');
+      return;
+    }
+    if (!isWeapon(weapon)) {
       return;
     }
     // killer
@@ -238,18 +238,18 @@ function scanLine(line) {
     }
     users[killedID].kdr = Number((users[killedID].kills / users[killedID].deaths).toFixed(2));
     // add weapon
-
     if (!users[killerID][weapon]) {
       users[killerID][weapon] = 0;
     }
-    users[killerID][weapon] = users[killerID][weapon] + 1;
     if (!weapons[weapon]) {
       weapons[weapon] = 0;
     }
+    // add killer kill with weapon
+    users[killerID][weapon] = users[killerID][weapon] + 1;
+    // add server wide weapon kill
     weapons[weapon] = weapons[weapon] + 1;
-    return;
   }
-  if (isConnect) {
+  else if (isConnect) {
     var connectedNameString = buildKillerNameString(word, isConnect);
     var connectedUser = getID(connectedNameString);
     var connectedUserName = getName(connectedNameString);
@@ -264,7 +264,7 @@ function scanLine(line) {
       }
     }
   }
-  if (isSuicide) {
+  else if (isSuicide) {
     var nameString = buildKillerNameString(word, isSuicide);
     var id = getID(nameString);
     var name = getName(nameString);
@@ -290,9 +290,8 @@ function scanLine(line) {
       weapons[weapon] = 0;
     }
     weapons[weapon] = weapons[weapon] + 1;
-    return;
   }
-  if (isChat) {
+  else if (isChat) {
     var nameString = buildKillerNameString(word, isChat);
     var id = getID(nameString);
     var name = getName(nameString);
