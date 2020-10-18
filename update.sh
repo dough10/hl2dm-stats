@@ -29,3 +29,4 @@ systemctl restart nginx
 echo "----------chmod sh files executable----------"
 chmod +x ./monitor.sh
 chmod +x ./update.sh
+chmod +x ./start.sh
