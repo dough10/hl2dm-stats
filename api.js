@@ -327,7 +327,8 @@ function sortUsersByKDR() {
   arr.reverse();
   for (var u in users) {
     delete users[u].chat;
-    console.log(u, users[u]);
+    console.log(u);
+    console.log(users[u]);
   }
   users = {};
   return arr;
