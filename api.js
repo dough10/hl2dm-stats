@@ -367,10 +367,12 @@ function bytesToSize(bytes) {
 }
 
 function getServerStatus() {
+  console.log(new Date() + ' - Getting game server info');
   Gamedig.query({
     type: 'hl2dm',
     host: 'hl2dm.dough10.me'
   }).then((state) => {
+    console.log(new Date() + ' - Game server info cached');
     serverStatus = state;
   }).catch((error) => {
     serverStatus = 'offline';
@@ -405,7 +407,7 @@ setInterval(getServerStatus, 5000);
 
 var j = schedule.scheduleJob('* * * 1 * *', cleanUp);
 
-console.log(new Date() + ' - Load API backend calls');
+console.log(new Date() + ' - Loading API backend calls');
 app.get('/stats', (req, res) => {
   res.send(JSON.stringify([top, weapons]));
 });
