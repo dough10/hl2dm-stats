@@ -76,7 +76,7 @@ function parseLogs() {
           log.on('close', _ => {
             totalFiles = totalFiles - 1;
             if (totalFiles === 0) {
-              // console.log(users)
+              console.log(users)
               resolve(sortUsersByKDR());
             }
           });
