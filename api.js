@@ -362,8 +362,7 @@ function bytesToSize(bytes) {
 
 function cleanUp() {
   console.log(new Date() + ' - Running file clean up');
-  const directoryPath = path.join(dir, 'logs');
-  fs.readdir(directoryPath, (err, files) => {
+  fs.readdir(logFolder, (err, files) => {
     files.forEach(fs.unlinkSync);
   });
   fs.readdir(dir, (err, files) => {
@@ -413,4 +412,5 @@ app.get('/demos', (reg,res) => {
 
 app.listen(3000);
 console.log(new Date() + ' - API active on port 3000');
-console.log(new Date() + ' - log folder = ' + logFolder)
+console.log(new Date() + ' - log folder = ' + logFolder);
+console.log(new Date() + ' - application root folder = ' + serverDir);
