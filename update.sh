@@ -1,19 +1,31 @@
 #!/bin/sh
-echo "stopping API"
+echo "----------stopping API----------"
 foreverOutput=$(forever list)
 uid=$(echo $foreverOutput | cut -d ' ' -f18)
 forever stop $uid
-echo "pull from github"
+
+
+echo "----------pull from github----------"
 cd /var/www/hl2dm
 git pull
-echo "build app from source"
+
+
+echo "----------build app from source----------"
 node build.js
-echo "restart API"
+
+
+echo "----------restart API----------"
 forever start api.js -l -o -e
-echo "update nginx site  file"
+
+
+echo "----------update nginx site  file----------"
 cp -u -p /var/www/hl2dm/hl2 /etc/nginx/sites-enabled/hl2
-echo "restart nginx"
+
+
+echo "----------restart nginx----------"
 systemctl restart nginx
-echo "make files executable"
+
+
+echo "----------chmod sh files executable----------"
 chmod +x ./monitor.sh
 chmod +x ./update.sh
