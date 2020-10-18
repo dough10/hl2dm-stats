@@ -44,7 +44,7 @@ function cacheResponse() {
     weapons.physics = weapons.physics + weapons.physbox;
     delete weapons.physbox;
     top = stats;
-    console.log('Results cached ', new Date());
+    console.log(new Date(), ' - Results cached');
   });
 }
 
