@@ -331,12 +331,6 @@ function sortUsersByKDR() {
     return a.kdr - b.kdr;
   });
   arr.reverse();
-  for (var u in users) {
-    if (users[u].kills >= 100) {
-      console.log(u);
-      console.log(users[u]);
-    }
-  }
   users = {};
   return arr;
 }
