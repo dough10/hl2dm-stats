@@ -70,7 +70,7 @@ async function parseLogs() {
             crlfDelay: Infinity
           });
           rl.on('line', scanLine);
-          rl..on('close', () => {
+          rl.on('close', () => {
             totalFiles = totalFiles - 1;
             if (totalFiles === 0) {
               resolve(sortUsersByKDR());
