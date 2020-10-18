@@ -46,5 +46,5 @@ chmod +x ./install.sh
 
 
 echo "--------------resume monitor--------------"
-sleep 5
+sleep 2
 ./monitor.sh
