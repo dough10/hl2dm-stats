@@ -6,3 +6,5 @@ cd /var/www/hl2dm
 git pull
 node build.js
 forever start api.js -l -o -e
+cp -u -p /var/www/hl2dm/hl2 /etc/nginx/sites-enabled/hl2
+systemctl restart nginx
