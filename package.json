@@ -4,7 +4,9 @@
   "description": "",
   "main": "api.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "forever start api.js -l -o -e",
+    "monitor": "sudo sh monitor",
+    "update_app": "sudo sh update"
   },
   "repository": {
     "type": "git",
