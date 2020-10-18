@@ -254,24 +254,24 @@ function scanLine(line) {
     }
   }
   if (isSuicide) {
-    var killerNameString = buildKillerNameString(word, isSuicide);
-    var killerID = getID(killerNameString);
-    var killerName = getName(killerNameString);
+    var nameString = buildKillerNameString(word, isSuicide);
+    var id = getID(nameString);
+    var name = getName(nameString);
     if (!users[killerID]) {
-      users[killerID] = {name: killerName, id:killerID, kills: 0, deaths: 0, kdr: 0, chat: []};
+      users[killerID] = {name: name, id: id, kills: 0, deaths: 0, kdr: 0, chat: []};
     }
-    users[killerID].kills = users[killerID].kills - 1;
-    users[killerID].deaths = users[killerID].deaths + 1;
-    users[killerID].kdr = Number((users[killerID].kills / users[killerID].deaths).toFixed(2));
+    users[id].kills = users[id].kills - 1;
+    users[id].deaths = users[id].deaths + 1;
+    users[id].kdr = Number((users[id].kills / users[id].deaths).toFixed(2));
     var weapon = word[word.length - 1].replace('"', '');
     weapon = weapon.replace('"', '');
     if (!isWeapon(weapon)) {
       return;
     }
-    if (!users[killerID][weapon]) {
-      users[killerID][weapon] = 0;
+    if (!users[id][weapon]) {
+      users[id][weapon] = 0;
     }
-    users[killerID][weapon] = users[killerID][weapon] + 1
+    users[id][weapon] = users[id][weapon] + 1
     if (!weapons[weapon]) {
       weapons[weapon] = 0;
     }
