@@ -38,10 +38,12 @@ function validateIPaddress(ip) {
 }
 
 function cacheResponse() {
+  console.log('Running log parser ', new Date());
   parseLogs().then(stats => {
     weapons.physics = weapons.physics + weapons.physbox;
     delete weapons.physbox;
     top = stats;
+    console.log('Results cached ', new Date());
   });
 }
 
@@ -76,7 +78,7 @@ function parseLogs() {
           log.on('close', _ => {
             totalFiles = totalFiles - 1;
             if (totalFiles === 0) {
-              console.log(users)
+              // console.log(users)
               resolve(sortUsersByKDR());
             }
           });
@@ -359,6 +361,7 @@ function bytesToSize(bytes) {
 }
 
 function cleanUp() {
+  console.log('Running file clean up ', new Date());
   const directoryPath = path.join(dir, 'logs');
   fs.readdir(directoryPath, (err, files) => {
     files.forEach(fs.unlinkSync);
@@ -392,6 +395,7 @@ app.get('/status', (reg, res) => {
 
 app.get('/download/:file', (reg, res) => {
   var dl = dir + '/' + reg.params.file;
+  console.log('File downloaded ', dl, new Date());
   res.download(dl, reg.params.file);
 });
 
