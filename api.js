@@ -288,7 +288,6 @@ function scanLine(line) {
     var nameString = buildKillerNameString(word, isChat);
     var id = getID(nameString);
     var name = getName(nameString);
-
     if (!users[id]) {
       users[id] = {
         name: name,
