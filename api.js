@@ -257,8 +257,8 @@ function scanLine(line) {
     var nameString = buildKillerNameString(word, isSuicide);
     var id = getID(nameString);
     var name = getName(nameString);
-    if (!users[killerID]) {
-      users[killerID] = {name: name, id: id, kills: 0, deaths: 0, kdr: 0, chat: []};
+    if (!users[id]) {
+      users[id] = {name: name, id: id, kills: 0, deaths: 0, kdr: 0, chat: []};
     }
     users[id].kills = users[id].kills - 1;
     users[id].deaths = users[id].deaths + 1;
