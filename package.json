@@ -5,8 +5,8 @@
   "main": "api.js",
   "scripts": {
     "start": "forever start api.js -l -o -e",
-    "monitor": "sh monitor",
-    "update_app": "sh update"
+    "monitor": "./monitor.sh",
+    "update_app": "./update.sh"
   },
   "repository": {
     "type": "git",
