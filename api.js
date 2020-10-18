@@ -41,13 +41,6 @@ function cacheResponse() {
   parseLogs().then(stats => {
     weapons.physics = weapons.physics + weapons.physbox;
     delete weapons.physbox;
-    keys = Object.keys(weapons);
-
-    keys.sort(function (a, b) {
-      return weapons[a][1] - weapons[b][1];
-    });
-
-    console.log(keys);
     top = stats;
   });
 }
