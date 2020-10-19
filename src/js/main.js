@@ -214,7 +214,7 @@ function parseTopData(top) {
         animations.fadeIn(favWrapper);
         animations.fadeOut(weaponWrapper).then(_ => {
           weaponWrapper.style.display = 'none';
-          animations.animateHeight(card, '0');
+          animations.animateHeight(card, '25px');
         });
       } else {
         animations.fadeOut(favWrapper).then(_ => {
