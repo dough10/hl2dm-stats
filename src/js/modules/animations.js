@@ -19,7 +19,6 @@ function whichTransitionEvent() {
 // the browser transition event name
 const transitionEvent = whichTransitionEvent();
 
-
 /**
  * animate transform / opacity on a give element
  *
@@ -48,7 +47,7 @@ function animateElement(el, transform, time, opacity, delay) {
       delay = 0;
     }
     el.addEventListener(transitionEvent, animationEnd, true);
-    el.style.willChange = 'transform opacity';
+    el.style.willChange = 'auto';
     el.style.transition = `all ${time}ms ease-in-out ${delay}ms`;
     requestAnimationFrame(_ => {
       el.style.transform = transform;
@@ -132,7 +131,6 @@ function animateScroll() {
     });
   });
 }
-
 
 /**
  * display a toast message
@@ -227,3 +225,27 @@ class Toast {
     this.toast.removeEventListener(transitionEvent, this._transitionEnd);
   }
 }
+
+function animateWithClasses(el, setClass) {
+  return new Promise(resolve => {
+    if (el.style.transform === transform) {
+      resolve();
+      return;
+    }
+    const animationEnd = _ => {
+      el.removeEventListener(transitionEvent, animationEnd);
+      el.style.willChange = 'initial';
+      el.style.transition = 'initial';
+      requestAnimationFrame(resolve);
+    };
+    if (!time) {
+      time = 300;
+    }
+    if (!delay) {
+      delay = 0;
+    }
+    el.addEventListener(transitionEvent, animationEnd, true);
+    el.style.willChange = 'auto';
+    el.style.transition = `all ${time}ms ease-in-out ${delay}ms`;
+    requestAnimationFrame(setClass);
+  });

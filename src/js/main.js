@@ -208,11 +208,25 @@ function parseTopData(top) {
     card.appendChild(wrapper);
     card.onClick(_ => {
       if (weaponWrapper.style.display !== 'none') {
-       weaponWrapper.style.display = 'none';
-       favWrapper.style.display = 'flex';
+        animations.fadeOut(weaponWrapper).then(_ => {
+          weaponWrapper.style.display = 'none';
+          animations.animateWithClasses(card, _ => {
+            card.classList.remove('.statOpened');
+          });
+          favWrapper.style.display = 'flex';
+          animations.fadeIn(favWrapper);
+        });
       } else {
-       weaponWrapper.style.display = 'flex';
-       favWrapper.style.display = 'none';
+        animations.fadeOut(favWrapper).then(_ => {
+          favWrapper.style.display = 'none';
+        });
+        animations.animateWithClasses(card, _ => {
+          card.classList.add('.statOpened');
+        }).then(_ => {
+          weaponWrapper.style.display = 'flex';
+          animations.fadeIn(weaponWrapper);
+        });
+
       }
     });
     for (var weap in top[0][i]) {
@@ -230,7 +244,6 @@ function parseTopData(top) {
         weaponWrapper.appendChild(weapContainer);
       }
     }
-    card.style.transition = `all 300ms ease-in-out`;
     card.appendChild(weaponWrapper);
     qs('#cardsWrapper').appendChild(card);
   }
