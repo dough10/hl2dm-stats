@@ -236,7 +236,7 @@ function animateWithClasses(el, setClass) {
     };
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'auto';
-    el.style.transition = `all 300ms ease-in-out`;
+    el.style.transition = `height 300ms`;
     requestAnimationFrame(setClass);
   });
 }
