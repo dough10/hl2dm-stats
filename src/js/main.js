@@ -207,21 +207,21 @@ function parseTopData(top) {
     wrapper.appendChild(stats);
     card.appendChild(wrapper);
     card.onClick(_ => {
-
       if (weaponWrapper.style.display !== 'none') {
        weaponWrapper.style.display = 'none';
+       favWrapper.style.display = 'flex';
       } else {
        weaponWrapper.style.display = 'flex';
+       favWrapper.style.display = 'none';
       }
     });
     for (var weap in top[0][i]) {
       if (isWeapon(weap)) {
-        //console.log(top[0][i][wep]);
-        // weaponWrapper
         var weapContainer = document.createElement('div');
         var icon = document.createElement('div');
         var text = document.createElement('div');
         icon.classList.add('favWeapon');
+        icon.style.marginBottom = "8px";
         icon.textContent = getWeaponIcon(weap);
         text.textContent = top[0][i][weap];
         weapContainer.title = weap + ': ' + top[0][i][weap];
