@@ -142,6 +142,7 @@ function parseTopData(top) {
     const name = document.createElement('div');
     name.textContent = top[0][i].name;
     name.title = top[0][i].name;
+    const weaponWrapper = createWrapper();
     ipLookup(top[0][i].ip).then(res => {
       name.textContent = name.textContent + ' (' + res.country + ')';
       name.title = name.title + ' (' + res.country + ')';
@@ -177,10 +178,10 @@ function parseTopData(top) {
     r.textContent = fav[1]
     favWrapper.appendChild(l);
     favWrapper.appendChild(r);
+    stats.appendChild(favWrapper);
     stats.appendChild(kills);
     stats.appendChild(deaths);
     stats.appendChild(kdr);
-    stats.appendChild(favWrapper);
     wrapper.appendChild(stats);
     card.appendChild(wrapper);
     card.onClick(_ => {
