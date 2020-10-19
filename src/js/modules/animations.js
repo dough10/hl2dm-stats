@@ -71,7 +71,7 @@ function fadeIn(el) {
     }
     let timer = 0;
     const animationEnd = _ => {
-      clearTimeout(timer);
+      // clearTimeout(timer);
       el.removeEventListener(transitionEvent, animationEnd);
       el.style.willChange = 'initial';
       el.style.transition = 'initial';
@@ -80,7 +80,7 @@ function fadeIn(el) {
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'opacity';
     el.style.transition = 'opacity 200ms ease-in-out 0s';
-    timer = setTimeout(animationEnd, 250);
+    // timer = setTimeout(animationEnd, 250);
     requestAnimationFrame(_ => {
       el.style.opacity = 1;
     });
@@ -101,7 +101,7 @@ function fadeOut(el) {
     }
     let timer = 0;
     var animationEnd = _ => {
-      clearTimeout(timer);
+      // clearTimeout(timer);
       el.removeEventListener(transitionEvent, animationEnd);
       el.style.willChange = 'initial';
       el.style.transition = 'initial';
@@ -110,7 +110,7 @@ function fadeOut(el) {
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'opacity';
     el.style.transition = 'opacity 200ms ease-in-out 0s';
-    timer = setTimeout(animationEnd, 250);
+    // timer = setTimeout(animationEnd, 250);
     requestAnimationFrame(_ => {
       el.style.opacity = 0;
     });
@@ -230,7 +230,7 @@ function animateHeight(el, height) {
   return new Promise(resolve => {
     var timer = 0;
     const animationEnd = _ => {
-      clearTimeout(timer);
+      // clearTimeout(timer);
       el.removeEventListener(transitionEvent, animationEnd);
       el.style.willChange = 'initial';
       el.style.transition = 'initial';
@@ -239,7 +239,7 @@ function animateHeight(el, height) {
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'auto';
     el.style.transition = `height 300ms ease-in-out`;
-    timer = setTimeout(animationEnd, 300);
+    // timer = setTimeout(animationEnd, 300);
     requestAnimationFrame(_ => {
       el.style.height = height;
     });
