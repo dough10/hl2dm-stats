@@ -80,8 +80,8 @@ function fadeIn(el) {
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'opacity';
     el.style.transition = 'opacity 200ms ease-in-out 0s';
+    timer = setTimeout(animationEnd, 250);
     requestAnimationFrame(_ => {
-      timer = setTimeout(animationEnd, 250);
       el.style.opacity = 1;
     });
 
@@ -110,8 +110,8 @@ function fadeOut(el) {
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'opacity';
     el.style.transition = 'opacity 200ms ease-in-out 0s';
+    timer = setTimeout(animationEnd, 250);
     requestAnimationFrame(_ => {
-      timer = setTimeout(animationEnd, 250);
       el.style.opacity = 0;
     });
   });
@@ -236,10 +236,10 @@ function animateWithClasses(el, setClass) {
       el.style.transition = 'initial';
       requestAnimationFrame(resolve);
     };
-    timer = setTimeout(animationEnd, 300);
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'auto';
     el.style.transition = `all 300ms ease-in-out`;
+    timer = setTimeout(animationEnd, 300);
     requestAnimationFrame(setClass);
   });
 }
