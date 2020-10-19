@@ -1,4 +1,4 @@
-export {animateElement, animateScroll, fadeIn, fadeOut};
+export {animateElement, animateScroll, fadeIn, fadeOut, animateWithClasses, Toast};
 
 function whichTransitionEvent() {
   let t;
