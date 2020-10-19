@@ -224,10 +224,10 @@ function parseTopData(top) {
         animations.animateWithClasses(card, _ => {
           card.classList.add('statOpened');
         }).then(_ => {
-          weaponWrapper.style.opacity = 0;
-          weaponWrapper.style.display = 'flex';
-          animations.fadeIn(weaponWrapper);
         });
+        weaponWrapper.style.opacity = 0;
+        weaponWrapper.style.display = 'flex';
+        animations.fadeIn(weaponWrapper);
       }
     });
     for (var weap in top[0][i]) {
