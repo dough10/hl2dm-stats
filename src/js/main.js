@@ -194,13 +194,13 @@ function parseTopData(top) {
     favWrapper.title = fav[0] + ": " + fav[1];
     var l = document.createElement('div');
     var r = document.createElement('div');
-    l.style.marginRight = '8px';
-    
+    l.style.marginRight = '4px';
     l.classList.add('favWeapon');
     l.textContent = getWeaponIcon(fav[0]);
     r.textContent = fav[1]
     favWrapper.appendChild(l);
     favWrapper.appendChild(r);
+    favWrapper.style.marginLeft = '8px';
     stats.appendChild(favWrapper);
     stats.appendChild(kills);
     stats.appendChild(deaths);
