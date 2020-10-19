@@ -212,15 +212,23 @@ function parseTopData(top) {
       //  card.style.removeProperty('height');
       // }
     });
-    for (var wep in top[0][i]) {
-      if (isWeapon(wep)) {
-        console.log(top[0][i][wep]);
+    for (var weap in top[0][i]) {
+      if (isWeapon(weap)) {
+        //console.log(top[0][i][wep]);
         // weaponWrapper
-        // var icon = document.createElement('div');
-        // var text = document.createElement('div');
-        // icon.classList.add('favWeapon');
+        var weapContainer = document.createElement('div');
+        var icon = document.createElement('div');
+        var text = document.createElement('div');
+        icon.classList.add('favWeapon');
+        icon.textContent = getWeaponIcon(weap);
+        text.textContent = top[0][i][weap];
+        weapContainer.title = weap + ': ' + top[0][i][weap];
+        weapContainer.appendChild(icon);
+        weapContainer.appendChild(text);
+        weaponWrapper.appendChild(weapContainer);
       }
     }
+    card.appendChild(weaponWrapper);
     qs('#cardsWrapper').appendChild(card);
   }
   const allWeaponsCard = createNoCard();
