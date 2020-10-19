@@ -6,9 +6,9 @@ echo ' \ \  \  \ \ \  \ \  \ \  \ \  \ \  \  __\ \   __  \|/ \ \  \ \  \ \  \'
 echo '  \ \  \__\ \ \  \_\  \ \  \_\  \ \  \_\  \ \  \ \  \   \ \  \ \  \_\  \'
 echo '   \ \_______\ \_______\ \_______\ \_______\ \__\ \__\   \ \__\ \_______\'
 echo '    \|_______|\|_______|\|_______|\|_______|\|__|\|__|    \|__|\|_______|'
-echo '\e[39m'
+echo '\e[33m'
 echo 'https://github.com/dough10/hl2dm-stats'
-echo 'Installing..'
+echo '\e[39mInstalling..'
 cd /var/www/hl2dm
 echo "-----------install npm modules------------"
 npm install

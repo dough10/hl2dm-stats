@@ -6,9 +6,9 @@ echo ' \ \  \  \ \ \  \ \  \ \  \ \  \ \  \  __\ \   __  \|/ \ \  \ \  \ \  \'
 echo '  \ \  \__\ \ \  \_\  \ \  \_\  \ \  \_\  \ \  \ \  \   \ \  \ \  \_\  \'
 echo '   \ \_______\ \_______\ \_______\ \_______\ \__\ \__\   \ \__\ \_______\'
 echo '    \|_______|\|_______|\|_______|\|_______|\|__|\|__|    \|__|\|_______|'
-echo '\e[39m'
+echo '\e[33m'
 echo 'https://github.com/dough10/hl2dm-stats'
-echo 'Starting app...'
+echo '\e[39mStarting app...'
 cd /var/www/hl2dm
 forever start api.js -l -o -e
 
