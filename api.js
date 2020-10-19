@@ -249,10 +249,11 @@ function scanLine(line) {
       users[killerID].kdr = users[killerID].kills;
     }
     users[killedID].kdr = Number((users[killedID].kills / users[killedID].deaths).toFixed(2));
-    // add weapon
+    // add weapon for killer
     if (!users[killerID][weapon]) {
       users[killerID][weapon] = 0;
     }
+    // add weapon for server
     if (!weapons[weapon]) {
       weapons[weapon] = 0;
     }
