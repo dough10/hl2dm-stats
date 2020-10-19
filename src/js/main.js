@@ -220,14 +220,13 @@ function parseTopData(top) {
       } else {
         animations.fadeOut(favWrapper).then(_ => {
           favWrapper.style.display = 'none';
+          animations.animateWithClasses(card, _ => {
+            card.classList.add('.statOpened');
+          }).then(_ => {
+            weaponWrapper.style.display = 'flex';
+            animations.fadeIn(weaponWrapper);
+          });
         });
-        animations.animateWithClasses(card, _ => {
-          card.classList.add('.statOpened');
-        }).then(_ => {
-          weaponWrapper.style.display = 'flex';
-          animations.fadeIn(weaponWrapper);
-        });
-
       }
     });
     for (var weap in top[0][i]) {
