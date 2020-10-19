@@ -249,3 +249,4 @@ function animateWithClasses(el, setClass) {
     el.style.transition = `all ${time}ms ease-in-out ${delay}ms`;
     requestAnimationFrame(setClass);
   });
+}
