@@ -200,7 +200,7 @@ function parseTopData(top) {
     r.textContent = fav[1]
     favWrapper.appendChild(l);
     favWrapper.appendChild(r);
-    favWrapper.style.marginLeft = '8px';
+    favWrapper.style.marginRight = '4px';
     stats.appendChild(favWrapper);
     stats.appendChild(kills);
     stats.appendChild(deaths);
@@ -220,12 +220,13 @@ function parseTopData(top) {
       } else {
         animations.fadeOut(favWrapper).then(_ => {
           favWrapper.style.display = 'none';
-          // animations.animateWithClasses(card, _ => {
-          //   card.classList.add('statOpened');
-          // }).then(_ => {
-          //   weaponWrapper.style.display = 'flex';
-          //   animations.fadeIn(weaponWrapper);
-          // });
+          animations.animateWithClasses(card, _ => {
+            card.classList.add('statOpened');
+          }).then(_ => {
+            weaponWrapper.style.opacity = 0;
+            weaponWrapper.style.display = 'flex';
+            animations.fadeIn(weaponWrapper);
+          });
         });
       }
     });
