@@ -209,14 +209,14 @@ function parseTopData(top) {
     card.appendChild(wrapper);
     card.onClick(_ => {
       if (weaponWrapper.style.display !== 'none') {
-        animations.fadeOut(weaponWrapper).then(_ => {
-          weaponWrapper.style.display = 'none';
-          animations.animateWithClasses(card, _ => {
-            card.classList.remove('statOpened');
-          });
-          favWrapper.style.display = 'flex';
-          animations.fadeIn(favWrapper);
-        });
+        // animations.fadeOut(weaponWrapper).then(_ => {
+        //   weaponWrapper.style.display = 'none';
+        //   animations.animateWithClasses(card, _ => {
+        //     card.classList.remove('statOpened');
+        //   });
+        //   favWrapper.style.display = 'flex';
+        //   animations.fadeIn(favWrapper);
+        // });
       } else {
         animations.fadeOut(favWrapper).then(_ => {
           favWrapper.style.display = 'none';
