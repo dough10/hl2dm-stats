@@ -184,7 +184,7 @@ function parseTopData(top) {
     wrapper.appendChild(stats);
     card.appendChild(wrapper);
     card.onClick(_ => {
-      if (card.style.height !== '85px') {}
+      if (card.style.height !== '85px') {
        card.style.height = '85px';
      } else {
        card.style.removeProperty('height');
