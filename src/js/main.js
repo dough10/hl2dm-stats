@@ -195,7 +195,7 @@ function parseTopData(top) {
     var l = document.createElement('div');
     var r = document.createElement('div');
     l.style.marginRight = '8px';
-    l.style.marginLeft = '8px';
+    
     l.classList.add('favWeapon');
     l.textContent = getWeaponIcon(fav[0]);
     r.textContent = fav[1]
