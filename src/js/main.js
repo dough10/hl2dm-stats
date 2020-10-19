@@ -163,6 +163,8 @@ function parseTopData(top) {
     name.textContent = top[0][i].name;
     name.title = top[0][i].name;
     const weaponWrapper = createWrapper();
+    weaponWrapper.style.martingTop = '24px'
+    weaponWrapper.style.display = 'none';
     ipLookup(top[0][i].ip).then(res => {
       name.textContent = name.textContent + ' (' + res.country + ')';
       name.title = name.title + ' (' + res.country + ')';
