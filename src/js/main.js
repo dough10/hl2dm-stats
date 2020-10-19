@@ -183,6 +183,13 @@ function parseTopData(top) {
     stats.appendChild(favWrapper);
     wrapper.appendChild(stats);
     card.appendChild(wrapper);
+    card.onClick(_ => {
+      if (card.style.height !== '85px') {}
+       card.style.height = '85px';
+     } else {
+       card.style.removeProperty('height');
+     }
+    });
     qs('#cardsWrapper').appendChild(card);
   }
   const allWeaponsCard = createNoCard();
