@@ -207,7 +207,8 @@ function parseTopData(top) {
     stats.appendChild(kdr);
     wrapper.appendChild(stats);
     card.appendChild(wrapper);
-    card.style.transition = `all 300ms ease-in-out`;
+    // card.style.transition = `all 300ms ease-in-out`;
+    card.style.height = '25px';
     card.onClick(_ => {
       if (weaponWrapper.style.display !== 'none') {
         favWrapper.style.display = 'flex';
