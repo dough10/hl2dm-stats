@@ -219,7 +219,7 @@ function parseTopData(top) {
       } else {
         animations.fadeOut(favWrapper).then(_ => {
           favWrapper.style.display = 'none';
-          animations.animateheight(card, '89px').then(_ => {
+          animations.animateHeight(card, '89px').then(_ => {
             weaponWrapper.style.opacity = 0;
             weaponWrapper.style.display = 'flex';
             animations.fadeIn(weaponWrapper);
