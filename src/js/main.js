@@ -131,6 +131,26 @@ function getWeaponIcon(weapon) {
   }
 }
 
+function isWeapon(weapon) {
+  var w = [
+    '357',
+    'ar2',
+    'combine_ball',
+    'crossbow_bolt',
+    'crowbar',
+    'grenade_frag',
+    'physbox',
+    'physics',
+    'pistol',
+    'shotgun',
+    'smg1',
+    'smg1_grenade',
+    'stunstick',
+    'rpg_missile'
+  ];
+  return w.includes(weapon);
+}
+
 function parseTopData(top) {
   setTimeout(_ => {
     animations.animateElement(qs('#load'), 'translateY(-102%)', 350);
@@ -185,12 +205,22 @@ function parseTopData(top) {
     wrapper.appendChild(stats);
     card.appendChild(wrapper);
     card.onClick(_ => {
-      if (card.style.height !== '85px') {
-       card.style.height = '85px';
-      } else {
-       card.style.removeProperty('height');
-      }
+
+      // if (card.style.height !== '85px') {
+      //  card.style.height = '85px';
+      // } else {
+      //  card.style.removeProperty('height');
+      // }
     });
+    for (var wep in top[0][i]) {
+      if (isWeapon(top[0][i][wep])) {
+        console.log(top[0][i][wep]);
+        // weaponWrapper
+        // var icon = document.createElement('div');
+        // var text = document.createElement('div');
+        // icon.classList.add('favWeapon');
+      }
+    }
     qs('#cardsWrapper').appendChild(card);
   }
   const allWeaponsCard = createNoCard();
