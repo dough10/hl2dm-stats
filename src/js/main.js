@@ -187,9 +187,9 @@ function parseTopData(top) {
     card.onClick(_ => {
       if (card.style.height !== '85px') {
        card.style.height = '85px';
-     } else {
+      } else {
        card.style.removeProperty('height');
-     }
+      }
     });
     qs('#cardsWrapper').appendChild(card);
   }
