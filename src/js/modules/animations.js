@@ -228,12 +228,15 @@ class Toast {
 
 function animateWithClasses(el, setClass) {
   return new Promise(resolve => {
+    var timer = 0;
     const animationEnd = _ => {
+      clearTimeout(timer);
       el.removeEventListener(transitionEvent, animationEnd);
       el.style.willChange = 'initial';
       el.style.transition = 'initial';
       requestAnimationFrame(resolve);
     };
+    timer = setTimeout(animationEnd, 300);
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'auto';
     el.style.transition = `all 300ms ease-in-out`;
