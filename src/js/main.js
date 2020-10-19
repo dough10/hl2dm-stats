@@ -230,6 +230,7 @@ function parseTopData(top) {
         weaponWrapper.appendChild(weapContainer);
       }
     }
+    card.style.transition = `all 300ms ease-in-out`;
     card.appendChild(weaponWrapper);
     qs('#cardsWrapper').appendChild(card);
   }
