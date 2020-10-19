@@ -228,25 +228,15 @@ class Toast {
 
 function animateWithClasses(el, setClass) {
   return new Promise(resolve => {
-    if (el.style.transform === transform) {
-      resolve();
-      return;
-    }
     const animationEnd = _ => {
       el.removeEventListener(transitionEvent, animationEnd);
       el.style.willChange = 'initial';
       el.style.transition = 'initial';
       requestAnimationFrame(resolve);
     };
-    if (!time) {
-      time = 300;
-    }
-    if (!delay) {
-      delay = 0;
-    }
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'auto';
-    el.style.transition = `all ${time}ms ease-in-out ${delay}ms`;
+    el.style.transition = `all 300ms ease-in-out`;
     requestAnimationFrame(setClass);
   });
 }
