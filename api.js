@@ -49,6 +49,12 @@ function cacheTopResponse() {
     weapons.physics = weapons.physics + weapons.physbox;
     delete weapons.physbox;
     for (var i = 0; i < top.length; i++) {
+      if (!top[i].physics) {
+        top[i].physics = 0;
+      }
+      if (!top[i].physbox) {
+        top[i].physbox = 0;
+      }
       top[i].physics = top[i].physics + top[i].physbox;
       delete top[i].physbox;
     }
