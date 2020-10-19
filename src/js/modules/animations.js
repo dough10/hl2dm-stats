@@ -226,7 +226,7 @@ class Toast {
   }
 }
 
-function animateWithClasses(el, setClass) {
+function animateHeight(el, height) {
   return new Promise(resolve => {
     var timer = 0;
     const animationEnd = _ => {
@@ -238,8 +238,10 @@ function animateWithClasses(el, setClass) {
     };
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'auto';
-    el.style.transition = `all 300ms ease-in-out`;
+    el.style.transition = `height 300ms ease-in-out`;
     timer = setTimeout(animationEnd, 300);
-    requestAnimationFrame(setClass);
+    requestAnimationFrame(_ => {
+      el.style.height = height;
+    });
   });
 }
