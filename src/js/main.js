@@ -213,6 +213,7 @@ function parseTopData(top) {
       // }
     });
     for (var wep in top[0][i]) {
+      console.log(top[0][i][wep]);
       if (isWeapon(top[0][i][wep])) {
         console.log(top[0][i][wep]);
         // weaponWrapper
