@@ -201,8 +201,16 @@ function scanLine(line) {
       console.log(line +  ' killer error');
       return;
     }
+    if (!killerName) {
+      console.log(line +  ' killerName error');
+      return;
+    }
     if (!killedID) {
       console.log(line +  ' killed error');
+      return;
+    }
+    if (!killedName) {
+      console.log(line +  ' killedName error');
       return;
     }
     if (!isWeapon(weapon)) {
