@@ -63,13 +63,16 @@ function animateElement(el, transform, time, opacity, delay) {
  *
  * @param {HTMLElement} el
  */
-function fadeIn(el) {
+function fadeIn(el, time) {
   return new Promise(resolve => {
     if (el.style.opacity === 1) {
       resolve();
       return;
     }
-    let timer = 0;
+    // let timer = 0;
+    if (!time) {
+      time = 300;
+    }
     const animationEnd = _ => {
       // clearTimeout(timer);
       el.removeEventListener(transitionEvent, animationEnd);
@@ -79,7 +82,7 @@ function fadeIn(el) {
     };
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'opacity';
-    el.style.transition = 'opacity 200ms ease-in-out 0s';
+    el.style.transition = `opacity ${time}ms ease-in-out 0s`;
     // timer = setTimeout(animationEnd, 250);
     requestAnimationFrame(_ => {
       el.style.opacity = 1;
@@ -93,13 +96,16 @@ function fadeIn(el) {
  *
  * @param {HTMLElement} el
  */
-function fadeOut(el) {
+function fadeOut(el, time) {
   return new Promise(resolve => {
     if (el.style.opacity === 0) {
       resolve();
       return;
     }
-    let timer = 0;
+    // let timer = 0;
+    if (!time) {
+      time = 300;
+    }
     var animationEnd = _ => {
       // clearTimeout(timer);
       el.removeEventListener(transitionEvent, animationEnd);
@@ -109,7 +115,7 @@ function fadeOut(el) {
     };
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'opacity';
-    el.style.transition = 'opacity 200ms ease-in-out 0s';
+    el.style.transition = `opacity ${time}ms ease-in-out 0s`;
     // timer = setTimeout(animationEnd, 250);
     requestAnimationFrame(_ => {
       el.style.opacity = 0;
@@ -226,7 +232,7 @@ class Toast {
   }
 }
 
-function animateHeight(el, height) {
+function animateHeight(el, height, time) {
   return new Promise(resolve => {
     var timer = 0;
     const animationEnd = _ => {
@@ -236,9 +242,12 @@ function animateHeight(el, height) {
       el.style.transition = 'initial';
       requestAnimationFrame(resolve);
     };
+    if (!time) {
+      time = 300;
+    }
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'auto';
-    el.style.transition = `height 200ms ease-in-out`;
+    el.style.transition = `height ${time}ms ease-in-out 0s`;;
     // timer = setTimeout(animationEnd, 200);
     requestAnimationFrame(_ => {
       el.style.height = height;
