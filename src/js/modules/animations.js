@@ -230,7 +230,7 @@ function animateHeight(el, height) {
   return new Promise(resolve => {
     var timer = 0;
     const animationEnd = _ => {
-      clearTimeout(timer);
+      // clearTimeout(timer);
       el.removeEventListener(transitionEvent, animationEnd);
       el.style.willChange = 'initial';
       el.style.transition = 'initial';
@@ -239,7 +239,7 @@ function animateHeight(el, height) {
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'auto';
     el.style.transition = `height 200ms ease-in-out`;
-    timer = setTimeout(animationEnd, 200);
+    // timer = setTimeout(animationEnd, 200);
     requestAnimationFrame(_ => {
       el.style.height = height;
     });
