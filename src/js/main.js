@@ -227,7 +227,7 @@ function parseTopData(top) {
         });
       }
     });
-    console.log(top[0][i].weapons)
+    console.log(top[0][i].weapons.length)
     for (var weap in top[0][i]) {
       if (isWeapon(weap)) {
         var weapContainer = document.createElement('div');
