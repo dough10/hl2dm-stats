@@ -425,6 +425,6 @@ window.onload = registerServiceWorker().then(reg => {
   fetchServerStatus();
   setInterval(fetchServerStatus, 5000);
   fetchTop();
-  console.log(reg
+  console.log(reg);
   return;
 }).then(loadRipples);
