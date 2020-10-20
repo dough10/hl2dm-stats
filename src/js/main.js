@@ -242,6 +242,7 @@ function parseTopData(top) {
     }
     card.appendChild(weaponWrapper);
     qs('#cardsWrapper').appendChild(card);
+    ripples.attachButtonRipple(card);
   }
   const allWeaponsCard = createNoCard();
   const wrapper = createWrapper();
