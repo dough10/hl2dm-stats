@@ -174,6 +174,7 @@ function serverWeaponData(weapons) {
 }
 
 function displayWeaponData(wrapper, weapons) {
+  console.log(weapons)
   const weaponName = weapons[i][0];
   const count = weapons[i][1];
   for (var i = 0; i < weapons.length; i++) {
