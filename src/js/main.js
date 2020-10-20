@@ -196,7 +196,6 @@ function parseTopData(top) {
     favWrapper.title = fav[0] + ": " + fav[1];
     var l = document.createElement('div');
     var r = document.createElement('div');
-    l.style.marginRight = '4px';
     l.classList.add('favWeapon');
     l.textContent = getWeaponIcon(fav[0]);
     r.textContent = fav[1]
