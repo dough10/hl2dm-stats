@@ -357,11 +357,9 @@ function favWeapon(user) {
   var highest = 0;
   var weapon = "";
   for (var k in user) {
-    if (isWeapon(k)) {
-      if (user[k] > highest) {
-        highest = user[k];
-        weapon = k;
-      }
+    if (isWeapon(k) && user[k] > highest) {
+      highest = user[k];
+      weapon = k;
     }
   }
   return [
