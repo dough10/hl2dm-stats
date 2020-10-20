@@ -190,7 +190,7 @@ function parseTopData(top) {
       "KDR"
     );
     wrapper.appendChild(name);
-    var fav = favWeapon(top[0][i])
+    var fav = favWeapon(top[0][i].weapons)
     const favWrapper = createWrapper();
     favWrapper.title = fav[0] + ": " + fav[1];
     var l = document.createElement('div');
@@ -356,13 +356,13 @@ function registerServiceWorker() {
   });
 }
 
-function favWeapon(user) {
+function favWeapon(weapons) {
   var highest = 0;
   var weapon = "";
-  for (var k in user) {
-    if (isWeapon(k) && user[k] > highest) {
-      highest = user[k];
-      weapon = k;
+  for (var i = 0; i < weapons.length; i++) {
+    if (isWeapon(weapons[i][0]) && weapons[i][1] > highest) {
+      highest = weapons[i][1];
+      weapon = weapons[i][0];
     }
   }
   return [
