@@ -46,7 +46,6 @@ function cacheTopResponse() {
   console.log(`${new Date()} - Parsing logs`);
   parseLogs().then(stats => {
     top = stats;
-    weapons = sortPlayerWeapons(weapons);
     // merge physics kills
     weapons.physics = weapons.physics + weapons.physbox;
     delete weapons.physbox;
@@ -63,7 +62,8 @@ function cacheTopResponse() {
         delete top[i].physics;
       }
     }
-    console.log(new Date() + ' - Logs parsed & cached');
+    weapons = sortPlayerWeapons(weapons);
+    console.log(`${new Date()} - Logs parsed & cached`);
   });
 }
 
