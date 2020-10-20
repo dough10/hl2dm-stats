@@ -43,7 +43,7 @@ function validateIPaddress(ip) {
 }
 
 function cacheTopResponse() {
-  console.log(new Date() + ' - Parsing logs');
+  console.log(`${new Date()} - Parsing logs`);
   parseLogs().then(stats => {
     top = stats;
     // merge physics kills

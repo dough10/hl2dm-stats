@@ -153,6 +153,7 @@ function isWeapon(weapon) {
 }
 
 function serverWeaponData(weapons) {
+  console.log(weapons)
   const allWeaponsCard = createNoCard();
   const wrapper = createWrapper();
   for (var i = 0; i < weapons.length; i++) {
