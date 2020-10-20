@@ -212,12 +212,14 @@ function parseTopData(top) {
     card.style.height = '25px';
     card.onClick(_ => {
       if (weaponWrapper.style.display !== 'none') {
+        name.style.color = 'black';
         animations.fadeOut(weaponWrapper).then(_ => {
           weaponWrapper.style.display = 'none';
           animations.fadeIn(favWrapper);
           animations.animateHeight(card, '25px');
         });
       } else {
+        name.style.color = 'red';
         animations.fadeOut(favWrapper);
         animations.animateHeight(card, '89px').then(_ => {
           weaponWrapper.style.opacity = 0;
