@@ -202,7 +202,6 @@ function parseTopData(top) {
     r.textContent = fav[1]
     favWrapper.appendChild(l);
     favWrapper.appendChild(r);
-    favWrapper.style.marginRight = '4px';
     stats.appendChild(favWrapper);
     stats.appendChild(kills);
     stats.appendChild(deaths);
