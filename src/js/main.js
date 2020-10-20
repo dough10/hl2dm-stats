@@ -140,7 +140,6 @@ function displayWeaponData(wrapper, weapons) {
     var icon = document.createElement('div');
     var text = document.createElement('div');
     icon.classList.add('favWeapon');
-    icon.style.marginBottom = "8px";
     icon.textContent = getWeaponIcon(weaponName);
     text.textContent = count;
     weapContainer.title = `${weaponName}: ${count}`;
@@ -301,7 +300,7 @@ function ipLookup(ip) {
       });
       return;
     }
-    fetch('https://get.geojs.io/v1/ip/country/' + ip + '.json').then(response => {
+    fetch(`https://get.geojs.io/v1/ip/country/${ip}.json`).then(response => {
       if (response.status !== 200) {
         reject(response.status);
         return;
