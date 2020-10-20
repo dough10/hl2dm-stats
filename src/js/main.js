@@ -248,7 +248,7 @@ function parseTopData(top) {
   }
   const allWeaponsCard = createNoCard();
   const wrapper = createWrapper();
-  for (var n = 0 n < top[1].length; n ++) {
+  for (var n = 0; n < top[1].length; n ++) {
     var container = document.createElement('div');
     var l = document.createElement('div');
     l.style.marginBottom = "8px";
