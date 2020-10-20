@@ -338,22 +338,18 @@ function scanLine(line) {
   }
 }
 
-function sortPlayerWeapons(player) {
+function sortPlayerWeapons(weapons) {
   var sortArr = [];
-  for (var weapon in player) {
-    if (isWeapon(weapon)) {
-      sortArr.push([weapon, player[key]]);
-      delete player[weapon];
+  for (var key in weapons) {
+    if (isWeapon(key)) {
+      sortArr.push([key, weapons[key]]);
     }
   }
   sortArr.sort((a, b) => {
     return a[1] - b[1];
   });
   sortArr.reverse();
-  return [
-    player
-    sortArr
-  ];
+  return sortArr;
 }
 
 function sortUsersByKDR() {
@@ -361,7 +357,6 @@ function sortUsersByKDR() {
   for (var user in users) {
     if (users[user].kills >= 100) {
       arr.push(users[user]);
-      console.log(sortPlayerWeapons(users[user]));
     }
   }
   arr.sort((a,b) => {
