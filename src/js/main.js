@@ -228,7 +228,7 @@ function parseTopData(top) {
       }
     });
     console.log()
-    for (var ndx = 0 ndx < top[0][i].weapons.length; ndx++) {
+    for (var ndx = 0; ndx < top[0][i].weapons.length; ndx++) {
 
       var weapContainer = document.createElement('div');
       var icon = document.createElement('div');
