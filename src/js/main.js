@@ -254,9 +254,9 @@ function parseTopData(top) {
     l.style.marginBottom = "8px";
     var r = document.createElement('div');
     l.classList.add('favWeapon');
-    l.textContent = getWeaponIcon(top[1][i][0]);
-    r.textContent = top[1][i][1];
-    container.title = top[1][i][0] + ': ' + top[1][i][1];
+    l.textContent = getWeaponIcon(top[1][n][0]);
+    r.textContent = top[1][n][1];
+    container.title = top[1][n][0] + ': ' + top[1][n][1];
     container.appendChild(l);
     container.appendChild(r);
     wrapper.appendChild(container);
