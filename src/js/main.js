@@ -152,10 +152,34 @@ function isWeapon(weapon) {
   return w.includes(weapon);
 }
 
-function parseTopData(top) {
+function serverWeaponData(weapons) {
+  const allWeaponsCard = createNoCard();
+  const wrapper = createWrapper();
+  for (var i = 0; i < weapons.length; i++) {
+    var container = document.createElement('div');
+    var l = document.createElement('div');
+    l.style.marginBottom = "8px";
+    var r = document.createElement('div');
+    l.classList.add('favWeapon');
+    l.textContent = getWeaponIcon(weapons[i][0]);
+    r.textContent = weapons[i][1];
+    container.title = `${weapons[i][0]}: ${weapons[i][1]}`;
+    container.appendChild(l);
+    container.appendChild(r);
+    wrapper.appendChild(container);
+  }
+  allWeaponsCard.appendChild(wrapper);
+  return allWeaponsCard;
+}
+
+function showApp() {
   setTimeout(_ => {
     animations.animateElement(qs('#load'), 'translateY(-102%)', 350);
   }, 1000);
+}
+
+function parseTopData(top) {
+  showApp();
   for (let i = 0; i < top[0].length; i++) {
     const wrapper = createWrapper();
     const card = createCard();
@@ -246,23 +270,7 @@ function parseTopData(top) {
       ripples.attachButtonRipple(card);
     }, 200);
   }
-  const allWeaponsCard = createNoCard();
-  const wrapper = createWrapper();
-  for (var n = 0; n < top[1].length; n ++) {
-    var container = document.createElement('div');
-    var l = document.createElement('div');
-    l.style.marginBottom = "8px";
-    var r = document.createElement('div');
-    l.classList.add('favWeapon');
-    l.textContent = getWeaponIcon(top[1][n][0]);
-    r.textContent = top[1][n][1];
-    container.title = top[1][n][0] + ': ' + top[1][n][1];
-    container.appendChild(l);
-    container.appendChild(r);
-    wrapper.appendChild(container);
-  }
-  allWeaponsCard.appendChild(wrapper);
-  qs('#cardsWrapper').appendChild(allWeaponsCard);
+  qs('#cardsWrapper').appendChild(serverWeaponData(top[1]));
 }
 
 function parseServerStatus(status) {
