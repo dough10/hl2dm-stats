@@ -212,16 +212,16 @@ function parseTopData(top) {
     card.onClick(_ => {
       if (weaponWrapper.style.display !== 'none') {
         animations.fadeIn(favWrapper);
-        animations.fadeOut(weaponWrapper);
-        weaponWrapper.style.display = 'none';
         animations.animateHeight(card, '25px');
+        animations.fadeOut(weaponWrapper).then(_ => {
+          weaponWrapper.style.display = 'none';
+        });
       } else {
-        animations.fadeOut(favWrapper).then(_ => {
-          animations.animateHeight(card, '89px').then(_ => {
-            weaponWrapper.style.opacity = 0;
-            weaponWrapper.style.display = 'flex';
-            animations.fadeIn(weaponWrapper);
-          });
+        animations.fadeOut(favWrapper);
+        animations.animateHeight(card, '89px').then(_ => {
+          weaponWrapper.style.opacity = 0;
+          weaponWrapper.style.display = 'flex';
+          animations.fadeIn(weaponWrapper);
         });
       }
     });
@@ -354,18 +354,10 @@ function favWeapon(user) {
   var highest = 0;
   var weapon = "";
   for (var k in user) {
-    if (k !== 'name') {
-      if (k !== 'id') {
-        if (k !== 'ip') {
-          if (k !== 'kills') {
-            if (k !== 'deaths') {
-              if (user[k] > highest) {
-                highest = user[k];
-                weapon = k;
-              }
-            }
-          }
-        }
+    if (isWeapon(k)) {
+      if (user[k] > highest) {
+        highest = user[k];
+        weapon = k;
       }
     }
   }

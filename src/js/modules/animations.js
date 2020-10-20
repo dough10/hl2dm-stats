@@ -238,8 +238,8 @@ function animateHeight(el, height) {
     };
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'auto';
-    el.style.transition = `height 300ms ease-in-out`;
-    timer = setTimeout(animationEnd, 300);
+    el.style.transition = `height 200ms ease-in-out`;
+    timer = setTimeout(animationEnd, 200);
     requestAnimationFrame(_ => {
       el.style.height = height;
     });
