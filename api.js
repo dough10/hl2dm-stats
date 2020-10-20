@@ -338,11 +338,12 @@ function scanLine(line) {
   }
 }
 
-function sortPlayerWeapons(weapons) {
+function sortPlayerWeapons(user) {
   var sortArr = [];
-  for (var key in weapons) {
-    if (isWeapon(key)) {
-      sortArr.push([key, weapons[key]]);
+  for (var weapon in user) {
+    if (isWeapon(weapon)) {
+      sortArr.push([weapon, user[weapon]]);
+      delete user[weapon];
     }
   }
   sortArr.sort((a, b) => {
