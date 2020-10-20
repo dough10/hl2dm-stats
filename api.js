@@ -357,8 +357,8 @@ function sortUsersByKDR() {
   var arr = [];
   for (var user in users) {
     if (users[user].kills >= 100) {
+      users[user].weapons = sortPlayerWeapons(users[user]);
       arr.push(users[user]);
-      console.log(sortPlayerWeapons(users[user]));
     }
   }
   arr.sort((a,b) => {
