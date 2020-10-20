@@ -418,7 +418,9 @@ qs('#demos').onClick(_ => {
   });
 });
 
-qs('#fab').onClick(animations.animateScroll);
+const fab = qs('#fab');
+ripples.attachButtonRipple(fab);
+fab.onClick(animations.animateScroll);
 
 window.onload = registerServiceWorker().then(reg => {
   fetchServerStatus();
