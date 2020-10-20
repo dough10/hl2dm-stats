@@ -152,6 +152,19 @@ function isWeapon(weapon) {
   return w.includes(weapon);
 }
 
+function sortPlayerWeapons(weapons) {
+  var sortArr = [];
+  for (var key in weapons) {
+    if (isWeapon(weap)) {
+      sortArr.push([key, weapons[key]]);
+    }
+  }
+  sortArr.sort((a, b) => {
+    return a[1] - b[1];
+  });
+  console.log(sortArr)
+}
+
 function parseTopData(top) {
   setTimeout(_ => {
     animations.animateElement(qs('#load'), 'translateY(-102%)', 350);
@@ -189,6 +202,7 @@ function parseTopData(top) {
       top[0][i].kdr,
       "KDR"
     );
+    sortPlayerWeapons(top[0][i]);
     wrapper.appendChild(name);
     var fav = favWeapon(top[0][i])
     const favWrapper = createWrapper();
@@ -227,6 +241,7 @@ function parseTopData(top) {
         });
       }
     });
+
     for (var weap in top[0][i]) {
       if (isWeapon(weap)) {
         var weapContainer = document.createElement('div');
