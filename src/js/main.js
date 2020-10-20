@@ -189,7 +189,6 @@ function parseTopData(top) {
       top[0][i].kdr,
       "KDR"
     );
-    sortPlayerWeapons(top[0][i]);
     wrapper.appendChild(name);
     var fav = favWeapon(top[0][i])
     const favWrapper = createWrapper();

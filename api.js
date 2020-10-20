@@ -286,7 +286,7 @@ function scanLine(line) {
         users[connectedUser].ip = ip;
       }
     }
-  }weapon
+  }
   else if (isSuicide) {
     var nameString = buildKillerNameString(word, isSuicide);
     var id = getID(nameString);
