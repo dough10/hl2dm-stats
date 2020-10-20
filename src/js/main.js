@@ -271,7 +271,8 @@ function parseTopData(top) {
       ripples.attachButtonRipple(card);
     }, 200);
   }
-  qs('#cardsWrapper').appendChild(serverWeaponData(top[1]));
+  var weapons = serverWeaponData(top[1]);
+  qs('#cardsWrapper').appendChild(weapons);
 }
 
 function parseServerStatus(status) {
