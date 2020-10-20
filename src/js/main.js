@@ -152,25 +152,6 @@ function isWeapon(weapon) {
   return w.includes(weapon);
 }
 
-function sortPlayerWeapons(weapons) {
-  var sortArr = [];
-  for (var key in weapons) {
-    if (isWeapon(key)) {
-      sortArr.push([key, weapons[key]]);
-    }
-  }
-  sortArr.sort((a, b) => {
-    return a[1] - b[1];
-  });
-  sortArr.reverse();
-  var retObj = {};
-  for (var i = 0; i < sortArr.length; i++) {
-    console.log(sortArr[i][0], sortArr[i][1])
-    retObj[sortArr[i][0]] = sortArr[i][1];
-  }
-  console.log(retObj)
-}
-
 function parseTopData(top) {
   setTimeout(_ => {
     animations.animateElement(qs('#load'), 'translateY(-102%)', 350);

@@ -46,6 +46,7 @@ function cacheTopResponse() {
   console.log(new Date() + ' - Parsing logs');
   parseLogs().then(stats => {
     top = stats;
+    // merge physics kills
     weapons.physics = weapons.physics + weapons.physbox;
     delete weapons.physbox;
     for (var i = 0; i < top.length; i++) {
@@ -285,7 +286,7 @@ function scanLine(line) {
         users[connectedUser].ip = ip;
       }
     }
-  }
+  }weapon
   else if (isSuicide) {
     var nameString = buildKillerNameString(word, isSuicide);
     var id = getID(nameString);
@@ -337,11 +338,30 @@ function scanLine(line) {
   }
 }
 
+function sortPlayerWeapons(player) {
+  var sortArr = [];
+  for (var weapon in player) {
+    if (isWeapon(weapon)) {
+      sortArr.push([weapon, player[key]]);
+      delete player[weapon];
+    }
+  }
+  sortArr.sort((a, b) => {
+    return a[1] - b[1];
+  });
+  sortArr.reverse();
+  return [
+    player
+    sortArr
+  ];
+}
+
 function sortUsersByKDR() {
   var arr = [];
   for (var user in users) {
     if (users[user].kills >= 100) {
       arr.push(users[user]);
+      console.log(sortPlayerWeapons(users[user]));
     }
   }
   arr.sort((a,b) => {
