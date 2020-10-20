@@ -153,7 +153,6 @@ function isWeapon(weapon) {
 }
 
 function serverWeaponData(weapons) {
-  console.log(weapons)
   const allWeaponsCard = createNoCard();
   const wrapper = createWrapper();
   for (var i = 0; i < weapons.length; i++) {
@@ -171,6 +170,22 @@ function serverWeaponData(weapons) {
   }
   allWeaponsCard.appendChild(wrapper);
   return allWeaponsCard;
+}
+
+function playerWeaponData(wrapper, weapons) {
+  for (var i = 0; i < weapons.length; i++) {
+    var weapContainer = document.createElement('div');
+    var icon = document.createElement('div');
+    var text = document.createElement('div');
+    icon.classList.add('favWeapon');
+    icon.style.marginBottom = "8px";
+    icon.textContent = getWeaponIcon(weapons[i][0]);
+    text.textContent = weapons[i][1];
+    weapContainer.title = `${weapons[i][0]}: ${weapons[i][1]}`;
+    weapContainer.appendChild(icon);
+    weapContainer.appendChild(text);
+    wrapper.appendChild(weapContainer);
+  }
 }
 
 function showApp() {
@@ -252,19 +267,7 @@ function parseTopData(top) {
         });
       }
     });
-    for (var ndx = 0; ndx < top[0][i].weapons.length; ndx++) {
-      var weapContainer = document.createElement('div');
-      var icon = document.createElement('div');
-      var text = document.createElement('div');
-      icon.classList.add('favWeapon');
-      icon.style.marginBottom = "8px";
-      icon.textContent = getWeaponIcon(top[0][i].weapons[ndx][0]);
-      text.textContent = top[0][i].weapons[ndx][1];
-      weapContainer.title = top[0][i].weapons[ndx][0] + ': ' + top[0][i].weapons[ndx][1];
-      weapContainer.appendChild(icon);
-      weapContainer.appendChild(text);
-      weaponWrapper.appendChild(weapContainer);
-    }
+    playerWeaponData(weaponWrapper, top[0][i].weapons);
     card.appendChild(weaponWrapper);
     qs('#cardsWrapper').appendChild(card);
     setTimeout(_ => {
