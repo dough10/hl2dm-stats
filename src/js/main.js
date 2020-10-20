@@ -211,10 +211,10 @@ function parseTopData(top) {
     card.style.height = '25px';
     card.onClick(_ => {
       if (weaponWrapper.style.display !== 'none') {
-        animations.fadeIn(favWrapper);
-        animations.animateHeight(card, '25px');
         animations.fadeOut(weaponWrapper).then(_ => {
           weaponWrapper.style.display = 'none';
+          animations.fadeIn(favWrapper);
+          animations.animateHeight(card, '25px');
         });
       } else {
         animations.fadeOut(favWrapper);
