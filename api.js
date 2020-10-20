@@ -450,7 +450,7 @@ var j = schedule.scheduleJob('* * * 1 * *', cleanUp);
 
 console.log(new Date() + ' - Loading API backend calls');
 app.get('/stats', (req, res) => {
-  res.send(JSON.stringify([top, weapons]));
+  res.send(JSON.stringify([top, sortPlayerWeapons(weapons)]));
 });
 
 app.get('/status', (reg, res) => {
