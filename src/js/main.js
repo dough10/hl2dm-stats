@@ -132,47 +132,6 @@ function getWeaponIcon(weapon) {
   }
 }
 
-function isWeapon(weapon) {
-  var w = [
-    '357',
-    'ar2',
-    'combine_ball',
-    'crossbow_bolt',
-    'crowbar',
-    'grenade_frag',
-    'physbox',
-    'physics',
-    'pistol',
-    'shotgun',
-    'smg1',
-    'smg1_grenade',
-    'stunstick',
-    'rpg_missile'
-  ];
-  return w.includes(weapon);
-}
-
-function serverWeaponData(weapons) {
-
-  const weaponName = weapons[i][0];
-  const count = weapons[i][1];
-  for (var i = 0; i < weapons.length; i++) {
-    var container = document.createElement('div');
-    var icon = document.createElement('div');
-    icon.style.marginBottom = "8px";
-    var text = document.createElement('div');
-    icon.classList.add('favWeapon');
-    icon.textContent = getWeaponIcon(weaponName);
-    text.textContent = count;
-    container.title = `${weaponName}: ${count}`;
-    container.appendChild(icon);
-    container.appendChild(text);
-    wrapper.appendChild(container);
-  }
-
-  return allWeaponsCard;
-}
-
 function displayWeaponData(wrapper, weapons) {
   for (var i = 0; i < weapons.length; i++) {
     const weaponName = weapons[i][0];
@@ -376,7 +335,7 @@ function favWeapon(weapons) {
   var highest = 0;
   var weapon = "";
   for (var i = 0; i < weapons.length; i++) {
-    if (isWeapon(weapons[i][0]) && weapons[i][1] > highest) {
+    if (weapons[i][1] > highest) {
       highest = weapons[i][1];
       weapon = weapons[i][0];
     }
