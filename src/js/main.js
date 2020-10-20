@@ -153,35 +153,38 @@ function isWeapon(weapon) {
 }
 
 function serverWeaponData(weapons) {
-  const allWeaponsCard = createNoCard();
-  const wrapper = createWrapper();
+
+  const weaponName = weapons[i][0];
+  const count = weapons[i][1];
   for (var i = 0; i < weapons.length; i++) {
     var container = document.createElement('div');
-    var l = document.createElement('div');
-    l.style.marginBottom = "8px";
-    var r = document.createElement('div');
-    l.classList.add('favWeapon');
-    l.textContent = getWeaponIcon(weapons[i][0]);
-    r.textContent = weapons[i][1];
-    container.title = `${weapons[i][0]}: ${weapons[i][1]}`;
-    container.appendChild(l);
-    container.appendChild(r);
+    var icon = document.createElement('div');
+    icon.style.marginBottom = "8px";
+    var text = document.createElement('div');
+    icon.classList.add('favWeapon');
+    icon.textContent = getWeaponIcon(weaponName);
+    text.textContent = count;
+    container.title = `${weaponName}: ${count}`;
+    container.appendChild(icon);
+    container.appendChild(text);
     wrapper.appendChild(container);
   }
-  allWeaponsCard.appendChild(wrapper);
+
   return allWeaponsCard;
 }
 
-function playerWeaponData(wrapper, weapons) {
+function displayWeaponData(wrapper, weapons) {
+  const weaponName = weapons[i][0];
+  const count = weapons[i][1];
   for (var i = 0; i < weapons.length; i++) {
     var weapContainer = document.createElement('div');
     var icon = document.createElement('div');
     var text = document.createElement('div');
     icon.classList.add('favWeapon');
     icon.style.marginBottom = "8px";
-    icon.textContent = getWeaponIcon(weapons[i][0]);
-    text.textContent = weapons[i][1];
-    weapContainer.title = `${weapons[i][0]}: ${weapons[i][1]}`;
+    icon.textContent = getWeaponIcon(weaponName);
+    text.textContent = count;
+    weapContainer.title = `${weaponName}: ${count}`;
     weapContainer.appendChild(icon);
     weapContainer.appendChild(text);
     wrapper.appendChild(weapContainer);
@@ -267,15 +270,18 @@ function parseTopData(top) {
         });
       }
     });
-    playerWeaponData(weaponWrapper, top[0][i].weapons);
+    displayWeaponData(weaponWrapper, top[0][i].weapons);
     card.appendChild(weaponWrapper);
     qs('#cardsWrapper').appendChild(card);
     setTimeout(_ => {
       ripples.attachButtonRipple(card);
     }, 200);
   }
-  var weapons = serverWeaponData(top[1]);
-  qs('#cardsWrapper').appendChild(weapons);
+  const allWeaponsCard = createNoCard();
+  const wrapper = createWrapper();
+  displayWeaponData(wrapper, top[1]);
+  allWeaponsCard.appendChild(wrapper);
+  qs('#cardsWrapper').appendChild(allWeaponsCard);
 }
 
 function parseServerStatus(status) {
