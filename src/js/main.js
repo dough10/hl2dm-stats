@@ -9,6 +9,7 @@ HTMLElement.prototype.onClick = function (cb) {
 
 function applyRipples() {
   return new Promise(resolve => {
+    ripples.attachButtonRipple(qs('#fab'));
     qsa('.button').forEach(ripples.attachButtonRipple);
     qsa('.icon-button').forEach(ripples.attachRoundButtonRipple);
     qsa('.link').forEach(ripples.attachButtonRipple);
@@ -418,14 +419,12 @@ qs('#demos').onClick(_ => {
   });
 });
 
-const fab = qs('#fab');
-ripples.attachButtonRipple(fab);
-fab.onClick(animations.animateScroll);
+qs('#fab').onClick(animations.animateScroll);
 
 window.onload = registerServiceWorker().then(reg => {
   fetchServerStatus();
   setInterval(fetchServerStatus, 5000);
   fetchTop();
-  console.log(reg);
+  console.log(reg
   return;
 }).then(loadRipples);
