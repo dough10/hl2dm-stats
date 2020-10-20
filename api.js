@@ -57,6 +57,9 @@ function cacheTopResponse() {
       }
       top[i].physics = top[i].physics + top[i].physbox;
       delete top[i].physbox;
+      if (top[i].physics === 0) {
+        delete top[i].physics;
+      }
     }
     console.log(new Date() + ' - Logs parsed & cached');
   });
