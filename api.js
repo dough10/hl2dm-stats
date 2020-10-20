@@ -46,6 +46,7 @@ function cacheTopResponse() {
   console.log(`${new Date()} - Parsing logs`);
   parseLogs().then(stats => {
     top = stats;
+    weapons = sortPlayerWeapons(weapons);
     // merge physics kills
     weapons.physics = weapons.physics + weapons.physbox;
     delete weapons.physbox;
@@ -450,7 +451,7 @@ var j = schedule.scheduleJob('* * * 1 * *', cleanUp);
 
 console.log(new Date() + ' - Loading API backend calls');
 app.get('/stats', (req, res) => {
-  res.send(JSON.stringify([top, sortPlayerWeapons(weapons)]));
+  res.send(JSON.stringify([top, weapons]));
 });
 
 app.get('/status', (reg, res) => {
