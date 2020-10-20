@@ -163,7 +163,11 @@ function sortPlayerWeapons(weapons) {
     return a[1] - b[1];
   });
   sortArr.reverse();
-  console.log(sortArr)
+  var retObj = {};
+  for (var i = 0; i < sortArr.length; i++) {
+    retObj[sortArr[0]] = sortArr[1];
+  }
+  console.log(retObj)
 }
 
 function parseTopData(top) {
