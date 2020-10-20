@@ -155,7 +155,7 @@ function isWeapon(weapon) {
 function sortPlayerWeapons(weapons) {
   var sortArr = [];
   for (var key in weapons) {
-    if (isWeapon(weap)) {
+    if (isWeapon(key)) {
       sortArr.push([key, weapons[key]]);
     }
   }
