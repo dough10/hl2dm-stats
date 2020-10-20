@@ -208,18 +208,17 @@ function parseTopData(top) {
     stats.appendChild(kdr);
     wrapper.appendChild(stats);
     card.appendChild(wrapper);
-    // card.style.transition = `all 300ms ease-in-out`;
     card.style.height = '25px';
     card.onClick(_ => {
       if (weaponWrapper.style.display !== 'none') {
-        name.style.color = 'black';
+        name.style.color = '#333333';
         animations.fadeOut(weaponWrapper, 75).then(_ => {
           weaponWrapper.style.display = 'none';
           animations.fadeIn(favWrapper, 75);
           animations.animateHeight(card, '25px', 100);
         });
       } else {
-        name.style.color = 'red';
+        name.style.color = '#b94949';
         animations.fadeOut(favWrapper, 75);
         animations.animateHeight(card, '89px', 100).then(_ => {
           weaponWrapper.style.opacity = 0;
