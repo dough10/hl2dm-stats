@@ -162,6 +162,7 @@ function sortPlayerWeapons(weapons) {
   sortArr.sort((a, b) => {
     return a[1] - b[1];
   });
+  sortArr.reverse();
   console.log(sortArr)
 }
 
