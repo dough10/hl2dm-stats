@@ -165,6 +165,7 @@ function sortPlayerWeapons(weapons) {
   sortArr.reverse();
   var retObj = {};
   for (var i = 0; i < sortArr.length; i++) {
+    console.log(sortArr[0], sortArr[1])
     retObj[sortArr[0]] = sortArr[1];
   }
   console.log(retObj)
