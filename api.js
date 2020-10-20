@@ -49,6 +49,7 @@ function cacheTopResponse() {
     // merge physics kills
     weapons.physics = weapons.physics + weapons.physbox;
     delete weapons.physbox;
+    weapons = sortWeapons(weapons);
     for (var i = 0; i < top.length; i++) {
       if (!top[i].physics) {
         top[i].physics = 0;
@@ -61,8 +62,8 @@ function cacheTopResponse() {
       if (top[i].physics === 0) {
         delete top[i].physics;
       }
+      top[i].weapons = sortWeapons(top[i]);
     }
-    weapons = sortPlayerWeapons(weapons);
     console.log(`${new Date()} - Logs parsed & cached`);
   });
 }
@@ -339,7 +340,7 @@ function scanLine(line) {
   }
 }
 
-function sortPlayerWeapons(user) {
+function sortWeapons(user) {
   var sortArr = [];
   for (var weapon in user) {
     if (isWeapon(weapon)) {
@@ -358,7 +359,6 @@ function sortUsersByKDR() {
   var arr = [];
   for (var user in users) {
     if (users[user].kills >= 100) {
-      users[user].weapons = sortPlayerWeapons(users[user]);
       arr.push(users[user]);
     }
   }
