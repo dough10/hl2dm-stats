@@ -232,11 +232,6 @@
         justify-content: center;
         align-items: center;
       }
-      .player-name {
-        text-align: left;
-        font-size: 14pt;
-        overflow: hidden;
-      }
       .button.disabled {
         background: rgba(84, 84, 84, 0.4);
         box-shadow: none;
@@ -246,14 +241,21 @@
       .button.disabled:active {
         box-shadow: none;
       }
-      .button:active {
-        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
+      .button:active:after {
+        opacity: 0;
       }
-      .button:hover:active {
-        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
+      .button:hover:after{
+        opacity: 1;
       }
-      .button:hover {
+      .button:after {
+        transition: opacity 100ms ease-in-out;
+        opacity: 0;
         box-shadow:0 8px 10px 1px rgba(0,0,0,0.14),0 3px 14px 2px rgba(0,0,0,0.12),0 5px 5px -3px rgba(0,0,0,0.4);
+      }
+      .player-name {
+        text-align: left;
+        font-size: 14pt;
+        overflow: hidden;
       }
       .statinfo {
         font-size: 7pt;
