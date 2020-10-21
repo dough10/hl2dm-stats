@@ -8,7 +8,6 @@ const Gamedig = require('gamedig');
 var schedule = require('node-schedule');
 
 const dir = "/appdata/hl2dm/hl2mp";
-const serverDir = '/var/www/hl2dm';
 const logFolder = path.join(dir, 'logs');
 
 var users = {};
@@ -64,6 +63,9 @@ function cacheTopResponse() {
       }
       top[i].weapons = sortWeapons(top[i]);
     }
+    setTimeout(_ => {
+      updated = false;
+    }, 10000);
     console.log(`${new Date()} - Logs parsed & cached`);
   });
 }
@@ -210,23 +212,23 @@ function scanLine(line) {
     var weapon = word[word.length - 1].replace('"', '');
     weapon = weapon.replace('"', '');
     if (!killerID) {
-      console.log(line +  ' killer error');
+      console.log(`${line} killer error`);
       return;
     }
     if (!killerName) {
-      console.log(line +  ' killerName error');
+      console.log(`${line} killerName error`);
       return;
     }
     if (!killedID) {
-      console.log(line +  ' killed error');
+      console.log(`${line} killed error`);
       return;
     }
     if (!killedName) {
-      console.log(line +  ' killedName error');
+      console.log(`${line} killedName error`);
       return;
     }
     if (!isWeapon(weapon)) {
-      console.log(line +  ' weapon error');
+      console.log(`${line} weapon error`);
       return;
     }
     // killer
@@ -283,7 +285,15 @@ function scanLine(line) {
     ip = ip.replace(/:\d{4,5}$/, '');
     if (validateIPaddress(ip)) {
       if (!users[connectedUser]) {
-        users[connectedUser] = {name: connectedUserName, id:connectedUser, ip: ip, kills: 0, deaths: 0, kdr: 0, chat: []};
+        users[connectedUser] = {
+          name: connectedUserName,
+          id:connectedUser,
+          ip: ip,
+          kills: 0,
+          deaths: 0,
+          kdr: 0,
+          chat: []
+        };
       } else {
         users[connectedUser].ip = ip;
       }
@@ -297,7 +307,14 @@ function scanLine(line) {
       console.log(new Date() + line +  ' id error');
     }
     if (!users[id]) {
-      users[id] = {name: name, id: id, kills: 0, deaths: 0, kdr: 0, chat: []};
+      users[id] = {
+        name: name,
+        id: id,
+        kills: 0,
+        deaths: 0,
+        kdr: 0,
+        chat: []
+      };
     }
     users[id].kills = users[id].kills - 1;
     users[id].deaths = users[id].deaths + 1;
@@ -305,6 +322,7 @@ function scanLine(line) {
     var weapon = word[word.length - 1].replace('"', '');
     weapon = weapon.replace('"', '');
     if (!isWeapon(weapon)) {
+      console.log(`${line} weapon error`);
       return;
     }
     if (!users[id][weapon]) {
@@ -402,6 +420,7 @@ function bytesToSize(bytes) {
    return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 }
 
+var updated = false;
 function getServerStatus() {
   Gamedig.query({
     type: 'hl2dm',
@@ -410,20 +429,21 @@ function getServerStatus() {
     serverStatus = state;
     if (serverStatus.players.length > 0) {
       for (var i = 0; i < serverStatus.players.length; i++) {
-        if (serverStatus.players[i].score === 60) {
+        if (serverStatus.players[i].score === 60 && !updated) {
+          updated = true;
           cacheTopResponse();
         }
       }
-      console.log(new Date() + ' - ', serverStatus.players);
+      console.log(`${new Date()} - `, serverStatus.players);
     }
   }).catch((error) => {
     serverStatus = 'offline';
-    console.log(new Date() + " - hl2dm server is offline", error);
+    console.log(`${new Date()} - hl2dm server is offline`, error);
   });
 }
 
 function cleanUp() {
-  console.log(new Date() + ' - Running file clean up');
+  console.log(`${new Date()} - Running file clean up`);
   var numFiles = 0;
   fs.readdir(logFolder, (err, files) => {
     numFiles = numFiles + files.length;
@@ -433,14 +453,14 @@ function cleanUp() {
         numFiles = numFiles + files.length;
         if (path.extname(file) === '.dem') {
           fs.unlinkSync(file);
-          console.log(new Date() + ' - Clean up complete. Removed ' + numFiles + ' files');
+          console.log(`${new Date()} - Clean up complete. Removed ${numFiles} files`);
         }
       });
     });
   });
 ;}
 
-console.log(new Date() + ' - Getting data');
+console.log(`${new Date()} - Getting data`);
 cacheTopResponse();
 setInterval(cacheTopResponse, 3600000);
 
@@ -449,7 +469,7 @@ setInterval(getServerStatus, 5000);
 
 var j = schedule.scheduleJob('* * * 1 * *', cleanUp);
 
-console.log(new Date() + ' - Loading API backend calls');
+console.log(`${new Date()} - Loading API backend calls`);
 app.get('/stats', (req, res) => {
   res.send(JSON.stringify([top, weapons]));
 });
@@ -476,6 +496,5 @@ app.get('/demos', (reg,res) => {
 
 app.listen(3000);
 
-console.log(new Date() + ' - API is now active on port 3000');
-console.log(new Date() + ' - log folder = ' + logFolder);
-console.log(new Date() + ' - application root folder = ' + serverDir);
+console.log(`${new Date()} - API is now active on port 3000`);
+console.log(`${new Date()} - log folder = ${logFolder}`);
