@@ -28,11 +28,11 @@ function loadRipples() {
 function cascadeCards(container) {
   return new Promise(resolve => {
     const cards = qsa('.card', container);
-    for (var i = 0; i < cards.length; i++) {
+    for (let i = 0; i < cards.length; i++) {
       cards[i].style.display = 'block';
       animations.animateElement(cards[i], 'translateX(0)', 200, 1, i * 50);
     }
-    var nocard = qs('.nocard')
+    const nocard = qs('.nocard')
     nocard.style.display = 'block';
     animations.animateElement(nocard, 'translateX(0)', 200, 1, i * 50);
   });
@@ -68,12 +68,12 @@ function createSVG(d, count, title) {
   const wrapper = createWrapper();
   wrapper.style.margin = '0 0.2em';
   wrapper.title = `${title}: ${count}`;
-  var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.style.width = '24px';
   svg.style.height = '24px';
   svg.style.marginRight = '8px';
   svg.setAttributeNS(null,"viewbox","0 0 24 24");
-  var path = document.createElementNS("http://www.w3.org/2000/svg", 'path');
+  const path = document.createElementNS("http://www.w3.org/2000/svg", 'path');
   path.setAttribute("d",d);
   path.style.stroke = "#00000";
   svg.appendChild(path);
@@ -134,12 +134,12 @@ function getWeaponIcon(weapon) {
 }
 
 function displayWeaponData(wrapper, weapons) {
-  for (var i = 0; i < weapons.length; i++) {
+  for (let i = 0; i < weapons.length; i++) {
     const weaponName = weapons[i][0];
     const count = weapons[i][1];
-    var weapContainer = document.createElement('div');
-    var icon = document.createElement('div');
-    var text = document.createElement('div');
+    const weapContainer = document.createElement('div');
+    const icon = document.createElement('div');
+    const text = document.createElement('div');
     weapContainer.classList.add('weapon');
     icon.classList.add('favWeapon');
     text.classList.add('weapon-count');
@@ -347,7 +347,7 @@ qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
   const wrapper = qs('#cardsWrapper');
   const scrollTop = e.target.scrollTop;
   const fab = qs('#fab');
-  var change = scrollTop / 6;
+  const change = scrollTop / 6;
   let top = 128 - change;
   if (top <= 65) {
     top = 65;
@@ -386,8 +386,7 @@ qs('#paypal').onClick(_ => {
 });
 
 qs('#demos').onClick(_ => {
-  var load = qs('#load');
-  animations.animateElement(load, 'translateY(0%)', 350).then(_ => {
+  animations.animateElement(qs('#load'), 'translateY(0%)', 350).then(_ => {
     window.location.href = 'https://hl2dm.dough10.me/api/demos';
   });
 });
