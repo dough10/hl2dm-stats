@@ -153,7 +153,7 @@ function getID(word) {
 
 function buildKillerNameString(line, end)  {
   let name = '';
-  const start = 4;
+  let start = 4;
   const isTime = /^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d):$/;
   for (let i = 0; i < line.length; i++) {
     if (isTime.test(line[i])) {
