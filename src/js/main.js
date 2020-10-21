@@ -169,7 +169,7 @@ function parseTopData(top) {
     name.textContent = player.name;
     name.title = player.name;
     name.style.transition = `color 200ms ease-in 0ms`;
-    const weaponWrapper = createWrapper();const
+    const weaponWrapper = createWrapper();
     weaponWrapper.classList.add('player-weapons');
     ipLookup(player.ip).then(res => {
       name.textContent = name.textContent + ` (${res.country})`;
