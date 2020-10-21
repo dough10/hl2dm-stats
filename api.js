@@ -16,7 +16,7 @@ var top = [];
 var weapons = {};
 var serverStatus;
 
-console.log(new Date() + ' - Load Functions');
+console.log(`${new Date()} - Load Functions`);
 function isWeapon(weapon) {
   var w = [
     '357',
@@ -47,10 +47,22 @@ function cacheTopResponse() {
   parseLogs().then(stats => {
     top = stats;
     // merge physics kills
+    if (!weapons.physics) {
+      weapons.physics = 0;
+    }
+    if (!weapons.physbox) {
+      weapons.physbox = 0;
+    }
+    if (!weapons.world) {
+      weapons.world = 0;
+    }
     weapons.physics = weapons.physics + weapons.physbox;
     weapons.physics = weapons.physics + weapons.world;
     delete weapons.physbox;
     delete weapons.world;
+    if (weapons.physics === 0) {
+      delete weapons.physics;
+    }
     weapons = sortWeapons(weapons);
     for (var i = 0; i < top.length; i++) {
       if (!top[i].physics) {
@@ -84,7 +96,7 @@ async function parseLogs() {
     fs.readdir(logFolder, (err, files) => {
       var remaining = '';
       if (err) {
-        return console.log(new Date() + ' - Unable to scan directory: ' + err);
+        return console.log(`${new Date()} - Unable to scan directory: ` + err);
       }
       totalFiles = files.length;
       files.forEach(function (file) {
@@ -487,8 +499,8 @@ app.get('/status', (reg, res) => {
 });
 
 app.get('/download/:file', (reg, res) => {
-  var dl = dir + '/' + reg.params.file;
-  console.log(new Date() + ' - File downloaded ', dl);
+  var dl = `${dir}/${reg.params.file}`;
+  console.log(`${new Date()} - File downloaded `, dl);
   res.download(dl, reg.params.file);
 });
 
@@ -496,9 +508,9 @@ app.get('/demos', (reg,res) => {
  var html = '<head><title>Lo-g Deathmatch Hoedown Demos</title></head><h1 style="text-align: center">Lo-g Deathmatch Hoedown Demos</h1><table style="width: 100%"><tr><th>filename</th><th>size</th><th>date/time</th></tr>';
  getDemos().then(demos => {
    for (var i = 0; i < demos.length; i++) {
-     html = html + '<tr><th><a href="/api/download/' + demos[i] + '">' + demos[i] + '</a></th><th>' + bytesToSize(getFilesizeInBytes(dir + '/' + demos[i])) + '</th><th>' + createdDate(dir + '/' + demos[i]) + '</th></tr>'
+     html = `${html}<tr><th><a href=/api/download/${demos[i]}>${demos[i]}</a></th><th>${bytesToSize(getFilesizeInBytes(`${dir }/${demos[i]}`))}</th><th>${createdDate(`${dir}/${demos[i]}`)}</th></tr>`;
    }
-   res.send(html + '</table>');
+   res.send(`${html}</table>`);
  });
 });
 
