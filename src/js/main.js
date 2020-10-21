@@ -246,24 +246,24 @@ function parseServerStatus(status) {
     qs('#numPlayers').textContent = status.maxplayers;
     qs('#map').textContent = status.map;
     // qs('#next_map').textContent = status.raw.rules.sm_nextmap;
-    var pContainer = qs('#players');
+    const pContainer = qs('#players');
     pContainer.innerHTML = '';
     if (status.players.length === 0) {
-      var div = document.createElement('div');
+      const div = document.createElement('div');
       div.textContent = "No Players Online";
       pContainer.appendChild(div);
     } else {
-      for (var i = 0; i < status.players.length; i++) {
-        var wrapper = document.createElement('div');
+      for (let i = 0; i < status.players.length; i++) {
+        const wrapper = document.createElement('div');
         wrapper.classList.add('playeronline');
-        var player = document.createElement('div');
+        const player = document.createElement('div');
         player.textContent = status.players[i].name;
-        var score = document.createElement('div');
+        const score = document.createElement('div');
         score.textContent = status.players[i].score;
         wrapper.appendChild(player);
         wrapper.appendChild(score);
         pContainer.appendChild(wrapper);
-        var spacer = document.createElement('div');
+        const spacer = document.createElement('div');
         spacer.classList.add('spacer');
         pContainer.appendChild(spacer);
       }
@@ -282,7 +282,7 @@ function fetchServerStatus() {
 }
 
 function isLocalIP(ip) {
-  var rx = /(^127\.)|(^192\.168\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^::1$)|(^[fF][cCdD])/;
+  const rx = /(^127\.)|(^192\.168\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^::1$)|(^[fF][cCdD])/;
   return rx.test(ip);
 }
 
@@ -328,9 +328,9 @@ function registerServiceWorker() {
 }
 
 function favWeapon(weapons) {
-  var highest = 0;
-  var weapon = "";
-  for (var i = 0; i < weapons.length; i++) {
+  let highest = 0;
+  let weapon = "";
+  for (let i = 0; i < weapons.length; i++) {
     if (weapons[i][1] > highest) {
       highest = weapons[i][1];
       weapon = weapons[i][0];
