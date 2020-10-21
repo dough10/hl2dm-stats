@@ -170,7 +170,9 @@ function parseTopData(top) {
     name.title = player.name;
     name.style.transition = `color 200ms ease-in 0ms`;
     const weaponWrapper = createWrapper();
-    weaponWrapper.classList.add('player-weapons');
+    weaponWrapper.style.marginTop = '24px'
+    weaponWrapper.style.display = 'none';
+    weaponWrapper.style.opacity = 0;
     ipLookup(player.ip).then(res => {
       name.textContent = name.textContent + ` (${res.country})`;
       name.title = name.title + ` (${res.country})`;
@@ -204,18 +206,18 @@ function parseTopData(top) {
     card.onClick(_ => {
       if (weaponWrapper.style.display !== 'none') {
         name.style.color = '#333333';
-        animations.fadeOut(weaponWrapper, 50).then(_ => {
+        animations.fadeOut(weaponWrapper, 75).then(_ => {
           weaponWrapper.style.display = 'none';
-          animations.fadeIn(favWrapper, 50);
+          animations.fadeIn(favWrapper, 75);
           animations.animateHeight(card, '25px', 100);
         });
       } else {
         name.style.color = '#b94949';
-        animations.fadeOut(favWrapper, 50);
+        animations.fadeOut(favWrapper, 75);
         animations.animateHeight(card, '89px', 100).then(_ => {
           weaponWrapper.style.opacity = 0;
           weaponWrapper.style.display = 'flex';
-          animations.fadeIn(weaponWrapper, 50);
+          animations.fadeIn(weaponWrapper, 75);
         });
       }
     });
@@ -244,21 +246,21 @@ function parseServerStatus(status) {
     var pContainer = qs('#players');
     pContainer.innerHTML = '';
     if (status.players.length === 0) {
-      const div = document.createElement('div');
+      var div = document.createElement('div');
       div.textContent = "No Players Online";
       pContainer.appendChild(div);
     } else {
       for (var i = 0; i < status.players.length; i++) {
-        const wrapper = document.createElement('div');
+        var wrapper = document.createElement('div');
         wrapper.classList.add('playeronline');
-        const player = document.createElement('div');
+        var player = document.createElement('div');
         player.textContent = status.players[i].name;
-        const score = document.createElement('div');
+        var score = document.createElement('div');
         score.textContent = status.players[i].score;
         wrapper.appendChild(player);
         wrapper.appendChild(score);
         pContainer.appendChild(wrapper);
-        const spacer = document.createElement('div');
+        var spacer = document.createElement('div');
         spacer.classList.add('spacer');
         pContainer.appendChild(spacer);
       }
