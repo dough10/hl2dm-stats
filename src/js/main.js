@@ -67,7 +67,7 @@ function createNoCard() {
 function createSVG(d, count, title) {
   const wrapper = createWrapper();
   wrapper.style.margin = '0 0.2em';
-  wrapper.title = title + ": " + count;
+  wrapper.title = `${title}: ${count}`;
   var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.style.width = '24px';
   svg.style.height = '24px';
@@ -157,17 +157,18 @@ function showApp() {
 
 function parseTopData(top) {
   for (let i = 0; i < top[0].length; i++) {
+    const player = top[0][i];
     const wrapper = createWrapper();
     const card = createCard();
     card.classList.add('stat');
     const name = document.createElement('div');
-    name.textContent = top[0][i].name;
-    name.title = top[0][i].name;
+    name.textContent = player.name;
+    name.title = player.name;
     const weaponWrapper = createWrapper();
     weaponWrapper.style.marginTop = '24px'
     weaponWrapper.style.display = 'none';
     weaponWrapper.style.opacity = 0;
-    ipLookup(top[0][i].ip).then(res => {
+    ipLookup(player.ip).then(res => {
       name.textContent = name.textContent + ` (${res.country})`;
       name.title = name.title + ` (${res.country})`;
     });
@@ -176,21 +177,21 @@ function parseTopData(top) {
     stats.style.display = "inline-flex";
     var kills = createSVG(
       "M7,5H23V9H22V10H16A1,1 0 0,0 15,11V12A2,2 0 0,1 13,14H9.62C9.24,14 8.89,14.22 8.72,14.56L6.27,19.45C6.1,19.79 5.76,20 5.38,20H2C2,20 -1,20 3,14C3,14 6,10 2,10V5H3L3.5,4H6.5L7,5M14,12V11A1,1 0 0,0 13,10H12C12,10 11,11 12,12A2,2 0 0,1 10,10A1,1 0 0,0 9,11V12A1,1 0 0,0 10,13H13A1,1 0 0,0 14,12Z",
-      top[0][i].kills,
+      player.kills,
       "Kills"
     );
     var deaths = createSVG(
       "M12,2A9,9 0 0,0 3,11C3,14.03 4.53,16.82 7,18.47V22H9V19H11V22H13V19H15V22H17V18.46C19.47,16.81 21,14 21,11A9,9 0 0,0 12,2M8,11A2,2 0 0,1 10,13A2,2 0 0,1 8,15A2,2 0 0,1 6,13A2,2 0 0,1 8,11M16,11A2,2 0 0,1 18,13A2,2 0 0,1 16,15A2,2 0 0,1 14,13A2,2 0 0,1 16,11M12,14L13.5,17H10.5L12,14Z",
-      top[0][i].deaths,
+      player.deaths,
       "Deaths"
     );
     var kdr = createSVG(
       "M3 18.34C3 18.34 4 7.09 7 3L12 4L11 7.09H9V14.25H10C12 11.18 16.14 10.06 18.64 11.18C21.94 12.71 21.64 17.32 18.64 19.36C16.24 21 9 22.43 3 18.34Z",
-      top[0][i].kdr,
+      player.kdr,
       "KDR"
     );
     wrapper.appendChild(name);
-    var fav = favWeapon(top[0][i].weapons)
+    var fav = favWeapon(player.weapons)
     const favWrapper = createWrapper();
     favWrapper.title = `${fav[0]}: ${fav[1]}`;
     var icon = document.createElement('div');
@@ -227,7 +228,7 @@ function parseTopData(top) {
         });
       }
     });
-    displayWeaponData(weaponWrapper, top[0][i].weapons);
+    displayWeaponData(weaponWrapper, player.weapons);
     card.appendChild(weaponWrapper);
     qs('#cardsWrapper').appendChild(card);
     setTimeout(_ => {
