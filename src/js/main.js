@@ -129,9 +129,6 @@ function getWeaponIcon(weapon) {
     case "physics":
       return '9';
       break;
-    case "world":
-      return 'v';
-      break;
   }
 }
 

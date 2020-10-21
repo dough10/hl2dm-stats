@@ -48,7 +48,9 @@ function cacheTopResponse() {
     top = stats;
     // merge physics kills
     weapons.physics = weapons.physics + weapons.physbox;
+    weapons.physics = weapons.physics + weapons.world;
     delete weapons.physbox;
+    delete weapons.world;
     weapons = sortWeapons(weapons);
     for (var i = 0; i < top.length; i++) {
       if (!top[i].physics) {
@@ -57,8 +59,13 @@ function cacheTopResponse() {
       if (!top[i].physbox) {
         top[i].physbox = 0;
       }
+      if (!top[i].world) {
+        top[i].world = 0;
+      }
       top[i].physics = top[i].physics + top[i].physbox;
+      top[i].physics = top[i].physics + top[i].world;
       delete top[i].physbox;
+      delete top[i].world;
       if (top[i].physics === 0) {
         delete top[i].physics;
       }
