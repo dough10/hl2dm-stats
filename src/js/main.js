@@ -134,7 +134,7 @@ function getWeaponIcon(weapon) {
 
 function displayWeaponData(wrapper, weapons) {
   for (var i = 0; i < weapons.length; i++) {
-    const weaponName = weapons[i][0];const
+    const weaponName = weapons[i][0];
     const count = weapons[i][1];
     const weapContainer = document.createElement('div');
     const icon = document.createElement('div');
