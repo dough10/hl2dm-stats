@@ -28,7 +28,7 @@ function loadRipples() {
 function cascadeCards(container) {
   return new Promise(resolve => {
     const cards = qsa('.card', container);
-    for (let i = 0; i < cards.length; i++) {
+    for (var i = 0; i < cards.length; i++) {
       cards[i].style.display = 'block';
       animations.animateElement(cards[i], 'translateX(0)', 200, 1, i * 50);
     }
