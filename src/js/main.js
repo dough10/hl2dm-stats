@@ -32,7 +32,7 @@ function cascadeCards(container) {
       cards[i].style.display = 'block';
       animations.animateElement(cards[i], 'translateX(0)', 200, 1, i * 50);
     }
-    var nocard = qs('.nocard')
+    const nocard = qs('.nocard')
     nocard.style.display = 'block';
     animations.animateElement(nocard, 'translateX(0)', 200, 1, i * 50);
   });
@@ -68,12 +68,12 @@ function createSVG(d, count, title) {
   const wrapper = createWrapper();
   wrapper.style.margin = '0 0.2em';
   wrapper.title = `${title}: ${count}`;
-  var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.style.width = '24px';
   svg.style.height = '24px';
   svg.style.marginRight = '8px';
   svg.setAttributeNS(null,"viewbox","0 0 24 24");
-  var path = document.createElementNS("http://www.w3.org/2000/svg", 'path');
+  const path = document.createElementNS("http://www.w3.org/2000/svg", 'path');
   path.setAttribute("d",d);
   path.style.stroke = "#00000";
   svg.appendChild(path);
@@ -134,11 +134,11 @@ function getWeaponIcon(weapon) {
 
 function displayWeaponData(wrapper, weapons) {
   for (var i = 0; i < weapons.length; i++) {
-    const weaponName = weapons[i][0];
+    const weaponName = weapons[i][0];const
     const count = weapons[i][1];
-    var weapContainer = document.createElement('div');
-    var icon = document.createElement('div');
-    var text = document.createElement('div');
+    const weapContainer = document.createElement('div');
+    const icon = document.createElement('div');
+    const text = document.createElement('div');
     icon.classList.add('favWeapon');
     text.classList.add('weapon-count');
     icon.textContent = getWeaponIcon(weaponName);
@@ -169,26 +169,24 @@ function parseTopData(top) {
     name.textContent = player.name;
     name.title = player.name;
     name.style.transition = `color 200ms ease-in 0ms`;
-    const weaponWrapper = createWrapper();
-    weaponWrapper.style.marginTop = '24px'
-    weaponWrapper.style.display = 'none';
-    weaponWrapper.style.opacity = 0;
+    const weaponWrapper = createWrapper();const
+    weaponWrapper.classList.add('player-weapons');
     ipLookup(player.ip).then(res => {
       name.textContent = name.textContent + ` (${res.country})`;
       name.title = name.title + ` (${res.country})`;
     });
     name.classList.add('player-name');
-    var stats = document.createElement('div');
+    const stats = document.createElement('div');
     stats.style.display = "inline-flex";
-    var kills = createSVG(killsIcon, player.kills, "Kills");
-    var deaths = createSVG(deathsIcon, player.deaths, "Deaths");
-    var kdr = createSVG(kdrIcon, player.kdr, "KDR");
+    const kills = createSVG(killsIcon, player.kills, "Kills");
+    const deaths = createSVG(deathsIcon, player.deaths, "Deaths");
+    const kdr = createSVG(kdrIcon, player.kdr, "KDR");
     wrapper.appendChild(name);
-    var fav = favWeapon(player.weapons)
+    const fav = favWeapon(player.weapons)
     const favWrapper = createWrapper();
     favWrapper.title = `${fav[0]}: ${fav[1]}`;
-    var icon = document.createElement('div');
-    var text = document.createElement('div');
+    const icon = document.createElement('div');
+    const text = document.createElement('div');
     text.style.marginRight = '8px';
     icon.style.marginRight = '4px';
     icon.classList.add('favWeapon');
@@ -206,18 +204,18 @@ function parseTopData(top) {
     card.onClick(_ => {
       if (weaponWrapper.style.display !== 'none') {
         name.style.color = '#333333';
-        animations.fadeOut(weaponWrapper, 75).then(_ => {
+        animations.fadeOut(weaponWrapper, 50).then(_ => {
           weaponWrapper.style.display = 'none';
-          animations.fadeIn(favWrapper, 75);
+          animations.fadeIn(favWrapper, 50);
           animations.animateHeight(card, '25px', 100);
         });
       } else {
         name.style.color = '#b94949';
-        animations.fadeOut(favWrapper, 75);
+        animations.fadeOut(favWrapper, 50);
         animations.animateHeight(card, '89px', 100).then(_ => {
           weaponWrapper.style.opacity = 0;
           weaponWrapper.style.display = 'flex';
-          animations.fadeIn(weaponWrapper, 75);
+          animations.fadeIn(weaponWrapper, 50);
         });
       }
     });
@@ -243,24 +241,24 @@ function parseServerStatus(status) {
     qs('#numPlayers').textContent = status.maxplayers;
     qs('#map').textContent = status.map;
     // qs('#next_map').textContent = status.raw.rules.sm_nextmap;
-    var pContainer = qs('#players');
+    const pContainer = qs('#players');
     pContainer.innerHTML = '';
     if (status.players.length === 0) {
-      var div = document.createElement('div');
+      const div = document.createElement('div');
       div.textContent = "No Players Online";
       pContainer.appendChild(div);
     } else {
       for (var i = 0; i < status.players.length; i++) {
-        var wrapper = document.createElement('div');
+        const wrapper = document.createElement('div');
         wrapper.classList.add('playeronline');
-        var player = document.createElement('div');
+        const player = document.createElement('div');
         player.textContent = status.players[i].name;
-        var score = document.createElement('div');
+        const score = document.createElement('div');
         score.textContent = status.players[i].score;
         wrapper.appendChild(player);
         wrapper.appendChild(score);
         pContainer.appendChild(wrapper);
-        var spacer = document.createElement('div');
+        const spacer = document.createElement('div');
         spacer.classList.add('spacer');
         pContainer.appendChild(spacer);
       }
@@ -325,8 +323,8 @@ function registerServiceWorker() {
 }
 
 function favWeapon(weapons) {
-  var highest = 0;
-  var weapon = "";
+  let highest = 0;
+  let weapon = "";
   for (var i = 0; i < weapons.length; i++) {
     if (weapons[i][1] > highest) {
       highest = weapons[i][1];
@@ -344,7 +342,7 @@ qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
   const wrapper = qs('#cardsWrapper');
   const scrollTop = e.target.scrollTop;
   const fab = qs('#fab');
-  var change = scrollTop / 6;
+  const change = scrollTop / 6;
   let top = 128 - change;
   if (top <= 65) {
     top = 65;
@@ -383,8 +381,7 @@ qs('#paypal').onClick(_ => {
 });
 
 qs('#demos').onClick(_ => {
-  var load = qs('#load');
-  animations.animateElement(load, 'translateY(0%)', 350).then(_ => {
+  animations.animateElement(qs('#load'), 'translateY(0%)', 350).then(_ => {
     window.location.href = 'https://hl2dm.dough10.me/api/demos';
   });
 });

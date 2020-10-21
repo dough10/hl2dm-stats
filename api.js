@@ -137,14 +137,14 @@ function getID(word) {
   if (!word) {
     return false;
   }
-  var u = word.search('U:1:');
+  const u = word.search('U:1:');
   if (u < 0) {
     return false;
   }
-  var start = u + 4;
+  const start = u + 4;
   word = word.substring(start)
-  var end = word.search(']');
-  var str = '';
+  const end = word.search(']');
+  let str = '';
   for (var i = 0; i < end; i++) {
     str = str + word[i];
   }
@@ -152,10 +152,10 @@ function getID(word) {
 }
 
 function buildKillerNameString(line, end)  {
-  var name = '';
-  var start = 4;
-  var isTime = /^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d):$/;
-  for (var i = 0; i < line.length; i++) {
+  let name = '';
+  const start = 4;
+  const isTime = /^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d):$/;
+  for (let i = 0; i < line.length; i++) {
     if (isTime.test(line[i])) {
       start = i + 1;
     }
