@@ -21,7 +21,13 @@ node build.js
 echo "------------check nginx install-----------"
 if ! command -v nginx &> /dev/null
 then
-    apt-get install nginx
+    apt-get install nginx -y
+fi
+
+echo "------------check certbot install-----------"
+if ! command -v certbot &> /dev/null
+then
+    apt-get install certbot -y
 fi
 
 echo "-------------ssl cert install--------------"
