@@ -156,7 +156,6 @@ function showApp() {
 }
 
 function parseTopData(top) {
-  showApp();
   for (let i = 0; i < top[0].length; i++) {
     const wrapper = createWrapper();
     const card = createCard();
@@ -169,10 +168,10 @@ function parseTopData(top) {
     weaponWrapper.style.display = 'none';
     weaponWrapper.style.opacity = 0;
     ipLookup(top[0][i].ip).then(res => {
-      name.textContent = name.textContent + ' (' + res.country + ')';
-      name.title = name.title + ' (' + res.country + ')';
+      name.textContent = name.textContent + ` (${res.country})`;
+      name.title = name.title + ` (${res.country})`;
     });
-    name.style = "text-align: left; font-size: 14pt; overflow: hidden;";
+    name.classList.add('player-name');
     var stats = document.createElement('div');
     stats.style.display = "inline-flex";
     var kills = createSVG(
@@ -193,16 +192,16 @@ function parseTopData(top) {
     wrapper.appendChild(name);
     var fav = favWeapon(top[0][i].weapons)
     const favWrapper = createWrapper();
-    favWrapper.title = fav[0] + ": " + fav[1];
-    var l = document.createElement('div');
-    var r = document.createElement('div');
-    r.style.marginRight = '8px';
-    l.style.marginRight = '4px';
-    l.classList.add('favWeapon');
-    l.textContent = getWeaponIcon(fav[0]);
-    r.textContent = fav[1]
-    favWrapper.appendChild(l);
-    favWrapper.appendChild(r);
+    favWrapper.title = `${fav[0]}: ${fav[1]}`;
+    var icon = document.createElement('div');
+    var text = document.createElement('div');
+    text.style.marginRight = '8px';
+    icon.style.marginRight = '4px';
+    icon.classList.add('favWeapon');
+    icon.textContent = getWeaponIcon(fav[0]);
+    text.textContent = fav[1]
+    favWrapper.appendChild(icon);
+    favWrapper.appendChild(text);
     stats.appendChild(favWrapper);
     stats.appendChild(kills);
     stats.appendChild(deaths);
@@ -243,6 +242,7 @@ function parseTopData(top) {
 }
 
 function parseServerStatus(status) {
+  showApp();
   if (status !== "offline") {
     document.title = status.name;
     qs('.hostname').textContent = status.name;
