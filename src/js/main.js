@@ -178,17 +178,17 @@ function parseTopData(top) {
       name.title = name.title + ` (${res.country})`;
     });
     name.classList.add('player-name');
-    var stats = document.createElement('div');
+    const stats = document.createElement('div');
     stats.style.display = "inline-flex";
-    var kills = createSVG(killsIcon, player.kills, "Kills");
-    var deaths = createSVG(deathsIcon, player.deaths, "Deaths");
-    var kdr = createSVG(kdrIcon, player.kdr, "KDR");
+    const kills = createSVG(killsIcon, player.kills, "Kills");
+    const deaths = createSVG(deathsIcon, player.deaths, "Deaths");
+    const kdr = createSVG(kdrIcon, player.kdr, "KDR");
     wrapper.appendChild(name);
-    var fav = favWeapon(player.weapons)
+    const fav = favWeapon(player.weapons)
     const favWrapper = createWrapper();
     favWrapper.title = `${fav[0]}: ${fav[1]}`;
-    var icon = document.createElement('div');
-    var text = document.createElement('div');
+    const icon = document.createElement('div');
+    const text = document.createElement('div');
     text.style.marginRight = '8px';
     icon.style.marginRight = '4px';
     icon.classList.add('favWeapon');
