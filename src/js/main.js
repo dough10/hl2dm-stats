@@ -188,7 +188,7 @@ function parseTopData(top) {
     wrapper.appendChild(name);
     const fav = favWeapon(player.weapons)
     const favWrapper = createWrapper();
-    favWeapon.classList.add('weapon');
+    favWrapper.classList.add('weapon');
     favWrapper.title = `${fav[0]}: ${fav[1]}`;
     const icon = document.createElement('div');
     const text = document.createElement('div');
