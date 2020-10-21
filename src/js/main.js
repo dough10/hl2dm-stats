@@ -241,7 +241,7 @@ function parseServerStatus(status) {
     qs('#numPlayers').textContent = status.maxplayers;
     qs('#map').textContent = status.map;
     // qs('#next_map').textContent = status.raw.rules.sm_nextmap;
-    co pContainer = qs('#players');
+    var pContainer = qs('#players');
     pContainer.innerHTML = '';
     if (status.players.length === 0) {
       const div = document.createElement('div');
