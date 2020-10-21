@@ -32,7 +32,7 @@ function cascadeCards(container) {
       cards[i].style.display = 'block';
       animations.animateElement(cards[i], 'translateX(0)', 200, 1, i * 50);
     }
-    const nocard = qs('.nocard')
+    var nocard = qs('.nocard')
     nocard.style.display = 'block';
     animations.animateElement(nocard, 'translateX(0)', 200, 1, i * 50);
   });
@@ -68,12 +68,12 @@ function createSVG(d, count, title) {
   const wrapper = createWrapper();
   wrapper.style.margin = '0 0.2em';
   wrapper.title = `${title}: ${count}`;
-  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.style.width = '24px';
   svg.style.height = '24px';
   svg.style.marginRight = '8px';
   svg.setAttributeNS(null,"viewbox","0 0 24 24");
-  const path = document.createElementNS("http://www.w3.org/2000/svg", 'path');
+  var path = document.createElementNS("http://www.w3.org/2000/svg", 'path');
   path.setAttribute("d",d);
   path.style.stroke = "#00000";
   svg.appendChild(path);
@@ -136,9 +136,9 @@ function displayWeaponData(wrapper, weapons) {
   for (var i = 0; i < weapons.length; i++) {
     const weaponName = weapons[i][0];
     const count = weapons[i][1];
-    const weapContainer = document.createElement('div');
-    const icon = document.createElement('div');
-    const text = document.createElement('div');
+    var weapContainer = document.createElement('div');
+    var icon = document.createElement('div');
+    var text = document.createElement('div');
     icon.classList.add('favWeapon');
     text.classList.add('weapon-count');
     icon.textContent = getWeaponIcon(weaponName);
@@ -176,17 +176,17 @@ function parseTopData(top) {
       name.title = name.title + ` (${res.country})`;
     });
     name.classList.add('player-name');
-    const stats = document.createElement('div');
+    var stats = document.createElement('div');
     stats.style.display = "inline-flex";
-    const kills = createSVG(killsIcon, player.kills, "Kills");
-    const deaths = createSVG(deathsIcon, player.deaths, "Deaths");
-    const kdr = createSVG(kdrIcon, player.kdr, "KDR");
+    var kills = createSVG(killsIcon, player.kills, "Kills");
+    var deaths = createSVG(deathsIcon, player.deaths, "Deaths");
+    var kdr = createSVG(kdrIcon, player.kdr, "KDR");
     wrapper.appendChild(name);
-    const fav = favWeapon(player.weapons)
+    var fav = favWeapon(player.weapons)
     const favWrapper = createWrapper();
     favWrapper.title = `${fav[0]}: ${fav[1]}`;
-    const icon = document.createElement('div');
-    const text = document.createElement('div');
+    var icon = document.createElement('div');
+    var text = document.createElement('div');
     text.style.marginRight = '8px';
     icon.style.marginRight = '4px';
     icon.classList.add('favWeapon');
@@ -241,7 +241,7 @@ function parseServerStatus(status) {
     qs('#numPlayers').textContent = status.maxplayers;
     qs('#map').textContent = status.map;
     // qs('#next_map').textContent = status.raw.rules.sm_nextmap;
-    const pContainer = qs('#players');
+    co pContainer = qs('#players');
     pContainer.innerHTML = '';
     if (status.players.length === 0) {
       const div = document.createElement('div');
@@ -323,8 +323,8 @@ function registerServiceWorker() {
 }
 
 function favWeapon(weapons) {
-  let highest = 0;
-  let weapon = "";
+  var highest = 0;
+  var weapon = "";
   for (var i = 0; i < weapons.length; i++) {
     if (weapons[i][1] > highest) {
       highest = weapons[i][1];
@@ -342,7 +342,7 @@ qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
   const wrapper = qs('#cardsWrapper');
   const scrollTop = e.target.scrollTop;
   const fab = qs('#fab');
-  const change = scrollTop / 6;
+  var change = scrollTop / 6;
   let top = 128 - change;
   if (top <= 65) {
     top = 65;
@@ -381,7 +381,8 @@ qs('#paypal').onClick(_ => {
 });
 
 qs('#demos').onClick(_ => {
-  animations.animateElement(qs('#load'), 'translateY(0%)', 350).then(_ => {
+  var load = qs('#load');
+  animations.animateElement(load, 'translateY(0%)', 350).then(_ => {
     window.location.href = 'https://hl2dm.dough10.me/api/demos';
   });
 });
