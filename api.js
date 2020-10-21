@@ -345,10 +345,10 @@ function scanLine(line) {
       console.log(`${line} weapon error`);
       return;
     }
-    if (!users[id][weapon]) {
-      users[id][weapon] = 0;
-    }
-    users[id][weapon] = users[id][weapon] + 1
+    // if (!users[id][weapon]) {
+    //   users[id][weapon] = 0;
+    // }
+    // users[id][weapon] = users[id][weapon] + 1;
     if (!weapons[weapon]) {
       weapons[weapon] = 0;
     }
