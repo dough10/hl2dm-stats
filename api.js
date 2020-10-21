@@ -1,4 +1,4 @@
-console.log(new Date() + ' - Loading imports');
+console.log(`${new Date()} - Loading imports`);
 const path = require('path');
 const fs = require('fs');
 const readline = require('readline');
@@ -161,7 +161,7 @@ function buildKillerNameString(line, end)  {
     }
   }
   for (var i = start; i < end; i++) {
-    name = name + line[i] + ' ';
+    name = `${name}${line[i]} `;
   }
   return name
 }
@@ -175,7 +175,7 @@ function buildKilledNameString(line, start) {
   }
   var name = '';
   for (var i = start; i < end; i++) {
-    name = name + line[i] + ' ';
+    name = `${name}${line[i]} `;
   }
   return name;
 }
