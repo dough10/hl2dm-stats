@@ -209,18 +209,18 @@ function parseTopData(top) {
     card.onClick(_ => {
       if (weaponWrapper.style.display !== 'none') {
         name.style.color = '#333333';
-        animations.fadeOut(weaponWrapper, 75).then(_ => {
+        animations.fadeOut(weaponWrapper, 50).then(_ => {
           weaponWrapper.style.display = 'none';
-          animations.fadeIn(favWrapper, 75);
+          animations.fadeIn(favWrapper, 50);
           animations.animateHeight(card, '25px', 100);
         });
       } else {
         name.style.color = '#b94949';
-        animations.fadeOut(favWrapper, 75);
+        animations.fadeOut(favWrapper, 50);
         animations.animateHeight(card, '89px', 100).then(_ => {
           weaponWrapper.style.opacity = 0;
           weaponWrapper.style.display = 'flex';
-          animations.fadeIn(weaponWrapper, 75);
+          animations.fadeIn(weaponWrapper, 50);
         });
       }
     });
