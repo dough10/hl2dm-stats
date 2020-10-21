@@ -82,6 +82,7 @@ function createSVG(d, count, title) {
   text.style = "font-size: 12px;"
   text.textContent = count;
   wrapper.appendChild(text);
+  wrapper.classList.add('weapon');
   return wrapper;
 }
 
