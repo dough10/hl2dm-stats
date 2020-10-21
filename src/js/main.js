@@ -139,6 +139,7 @@ function displayWeaponData(wrapper, weapons) {
     var weapContainer = document.createElement('div');
     var icon = document.createElement('div');
     var text = document.createElement('div');
+    weapContainer.classList.add('weapon');
     icon.classList.add('favWeapon');
     text.classList.add('weapon-count');
     icon.textContent = getWeaponIcon(weaponName);
