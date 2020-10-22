@@ -232,7 +232,7 @@ class Toast {
   }
 }
 
-function animateClass(el, setStuff, time) {
+function animateClass(el, setStuff) {
   return new Promise(resolve => {
     var timer = 0;
     const animationEnd = _ => {
@@ -240,9 +240,6 @@ function animateClass(el, setStuff, time) {
       el.classList.remove('animate-height');
       requestAnimationFrame(resolve);
     };
-    if (!time) {
-      time = 300;
-    }
     el.addEventListener(transitionEvent, animationEnd, true);
     el.classList.add('animate-height');
     requestAnimationFrame(setStuff);
