@@ -69,9 +69,7 @@ function createSVG(d, count, title) {
   wrapper.style.margin = '0 0.2em';
   wrapper.title = `${title}: ${count}`;
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.style.width = '24px';
-  svg.style.height = '24px';
-  svg.style.marginRight = '8px';
+  svg.classList.add('svg');
   svg.setAttributeNS(null,"viewbox","0 0 24 24");
   const path = document.createElementNS("http://www.w3.org/2000/svg", 'path');
   path.setAttribute("d",d);
