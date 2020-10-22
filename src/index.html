@@ -155,14 +155,24 @@
         z-index: 2;
         overflow: hidden;
       }
-      .fab:active {
-        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
+      .fab:after {
+        display: inline-block;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 150ms ease-in-out;
+        box-shadow: 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12), 0 5px 5px -3px rgba(0,0,0,.4);
+        content:' ';
+        position: absolute;
+        top: 0;
+        left: 0;
       }
-      .fab:hover:active {
-        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
+      .fab:hover:after {
+        opacity: 1;
       }
-      .fab:hover {
-        box-shadow:0 8px 10px 1px rgba(0,0,0,0.14),0 3px 14px 2px rgba(0,0,0,0.12),0 5px 5px -3px rgba(0,0,0,0.4);
+      .fab:hover:active:after {
+        opacity: 0;
       }
       .stat {
         cursor: pointer;
