@@ -304,8 +304,6 @@ function parseServerStatus(status) {
           playeronline.push(playerName);
           new animations.Toast(`${playerName} has joined the game`, 0.8);
         }
-        var in = false;
-        var pos = 0;
         for (var ndx = 0; ndx < playersOnline.length; ndx++) {
           if (!status.players.includes(playersOnline[ndx])) {
             playersOnline.splice(ndx, 1);
