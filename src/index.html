@@ -210,6 +210,9 @@
         text-align: center;
         min-height: 25px;
       }
+      .card .opened {
+        min-height: 89px;
+      }
       .nocard {
         max-width: 645px;
         min-width: 280px;
@@ -319,11 +322,6 @@
         pointer-events: all;
         overflow: hidden;
       }
-      @media only screen and (min-width: 500px) {
-        .phone-only {
-          display: none;
-        }
-      }
       .or1 {
         background-color: #beec8b;
       }
@@ -377,9 +375,12 @@
         background-position: center;
         background-size: 240px;
       }
-      @media only screen and (max-width: 600px) {
+      @media only screen and (max-width: 500px) {
         .card {
-          min-height: 40px;;
+          min-height: 40px;
+        }
+        .card .opened {
+          min-height: 108px;
         }
       }
     </style>
