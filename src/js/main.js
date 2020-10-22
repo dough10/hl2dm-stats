@@ -151,7 +151,11 @@ function displayWeaponData(wrapper, weapons) {
 
 function showApp() {
   setTimeout(_ => {
-    animations.animateElement(qs('#load'), 'translateY(-102%)', 350);
+    animations.animateElement(qs('#load'), 'translateY(-102%)', 350).then(_ => {
+      new animations.Toast('Stats reset day.');
+      if (new Date().getDate() === 1) {
+      }
+    });
   }, 1000);
 }
 

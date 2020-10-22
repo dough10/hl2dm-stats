@@ -69,12 +69,10 @@ function fadeIn(el, time) {
       resolve();
       return;
     }
-    // let timer = 0;
     if (!time) {
-      time = 300;
+      time = 200;
     }
     const animationEnd = _ => {
-      // clearTimeout(timer);
       el.removeEventListener(transitionEvent, animationEnd);
       el.style.willChange = 'initial';
       el.style.transition = 'initial';
@@ -83,7 +81,6 @@ function fadeIn(el, time) {
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'opacity';
     el.style.transition = `opacity ${time}ms cubic-bezier(.33,.17,.78,1.37) 0s`;
-    // timer = setTimeout(animationEnd, 250);
     requestAnimationFrame(_ => {
       el.style.opacity = 1;
     });
@@ -102,12 +99,10 @@ function fadeOut(el, time) {
       resolve();
       return;
     }
-    // let timer = 0;
     if (!time) {
-      time = 300;
+      time = 200;
     }
     var animationEnd = _ => {
-      // clearTimeout(timer);
       el.removeEventListener(transitionEvent, animationEnd);
       el.style.willChange = 'initial';
       el.style.transition = 'initial';
@@ -116,7 +111,6 @@ function fadeOut(el, time) {
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'opacity';
     el.style.transition = `opacity ${time}ms cubic-bezier(.33,.17,.78,1.37) 0s`;
-    // timer = setTimeout(animationEnd, 250);
     requestAnimationFrame(_ => {
       el.style.opacity = 0;
     });
@@ -236,7 +230,6 @@ function animateHeight(el, height, time) {
   return new Promise(resolve => {
     var timer = 0;
     const animationEnd = _ => {
-      // clearTimeout(timer);
       el.removeEventListener(transitionEvent, animationEnd);
       el.style.willChange = 'initial';
       el.style.transition = 'initial';
@@ -247,8 +240,7 @@ function animateHeight(el, height, time) {
     }
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'auto';
-    el.style.transition = `height ${time}ms cubic-bezier(.33,.17,.78,1.37) 0s`;;
-    // timer = setTimeout(animationEnd, 200);
+    el.style.transition = `height ${time}ms cubic-bezier(.33,.17,.78,1.37) 0s`;
     requestAnimationFrame(_ => {
       el.style.height = height;
     });
