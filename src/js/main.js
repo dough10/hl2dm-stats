@@ -192,7 +192,7 @@ function parseTopData(top) {
     const deaths = createSVG(deathsIcon, player.deaths, "Deaths");
     const kdr = createSVG(kdrIcon, player.kdr, "KDR");
     wrapper.appendChild(name);
-    if (window.innerWidth >= '500px') {
+    if (window.innerWidth >= 500) {
       const fav = favWeapon(player.weapons)
       const favWrapper = createWrapper();
       const icon = document.createElement('div');
@@ -218,14 +218,14 @@ function parseTopData(top) {
         name.style.color = '#333333';
         animations.fadeOut(weaponWrapper, 50).then(_ => {
           weaponWrapper.style.display = 'none';
-          if (window.innerWidth >= '500px') {
+          if (window.innerWidth >= 500) {
             animations.fadeIn(favWrapper, 50);
           }
           animations.animateHeight(card, '25px', 100);
         });
       } else {
         name.style.color = '#b94949';
-        if (window.innerWidth >= '500px') {
+        if (window.innerWidth >= 500) {
           animations.fadeOut(favWrapper, 50);
         }
         animations.animateHeight(card, '89px', 100).then(_ => {
