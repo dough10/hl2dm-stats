@@ -1,4 +1,4 @@
-export {animateElement, animateScroll, fadeIn, fadeOut, animateClass, Toast};
+export {animateElement, animateScroll, fadeIn, fadeOut, animateHeight, Toast};
 
 function whichTransitionEvent() {
   let t;
@@ -232,15 +232,25 @@ class Toast {
   }
 }
 
-function animateClass(el, setStuff) {
+function animateHeight(el, height, time) {
   return new Promise(resolve => {
+    var timer = 0;
     const animationEnd = _ => {
-      el.classList.remove('animate-height');
+      // clearTimeout(timer);
       el.removeEventListener(transitionEvent, animationEnd);
+      el.style.willChange = 'initial';
+      el.style.transition = 'initial';
       requestAnimationFrame(resolve);
     };
+    if (!time) {
+      time = 300;
+    }
     el.addEventListener(transitionEvent, animationEnd, true);
-    el.classList.add('animate-height');
-    requestAnimationFrame(setStuff);
+    el.style.willChange = 'auto';
+    el.style.transition = `height ${time}ms cubic-bezier(.33,.17,.78,1.37) 0s`;;
+    // timer = setTimeout(animationEnd, 200);
+    requestAnimationFrame(_ => {
+      el.style.height = height;
+    });
   });
 }
