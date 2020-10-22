@@ -210,12 +210,16 @@ function parseTopData(top) {
         name.style.color = '#333333';
         animations.fadeOut(weaponWrapper, 50).then(_ => {
           weaponWrapper.style.display = 'none';
-          animations.fadeIn(favWrapper, 50);
+          if (window.innerWidth >= '500px') {
+            animations.fadeIn(favWrapper, 50);
+          }
           animations.animateHeight(card, '25px', 100);
         });
       } else {
         name.style.color = '#b94949';
-        animations.fadeOut(favWrapper, 50);
+        if (window.innerWidth >= '500px') {
+          animations.fadeOut(favWrapper, 50);
+        }
         animations.animateHeight(card, '89px', 100).then(_ => {
           weaponWrapper.style.display = 'flex';
           animations.fadeIn(weaponWrapper, 50);
