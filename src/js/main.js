@@ -205,9 +205,6 @@ function parseTopData(top) {
     favWrapper.appendChild(icon);
     favWrapper.appendChild(text);
     stats.appendChild(favWrapper);
-    if (window.innerWidth >= 500) {
-      favWrapper.style.display = 'none';
-    }
     stats.appendChild(kills);
     stats.appendChild(deaths);
     stats.appendChild(kdr);
