@@ -218,7 +218,7 @@ function parseTopData(top) {
         name.style.color = '#b94949';
         animations.fadeOut(favWrapper, 50);
         animations.animateHeight(card, '89px', 100).then(_ => {
-          weaponWrapper.style.opacity = 0;
+          // weaponWrapper.style.opacity = 0;
           weaponWrapper.style.display = 'flex';
           animations.fadeIn(weaponWrapper, 50);
         });
