@@ -157,7 +157,7 @@ function showApp() {
   setTimeout(_ => {
     animations.animateElement(qs('#load'), 'translateY(-102%)', 350).then(_ => {
       if (new Date().getDate() === 1) {
-        new animations.Toast('Stats have reset today.' 5);
+        new animations.Toast('Stats have reset today.', 5);
       } else {
         switch (numPlayersOnline) {
           case 0:
