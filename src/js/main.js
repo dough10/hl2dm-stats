@@ -182,6 +182,7 @@ function showApp() {
             new animations.Toast(`${numPlayersOnline} players online. Server full`, 0.8);
             break;
         }
+      }
     });
   }, 1000);
 }
