@@ -231,10 +231,10 @@ function parseTopData(top) {
   displayWeaponData(wrapper, top[1]);
   allWeaponsCard.appendChild(wrapper);
   qs('#cardsWrapper').appendChild(allWeaponsCard);
+  showApp();
 }
 
 function parseServerStatus(status) {
-  showApp();
   if (status !== "offline") {
     document.title = status.name;
     qs('.hostname').textContent = status.name;
