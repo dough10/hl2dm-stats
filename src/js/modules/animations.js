@@ -48,7 +48,7 @@ function animateElement(el, transform, time, opacity, delay) {
     }
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'auto';
-    el.style.transition = `all ${time}ms ease-in-out ${delay}ms`;
+    el.style.transition = `all ${time}ms cubic-bezier(.32,-0.23,.86,1.14) ${delay}ms`;
     requestAnimationFrame(_ => {
       el.style.transform = transform;
       if (opacity !== undefined) {
@@ -82,7 +82,7 @@ function fadeIn(el, time) {
     };
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'opacity';
-    el.style.transition = `opacity ${time}ms ease-in-out 0s`;
+    el.style.transition = `opacity ${time}ms cubic-bezier(.32,-0.23,.86,1.14) 0s`;
     // timer = setTimeout(animationEnd, 250);
     requestAnimationFrame(_ => {
       el.style.opacity = 1;
@@ -115,7 +115,7 @@ function fadeOut(el, time) {
     };
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'opacity';
-    el.style.transition = `opacity ${time}ms ease-in-out 0s`;
+    el.style.transition = `opacity ${time}ms cubic-bezier(.32,-0.23,.86,1.14) 0s`;
     // timer = setTimeout(animationEnd, 250);
     requestAnimationFrame(_ => {
       el.style.opacity = 0;
@@ -199,7 +199,7 @@ class Toast {
     toast.style.opacity = 0;
     toast.style.transform = 'translateY(80px)';
     toast.style.willChange = 'transform opacity';
-    toast.style.transition = 'all 300ms ease-in-out 0ms';
+    toast.style.transition = 'all 300ms cubic-bezier(.32,-0.23,.86,1.14) 0ms';
     return toast;
   }
 
@@ -247,7 +247,7 @@ function animateHeight(el, height, time) {
     }
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'auto';
-    el.style.transition = `height ${time}ms ease-in-out 0s`;;
+    el.style.transition = `height ${time}ms cubic-bezier(.32,-0.23,.86,1.14) 0s`;;
     // timer = setTimeout(animationEnd, 200);
     requestAnimationFrame(_ => {
       el.style.height = height;
