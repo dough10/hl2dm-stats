@@ -1,6 +1,6 @@
+import * as ripples from './modules/ripples.js';
 export {animateElement, animateScroll, fadeIn, fadeOut, animateHeight, Toast};
 
-import * as ripples from './modules/ripples.js';
 
 function whichTransitionEvent() {
   let t;
