@@ -7,7 +7,8 @@ HTMLElement.prototype.onClick = function (cb) {
   this.addEventListener('click', cb, false);
 };
 
-var playersOnline  = 0;
+var numPlayersOnline  = 0;
+var playersOnline = [];
 
 function applyRipples() {
   return new Promise(resolve => {
@@ -156,29 +157,29 @@ function showApp() {
   setTimeout(_ => {
     animations.animateElement(qs('#load'), 'translateY(-102%)', 350).then(_ => {
       if (new Date().getDate() === 1) {
-        new animations.Toast('Stats have reset today.');
+        new animations.Toast('Stats have reset today.' 5);
       } else {
-        switch (playersOnline) {
+        switch (numPlayersOnline) {
           case 0:
-            new animations.Toast(`${playersOnline} players online.`);
+            new animations.Toast(`${numPlayersOnline} players online.`, 0.8);
             break;
           case 1:
-            new animations.Toast(`${playersOnline} players online. He needs someone to kill`);
+            new animations.Toast(`${numPlayersOnline} players online. He needs someone to kill`, 0.8);
             break;
           case 2:
-            new animations.Toast(`${playersOnline} players online. 1v1 in progress`);
+            new animations.Toast(`${numPlayersOnline} players online. 1v1 in progress`, 0.8);
             break;
           case 3:
-            new animations.Toast(`${playersOnline} players online. Deathmatch had begun`);
+            new animations.Toast(`${numPlayersOnline} players online. Deathmatch had begun`, 0.8);
             break;
           case 4:
-            new animations.Toast(`${playersOnline} players online. Still room`);
+            new animations.Toast(`${numPlayersOnline} players online. Still room`, 0.8);
             break;
           case 5:
-            new animations.Toast(`${playersOnline} players online. Room for one more`);
+            new animations.Toast(`${numPlayersOnline} players online. Room for one more`, 0.8);
             break;
           case 6:
-            new animations.Toast(`${playersOnline} players online. Server full`);
+            new animations.Toast(`${numPlayersOnline} players online. Server full`, 0.8);
             break;
         }
     });
@@ -282,15 +283,13 @@ function parseServerStatus(status) {
       div.textContent = "No Players Online";
       pContainer.appendChild(div);
     } else {
-      playersOnline = status.players.length;
-      status.players.push = _ => {
-        Array.prototype.push.apply(this, arguments);  console.log(this, arguments, 'pushed');
-      };
-      for (let i = 0; i < playersOnline; i++) {
+      numPlayersOnline = status.players.length;
+      for (let i = 0; i < numPlayersOnline; i++) {
+        var playerName = status.players[i].name;
         const wrapper = document.createElement('div');
         wrapper.classList.add('playeronline');
         const player = document.createElement('div');
-        player.textContent = status.players[i].name;
+        player.textContent = playerName;
         const score = document.createElement('div');
         score.textContent = status.players[i].score;
         wrapper.appendChild(player);
@@ -299,6 +298,19 @@ function parseServerStatus(status) {
         const spacer = document.createElement('div');
         spacer.classList.add('spacer');
         pContainer.appendChild(spacer);
+        // for toasts
+        if (!playersOnline.includes(playerName)) {
+          playeronline.push(playerName);
+          new animations.Toast(`${playerName} has joined the game`, 0.8);
+        }
+        var in = false;
+        var pos = 0;
+        for (var ndx = 0; ndx < playersOnline.length; ndx++) {
+          if (!status.players.includes(playersOnline[ndx])) {
+            playersOnline.splice(ndx, 1);
+          }
+        }
+        console.log(playersOnline)
       }
     }
   }
