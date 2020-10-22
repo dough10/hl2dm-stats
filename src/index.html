@@ -167,10 +167,10 @@
       .stat {
         cursor: pointer;
       }
-      .stat::after {
+      .card::after {
         content '';
         position: absolute;
-        display: inline-block;
+        display: block;
         z-index: -1;
         width: 100%;
         height: 100%;
@@ -178,7 +178,7 @@
         transition: opacity 100ms ease-in-out;
         box-shadow:0 8px 10px 1px rgba(0,0,0,0.14),0 3px 14px 2px rgba(0,0,0,0.12),0 5px 5px -3px rgba(0,0,0,0.4);
       }
-      .stat:hover::after {
+      .card:hover::after {
         opacity: 1;
       }
       /* .stat:active:hover::after {
