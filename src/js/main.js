@@ -7,6 +7,8 @@ HTMLElement.prototype.onClick = function (cb) {
   this.addEventListener('click', cb, false);
 };
 
+var online  = 0;
+
 function applyRipples() {
   return new Promise(resolve => {
     ripples.attachButtonRipple(qs('#fab'));
@@ -152,8 +154,10 @@ function displayWeaponData(wrapper, weapons) {
 function showApp() {
   setTimeout(_ => {
     animations.animateElement(qs('#load'), 'translateY(-102%)', 350).then(_ => {
-      new animations.Toast('Stats reset day.');
       if (new Date().getDate() === 1) {
+        new animations.Toast('Stats have reset today.');
+      } else {
+        new animations.Toast(`Welcome. ${online} players online.`);
       }
     });
   }, 1000);
@@ -259,7 +263,8 @@ function parseServerStatus(status) {
       div.textContent = "No Players Online";
       pContainer.appendChild(div);
     } else {
-      for (let i = 0; i < status.players.length; i++) {
+      online = status.players.length;
+      for (let i = 0; i < online; i++) {
         const wrapper = document.createElement('div');
         wrapper.classList.add('playeronline');
         const player = document.createElement('div');
