@@ -408,6 +408,6 @@ window.onload = registerServiceWorker().then(reg => {
   setInterval(fetchServerStatus, 5000);
   fetchTop();
   console.log(reg);
-  qs('.foot').style.minHeight = `${window.innerHeight * 2}px`;
+  qs('.foot').style.minHeight = `${window.innerHeight}px`;
   return;
 }).then(loadRipples);
