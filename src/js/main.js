@@ -7,7 +7,7 @@ HTMLElement.prototype.onClick = function (cb) {
   this.addEventListener('click', cb, false);
 };
 
-var online  = 0;
+var playersOnline  = 0;
 
 function applyRipples() {
   return new Promise(resolve => {
@@ -157,7 +157,7 @@ function showApp() {
       if (new Date().getDate() === 1) {
         new animations.Toast('Stats have reset today.');
       } else {
-        new animations.Toast(`Welcome. ${online} players online.`);
+        new animations.Toast(`Welcome. ${playersOnline} players online.`);
       }
     });
   }, 1000);
@@ -260,8 +260,11 @@ function parseServerStatus(status) {
       div.textContent = "No Players Online";
       pContainer.appendChild(div);
     } else {
-      online = status.players.length;
-      for (let i = 0; i < online; i++) {
+      playerOnline = status.players.length;
+      status.players.push = _ => {
+        Array.prototype.push.apply(this, arguments);  console.log(this, arguments, 'pushed');
+      };
+      for (let i = 0; i < playersOnline; i++) {
         const wrapper = document.createElement('div');
         wrapper.classList.add('playeronline');
         const player = document.createElement('div');
