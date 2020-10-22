@@ -161,25 +161,25 @@ function showApp() {
       } else {
         switch (numPlayersOnline) {
           case 0:
-            new animations.Toast(`${numPlayersOnline} players online.`, 0.8);
+            new animations.Toast(`${numPlayersOnline} players online.`, 2);
             break;
           case 1:
-            new animations.Toast(`${numPlayersOnline} players online. He needs someone to kill`, 0.8);
+            new animations.Toast(`${numPlayersOnline} players online. He needs someone to kill`, 2);
             break;
           case 2:
-            new animations.Toast(`${numPlayersOnline} players online. 1v1 in progress`, 0.8);
+            new animations.Toast(`${numPlayersOnline} players online. 1v1 in progress`, 2);
             break;
           case 3:
-            new animations.Toast(`${numPlayersOnline} players online. Deathmatch had begun`, 0.8);
+            new animations.Toast(`${numPlayersOnline} players online. Deathmatch had begun`, 2);
             break;
           case 4:
-            new animations.Toast(`${numPlayersOnline} players online. Still room`, 0.8);
+            new animations.Toast(`${numPlayersOnline} players online. Still room`, 2);
             break;
           case 5:
-            new animations.Toast(`${numPlayersOnline} players online. Room for one more`, 0.8);
+            new animations.Toast(`${numPlayersOnline} players online. Room for one more`, 2);
             break;
           case 6:
-            new animations.Toast(`${numPlayersOnline} players online. Server full`, 0.8);
+            new animations.Toast(`${numPlayersOnline} players online. Server full`, 2);
             break;
         }
       }
@@ -302,7 +302,7 @@ function parseServerStatus(status) {
         // for toasts
         if (!playersOnline.includes(playerName)) {
           playeronline.push(playerName);
-          new animations.Toast(`${playerName} has joined the game`, 0.8);
+          new animations.Toast(`${playerName} has joined the game`, 2);
         }
         for (var ndx = 0; ndx < playersOnline.length; ndx++) {
           if (!status.players.includes(playersOnline[ndx])) {
