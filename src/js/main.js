@@ -183,19 +183,21 @@ function parseTopData(top) {
     const deaths = createSVG(deathsIcon, player.deaths, "Deaths");
     const kdr = createSVG(kdrIcon, player.kdr, "KDR");
     wrapper.appendChild(name);
-    const fav = favWeapon(player.weapons)
-    const favWrapper = createWrapper();
-    favWrapper.title = `${fav[0]}: ${fav[1]}`;
-    const icon = document.createElement('div');
-    const text = document.createElement('div');
-    text.style.marginRight = '8px';
-    icon.style.marginRight = '4px';
-    icon.classList.add('favWeapon');
-    icon.textContent = getWeaponIcon(fav[0]);
-    text.textContent = fav[1]
-    favWrapper.appendChild(icon);
-    favWrapper.appendChild(text);
-    stats.appendChild(favWrapper);
+    if (window.innerWidth >== '500px') {
+      const fav = favWeapon(player.weapons)
+      const favWrapper = createWrapper();
+      const icon = document.createElement('div');
+      const text = document.createElement('div');
+      text.style.marginRight = '8px';
+      icon.style.marginRight = '4px';
+      icon.classList.add('favWeapon');
+      icon.textContent = getWeaponIcon(fav[0]);
+      text.textContent = fav[1]
+      favWrapper.title = `${fav[0]}: ${fav[1]}`;
+      favWrapper.appendChild(icon);
+      favWrapper.appendChild(text);
+      stats.appendChild(favWrapper);
+    }
     stats.appendChild(kills);
     stats.appendChild(deaths);
     stats.appendChild(kdr);
