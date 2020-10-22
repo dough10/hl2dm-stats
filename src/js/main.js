@@ -158,8 +158,29 @@ function showApp() {
       if (new Date().getDate() === 1) {
         new animations.Toast('Stats have reset today.');
       } else {
-        new animations.Toast(`Welcome. ${playersOnline} players online.`);
-      }
+        switch (playersOnline) {
+          case 0:
+            new animations.Toast(`${playersOnline} players online.`);
+            break;
+          case 1:
+            new animations.Toast(`${playersOnline} players online. He needs someone to kill`);
+            break;
+          case 2:
+            new animations.Toast(`${playersOnline} players online. 1v1 in progress`);
+            break;
+          case 3:
+            new animations.Toast(`${playersOnline} players online. Deathmatch had begun`);
+            break;
+          case 4:
+            new animations.Toast(`${playersOnline} players online. Still room`);
+            break;
+          case 5:
+            new animations.Toast(`${playersOnline} players online. Room for one more`);
+            break;
+          case 6:
+            new animations.Toast(`${playersOnline} players online. Server full`);
+            break;
+        }
     });
   }, 1000);
 }
