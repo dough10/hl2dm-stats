@@ -234,10 +234,9 @@ class Toast {
 
 function animateClass(el, setStuff) {
   return new Promise(resolve => {
-    var timer = 0;
     const animationEnd = _ => {
-      el.removeEventListener(transitionEvent, animationEnd);
       el.classList.remove('animate-height');
+      el.removeEventListener(transitionEvent, animationEnd);
       requestAnimationFrame(resolve);
     };
     el.addEventListener(transitionEvent, animationEnd, true);

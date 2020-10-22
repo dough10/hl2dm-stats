@@ -210,14 +210,14 @@ function parseTopData(top) {
           animations.fadeIn(favWrapper, 50);
           animations.animateClass(card, _ => {
             card.classList.remove('opened');
-          }, 100);
+          });
         });
       } else {
         name.style.color = '#b94949';
         animations.fadeOut(favWrapper, 50);
         animations.animateClass(card, _ => {
           card.classList.add('opened');
-        }, 100).then(_ => {
+        }).then(_ => {
           weaponWrapper.style.display = 'flex';
           animations.fadeIn(weaponWrapper, 50);
         });
