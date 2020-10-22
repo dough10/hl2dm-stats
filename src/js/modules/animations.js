@@ -237,14 +237,14 @@ function animateClass(el, setStuff, time) {
     var timer = 0;
     const animationEnd = _ => {
       el.removeEventListener(transitionEvent, animationEnd);
+      el.classList.remove('animate-height');
       requestAnimationFrame(resolve);
     };
     if (!time) {
       time = 300;
     }
     el.addEventListener(transitionEvent, animationEnd, true);
-    el.style.willChange = 'auto';
-    el.style.transition = `height ${time}ms cubic-bezier(.33,.17,.78,1.37) 0s`;;
+    el.classList.add('animate-height');
     requestAnimationFrame(setStuff);
   });
 }
