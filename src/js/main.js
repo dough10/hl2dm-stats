@@ -404,10 +404,10 @@ qs('#demos').onClick(_ => {
 qs('#fab').onClick(animations.animateScroll);
 
 window.onload = registerServiceWorker().then(reg => {
+  qs('.foot').style.minHeight = `${window.innerHeight}px`;
   fetchServerStatus();
   setInterval(fetchServerStatus, 5000);
   fetchTop();
   console.log(reg);
-  qs('.foot').style.minHeight = `${window.innerHeight / 2}px`;
   return;
 }).then(loadRipples);
