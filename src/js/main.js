@@ -260,7 +260,7 @@ function parseServerStatus(status) {
       div.textContent = "No Players Online";
       pContainer.appendChild(div);
     } else {
-      playerOnline = status.players.length;
+      playersOnline = status.players.length;
       status.players.push = _ => {
         Array.prototype.push.apply(this, arguments);  console.log(this, arguments, 'pushed');
       };
