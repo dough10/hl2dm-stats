@@ -45,6 +45,7 @@ function createWrapper() {
   wrapper.style.display = 'flex';
   wrapper.style.justifyContent = 'space-between';
   wrapper.style.alignItems = 'center';
+  wrapper.style.overflow = 'none';
   return wrapper;
 }
 
