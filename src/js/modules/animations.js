@@ -1,5 +1,7 @@
 export {animateElement, animateScroll, fadeIn, fadeOut, animateHeight, Toast};
 
+import * as ripples from './modules/ripples.js';
+
 function whichTransitionEvent() {
   let t;
   const el = document.createElement('fakeelement');
@@ -152,7 +154,7 @@ class Toast {
       this.toast.addEventListener('click', this._cleanUp, true);
       this.toast.textContent = message;
       document.querySelector('body').appendChild(this.toast);
-      attachButtonRipple(this.toast);
+      ripples.attachButtonRipple(this.toast);
       setTimeout(_ => requestAnimationFrame(_ => {
         this.toast.style.opacity = 1;
         this.toast.style.transform = 'translateY(0px)';
