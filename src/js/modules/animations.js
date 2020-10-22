@@ -1,4 +1,4 @@
-import * as ripples from './modules/ripples.js';
+import * as ripples from './ripples.js';
 export {animateElement, animateScroll, fadeIn, fadeOut, animateHeight, Toast};
 
 
