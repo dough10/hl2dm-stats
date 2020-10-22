@@ -181,7 +181,7 @@ function parseTopData(top) {
     weaponWrapper.style.marginTop = '24px'
     weaponWrapper.style.display = 'none';
     weaponWrapper.style.opacity = 0;
-    weaponWrapper.style.overflow = 'scroll';
+    weaponWrapper.style.overflow = 'auto';
     ipLookup(player.ip).then(res => {
       name.textContent = name.textContent + ` (${res.country})`;
       name.title = name.title + ` (${res.country})`;
@@ -241,7 +241,7 @@ function parseTopData(top) {
   }
   const allWeaponsCard = createNoCard();
   const wrapper = createWrapper();
-  wrapper.style.overflow = 'scroll';
+  wrapper.style.overflow = 'auto';
   displayWeaponData(wrapper, top[1]);
   allWeaponsCard.appendChild(wrapper);
   qs('#cardsWrapper').appendChild(allWeaponsCard);
