@@ -184,7 +184,7 @@ function parseTopData(top) {
     const deaths = createSVG(deathsIcon, player.deaths, "Deaths");
     const kdr = createSVG(kdrIcon, player.kdr, "KDR");
     wrapper.appendChild(name);
-    if (window.innerWidth >== '500px') {
+    if (window.innerWidth >= '500px') {
       const fav = favWeapon(player.weapons)
       const favWrapper = createWrapper();
       const icon = document.createElement('div');
