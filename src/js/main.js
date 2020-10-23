@@ -142,14 +142,14 @@ function displayWeaponData(wrapper, weapons, kills) {
   for (let i = 0; i < weapons.length; i++) {
     const weaponName = weapons[i][0];
     const count = weapons[i][1];
-    const weapContainer = document.createElement('div');
-    const icon = document.createElement('div');
-    const text = document.createElement('div');
     let precent = Math.round((count / kills) * 100);
     if (precent === 0) {
       precent = '< 1';
     }
+    const weapContainer = document.createElement('div');
     weapContainer.classList.add('weapon');
+    const icon = document.createElement('div');
+    const text = document.createElement('div');
     if (weaponName === 'headshots') {
       icon.classList.add('CS');
     } else {

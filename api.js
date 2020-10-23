@@ -494,6 +494,7 @@ function getServerStatus() {
 }
 
 function cleanUp() {
+  console.count('cleanup-function')
   console.log(`${new Date()} - Running file clean up`);
   var numFiles = 0;
   fs.readdir(logFolder, (err, files) => {
