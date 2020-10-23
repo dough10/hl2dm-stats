@@ -238,10 +238,8 @@ function scanLine(line) {
     for (var id in users) {
       if (users[id].name === name) {
         users[id].headshots = users[id].headshots + 1;
-        console.log(users[id])
       }
     }
-
   }
   if (isKill) {
     var killerNameString = buildKillerNameString(word, isKill);
