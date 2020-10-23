@@ -133,7 +133,7 @@ function getWeaponIcon(weapon) {
       return '9';
       break;
     case "headshots":
-      return "'";
+      return "D";
       break;
   }
 }
@@ -149,7 +149,7 @@ function displayWeaponData(wrapper, weapons) {
     if (weaponName === 'headshots') {
       icon.classList.add('CS');
     } else {
-      icon.classList.add('favWeapon');
+      icon.classList.add('HL2Weapons');
     }
     text.classList.add('weapon-count');
     icon.textContent = getWeaponIcon(weaponName);
@@ -225,13 +225,13 @@ function parseTopData(top) {
     const deaths = createSVG(deathsIcon, player.deaths, "Deaths");
     const kdr = createSVG(kdrIcon, player.kdr, "KDR");
     wrapper.appendChild(name);
-    const fav = favWeapon(player.weapons)
+    const fav = HL2Weapons(player.weapons)
     const favWrapper = createWrapper();
     const icon = document.createElement('div');
     const text = document.createElement('div');
     text.style.marginRight = '8px';
     icon.style.marginRight = '4px';
-    icon.classList.add('favWeapon');
+    icon.classList.add('HL2Weapons');
     icon.textContent = getWeaponIcon(fav[0]);
     text.textContent = fav[1]
     favWrapper.title = `${fav[0]}: ${fav[1]}`;
@@ -391,7 +391,7 @@ function registerServiceWorker() {
   });
 }
 
-function favWeapon(weapons) {
+function HL2Weapons(weapons) {
   let highest = 0;
   let weapon = "";
   for (let i = 0; i < weapons.length; i++) {
