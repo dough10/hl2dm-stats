@@ -132,6 +132,9 @@ function getWeaponIcon(weapon) {
     case "physics":
       return '9';
       break;
+    case "headshots":
+      return ''';
+      break;
   }
 }
 
