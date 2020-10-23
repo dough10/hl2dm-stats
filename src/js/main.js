@@ -133,7 +133,7 @@ function getWeaponIcon(weapon) {
       return '9';
       break;
     case "headshots":
-      return ''';
+      return "'";
       break;
   }
 }
