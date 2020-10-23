@@ -305,7 +305,7 @@ function parseServerStatus(status) {
         }
         if (!playersOnline.includes(playerName)) {
           playersOnline.push(playerName);
-          new animations.Toast(`${playerName} has joined the game`, 2);
+          // new animations.Toast(`${playerName} has joined the game`, 2);
         }
         console.log(playersOnline, 'before loop')
         for (var ndx = 0; ndx < playersOnline.length; ndx++) {
