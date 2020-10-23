@@ -484,9 +484,10 @@ qs('#github').onClick(_ => {
 qs('#paypal').onClick(_ => {
   window.location.href = 'https://www.paypal.me/jdough10';
 });
-qs('#stats').onClick(_ => {
-  window.location.href = '#cardsWrapper';
-});
+
+// qs('#stats').onClick(_ => {
+//   window.location.href = '#cardsWrapper';
+// });
 
 qs('#demos').onClick(_ => {
   animations.animateElement(qs('#load'), 'translateY(0%)', 350).then(_ => {
