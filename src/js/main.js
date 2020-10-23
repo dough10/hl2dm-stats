@@ -145,6 +145,10 @@ function displayWeaponData(wrapper, weapons, kills) {
     const weapContainer = document.createElement('div');
     const icon = document.createElement('div');
     const text = document.createElement('div');
+    let precent = Math.round((count / kills) * 100);
+    if (precent === 0) {
+      precent = '< 1';
+    }
     weapContainer.classList.add('weapon');
     if (weaponName === 'headshots') {
       icon.classList.add('CS');
@@ -153,11 +157,7 @@ function displayWeaponData(wrapper, weapons, kills) {
     }
     text.classList.add('weapon-count');
     icon.textContent = getWeaponIcon(weaponName);
-    text.textContent = count;
-    var precent = Math.round((count / kills) * 100);
-    if (precent === 0) {
-      precent = '< 1';
-    }
+    text.textContent = `${count} ${precent}%`;
     weapContainer.title = `${weaponName}: ${count} ${precent}% of all kills`;
     weapContainer.appendChild(icon);
     weapContainer.appendChild(text);
