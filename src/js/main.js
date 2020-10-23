@@ -304,12 +304,14 @@ function parseServerStatus(status) {
           playersOnline.push(playerName);
           new animations.Toast(`${playerName} has joined the game`, 2);
         }
+        console.log(playersOnline, 'before loop')
         for (var ndx = 0; ndx < playersOnline.length; ndx++) {
+          console.log(playersOnline[ndx], status.players.includes(playersOnline[ndx]))
           if (!status.players.includes(playersOnline[ndx])) {
             playersOnline.splice(ndx, 1);
           }
         }
-        console.log(playersOnline)
+        console.log(playersOnline, 'after loop')
       }
     }
   }
