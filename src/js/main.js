@@ -317,7 +317,7 @@ function parseServerStatus(status) {
         if (!in) {
           playersOnline.splice(playersOnline.indexOf(playerName), 1);
         }
-        console.log(playersOnline, 'after loop')
+        console.log(playersOnline, 'after loop');
       }
     }
   }
