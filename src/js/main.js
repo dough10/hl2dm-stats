@@ -266,6 +266,7 @@ function parseTopData(top) {
         animations.fadeOut(weaponWrapper2, 50);
         animations.fadeOut(weaponWrapper1, 50).then(_ => {
           weaponWrapper1.style.display = 'none';
+          weaponWrapper2.style.display = 'none';
           favWrapper.style.display = 'flex';
           animations.fadeIn(favWrapper, 50);
           animations.animateHeight(card, '25px', 100);
@@ -277,6 +278,7 @@ function parseTopData(top) {
         });
         animations.animateHeight(card, '154px', 100).then(_ => {
           weaponWrapper1.style.display = 'flex';
+          weaponWrapper2.style.display = 'flex';
           animations.fadeIn(weaponWrapper1, 50);
           animations.fadeIn(weaponWrapper2, 50);
         });
