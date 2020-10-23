@@ -155,7 +155,7 @@ function getID2(word) {
   if (!word) {
     return false;
   }
-  const u = word.search('0:1:');
+  var u = word.search('0:1:');
   if (u < 0) {
     u = word.search('0:0:');
   }
