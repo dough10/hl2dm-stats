@@ -242,6 +242,9 @@ function scanLine(line) {
     var name = getName(killerNameString);
     for (var id in users) {
       if (users[id].name === name) {
+        if (!users[id].headshots) {
+          users[id].headshots = 0;
+        }
         users[id].headshots = users[id].headshots + 1;
       }
     }
@@ -283,7 +286,6 @@ function scanLine(line) {
         kills: 0,
         deaths: 0,
         kdr: 0,
-        headshots: 0,
         chat: []
       };
     }
@@ -295,7 +297,6 @@ function scanLine(line) {
         kills: 0,
         deaths: 0,
         kdr: 0,
-        headshots: 0,
         chat: []
       };
     }
@@ -338,7 +339,6 @@ function scanLine(line) {
           kills: 0,
           deaths: 0,
           kdr: 0,
-          headshots: 0,
           chat: []
         };
       } else {
@@ -360,7 +360,6 @@ function scanLine(line) {
         kills: 0,
         deaths: 0,
         kdr: 0,
-        headshots: 0,
         chat: []
       };
     }
@@ -393,7 +392,6 @@ function scanLine(line) {
         kills: 0,
         deaths: 0,
         kdr: 0,
-        headshots: 0,
         chat: []
       };
     }
