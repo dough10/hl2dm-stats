@@ -236,7 +236,7 @@ function scanLine(line) {
     var killerNameString = buildKillerNameString(word, isHeadshot - 1);
     var name = getName(killerNameString);
     for (var id in users) {
-      if (user[id].name === name) {
+      if (users[id].name === name) {
         users[id].headshots = users[id].headshots + 1;
         console.log(users[id])
       }
