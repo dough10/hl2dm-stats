@@ -236,7 +236,7 @@ function scanLine(line) {
     var killerNameString = buildKillerNameString(word, isHeadshot - 1);
     var id = getID(killerNameString);
     var name = getName(killerNameString);
-    console.log(id, name)
+    console.log(killerNameString, id, name)
   }
   if (isKill) {
     var killerNameString = buildKillerNameString(word, isKill);
