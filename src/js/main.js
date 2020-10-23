@@ -323,8 +323,9 @@ function parseServerStatus(status) {
         }
         if (!playersOnline.includes(playerName)) {
           playersOnline.push(playerName);
-          if (!loaded) return;
-          new animations.Toast(`${playerName} has joined the game`, 2);
+          if (loaded) {
+            new animations.Toast(`${playerName} has joined the game`, 2);
+          }
         }
         var inArray = false;
         for (var ndx = 0; ndx < playersOnline.length; ndx++) {
@@ -334,8 +335,9 @@ function parseServerStatus(status) {
         }
         if (!inArray) {
           playersOnline.splice(playersOnline.indexOf(playerName), 1);
-          if (!loaded) return;
-          new animations.Toast(`${playerName} has left the server`, 2);
+          if (loaded) {
+            new animations.Toast(`${playerName} has left the server`, 2);
+          }
         }
       }
     }
