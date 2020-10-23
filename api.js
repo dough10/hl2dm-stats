@@ -233,22 +233,6 @@ function scanLine(line) {
   var isSuicide = lineIsSuicide(word);
   var isChat = lineIsChat(word);
   var isHeadshot  = lineIsHeadshot(word);
-  if (isHeadshot) {
-    if (!weapons.headshots) {
-      weapons.headshots = 0;
-    }
-    weapons.headshots = weapons.headshots + 1;
-    var killerNameString = buildKillerNameString(word, isHeadshot - 1);
-    var name = getName(killerNameString);
-    for (var id in users) {
-      if (users[id].name === name) {
-        if (!users[id].headshots) {
-          users[id].headshots = 0;
-        }
-        users[id].headshots = users[id].headshots + 1;
-      }
-    }
-  }
   if (isKill) {
     var killerNameString = buildKillerNameString(word, isKill);
     var killerID = getID(killerNameString);
@@ -322,8 +306,7 @@ function scanLine(line) {
     users[killerID][weapon] = users[killerID][weapon] + 1;
     // add server wide weapon kill
     weapons[weapon] = weapons[weapon] + 1;
-  }
-  else if (isConnect) {
+  } else if (isConnect) {
     var connectedNameString = buildKillerNameString(word, isConnect);
     var connectedUser = getID(connectedNameString);
     var connectedUserName = getName(connectedNameString);
@@ -345,8 +328,7 @@ function scanLine(line) {
         users[connectedUser].ip = ip;
       }
     }
-  }
-  else if (isSuicide) {
+  } else if (isSuicide) {
     var nameString = buildKillerNameString(word, isSuicide);
     var id = getID(nameString);
     var name = getName(nameString);
@@ -380,8 +362,7 @@ function scanLine(line) {
       weapons[weapon] = 0;
     }
     weapons[weapon] = weapons[weapon] + 1;
-  }
-  else if (isChat) {
+  } else if (isChat) {
     var nameString = buildKillerNameString(word, isChat);
     var id = getID(nameString);
     var name = getName(nameString);
@@ -402,6 +383,21 @@ function scanLine(line) {
     said.replace('"', '');
     said.replace('"', '');
     users[id].chat.push(said);
+  } else  if (isHeadshot) {
+    if (!weapons.headshots) {
+      weapons.headshots = 0;
+    }
+    weapons.headshots = weapons.headshots + 1;
+    var killerNameString = buildKillerNameString(word, isHeadshot - 1);
+    var name = getName(killerNameString);
+    for (var id in users) {
+      if (users[id].name === name) {
+        if (!users[id].headshots) {
+          users[id].headshots = 0;
+        }
+        users[id].headshots = users[id].headshots + 1;
+      }
+    }
   }
 }
 
