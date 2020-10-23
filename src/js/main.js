@@ -226,6 +226,10 @@ function parseTopData(top) {
     weaponWrapper1.style.marginTop = '24px'
     weaponWrapper1.style.display = 'none';
     weaponWrapper1.style.opacity = 0;
+    const weaponWrapper2 = createWrapper();
+    weaponWrapper2.style.marginTop = '24px'
+    weaponWrapper2.style.display = 'none';
+    weaponWrapper2.style.opacity = 0;
     ipLookup(player.ip).then(res => {
       name.textContent = name.textContent + ` (${res.country})`;
       name.title = name.title + ` (${res.country})`;
@@ -281,6 +285,7 @@ function parseTopData(top) {
       weaponWrapper2
     ], player.weapons, player.kills);
     card.appendChild(weaponWrapper1);
+    card.appendChild(weaponWrapper2);
     qs('#cardsWrapper').appendChild(card);
     setTimeout(_ => {
       ripples.attachButtonRipple(card);
