@@ -137,7 +137,7 @@ function getID(word) {
   if (!word) {
     return false;
   }
-  const u = word.search('U:1:');
+  var u = word.search('U:1:');
   if (u < 0) {
     u = word.search('0:1:');
   }
