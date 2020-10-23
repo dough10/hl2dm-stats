@@ -316,6 +316,7 @@ function parseServerStatus(status) {
         }
         if (!inArray) {
           playersOnline.splice(playersOnline.indexOf(playerName), 1);
+          new animations.Toast(`${playerName} has left the server`, 2);
         }
       }
     }
