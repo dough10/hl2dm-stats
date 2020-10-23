@@ -157,6 +157,9 @@ function getID2(word) {
   }
   const u = word.search('0:1:');
   if (u < 0) {
+    u = word.search('0:0:');
+  }
+  if (u < 0) {
     return false;
   }
   const start = u + 4;
