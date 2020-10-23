@@ -161,7 +161,7 @@ function getID2(word) {
   }
   const start = u + 4;
   word = word.substring(start)
-  const end = word.search(']');
+  const end = word.search('>');
   let str = '';
   for (var i = 0; i < end; i++) {
     str = str + word[i];
