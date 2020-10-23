@@ -233,7 +233,8 @@ function scanLine(line) {
   var isChat = lineIsChat(word);
   var isHeadshot  = lineIsHeadshot(word);
   if (isHeadshot) {
-    console.log(line);
+    var killerName = buildKillerNameString(word, isHeadshot - 1);
+    console.log(killerName)
   }
   if (isKill) {
     var killerNameString = buildKillerNameString(word, isKill);
