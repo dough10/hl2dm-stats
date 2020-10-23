@@ -30,6 +30,7 @@ server {
         http2_push /js/paper-ripple.min.js;
         http2_push /fonts/halflife2.ttf;
         http2_push /fonts/hl2mp.ttf;
+        http2_push /fonts/csd.ttf;
         http2_push /fonts/roboto-v15-latin-regular.woff2;
         proxy_set_header Accept-Encoding "";
     }
@@ -49,4 +50,3 @@ server {
        expires 7d;
     }
  }
-

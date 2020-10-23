@@ -146,7 +146,11 @@ function displayWeaponData(wrapper, weapons) {
     const icon = document.createElement('div');
     const text = document.createElement('div');
     weapContainer.classList.add('weapon');
-    icon.classList.add('favWeapon');
+    if (weaponName === 'headshots') {
+      icon.classList.add('CS');
+    } else {
+      icon.classList.add('favWeapon');
+    }
     text.classList.add('weapon-count');
     icon.textContent = getWeaponIcon(weaponName);
     text.textContent = count;
