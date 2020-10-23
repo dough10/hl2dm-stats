@@ -33,7 +33,8 @@ function isWeapon(weapon) {
     'smg1_grenade',
     'stunstick',
     'rpg_missile',
-    'world'
+    'world',
+    'headshot'
   ];
   return w.includes(weapon);
 }
@@ -233,6 +234,10 @@ function scanLine(line) {
   var isChat = lineIsChat(word);
   var isHeadshot  = lineIsHeadshot(word);
   if (isHeadshot) {
+    if (!weapons.headshots) {
+      weapons.headshots = 0;
+    }
+    weapons.headshots = weapons.headshots + 1;
     var killerNameString = buildKillerNameString(word, isHeadshot - 1);
     var name = getName(killerNameString);
     for (var id in users) {
