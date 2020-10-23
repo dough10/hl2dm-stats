@@ -1,4 +1,4 @@
-var CACHE_NAME = 'cache-v1.4';
+var CACHE_NAME = 'cache-v1.5';
 var urlsToCache = [
   '/index.html',
   '/manifest.json',
@@ -11,6 +11,7 @@ var urlsToCache = [
   '/images/logo192.png',
   '/fonts/halflife2.ttf',
   '/fonts/hl2mp.ttf',
+  '/fonts/csd.ttf',
   'fonts/roboto-v15-latin-regular.woff2',
   'fonts/roboto-v15-latin-regular.woff',
   'fonts/roboto-v15-latin-regular.ttf',
