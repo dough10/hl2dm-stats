@@ -254,7 +254,22 @@ function scanLine(line) {
     var killerNameString = buildKillerNameString(word, isHeadshot - 1);
     var id = getID2(killerNameString);
     var name = getName(killerNameString);
-    console.log(killerNameString, id, name)
+    if (!id) {
+      console.log(line);
+      return;
+    }
+    if (!users[id]) {
+      users[id] = {
+        name: name,
+        id:id,
+        kills: 0,
+        deaths: 0,
+        kdr: 0,
+        headshots: 0,
+        chat: []
+      };
+    }
+    users[id].headshots = users[killerID].headshots + 1;
   }
   if (isKill) {
     var killerNameString = buildKillerNameString(word, isKill);
