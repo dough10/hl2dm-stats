@@ -75,6 +75,7 @@ function createSVG(d, count, title) {
   wrapper.title = `${title}: ${count}`;
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.classList.add('svg');
+  svg.classList.add('eight-right');
   svg.setAttributeNS(null,"viewbox","0 0 24 24");
   const path = document.createElementNS("http://www.w3.org/2000/svg", 'path');
   path.setAttribute("d",d);
