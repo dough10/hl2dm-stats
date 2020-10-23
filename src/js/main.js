@@ -278,7 +278,7 @@ function parseTopData(top) {
   const allWeaponsCard = createNoCard();
   const wrapper = createWrapper();
   var total = 0;
-  for (var n = 0; n < top[1]; n++)  {
+  for (var n = 0; n < top[1].length; n++)  {
     console.log(top[1][n][1])
     total = total + top[1][n][1];
   }
