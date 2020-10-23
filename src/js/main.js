@@ -263,6 +263,7 @@ function parseTopData(top) {
     card.onClick(_ => {
       if (weaponWrapper1.style.display !== 'none') {
         name.style.color = '#333333';
+        animations.fadeOut(weaponWrapper2, 50);
         animations.fadeOut(weaponWrapper1, 50).then(_ => {
           weaponWrapper1.style.display = 'none';
           favWrapper.style.display = 'flex';
@@ -277,6 +278,7 @@ function parseTopData(top) {
         animations.animateHeight(card, '154px', 100).then(_ => {
           weaponWrapper1.style.display = 'flex';
           animations.fadeIn(weaponWrapper1, 50);
+          animations.fadeIn(weaponWrapper2, 50);
         });
       }
     });
