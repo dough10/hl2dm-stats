@@ -300,6 +300,9 @@ function parseServerStatus(status) {
         spacer.classList.add('spacer');
         pContainer.appendChild(spacer);
         // for toasts
+        if (!playerName) {
+          return;
+        }
         if (!playersOnline.includes(playerName)) {
           playersOnline.push(playerName);
           new animations.Toast(`${playerName} has joined the game`, 2);
