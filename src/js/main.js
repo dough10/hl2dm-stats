@@ -157,7 +157,7 @@ function displayWeaponData(wrapper, weapons, kills) {
     }
     text.classList.add('weapon-count');
     icon.textContent = getWeaponIcon(weaponName);
-    text.textContent = `${count} ${precent}%`;
+    text.textContent = count;
     weapContainer.title = `${weaponName}: ${count} ${precent}% of all kills`;
     weapContainer.appendChild(icon);
     weapContainer.appendChild(text);
