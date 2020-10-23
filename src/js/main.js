@@ -138,7 +138,7 @@ function getWeaponIcon(weapon) {
   }
 }
 
-function displayWeaponData(wrapper, weapons, kills) {
+function displayWeaponData(wrappers, weapons, kills) {
   for (let i = 0; i < weapons.length; i++) {
     const weaponName = weapons[i][0];
     const count = weapons[i][1];
@@ -161,8 +161,16 @@ function displayWeaponData(wrapper, weapons, kills) {
     weapContainer.title = `${weaponName}: ${precent}% of all kills`;
     weapContainer.appendChild(icon);
     weapContainer.appendChild(text);
-    wrapper.appendChild(weapContainer);
+    if (i < weapons.length / 2) {
+      wrappers[0].appendChild(weapContainer);
+    } else {
+      wrappers[1].appendChild(weapContainer);
+    }
   }
+}
+
+function isSmallScreen() {
+  return (window.innerWidth <= 500);
 }
 
 function showApp() {
@@ -268,7 +276,7 @@ function parseTopData(top) {
         });
       }
     });
-    displayWeaponData(weaponWrapper, player.weapons, player.kills);
+    // displayWeaponData(weaponWrapper, player.weapons, player.kills);
     card.appendChild(weaponWrapper);
     qs('#cardsWrapper').appendChild(card);
     setTimeout(_ => {
@@ -276,13 +284,18 @@ function parseTopData(top) {
     }, 200);
   }
   const allWeaponsCard = createNoCard();
-  const wrapper = createWrapper();
+  const wrapper1 = createWrapper();
+  const wrapper2 = createWrapper();
   var total = 0;
   for (var n = 0; n < top[1].length; n++)  {
     total = total + top[1][n][1];
   }
-  displayWeaponData(wrapper, top[1], total);
-  allWeaponsCard.appendChild(wrapper);
+  displayWeaponData([
+    wrapper1,
+    wrapper2
+  ], top[1], total);
+  allWeaponsCard.appendChild(wrapper1);
+  allWeaponsCard.appendChild(wrapper2);
   qs('#cardsWrapper').appendChild(allWeaponsCard);
   showApp();
 }
