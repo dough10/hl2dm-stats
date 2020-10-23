@@ -216,12 +216,25 @@ function lineIsChat(line) {
   return false;
 }
 
+function lineIsHeadshot(line) {
+  for (var i = 0; i < line.length; i++) {
+    if (line[i] === '"headshot"') {
+      return i;
+    }
+  }
+  return false;
+}
+
 function scanLine(line) {
   var word  = line.split(' ');
   var isKill = lineIsKill(word);
   var isConnect = lineIsConnect(word);
   var isSuicide = lineIsSuicide(word);
   var isChat = lineIsChat(word);
+  var isHeadshot  = lineIsHeadshot(word);
+  if (isHeadshot) {
+    console.log(line);
+  }
   if (isKill) {
     var killerNameString = buildKillerNameString(word, isKill);
     var killerID = getID(killerNameString);
@@ -259,6 +272,7 @@ function scanLine(line) {
         kills: 0,
         deaths: 0,
         kdr: 0,
+        headshots: 0,
         chat: []
       };
     }
@@ -270,6 +284,7 @@ function scanLine(line) {
         kills: 0,
         deaths: 0,
         kdr: 0,
+        headshots: 0,
         chat: []
       };
     }
@@ -312,6 +327,7 @@ function scanLine(line) {
           kills: 0,
           deaths: 0,
           kdr: 0,
+          headshots: 0,
           chat: []
         };
       } else {
@@ -333,6 +349,7 @@ function scanLine(line) {
         kills: 0,
         deaths: 0,
         kdr: 0,
+        headshots: 0,
         chat: []
       };
     }
@@ -365,6 +382,7 @@ function scanLine(line) {
         kills: 0,
         deaths: 0,
         kdr: 0,
+        headshots: 0,
         chat: []
       };
     }
