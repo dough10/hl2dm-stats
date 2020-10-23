@@ -137,11 +137,28 @@ function getID(word) {
   if (!word) {
     return false;
   }
-  var u = word.search('U:1:');
+  const u = word.search('U:1:');
   if (u < 0) {
-    u = word.search('0:1:');
+    return false;
   }
-  if (u < 0) return false;
+  const start = u + 4;
+  word = word.substring(start)
+  const end = word.search(']');
+  let str = '';
+  for (var i = 0; i < end; i++) {
+    str = str + word[i];
+  }
+  return str;
+}
+
+function getID2(word) {
+  if (!word) {
+    return false;
+  }
+  const u = word.search('0:1:');
+  if (u < 0) {
+    return false;
+  }
   const start = u + 4;
   word = word.substring(start)
   const end = word.search(']');
@@ -235,7 +252,7 @@ function scanLine(line) {
   var isHeadshot  = lineIsHeadshot(word);
   if (isHeadshot) {
     var killerNameString = buildKillerNameString(word, isHeadshot - 1);
-    var id = getID(killerNameString);
+    var id = getID2(killerNameString);
     var name = getName(killerNameString);
     console.log(killerNameString, id, name)
   }
