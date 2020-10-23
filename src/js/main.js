@@ -283,6 +283,7 @@ function parseServerStatus(status) {
       const div = document.createElement('div');
       div.textContent = "No Players Online";
       pContainer.appendChild(div);
+      playersOnline = [];
     } else {
       numPlayersOnline = status.players.length;
       for (let i = 0; i < numPlayersOnline; i++) {
@@ -307,7 +308,6 @@ function parseServerStatus(status) {
           playersOnline.push(playerName);
           new animations.Toast(`${playerName} has joined the game`, 2);
         }
-        console.log(playersOnline, 'before loop');
         var inArray = false;
         for (var ndx = 0; ndx < playersOnline.length; ndx++) {
           if (playersOnline[ndx] === playerName) {
@@ -317,9 +317,9 @@ function parseServerStatus(status) {
         if (!inArray) {
           playersOnline.splice(playersOnline.indexOf(playerName), 1);
         }
-        console.log(playersOnline, 'after loop');
       }
     }
+    console.log(playersOnline)
   }
 }
 
