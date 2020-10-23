@@ -9,6 +9,7 @@ HTMLElement.prototype.onClick = function (cb) {
 
 var numPlayersOnline  = 0;
 var playersOnline = [];
+var loaded = false;
 
 function applyRipples() {
   return new Promise(resolve => {
@@ -182,6 +183,7 @@ function showApp() {
             new animations.Toast(`${numPlayersOnline} players online. Server full`, 2);
             break;
         }
+        loaded = true;
       }
     });
   }, 1000);
@@ -306,6 +308,7 @@ function parseServerStatus(status) {
         }
         if (!playersOnline.includes(playerName)) {
           playersOnline.push(playerName);
+          if (!loaded) return;
           new animations.Toast(`${playerName} has joined the game`, 2);
         }
         var inArray = false;
@@ -316,6 +319,7 @@ function parseServerStatus(status) {
         }
         if (!inArray) {
           playersOnline.splice(playersOnline.indexOf(playerName), 1);
+          if (!loaded) return;
           new animations.Toast(`${playerName} has left the server`, 2);
         }
       }
