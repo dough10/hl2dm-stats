@@ -138,10 +138,10 @@ function getID(word) {
     return false;
   }
   const u = word.search('U:1:');
-  console.log(u)
   if (u < 0) {
-    return false;
+    u = word.search('0:1:');
   }
+  if (u < 0) return false;
   const start = u + 4;
   word = word.substring(start)
   const end = word.search(']');
