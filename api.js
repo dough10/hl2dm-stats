@@ -138,6 +138,7 @@ function getID(word) {
     return false;
   }
   const u = word.search('U:1:');
+  console.log(u)
   if (u < 0) {
     return false;
   }
