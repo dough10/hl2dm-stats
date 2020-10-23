@@ -151,27 +151,6 @@ function getID(word) {
   return str;
 }
 
-function getID2(word) {
-  if (!word) {
-    return false;
-  }
-  var u = word.search('0:1:');
-  if (u < 0) {
-    u = word.search('0:0:');
-  }
-  if (u < 0) {
-    return false;
-  }
-  const start = u + 4;
-  word = word.substring(start)
-  const end = word.search('>');
-  let str = '';
-  for (var i = 0; i < end; i++) {
-    str = str + word[i];
-  }
-  return str;
-}
-
 function buildKillerNameString(line, end)  {
   let name = '';
   let start = 4;
@@ -255,25 +234,14 @@ function scanLine(line) {
   var isHeadshot  = lineIsHeadshot(word);
   if (isHeadshot) {
     var killerNameString = buildKillerNameString(word, isHeadshot - 1);
-    var id = getID2(killerNameString);
     var name = getName(killerNameString);
-    if (!id) {
-      console.log(line);
-      return;
+    for (var id in users) {
+      if (user[id].name === name) {
+        users[id].headshots = users[id].headshots + 1;
+        console.log(users[id])
+      }
     }
-    if (!users[id]) {
-      users[id] = {
-        name: name,
-        id:id,
-        kills: 0,
-        deaths: 0,
-        kdr: 0,
-        headshots: 0,
-        chat: []
-      };
-    }
-    users[id].headshots = users[id].headshots + 1;
-    console.log(users)
+
   }
   if (isKill) {
     var killerNameString = buildKillerNameString(word, isKill);
