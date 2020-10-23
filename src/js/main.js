@@ -222,10 +222,10 @@ function parseTopData(top) {
     name.title = player.name;
     name.style.transition = `color 200ms ease-in 0ms`;
     name.style.height = '20px';
-    const weaponWrapper = createWrapper();
-    weaponWrapper.style.marginTop = '24px'
-    weaponWrapper.style.display = 'none';
-    weaponWrapper.style.opacity = 0;
+    const weaponWrapper1 = createWrapper();
+    weaponWrapper1.style.marginTop = '24px'
+    weaponWrapper1.style.display = 'none';
+    weaponWrapper1.style.opacity = 0;
     ipLookup(player.ip).then(res => {
       name.textContent = name.textContent + ` (${res.country})`;
       name.title = name.title + ` (${res.country})`;
@@ -257,10 +257,10 @@ function parseTopData(top) {
     card.appendChild(wrapper);
     card.style.height = '25px';
     card.onClick(_ => {
-      if (weaponWrapper.style.display !== 'none') {
+      if (name.style.color !== '#333333') {
         name.style.color = '#333333';
-        animations.fadeOut(weaponWrapper, 50).then(_ => {
-          weaponWrapper.style.display = 'none';
+        animations.fadeOut(weaponWrapper1, 50).then(_ => {
+          weaponWrapper1.style.display = 'none';
           favWrapper.style.display = 'flex';
           animations.fadeIn(favWrapper, 50);
           animations.animateHeight(card, '25px', 100);
@@ -271,13 +271,16 @@ function parseTopData(top) {
           favWrapper.style.display = 'none';
         });
         animations.animateHeight(card, '89px', 100).then(_ => {
-          weaponWrapper.style.display = 'flex';
-          animations.fadeIn(weaponWrapper, 50);
+          weaponWrapper1.style.display = 'flex';
+          animations.fadeIn(weaponWrapper1, 50);
         });
       }
     });
-    // displayWeaponData(weaponWrapper, player.weapons, player.kills);
-    card.appendChild(weaponWrapper);
+    displayWeaponData([
+      weaponWrapper1,
+      weaponWrapper2
+    ], player.weapons, player.kills);
+    card.appendChild(weaponWrapper1);
     qs('#cardsWrapper').appendChild(card);
     setTimeout(_ => {
       ripples.attachButtonRipple(card);
@@ -286,6 +289,7 @@ function parseTopData(top) {
   const allWeaponsCard = createNoCard();
   const wrapper1 = createWrapper();
   const wrapper2 = createWrapper();
+  wrapper2.style.marginTop = '24px';
   var total = 0;
   for (var n = 0; n < top[1].length; n++)  {
     total = total + top[1][n][1];
