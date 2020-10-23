@@ -308,13 +308,13 @@ function parseServerStatus(status) {
           new animations.Toast(`${playerName} has joined the game`, 2);
         }
         console.log(playersOnline, 'before loop');
-        var in = false;
+        var inArray = false;
         for (var ndx = 0; ndx < playersOnline.length; ndx++) {
           if (playersOnline[ndx] === playerName) {
-            in = true;
+            inArray = true;
           }
         }
-        if (!in) {
+        if (!inArray) {
           playersOnline.splice(playersOnline.indexOf(playerName), 1);
         }
         console.log(playersOnline, 'after loop');
