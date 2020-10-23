@@ -269,7 +269,7 @@ function scanLine(line) {
         chat: []
       };
     }
-    users[id].headshots = users[killerID].headshots + 1;
+    users[id].headshots = users[id].headshots + 1;
   }
   if (isKill) {
     var killerNameString = buildKillerNameString(word, isKill);
