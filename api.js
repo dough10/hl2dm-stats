@@ -273,6 +273,7 @@ function scanLine(line) {
       };
     }
     users[id].headshots = users[id].headshots + 1;
+    console.log(users[id])
   }
   if (isKill) {
     var killerNameString = buildKillerNameString(word, isKill);
