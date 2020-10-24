@@ -370,7 +370,7 @@ function parseServerStatus(status) {
     var notOnline = [...playersOnline];
     for (var ndx = 0; ndx < playersOnline.length; ndx++) {
       for (var ndx2 = 0; ndx2 < status.players.length; ndx2++) {
-        console.log(playersOnline[ndx], status.players[ndx2])
+        // console.log(playersOnline[ndx], status.players[ndx2])
         if (playersOnline[ndx] === status.players[ndx2]) {
           notOnline.splice(notOnline.indexOf(playersOnline[ndx]), 1);
         }
@@ -383,7 +383,7 @@ function parseServerStatus(status) {
     //   playersOnline.splice(playersOnline.indexOf(player), 1);
     // });
 
-    // console.log(status.players, notOnline, playersOnline)
+    console.log(notOnline)
   }
 }
 
