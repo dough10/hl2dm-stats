@@ -364,7 +364,7 @@ function parseServerStatus(status) {
         }
       }
     }
-    console.log(notOnline, playersOnline)
+    console.log(status.players, notOnline, playersOnline)
   }
 }
 
