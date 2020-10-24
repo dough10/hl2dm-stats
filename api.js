@@ -10,13 +10,13 @@ var schedule = require('node-schedule');
 const dir = "/appdata/hl2dm/hl2mp";
 const logFolder = path.join(dir, 'logs');
 
-var users = {};
-var totalFiles = 0;
-var top = [];
-var weapons = {};
-var serverStatus;
-var cachedIDs = {};
-var totalPlayers = 0;
+var users = {};              // all users go in this object ie. {steamid: {name:playername, kills: 1934, deaths: 1689, kdr: 1.14, .....}}
+var totalFiles = 0;          // total # of log files in "logs" folder
+var top = [];                // players with over 100 kills sorted by KDR
+var weapons = {};            // server wide kill count sorted by weapons
+var serverStatus;            // placeholder for gamedig state
+var cachedIDs = {};          // maybe used for https://steamid.uk/steamidapi/ response caching
+var totalPlayers = 0;        // count all all players join the server
 
 console.log(`${new Date()} - Load Functions`);
 function isWeapon(weapon) {
@@ -250,6 +250,7 @@ function scanLine(line) {
     var id = getID(nameString);
     var name = getName(nameString);
     if (!users[id]) {
+      console.count('chatter not in obj');
       users[id] = {
         name: name,
         id: id,
@@ -297,6 +298,7 @@ function scanLine(line) {
     }
     // killer
     if (!users[killerID]) {
+      console.count('killer not in obj');
       users[killerID] = {
         name: killerName,
         id:killerID,
@@ -308,6 +310,7 @@ function scanLine(line) {
     }
     // killed
     if (!users[killedID]) {
+      console.count('killed not in obj');
       users[killedID] = {
         name: killedName,
         id: killedID,
@@ -370,6 +373,7 @@ function scanLine(line) {
       console.log(new Date() + line +  ' id error');
     }
     if (!users[id]) {
+      console.count('suicide not in obj');
       users[id] = {
         name: name,
         id: id,
@@ -403,6 +407,7 @@ function scanLine(line) {
     weapons.headshots = weapons.headshots + 1;
     var killerNameString = buildKillerNameString(word, isHeadshot - 1);
     var name = getName(killerNameString);
+    // loop through users to find the right name.. I need superlogs to give steamid3 or use https://steamid.uk/steamidapi/ for lookup
     for (var id in users) {
       if (users[id].name === name) {
         if (!users[id].headshots) {
@@ -413,9 +418,9 @@ function scanLine(line) {
     }
   } else if (isStats) {
     var stat = line.split('(');
-    for (var i = 0; i < stat.length; i++) {
-      console.log(stat);
-    }
+    // for (var i = 0; i < stat.length; i++) {
+    //   console.log(stat);
+    // }
   }
 }
 
