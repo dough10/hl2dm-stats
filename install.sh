@@ -30,6 +30,12 @@ then
     sudo apt-get install certbot -y
 fi
 
+echo "------------check jq install-----------"
+if ! command -v jq &> /dev/null
+then
+    sudo apt-get install jq -y
+fi
+
 echo "-------------ssl cert install--------------"
 certbot certonly -a webroot --webroot-path=/var/www/html -d hl2dm.dough10.me
 
