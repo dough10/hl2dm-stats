@@ -38,7 +38,7 @@ echo "------------check jq install-----------"
 
 echo "-------------ssl cert install--------------"
 hostname=$(jq .serverHostname config.json)
-certbot certonly -a webroot --webroot-path=/var/www/html -d $hostname
+sudo certbot certonly -a webroot --webroot-path=/var/www/html -d $hostname
 
 
 echo "----------install nginx site file----------"
