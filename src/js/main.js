@@ -251,7 +251,7 @@ function parseTopData(top) {
     icon.classList.add('HL2Weapons');
     icon.textContent = getWeaponIcon(fav[0]);
     text.textContent = fav[1];
-    favWrapper.title = `${fav[0]}: ${Math.round((fav[1] / player.kills) * 100)}`;
+    favWrapper.title = `${fav[0]}: ${Math.round((fav[1] / player.kills) * 100)}% of all kills`;
     favWrapper.appendChild(icon);
     favWrapper.appendChild(text);
     stats.appendChild(favWrapper);
