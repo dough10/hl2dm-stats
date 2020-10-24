@@ -515,7 +515,7 @@ function bytesToSize(bytes) {
 function getServerStatus() {
   Gamedig.query({
     type: 'hl2dm',
-    host: config.serverHostname;
+    host: config.serverHostname
   }).then((state) => {
     serverStatus = state;
     if (serverStatus.players.length > 0) {
