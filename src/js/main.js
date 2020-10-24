@@ -71,8 +71,11 @@ function createNoCard() {
 
 function createSVG(d, count, title) {
   const wrapper = createWrapper();
+  const tooltip = document.createElement('div');
   wrapper.style.margin = '0 0.2em';
-  wrapper.title = `${title}: ${count}`;
+  wrapper.classList.add('tooltip');
+  tooltip.classList.add('tooltiptext');
+  tooltip.textContent = `${title}: ${count}`;
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.classList.add('svg');
   svg.classList.add('eight-right');
