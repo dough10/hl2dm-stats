@@ -160,7 +160,7 @@ function displayWeaponData(wrappers, weapons, kills) {
     text.classList.add('weapon-count');
     icon.textContent = getWeaponIcon(weaponName);
     text.textContent = count;
-    const tooptip = document.createElement('span');
+    const tooptip = document.createElement('div');
     tooltip.classList.add('tooltiptext');
     tooltip.textContent = `${weaponName}: ${precent}% of all kills`;
     // weapContainer.title = `${weaponName}: ${precent}% of all kills`;
