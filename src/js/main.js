@@ -303,7 +303,6 @@ function parseTopData(top) {
   var total = 0;
   for (var n = 0; n < top[1].length; n++)  {
     if (top[1][n][0] !== 'headshots') {
-      console.log(top[1][n][0])
       total = total + top[1][n][1];
     }
   }

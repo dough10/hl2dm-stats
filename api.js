@@ -398,11 +398,11 @@ function scanLine(line) {
     // if (!users[id][weapon]) {
     //   users[id][weapon] = 0;
     // }
-    // users[id][weapon] = users[id][weapon] + 1;
+    // users[id][weapon]++;
     if (!weapons[weapon]) {
       weapons[weapon] = 0;
     }
-    weapons[weapon] = weapons[weapon] + 1;
+    weapons[weapon]++;
   } else if (isHeadshot) {
     if (!weapons.headshots) {
       weapons.headshots = 0;
