@@ -432,7 +432,7 @@ function scanLine(line) {
     var stat = line.split('(');
     console.log(nameString);
     for (var i = 1; i < stat.length; i++) {
-      console.log(stat);
+      console.log(stat[i]);
     }
   }
 }
