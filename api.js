@@ -16,7 +16,7 @@ var top = [];                // players with over 100 kills sorted by KDR
 var weapons = {};            // server wide kill count sorted by weapons
 var serverStatus;            // placeholder for gamedig state
 var cachedIDs = {};          // maybe used for https://steamid.uk/steamidapi/ response caching
-
+var totalPlayers = 0;        // count of total players to have joined the server
 
 Object.size = function(obj) {
   var size = 0, key;
@@ -444,6 +444,7 @@ function sortWeapons(user) {
 
 function sortUsersByKDR() {
   var arr = [];
+  totalPlayers = Object.size(users);
   for (var user in users) {
     if (users[user].kills >= 100) {
       arr.push(users[user]);
@@ -549,7 +550,11 @@ var j = schedule.scheduleJob('* * * 1 * *', cleanUp);
 
 console.log(`${new Date()} - Loading API backend calls`);
 app.get('/stats', (req, res) => {
-  res.send(JSON.stringify([top, weapons, Object.size(users)]));
+  res.send(JSON.stringify([
+    top,
+    weapons,
+    totalPlayers
+  ]));
 });
 
 app.get('/status', (reg, res) => {
