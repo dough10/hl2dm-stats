@@ -16,6 +16,7 @@ var top = [];
 var weapons = {};
 var serverStatus;
 var cachedIDs = {};
+var totalPlayers = 0;
 
 console.log(`${new Date()} - Load Functions`);
 function isWeapon(weapon) {
@@ -347,6 +348,7 @@ function scanLine(line) {
     ip = ip.replace(/:\d{4,5}$/, '');
     if (validateIPaddress(ip)) {
       if (!users[connectedUser]) {
+        totalPlayers = totalPlayers  + 1;
         users[connectedUser] = {
           name: connectedUserName,
           id:connectedUser,
@@ -536,7 +538,7 @@ var j = schedule.scheduleJob('* * * 1 * *', cleanUp);
 
 console.log(`${new Date()} - Loading API backend calls`);
 app.get('/stats', (req, res) => {
-  res.send(JSON.stringify([top, weapons]));
+  res.send(JSON.stringify([top, weapons, totalPlayers]));
 });
 
 app.get('/status', (reg, res) => {
