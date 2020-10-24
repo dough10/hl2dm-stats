@@ -194,7 +194,7 @@ function showApp() {
             new animations.Toast(`${numPlayersOnline} players online. Deathmatch had begun`, 2);
             break;
           case 4:
-            new animations.Toast(`${numPlayersOnline} players online. Still room`, 2);
+            new animations.Toast(`${numPlayersOnline} players online. Shits poppin off`, 2);
             break;
           case 5:
             new animations.Toast(`${numPlayersOnline} players online. Room for one more`, 2);
