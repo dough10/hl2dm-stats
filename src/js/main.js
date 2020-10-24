@@ -311,7 +311,7 @@ function parseTopData(top) {
     wrapper1,
     wrapper2
   ], top[1], total);
-  head.textContent = `${top[2]} players ${total} total kills`;
+  head.textContent = `Server Totals: ${top[2]} players - ${total} kills`;
   head.classList.add('server-stats');
   allWeaponsCard.appendChild(head);
   allWeaponsCard.appendChild(wrapper1);
