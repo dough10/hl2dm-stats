@@ -412,8 +412,9 @@ function scanLine(line) {
       }
     }
   } else if (isStats) {
-    for (var i = 0; i < word.length; i++) {
-      console.log(word[i]);
+    var stat = line.split('(');
+    for (var i = 0; i < stat.length; i++) {
+      console.log(stat);
     }
   }
 }
