@@ -10,40 +10,40 @@ echo '\e[33m'
 echo 'https://github.com/dough10/hl2dm-stats'
 echo '\e[39mUpdating...'
 
-echo "---------------stopping API---------------"
+echo "\e[39m---------------\e[33mstopping API\e[39m---------------"
 foreverOutput=$(forever list)
 uid=$(echo $foreverOutput | cut -d ' ' -f18)
 forever stop $uid
 
 
-echo "-------------pull from github-------------"
+echo "\e[39m---------------\e[33mpull from github\e[39m---------------"
 cd /var/www/hl2dm
 git stash
 git pull
 
 
-echo "-----------build app from source----------"
+echo "\e[39m---------------\e[33mbuild app from source\e[39m---------------"
 node build.js
 
 
-echo "----------------restart API---------------"
+echo "\e[39m---------------\e[33mrestart API\e[39m---------------"
 forever start api.js -l -o -e
 
 
-echo "----------update nginx site file----------"
+echo "\e[39m---------------\e[33mupdate nginx site file\e[39m---------------"
 cp -u -p /var/www/hl2dm/hl2 /etc/nginx/sites-enabled/hl2
 
 
-echo "--------------restart nginx---------------"
+echo "\e[39m---------------\e[33mrestart nginx\e[39m---------------"
 systemctl restart nginx
 
 
-echo "---------chmod sh files executable--------"
+echo "\e[39m---------------\e[33mchmod sh files executable\e[39m---------------"
 chmod +x ./monitor.sh
 chmod +x ./update.sh
 chmod +x ./start.sh
 chmod +x ./install.sh
 
 
-echo "--------------resume monitor--------------"
+echo "\e[39m---------------\e[33mresume monitor\e[39m---------------"
 ./monitor.sh

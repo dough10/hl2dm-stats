@@ -333,10 +333,10 @@ function parseServerStatus(status) {
       const div = document.createElement('div');
       div.textContent = "No Players Online";
       pContainer.appendChild(div);
-      for (var n = 0; n < playersOnline.length; n++) {
-        new animations.Toast(`${playersOnline[n]} has left the server`, 2);
-        playersOnline.splice(playersOnline.indexOf(playersOnline[n]), 1);
-      }
+      // for (var n = 0; n < playersOnline.length; n++) {
+      //   new animations.Toast(`${playersOnline[n]} has left the server`, 2);
+      //   playersOnline.splice(playersOnline.indexOf(playersOnline[n]), 1);
+      // }
     } else {
       numPlayersOnline = status.players.length;
       for (let i = 0; i < numPlayersOnline; i++) {
@@ -373,10 +373,11 @@ function parseServerStatus(status) {
       }
     }
     // remove player from online array and notify UI
-    notOnline.forEach(player => {
-      new animations.Toast(`${player} has left the server`, 2);
-      playersOnline.splice(playersOnline.indexOf(player), 1);
-    });
+    
+    // notOnline.forEach(player => {
+    //   new animations.Toast(`${player} has left the server`, 2);
+    //   playersOnline.splice(playersOnline.indexOf(player), 1);
+    // });
 
     console.log(status.players, notOnline, playersOnline)
   }
