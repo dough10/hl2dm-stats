@@ -17,6 +17,15 @@ var weapons = {};            // server wide kill count sorted by weapons
 var serverStatus;            // placeholder for gamedig state
 var cachedIDs = {};          // maybe used for https://steamid.uk/steamidapi/ response caching
 
+
+Object.size = function(obj) {
+  var size = 0, key;
+  for (key in obj) {
+    if (obj.hasOwnProperty(key)) size++;
+  }
+  return size;
+};
+
 console.log(`${new Date()} - Load Functions`);
 function isWeapon(weapon) {
   var w = [
@@ -383,8 +392,8 @@ function scanLine(line) {
         chat: []
       };
     }
-    users[id].kills = users[id].kills - 1;
-    users[id].deaths = users[id].deaths + 1;
+    users[id].kills--;
+    users[id].deaths++;
     users[id].kdr = Number((users[id].kills / users[id].deaths).toFixed(2));
     var weapon = word[word.length - 1].replace('"', '');
     weapon = weapon.replace('"', '');
@@ -404,7 +413,7 @@ function scanLine(line) {
     if (!weapons.headshots) {
       weapons.headshots = 0;
     }
-    weapons.headshots = weapons.headshots + 1;
+    weapons.headshots++;
     var killerNameString = buildKillerNameString(word, isHeadshot - 1);
     var name = getName(killerNameString);
     // loop through users to find the right name.. I need superlogs to give steamid3 or use https://steamid.uk/steamidapi/ for lookup
@@ -413,7 +422,7 @@ function scanLine(line) {
         if (!users[id].headshots) {
           users[id].headshots = 0;
         }
-        users[id].headshots = users[id].headshots + 1;
+        users[id].headshots++;
       }
     }
   } else if (isStats) {
