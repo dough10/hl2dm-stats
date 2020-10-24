@@ -17,6 +17,12 @@ var weapons = {};            // server wide kill count sorted by weapons
 var serverStatus;            // placeholder for gamedig state
 var cachedIDs = {};          // maybe used for https://steamid.uk/steamidapi/ response caching
 var totalPlayers = 0;        // count of total players to have joined the server
+var updated = false;         // if stats have been updated when a player reaches end of game kill count
+var logRefreshTime = 60;     // should be the same as mp_timelimit
+
+
+
+console.log(`${new Date()} - Load Functions`);
 
 Object.size = function(obj) {
   var size = 0, key;
@@ -26,7 +32,6 @@ Object.size = function(obj) {
   return size;
 };
 
-console.log(`${new Date()} - Load Functions`);
 function isWeapon(weapon) {
   var w = [
     '357',
@@ -54,7 +59,7 @@ function validateIPaddress(ip) {
 }
 
 function cacheTopResponse() {
-  console.log(`${new Date()} - Parsing logs`);
+  console.log(`${new Date()} - Clearing cache & parsing logs`);
   parseLogs().then(stats => {
     top = stats;
     // merge physics kills
@@ -74,8 +79,10 @@ function cacheTopResponse() {
     if (weapons.physics === 0) {
       delete weapons.physics;
     }
+    // convert weapons object into sorted by kill count array
     weapons = sortWeapons(weapons);
     for (var i = 0; i < top.length; i++) {
+      // merge player physics kills
       if (!top[i].physics) {
         top[i].physics = 0;
       }
@@ -92,6 +99,7 @@ function cacheTopResponse() {
       if (top[i].physics === 0) {
         delete top[i].physics;
       }
+      // extract weapons from player object and place in sorted by kill count array
       top[i].weapons = sortWeapons(top[i]);
     }
     setTimeout(_ => {
@@ -101,7 +109,7 @@ function cacheTopResponse() {
   });
 }
 
-async function parseLogs() {
+function parseLogs() {
   return new Promise((resolve, reject) => {
     weapons = {};
     fs.readdir(logFolder, (err, files) => {
@@ -498,7 +506,6 @@ function bytesToSize(bytes) {
    return `${Math.round(bytes / Math.pow(1024, i), 2)} ${sizes[i]}`;
 }
 
-var updated = false;
 function getServerStatus() {
   Gamedig.query({
     type: 'hl2dm',
@@ -507,7 +514,7 @@ function getServerStatus() {
     serverStatus = state;
     if (serverStatus.players.length > 0) {
       for (var i = 0; i < serverStatus.players.length; i++) {
-        if (serverStatus.players[i].score === 60 && !updated) {
+        if (serverStatus.players[i].score === serverStatus.raw.rules.mp_fraglimit && !updated) {
           updated = true;
           cacheTopResponse();
         }
@@ -541,7 +548,7 @@ function cleanUp() {
 
 console.log(`${new Date()} - Getting data`);
 cacheTopResponse();
-setInterval(cacheTopResponse, 3600000);
+setInterval(cacheTopResponse, (logRefreshTime * 60) * 1000);
 
 getServerStatus();
 setInterval(getServerStatus, 5000);
