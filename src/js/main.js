@@ -354,20 +354,23 @@ function parseServerStatus(status) {
             new animations.Toast(`${playerName} has joined the game`, 2);
           }
         }
-        var inArray = false;
-        for (var ndx = 0; ndx < playersOnline.length; ndx++) {
-          inArray = status.players.includes(playersOnline[ndx]);
-        }
-        console.log(inArray)
-        if (!inArray) {
-          playersOnline.splice(playersOnline.indexOf(playerName), 1);
-          if (loaded) {
-            new animations.Toast(`${playerName} has left the server`, 2);
-          }
+      }
+    }
+    var inArray = false;
+    for (var ndx = 0; ndx < playersOnline.length; ndx++) {
+      for (var ndx2 = 0; ndx2 < status.players.length) {
+        if (playersOnline[ndx] === status.players[ndx2]) {
+          inArray = true;
         }
       }
     }
-    // console.log(playersOnline)
+    if (!inArray) {
+      playersOnline.splice(playersOnline.indexOf(playerName), 1);
+      if (loaded) {
+        new animations.Toast(`${playerName} has left the server`, 2);
+      }
+    }
+    console.log(playersOnline)
   }
 }
 
