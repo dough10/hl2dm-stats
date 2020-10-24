@@ -21,19 +21,19 @@ node build.js
 echo "------------check nginx install-----------"
 if [ $(dpkg-query -W -f='${Status}' nginx 2>/dev/null | grep -c "ok installed") -eq 0 ];
 then
-    sudo apt-get install nginx -y
+    # sudo apt-get install nginx -y
 fi
 
 echo "------------check certbot install-----------"
 if [ $(dpkg-query -W -f='${Status}' certbot 2>/dev/null | grep -c "ok installed") -eq 0 ];
 then
-    sudo apt-get install certbot -y
+    # sudo apt-get install certbot -y
 fi
 
 echo "------------check jq install-----------"
 if [ $(dpkg-query -W -f='${Status}' jq 2>/dev/null | grep -c "ok installed") -eq 0 ];
 then
-    sudo apt-get install jq -y
+    # sudo apt-get install jq -y
 fi
 
 echo "-------------ssl cert install--------------"
