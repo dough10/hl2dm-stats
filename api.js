@@ -108,7 +108,7 @@ function cacheTopResponse() {
     }
     setTimeout(_ => {
       updated = false;
-    }, 10000);
+    }, 60000);
     console.log(`${new Date()} - Logs parsed & cached`);
   });
 }
