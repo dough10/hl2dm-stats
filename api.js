@@ -353,9 +353,9 @@ function scanLine(line) {
       };
     }
     // add kill
-    users[killerID].kills = users[killerID].kills + 1;
+    users[killerID].kills++;
     // add death
-    users[killedID].deaths = users[killedID].deaths + 1
+    users[killedID].deaths++;
     // calculate KDR
     users[killerID].kdr = Number((users[killerID].kills / users[killerID].deaths).toFixed(2));
     if (users[killerID].kdr === Infinity) {
@@ -371,9 +371,9 @@ function scanLine(line) {
       weapons[weapon] = 0;
     }
     // add killer kill with weapon
-    users[killerID][weapon] = users[killerID][weapon] + 1;
+    users[killerID][weapon]++;
     // add server wide weapon kill
-    weapons[weapon] = weapons[weapon] + 1;
+    weapons[weapon]++;
   } else if (isSuicide) {
     var nameString = buildKillerNameString(word, isSuicide);
     var id = getID(nameString);
