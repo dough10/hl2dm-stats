@@ -499,7 +499,7 @@ qs('#demos').onClick(_ => {
 qs('#fab').onClick(animations.animateScroll);
 
 window.onload = registerServiceWorker().then(reg => {
-  qs('.foot').style.minHeight = `${window.innerHeight}px`;
+  // qs('.foot').style.minHeight = `${window.innerHeight}px`;
   fetchServerStatus();
   setInterval(fetchServerStatus, 5000);
   fetchTop();
