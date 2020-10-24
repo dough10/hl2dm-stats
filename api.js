@@ -258,7 +258,6 @@ function scanLine(line) {
     var id = getID(nameString);
     var name = getName(nameString);
     if (!users[id]) {
-      console.count('chatter not in obj');
       users[id] = {
         name: name,
         id: id,
@@ -328,8 +327,6 @@ function scanLine(line) {
     }
     // killer
     if (!users[killerID]) {
-      // console.count('killer not in obj');
-      console.log(killerName);
       users[killerID] = {
         name: killerName,
         id:killerID,
@@ -341,8 +338,6 @@ function scanLine(line) {
     }
     // killed
     if (!users[killedID]) {
-      // console.count('killed not in obj');
-      console.log(killedName);
       users[killedID] = {
         name: killedName,
         id: killedID,
@@ -382,7 +377,6 @@ function scanLine(line) {
       console.log(new Date() + line +  ' id error');
     }
     if (!users[id]) {
-      console.count('suicide not in obj');
       users[id] = {
         name: name,
         id: id,
@@ -555,7 +549,7 @@ var j = schedule.scheduleJob('* * * 1 * *', cleanUp);
 
 console.log(`${new Date()} - Loading API backend calls`);
 app.get('/stats', (req, res) => {
-  res.send(JSON.stringify([top, weapons, users.length]));
+  res.send(JSON.stringify([top, weapons, Object.size(users)]));
 });
 
 app.get('/status', (reg, res) => {
