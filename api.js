@@ -299,6 +299,7 @@ function scanLine(line) {
     // killer
     if (!users[killerID]) {
       console.count('killer not in obj');
+      console.log(killerName, killerID);
       users[killerID] = {
         name: killerName,
         id:killerID,
@@ -311,6 +312,7 @@ function scanLine(line) {
     // killed
     if (!users[killedID]) {
       console.count('killed not in obj');
+      console.log(killedName, killedID);
       users[killedID] = {
         name: killedName,
         id: killedID,
