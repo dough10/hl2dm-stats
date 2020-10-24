@@ -370,20 +370,16 @@ function parseServerStatus(status) {
     var notOnline = [...playersOnline];
     for (var ndx = 0; ndx < playersOnline.length; ndx++) {
       for (var ndx2 = 0; ndx2 < status.players.length; ndx2++) {
-        console.log(notOnline[ndx] === status.players[ndx2].name);
         if (notOnline[ndx] === status.players[ndx2].name) {
           notOnline.splice(notOnline.indexOf(notOnline[ndx]), 1);
         }
       }
     }
     // remove player from online array and notify UI
-
-    // notOnline.forEach(player => {
-    //   new animations.Toast(`${player} has left the server`, 2);
-    //   playersOnline.splice(playersOnline.indexOf(player), 1);
-    // });
-
-    console.log(notOnline)
+    notOnline.forEach(player => {
+      new animations.Toast(`${player} has left the server`, 2);
+      playersOnline.splice(playersOnline.indexOf(player), 1);
+    });
   }
 }
 
