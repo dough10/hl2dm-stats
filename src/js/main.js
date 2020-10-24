@@ -297,6 +297,7 @@ function parseTopData(top) {
     }, 200);
   }
   const allWeaponsCard = createNoCard();
+  const head = document.createElement('div');
   const wrapper1 = createWrapper();
   const wrapper2 = createWrapper();
   wrapper2.style.marginTop = '24px';
@@ -310,6 +311,8 @@ function parseTopData(top) {
     wrapper1,
     wrapper2
   ], top[1], total);
+  head.textContent = `${top[2]} players ${total} total kills`;
+  allWeaponsCard.appendChild(head);
   allWeaponsCard.appendChild(wrapper1);
   allWeaponsCard.appendChild(wrapper2);
   qs('#cardsWrapper').appendChild(allWeaponsCard);
