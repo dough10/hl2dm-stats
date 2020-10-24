@@ -356,7 +356,8 @@ function parseServerStatus(status) {
         }
       }
     }
-    var notOnline = playersOnline;
+    var notOnline = [...playersOnline];
+    console.log(notOnline)
     for (var ndx = 0; ndx < playersOnline.length; ndx++) {
       for (var ndx2 = 0; ndx2 < status.players.length; ndx2++) {
         if (playersOnline[ndx] === status.players[ndx2]) {

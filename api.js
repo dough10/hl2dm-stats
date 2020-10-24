@@ -15,6 +15,7 @@ var totalFiles = 0;
 var top = [];
 var weapons = {};
 var serverStatus;
+var cachedIDs = {};
 
 console.log(`${new Date()} - Load Functions`);
 function isWeapon(weapon) {
