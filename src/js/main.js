@@ -356,13 +356,10 @@ function parseServerStatus(status) {
         }
       }
     }
-    var inArray = false;
     for (var ndx = 0; ndx < playersOnline.length; ndx++) {
-      for (var ndx2 = 0; ndx2 < status.players.length; ndx2++) {
-        if (status.players[ndx2].name === playersOnline[ndx]) {
-          inArray = true;
-        }
-      }
+      console.log(status.players.includes(playersOnline[ndx]))
+    }
+    for (var ndx2 = 0; ndx2 < status.players.length; ndx2++) {
     }
     if (!inArray) {
       playersOnline.splice(playersOnline.indexOf(playerName), 1);
