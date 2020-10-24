@@ -302,7 +302,8 @@ function parseTopData(top) {
   wrapper2.style.marginTop = '24px';
   var total = 0;
   for (var n = 0; n < top[1].length; n++)  {
-    if (top[1] !== 'headshots') {
+    console.log(top[1][n][0])
+    if (top[1][n][0] !== 'headshots') {
       total = total + top[1][n][1];
     }
   }
