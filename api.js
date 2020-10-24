@@ -10,8 +10,13 @@ const Gamedig = require('gamedig');
 var schedule = require('node-schedule');
 
 const config = require(__dirname + '/config.json');
-const logFolder = path.join(config.dir, 'logs');
+const logFolder = path.join(config.gameServerDir, 'logs');
 
+/**
+ *
+ *  global variables
+ *
+ */
 var users = {};              // all users go in this object ie. {steamid: {name:playername, kills: 1934, deaths: 1689, kdr: 1.14, .....}}
 var totalFiles = 0;          // total # of log files in "logs" folder
 var top = [];                // players with over 100 kills sorted by KDR
@@ -20,7 +25,6 @@ var serverStatus;            // placeholder for gamedig state
 var cachedIDs = {};          // maybe used for https://steamid.uk/steamidapi/ response caching
 var totalPlayers = 0;        // count of total players to have joined the server
 var updated = false;         // if stats have been updated when a player reaches end of game kill count
-var logRefreshTime = 60;     // should be the same as mp_timelimit
 
 console.log(`${new Date()} - Load Functions`);
 
@@ -471,7 +475,7 @@ function sortUsersByKDR() {
 function getDemos() {
   return new Promise((resolve, reject) => {
     var demos = [];
-    fs.readdir(config.dir, (err, files) => {
+    fs.readdir(config.gameServerDir, (err, files) => {
       for (var i = 0; i < files.length; i++) {
         if (path.extname(files[i]) === '.dem') {
           demos.push(files[i]);
@@ -511,7 +515,7 @@ function bytesToSize(bytes) {
 function getServerStatus() {
   Gamedig.query({
     type: 'hl2dm',
-    host: 'hl2dm.dough10.me'
+    host: config.serverHostname;
   }).then((state) => {
     serverStatus = state;
     if (serverStatus.players.length > 0) {
@@ -522,10 +526,12 @@ function getServerStatus() {
         }
       }
       console.log(`${new Date()} - `, serverStatus.players);
+    } else {
+      console.log(`${new Date()} - hl2dm server is online`);
     }
   }).catch((error) => {
     serverStatus = 'offline';
-    // console.log(`${new Date()} - hl2dm server is offline`, error);
+    console.log(`${new Date()} - hl2dm server is offline`);
   });
 }
 
@@ -536,7 +542,7 @@ function cleanUp() {
   fs.readdir(logFolder, (err, files) => {
     numFiles = numFiles + files.length;
     files.forEach(fs.unlinkSync);
-    fs.readdir(config.dir, (err, files) => {
+    fs.readdir(config.gameServerDir, (err, files) => {
       files.forEach(file => {
         numFiles = numFiles + files.length;
         if (path.extname(file) === '.dem') {
@@ -550,7 +556,7 @@ function cleanUp() {
 
 console.log(`${new Date()} - Getting data`);
 cacheTopResponse();
-setInterval(cacheTopResponse, (logRefreshTime * 60) * 1000);
+setInterval(cacheTopResponse, (config.logRefreshTime * 60) * 1000);
 
 getServerStatus();
 setInterval(getServerStatus, 5000);
@@ -571,7 +577,7 @@ app.get('/status', (reg, res) => {
 });
 
 app.get('/download/:file', (reg, res) => {
-  var dl = `${config.dir}/${reg.params.file}`;
+  var dl = `${config.gameServerDir}/${reg.params.file}`;
   console.log(`${new Date()} - File downloaded `, dl);
   res.download(dl, reg.params.file);
 });
@@ -580,7 +586,7 @@ app.get('/demos', (reg,res) => {
  var html = '<head><title>Lo-g Deathmatch Hoedown Demos</title></head><h1 style="text-align: center">Lo-g Deathmatch Hoedown Demos</h1><table style="width: 100%"><tr><th>filename</th><th>size</th><th>date/time</th></tr>';
  getDemos().then(demos => {
    for (var i = 0; i < demos.length; i++) {
-     html = `${html}<tr><th><a href=/api/download/${demos[i]}>${demos[i]}</a></th><th>${bytesToSize(getFilesizeInBytes(`${config.dir }/${demos[i]}`))}</th><th>${createdDate(`${config.dir}/${demos[i]}`)}</th></tr>`;
+     html = `${html}<tr><th><a href=/api/download/${demos[i]}>${demos[i]}</a></th><th>${bytesToSize(getFilesizeInBytes(`${config.gameServerDir }/${demos[i]}`))}</th><th>${createdDate(`${config.gameServerDir}/${demos[i]}`)}</th></tr>`;
    }
    res.send(`${html}</table>`);
  });

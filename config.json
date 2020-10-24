@@ -1,3 +1,5 @@
 {
-  "dir": "/appdata/hl2dm/hl2mp"
+  "gameServerDir": "/appdata/hl2dm/hl2mp",
+  "serverHostname": "hl2dm.dough10.me",
+  "logRefreshTime": 60
 }
