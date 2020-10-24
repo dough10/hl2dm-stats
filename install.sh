@@ -19,25 +19,26 @@ node build.js
 
 
 echo "------------check nginx install-----------"
-if ! command -v nginx &> /dev/null
+if [ $(dpkg-query -W -f='${Status}' nginx 2>/dev/null | grep -c "ok installed") -eq 0 ];
 then
     sudo apt-get install nginx -y
 fi
 
 echo "------------check certbot install-----------"
-if ! command -v certbot &> /dev/null
+if [ $(dpkg-query -W -f='${Status}' certbot 2>/dev/null | grep -c "ok installed") -eq 0 ];
 then
     sudo apt-get install certbot -y
 fi
 
 echo "------------check jq install-----------"
-if ! command -v jq &> /dev/null
+if [ $(dpkg-query -W -f='${Status}' jq 2>/dev/null | grep -c "ok installed") -eq 0 ];
 then
     sudo apt-get install jq -y
 fi
 
 echo "-------------ssl cert install--------------"
-certbot certonly -a webroot --webroot-path=/var/www/html -d hl2dm.dough10.me
+hostname=jq .serverHostname config.json
+certbot certonly -a webroot --webroot-path=/var/www/html -d $hostname
 
 
 echo "----------install nginx site file----------"
