@@ -378,12 +378,12 @@ function parseServerStatus(status) {
     }
     // remove player from online array and notify UI
 
-    notOnline.forEach(player => {
-      new animations.Toast(`${player} has left the server`, 2);
-      playersOnline.splice(playersOnline.indexOf(player), 1);
-    });
+    // notOnline.forEach(player => {
+    //   new animations.Toast(`${player} has left the server`, 2);
+    //   playersOnline.splice(playersOnline.indexOf(player), 1);
+    // });
 
-    console.log(status.players, notOnline, playersOnline)
+    // console.log(status.players, notOnline, playersOnline)
   }
 }
 
