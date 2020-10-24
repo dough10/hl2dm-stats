@@ -396,7 +396,7 @@ function scanLine(line) {
       weapons[weapon] = 0;
     }
     weapons[weapon] = weapons[weapon] + 1;
-  } else  if (isHeadshot) {
+  } else if (isHeadshot) {
     if (!weapons.headshots) {
       weapons.headshots = 0;
     }
@@ -412,7 +412,9 @@ function scanLine(line) {
       }
     }
   } else if (isStats) {
-    // console.log(line);
+    for (var i = 0; i < word.length; i++) {
+      console.log(word[i]);
+    }
   }
 }
 
