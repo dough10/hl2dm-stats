@@ -35,14 +35,14 @@ cp -u -p /var/www/hl2dm/hl2 /etc/nginx/sites-enabled/hl2
 
 
 echo "\e[39m---------------\e[33mrestart nginx\e[39m---------------"
-systemctl restart nginx
+sudo systemctl restart nginx
 
 
 echo "\e[39m---------------\e[33mchmod sh files executable\e[39m---------------"
-chmod +x ./monitor.sh
-chmod +x ./update.sh
-chmod +x ./start.sh
-chmod +x ./install.sh
+sudo chmod +x ./monitor.sh
+sudo chmod +x ./update.sh
+sudo chmod +x ./start.sh
+sudo chmod +x ./install.sh
 
 
 echo "\e[39m---------------\e[33mresume monitor\e[39m---------------"
