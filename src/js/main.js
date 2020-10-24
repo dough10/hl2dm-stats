@@ -359,7 +359,7 @@ function parseServerStatus(status) {
     var inArray = false;
     for (var ndx = 0; ndx < playersOnline.length; ndx++) {
       for (var ndx2 = 0; ndx2 < status.players.length; ndx2++) {
-        if (playersOnline[ndx] === status.players[ndx2]) {
+        if (status.players[ndx2].name === playersOnline[ndx]) {
           inArray = true;
         }
       }
