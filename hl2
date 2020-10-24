@@ -22,8 +22,8 @@ server {
         http2_push /favicon.ico;
         http2_push /manifest.json;
         http2_push /js/main.js;
-        http2_push /images/avatar.png;
-        http2_push /images/logo.png;
+        http2_push /images/avatar.webp;
+        http2_push /images/logo.webp;
         http2_push /images/logo152.png;
         http2_push /images/logo192.png;
         http2_push /css/paper-ripple.min.css;
