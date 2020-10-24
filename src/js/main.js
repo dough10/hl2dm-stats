@@ -3,22 +3,13 @@ import {qs, qsa} from './modules/helpers.js';
 import * as ripples from './modules/ripples.js';
 import {loadCSSFile, loadJSFile} from './modules/loadFiles.js';
 
-var pressEvent = whichEvent();
 var numPlayersOnline  = 0;
 var playersOnline = [];
 var loaded = false;
 
 HTMLElement.prototype.onClick = function (cb) {
-  this.addEventListener(pressEvent, cb, false);
+  this.addEventListener('click', cb, false);
 };
-
-function whichEvent() {
-  if (isSmallScreen()) {
-    return 'tap';
-  } else {
-    return 'click';
-  }
-}
 
 function applyRipples() {
   return new Promise(resolve => {
