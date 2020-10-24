@@ -428,10 +428,12 @@ function scanLine(line) {
       }
     }
   } else if (isStats) {
+    var nameString = buildKillerNameString(word, isChat);
     var stat = line.split('(');
-    // for (var i = 0; i < stat.length; i++) {
-    //   console.log(stat);
-    // }
+    console.log(nameString);
+    for (var i = 1; i < stat.length; i++) {
+      console.log(stat);
+    }
   }
 }
 
