@@ -370,8 +370,8 @@ function parseServerStatus(status) {
     var notOnline = [...playersOnline];
     for (var ndx = 0; ndx < playersOnline.length; ndx++) {
       for (var ndx2 = 0; ndx2 < status.players.length; ndx2++) {
-        console.log(notOnline[ndx] === status.players[ndx2]);
-        if (notOnline[ndx] === status.players[ndx2]) {
+        console.log(notOnline[ndx] === status.players[ndx2].name);
+        if (notOnline[ndx] === status.players[ndx2].name) {
           notOnline.splice(notOnline.indexOf(notOnline[ndx]), 1);
         }
       }
