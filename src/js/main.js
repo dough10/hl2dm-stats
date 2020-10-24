@@ -356,17 +356,16 @@ function parseServerStatus(status) {
         }
       }
     }
-    for (var ndx = 0; ndx < playersOnline.length; ndx++) {
-      console.log(status.players.includes(playersOnline[ndx]))
-    }
+    var inArray = false;
     for (var ndx2 = 0; ndx2 < status.players.length; ndx2++) {
+      inArray = playersOnline.includes(status.players[ndx2].name);
     }
-    // if (!inArray) {
-    //   playersOnline.splice(playersOnline.indexOf(playerName), 1);
-    //   if (loaded) {
-    //     new animations.Toast(`${playerName} has left the server`, 2);
-    //   }
-    // }
+    if (!inArray) {
+      playersOnline.splice(playersOnline.indexOf(playerName), 1);
+      if (loaded) {
+        new animations.Toast(`${playerName} has left the server`, 2);
+      }
+    }
     console.log(playersOnline)
   }
 }
