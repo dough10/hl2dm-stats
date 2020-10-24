@@ -360,6 +360,7 @@ function parseServerStatus(status) {
             inArray = true;
           }
         }
+        console.log(playersOnline, inArray)
         if (!inArray) {
           playersOnline.splice(playersOnline.indexOf(playerName), 1);
           if (loaded) {
@@ -368,7 +369,7 @@ function parseServerStatus(status) {
         }
       }
     }
-    console.log(playersOnline)
+    // console.log(playersOnline)
   }
 }
 
