@@ -362,9 +362,7 @@ function parseServerStatus(status) {
     }
     if (!inArray && playerName !== undefined) {
       playersOnline.splice(playersOnline.indexOf(playerName), 1);
-      if (loaded) {
-        new animations.Toast(`${playerName} has left the server`, 2);
-      }
+      new animations.Toast(`${playerName} has left the server`, 2);
     }
     console.log(playersOnline)
   }
