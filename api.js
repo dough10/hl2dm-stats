@@ -410,7 +410,7 @@ function scanLine(line) {
       }
     }
   } else if (isStats) {
-    console.log(line);
+    // console.log(line);
   }
 }
 
