@@ -152,7 +152,7 @@ function displayWeaponData(wrappers, weapons, kills) {
     weapContainer.classList.add('tooltip');
     const icon = document.createElement('div');
     const text = document.createElement('div');
-    const tooptip = document.createElement('div');
+    const tooltip = document.createElement('div');
     if (weaponName === 'headshots') {
       icon.classList.add('CS');
     } else {
