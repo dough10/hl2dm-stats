@@ -227,6 +227,15 @@ function lineIsHeadshot(line) {
   return false;
 }
 
+function lineIsStats(line) {
+  for (var i = 0; i < line.length; i++) {
+    if (line[i] === '"weaponstats"') {
+      return i;
+    }
+  }
+  return false;
+}
+
 function scanLine(line) {
   var word  = line.split(' ');
   var isKill = lineIsKill(word);
@@ -234,6 +243,7 @@ function scanLine(line) {
   var isSuicide = lineIsSuicide(word);
   var isChat = lineIsChat(word);
   var isHeadshot  = lineIsHeadshot(word);
+  var isStats = lineIsStats(word);
   if (isChat) {
     var nameString = buildKillerNameString(word, isChat);
     var id = getID(nameString);
@@ -399,6 +409,8 @@ function scanLine(line) {
         users[id].headshots = users[id].headshots + 1;
       }
     }
+  } else if (isStats) {
+    console.log(line);
   }
 }
 
