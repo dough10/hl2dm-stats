@@ -11,4 +11,4 @@ echo 'https://github.com/dough10/hl2dm-stats'
 echo '\e[39mMonitoring..'
 foreverOutput=$(forever list)
 log=$(echo $foreverOutput | cut -d ' ' -f18)
-tail -f /root/.forever/$log.log
+tail -f $HOME/.forever/$log.log
