@@ -327,7 +327,10 @@ function parseServerStatus(status) {
       const div = document.createElement('div');
       div.textContent = "No Players Online";
       pContainer.appendChild(div);
-      playersOnline = [];
+      for (var n = 0; n < playersOnline.length; n++) {
+        new animations.Toast(`${playersOnline[n]} has left the server`, 2);
+        playersOnline.splice(playersOnline.indexOf(playersOnline[n]), 1);
+      }
     } else {
       numPlayersOnline = status.players.length;
       for (let i = 0; i < numPlayersOnline; i++) {
