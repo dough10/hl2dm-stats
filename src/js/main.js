@@ -356,15 +356,14 @@ function parseServerStatus(status) {
         }
       }
     }
-    var inArray = false;
+    var inArray = true;
     var name;
     for (var ndx2 = 0; ndx2 < status.players.length; ndx2++) {
-      if (playersOnline.includes(status.players[ndx2].name)) {
+      if (status.players[ndx2].name && !playersOnline.includes(status.players[ndx2].name)) {
         name = status.players[ndx2].name;
-        inArray = true;
+        inArray = false;
       }
     }
-    console.log(name, inArray);
     if (!inArray && name !== undefined) {
       new animations.Toast(`${name} has left the server`, 2);
       playersOnline.splice(playersOnline.indexOf(name), 1);
