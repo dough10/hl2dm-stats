@@ -7,8 +7,8 @@ const app = express();
 const Gamedig = require('gamedig');
 var schedule = require('node-schedule');
 
-const dir = "/appdata/hl2dm/hl2mp";
-const logFolder = path.join(dir, 'logs');
+const config = require(__dirname + '/config.json');
+const logFolder = path.join(config.dir, 'logs');
 
 var users = {};              // all users go in this object ie. {steamid: {name:playername, kills: 1934, deaths: 1689, kdr: 1.14, .....}}
 var totalFiles = 0;          // total # of log files in "logs" folder
@@ -19,8 +19,6 @@ var cachedIDs = {};          // maybe used for https://steamid.uk/steamidapi/ re
 var totalPlayers = 0;        // count of total players to have joined the server
 var updated = false;         // if stats have been updated when a player reaches end of game kill count
 var logRefreshTime = 60;     // should be the same as mp_timelimit
-
-
 
 console.log(`${new Date()} - Load Functions`);
 
@@ -471,7 +469,7 @@ function sortUsersByKDR() {
 function getDemos() {
   return new Promise((resolve, reject) => {
     var demos = [];
-    fs.readdir(dir, (err, files) => {
+    fs.readdir(config.dir, (err, files) => {
       for (var i = 0; i < files.length; i++) {
         if (path.extname(files[i]) === '.dem') {
           demos.push(files[i]);
@@ -536,7 +534,7 @@ function cleanUp() {
   fs.readdir(logFolder, (err, files) => {
     numFiles = numFiles + files.length;
     files.forEach(fs.unlinkSync);
-    fs.readdir(dir, (err, files) => {
+    fs.readdir(config.dir, (err, files) => {
       files.forEach(file => {
         numFiles = numFiles + files.length;
         if (path.extname(file) === '.dem') {
@@ -571,7 +569,7 @@ app.get('/status', (reg, res) => {
 });
 
 app.get('/download/:file', (reg, res) => {
-  var dl = `${dir}/${reg.params.file}`;
+  var dl = `${config.dir}/${reg.params.file}`;
   console.log(`${new Date()} - File downloaded `, dl);
   res.download(dl, reg.params.file);
 });
@@ -580,7 +578,7 @@ app.get('/demos', (reg,res) => {
  var html = '<head><title>Lo-g Deathmatch Hoedown Demos</title></head><h1 style="text-align: center">Lo-g Deathmatch Hoedown Demos</h1><table style="width: 100%"><tr><th>filename</th><th>size</th><th>date/time</th></tr>';
  getDemos().then(demos => {
    for (var i = 0; i < demos.length; i++) {
-     html = `${html}<tr><th><a href=/api/download/${demos[i]}>${demos[i]}</a></th><th>${bytesToSize(getFilesizeInBytes(`${dir }/${demos[i]}`))}</th><th>${createdDate(`${dir}/${demos[i]}`)}</th></tr>`;
+     html = `${html}<tr><th><a href=/api/download/${demos[i]}>${demos[i]}</a></th><th>${bytesToSize(getFilesizeInBytes(`${config.dir }/${demos[i]}`))}</th><th>${createdDate(`${config.dir}/${demos[i]}`)}</th></tr>`;
    }
    res.send(`${html}</table>`);
  });
