@@ -526,12 +526,9 @@ function getServerStatus() {
         }
       }
       console.log(`${new Date()} - `, serverStatus.players);
-    } else {
-      console.log(`${new Date()} - hl2dm server is online`);
     }
   }).catch((error) => {
     serverStatus = 'offline';
-    console.log(`${new Date()} - hl2dm server is offline`);
   });
 }
 
