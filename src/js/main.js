@@ -8,6 +8,10 @@ var numPlayersOnline  = 0;
 var playersOnline = [];
 var loaded = false;
 
+HTMLElement.prototype.onClick = function (cb) {
+  this.addEventListener(pressEvent, cb, false);
+};
+
 function whichEvent() {
   if (isSmallScreen()) {
     return 'tap';
@@ -502,10 +506,6 @@ qs('#demos').onClick(_ => {
 });
 
 qs('#fab').onClick(animations.animateScroll);
-
-HTMLElement.prototype.onClick = function (cb) {
-  this.addEventListener(pressEvent, cb, false);
-};
 
 window.onload = registerServiceWorker().then(reg => {
   // qs('.foot').style.minHeight = `${window.innerHeight}px`;
