@@ -523,7 +523,7 @@ function getServerStatus() {
     }
   }).catch((error) => {
     serverStatus = 'offline';
-    console.log(`${new Date()} - hl2dm server is offline`, error);
+    // console.log(`${new Date()} - hl2dm server is offline`, error);
   });
 }
 
