@@ -233,10 +233,28 @@ function scanLine(line) {
   var isSuicide = lineIsSuicide(word);
   var isChat = lineIsChat(word);
   var isHeadshot  = lineIsHeadshot(word);
-  if (isKill) {
-    if (isChat)  {
-      return;
+  if (isChat) {
+    var nameString = buildKillerNameString(word, isChat);
+    var id = getID(nameString);
+    var name = getName(nameString);
+    if (!users[id]) {
+      users[id] = {
+        name: name,
+        id: id,
+        kills: 0,
+        deaths: 0,
+        kdr: 0,
+        chat: []
+      };
     }
+    var said = '';
+    for (var i = (isChat + 1); i < word.length; i++) {
+      said = `${said}${word[i]} `;
+    }
+    said.replace('"', '');
+    said.replace('"', '');
+    users[id].chat.push(said);
+  } else if (isKill) {
     var killerNameString = buildKillerNameString(word, isKill);
     var killerID = getID(killerNameString);
     var killerName = getName(killerNameString);
@@ -365,27 +383,6 @@ function scanLine(line) {
       weapons[weapon] = 0;
     }
     weapons[weapon] = weapons[weapon] + 1;
-  } else if (isChat) {
-    var nameString = buildKillerNameString(word, isChat);
-    var id = getID(nameString);
-    var name = getName(nameString);
-    if (!users[id]) {
-      users[id] = {
-        name: name,
-        id: id,
-        kills: 0,
-        deaths: 0,
-        kdr: 0,
-        chat: []
-      };
-    }
-    var said = '';
-    for (var i = (isChat + 1); i < word.length; i++) {
-      said = `${said}${word[i]} `;
-    }
-    said.replace('"', '');
-    said.replace('"', '');
-    users[id].chat.push(said);
   } else  if (isHeadshot) {
     if (!weapons.headshots) {
       weapons.headshots = 0;
