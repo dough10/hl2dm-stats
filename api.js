@@ -428,7 +428,7 @@ function scanLine(line) {
       }
     }
   } else if (isStats) {
-    var nameString = buildKillerNameString(word, isChat);
+    var nameString = buildKillerNameString(word, isStats - 1);
     var stat = line.split('(');
     for (var i = 1; i < stat.length; i++) {
       console.log(nameString, stat[i]);
