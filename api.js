@@ -16,7 +16,6 @@ var top = [];                // players with over 100 kills sorted by KDR
 var weapons = {};            // server wide kill count sorted by weapons
 var serverStatus;            // placeholder for gamedig state
 var cachedIDs = {};          // maybe used for https://steamid.uk/steamidapi/ response caching
-var totalPlayers = 0;        // count all all players join the server
 
 console.log(`${new Date()} - Load Functions`);
 function isWeapon(weapon) {
@@ -276,7 +275,6 @@ function scanLine(line) {
     ip = ip.replace(/:\d{4,5}$/, '');
     if (validateIPaddress(ip)) {
       if (!users[connectedUser]) {
-        totalPlayers = totalPlayers  + 1;
         users[connectedUser] = {
           name: connectedUserName,
           id:connectedUser,
@@ -548,7 +546,7 @@ var j = schedule.scheduleJob('* * * 1 * *', cleanUp);
 
 console.log(`${new Date()} - Loading API backend calls`);
 app.get('/stats', (req, res) => {
-  res.send(JSON.stringify([top, weapons, totalPlayers]));
+  res.send(JSON.stringify([top, weapons, users.length]));
 });
 
 app.get('/status', (reg, res) => {
