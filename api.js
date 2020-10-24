@@ -234,6 +234,9 @@ function scanLine(line) {
   var isChat = lineIsChat(word);
   var isHeadshot  = lineIsHeadshot(word);
   if (isKill) {
+    if (isChat)  {
+      return;
+    }
     var killerNameString = buildKillerNameString(word, isKill);
     var killerID = getID(killerNameString);
     var killerName = getName(killerNameString);
