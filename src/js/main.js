@@ -345,10 +345,7 @@ function parseServerStatus(status) {
         spacer.classList.add('spacer');
         pContainer.appendChild(spacer);
         // for toasts
-        if (!playerName) {
-          return;
-        }
-        if (!playersOnline.includes(playerName)) {
+        if (playerName && !playersOnline.includes(playerName)) {
           playersOnline.push(playerName);
           if (loaded) {
             new animations.Toast(`${playerName} has joined the game`, 2);
@@ -356,13 +353,13 @@ function parseServerStatus(status) {
         }
       }
     }
-    // for (var ndx2 = 0; ndx2 < status.players.length; ndx2++) {
-    //   if (status.players[ndx2].name && !playersOnline.includes(status.players[ndx2].name)) {
-    //     console.log(status.players[ndx2].name)
-    //     new animations.Toast(`${status.players[ndx2].name} has left the server`, 2);
-    //     playersOnline.splice(playersOnline.indexOf(status.players[ndx2].name), 1);
-    //   }
-    // }
+    for (var ndx2 = 0; ndx2 < status.players.length; ndx2++) {
+      if (status.players[ndx2].name && !playersOnline.includes(status.players[ndx2].name)) {
+        console.log(status.players, playersOnline)
+        // new animations.Toast(`${status.players[ndx2].name} has left the server`, 2);
+        // playersOnline.splice(playersOnline.indexOf(status.players[ndx2].name), 1);
+      }
+    }
     console.log(playersOnline)
   }
 }
