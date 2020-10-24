@@ -360,7 +360,7 @@ function parseServerStatus(status) {
     for (var ndx2 = 0; ndx2 < status.players.length; ndx2++) {
       inArray = playersOnline.includes(status.players[ndx2].name);
     }
-    if (!inArray) {
+    if (!inArray && playerName !== undefined) {
       playersOnline.splice(playersOnline.indexOf(playerName), 1);
       if (loaded) {
         new animations.Toast(`${playerName} has left the server`, 2);
