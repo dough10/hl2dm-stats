@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/dough10/hl2dm-stats#readme",
   "dependencies": {
+    "compression": "^1.7.4",
     "esperanto": "^0.7.6",
     "express": "^4.17.1",
     "forever": "^3.0.2",

@@ -2,8 +2,10 @@ console.log(`${new Date()} - Loading imports`);
 const path = require('path');
 const fs = require('fs');
 const readline = require('readline');
-const express = require('express')
+const express = require('express');
+const compression = require('compression');
 const app = express();
+app.use(compression());
 const Gamedig = require('gamedig');
 var schedule = require('node-schedule');
 
