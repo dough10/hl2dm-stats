@@ -76,6 +76,7 @@ function createSVG(d, count, title) {
   wrapper.classList.add('tooltip');
   tooltip.classList.add('tooltiptext');
   tooltip.textContent = `${title}: ${count}`;
+  wrapper.appendChild(tooltip);
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.classList.add('svg');
   svg.classList.add('eight-right');
