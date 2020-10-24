@@ -311,7 +311,7 @@ function parseTopData(top) {
     wrapper1,
     wrapper2
   ], top[1], total);
-  head.textContent = `Server Totals: ${top[2]} players - ${total} kills`;
+  head.textContent = `Server Totals: ${total} kills by ${top[2]} players`;
   head.classList.add('server-stats');
   allWeaponsCard.appendChild(head);
   allWeaponsCard.appendChild(wrapper1);
@@ -373,7 +373,7 @@ function parseServerStatus(status) {
       }
     }
     // remove player from online array and notify UI
-    
+
     // notOnline.forEach(player => {
     //   new animations.Toast(`${player} has left the server`, 2);
     //   playersOnline.splice(playersOnline.indexOf(player), 1);
