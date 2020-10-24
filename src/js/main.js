@@ -9,7 +9,7 @@ var playersOnline = [];
 var loaded = false;
 
 function whichEvent() {
-  if (window.innerWidth <== 500) {
+  if (isSmallScreen()) {
     return 'tap';
   } else {
     return 'click';
