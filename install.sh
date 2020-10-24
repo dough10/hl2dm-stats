@@ -21,13 +21,13 @@ node build.js
 echo "------------check nginx install-----------"
 if ! command -v nginx &> /dev/null
 then
-    apt-get install nginx -y
+    sudo apt-get install nginx -y
 fi
 
 echo "------------check certbot install-----------"
 if ! command -v certbot &> /dev/null
 then
-    apt-get install certbot -y
+    sudo apt-get install certbot -y
 fi
 
 echo "-------------ssl cert install--------------"
@@ -35,11 +35,11 @@ certbot certonly -a webroot --webroot-path=/var/www/html -d hl2dm.dough10.me
 
 
 echo "----------install nginx site file----------"
-cp -u -p /var/www/hl2dm/hl2 /etc/nginx/sites-enabled/hl2
+sudo cp -u -p /var/www/hl2dm/hl2 /etc/nginx/sites-enabled/hl2
 
 
 echo "--------------restart nginx---------------"
-systemctl restart nginx
+sudo systemctl restart nginx
 
 
 echo "-----------------start API----------------"
