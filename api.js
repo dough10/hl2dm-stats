@@ -383,6 +383,7 @@ function scanLine(line) {
     var name = getName(nameString);
     if (!id) {
       console.log(new Date() + line +  ' id error');
+      return;
     }
     if (!users[id]) {
       users[id] = {
@@ -430,9 +431,9 @@ function scanLine(line) {
   } else if (isStats) {
     var nameString = buildKillerNameString(word, isStats - 1);
     var stat = line.split('(');
-    for (var i = 1; i < stat.length; i++) {
-      console.log(nameString, stat[i]);
-    }
+    // for (var i = 1; i < stat.length; i++) {
+    //   console.log(nameString, stat[i]);
+    // }
   }
 }
 
