@@ -356,11 +356,9 @@ function parseServerStatus(status) {
         }
         var inArray = false;
         for (var ndx = 0; ndx < playersOnline.length; ndx++) {
-          if (playersOnline[ndx] === playerName) {
-            inArray = true;
-          }
+          inArray = status.players.includes(playersOnline[ndx]);
         }
-        console.log(playersOnline, inArray)
+        console.log(inArray)
         if (!inArray) {
           playersOnline.splice(playersOnline.indexOf(playerName), 1);
           if (loaded) {
