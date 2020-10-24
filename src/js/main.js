@@ -149,6 +149,7 @@ function displayWeaponData(wrappers, weapons, kills) {
     }
     const weapContainer = document.createElement('div');
     weapContainer.classList.add('weapon');
+    weapContainer.classList.add('tooltip');
     const icon = document.createElement('div');
     const text = document.createElement('div');
     if (weaponName === 'headshots') {
@@ -159,9 +160,13 @@ function displayWeaponData(wrappers, weapons, kills) {
     text.classList.add('weapon-count');
     icon.textContent = getWeaponIcon(weaponName);
     text.textContent = count;
-    weapContainer.title = `${weaponName}: ${precent}% of all kills`;
+    const tooptip = document.createElement('span');
+    tooltip.classList.add('tooltiptext');
+    tooltip.textContent = `${weaponName}: ${precent}% of all kills`;
+    // weapContainer.title = `${weaponName}: ${precent}% of all kills`;
     weapContainer.appendChild(icon);
     weapContainer.appendChild(text);
+    weapContainer.appendChild(tooltip);
     if (i < weapons.length / 2) {
       wrappers[0].appendChild(weapContainer);
     } else {
