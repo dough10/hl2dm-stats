@@ -3,13 +3,18 @@ import {qs, qsa} from './modules/helpers.js';
 import * as ripples from './modules/ripples.js';
 import {loadCSSFile, loadJSFile} from './modules/loadFiles.js';
 
-HTMLElement.prototype.onClick = function (cb) {
-  this.addEventListener('click', cb, false);
-};
-
+var pressEvent = whichEvent();
 var numPlayersOnline  = 0;
 var playersOnline = [];
 var loaded = false;
+
+function whichEvent() {
+  if (window.innerWidth <== 500) {
+    return 'tap';
+  } else {
+    return 'click';
+  }
+}
 
 function applyRipples() {
   return new Promise(resolve => {
@@ -490,10 +495,6 @@ qs('#paypal').onClick(_ => {
   window.location.href = 'https://www.paypal.me/jdough10';
 });
 
-// qs('#stats').onClick(_ => {
-//   window.location.href = '#cardsWrapper';
-// });
-
 qs('#demos').onClick(_ => {
   animations.animateElement(qs('#load'), 'translateY(0%)', 350).then(_ => {
     window.location.href = 'https://hl2dm.dough10.me/api/demos';
@@ -501,6 +502,10 @@ qs('#demos').onClick(_ => {
 });
 
 qs('#fab').onClick(animations.animateScroll);
+
+HTMLElement.prototype.onClick = function (cb) {
+  this.addEventListener(pressEvent, cb, false);
+};
 
 window.onload = registerServiceWorker().then(reg => {
   // qs('.foot').style.minHeight = `${window.innerHeight}px`;
