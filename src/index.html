@@ -409,7 +409,7 @@
         font-weight: bold;
       }
       .tooltiptext {
-        visibility: hidden;
+        opacity: 0;
         background: #323232;
         color: #fff;
         text-align: center;
@@ -420,9 +420,10 @@
         border: #ffffffa8;
         border-style: solid;
         border-width: 1px;
+        transition: opacity 50ms cubic-bezier(.33,.17,.78,1.37);
       }
       .tooltip:hover .tooltiptext {
-        visibility: visible;
+        opacity: 1;
       }
       @media only screen and (max-width: 500px) {
         .button:active:after {
