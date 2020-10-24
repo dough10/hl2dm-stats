@@ -37,7 +37,7 @@ then
 fi
 
 echo "-------------ssl cert install--------------"
-hostname=jq .serverHostname config.json
+hostname= jq .serverHostname config.json
 certbot certonly -a webroot --webroot-path=/var/www/html -d $hostname
 
 
