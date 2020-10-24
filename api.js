@@ -267,6 +267,29 @@ function scanLine(line) {
     said.replace('"', '');
     said.replace('"', '');
     users[id].chat.push(said);
+  } else if (isConnect) {
+    var connectedNameString = buildKillerNameString(word, isConnect);
+    var connectedUser = getID(connectedNameString);
+    var connectedUserName = getName(connectedNameString);
+    var ip = word[isConnect  + 2].replace('"', '');
+    ip = ip.replace('"', '');
+    ip = ip.replace(/:\d{4,5}$/, '');
+    if (validateIPaddress(ip)) {
+      if (!users[connectedUser]) {
+        totalPlayers = totalPlayers  + 1;
+        users[connectedUser] = {
+          name: connectedUserName,
+          id:connectedUser,
+          ip: ip,
+          kills: 0,
+          deaths: 0,
+          kdr: 0,
+          chat: []
+        };
+      } else {
+        users[connectedUser].ip = ip;
+      }
+    }
   } else if (isKill) {
     var killerNameString = buildKillerNameString(word, isKill);
     var killerID = getID(killerNameString);
@@ -298,8 +321,8 @@ function scanLine(line) {
     }
     // killer
     if (!users[killerID]) {
-      console.count('killer not in obj');
-      console.log(killerName, killerID);
+      // console.count('killer not in obj');
+      console.log(killerName);
       users[killerID] = {
         name: killerName,
         id:killerID,
@@ -311,8 +334,8 @@ function scanLine(line) {
     }
     // killed
     if (!users[killedID]) {
-      console.count('killed not in obj');
-      console.log(killedName, killedID);
+      // console.count('killed not in obj');
+      console.log(killedName);
       users[killedID] = {
         name: killedName,
         id: killedID,
@@ -344,29 +367,6 @@ function scanLine(line) {
     users[killerID][weapon] = users[killerID][weapon] + 1;
     // add server wide weapon kill
     weapons[weapon] = weapons[weapon] + 1;
-  } else if (isConnect) {
-    var connectedNameString = buildKillerNameString(word, isConnect);
-    var connectedUser = getID(connectedNameString);
-    var connectedUserName = getName(connectedNameString);
-    var ip = word[isConnect  + 2].replace('"', '');
-    ip = ip.replace('"', '');
-    ip = ip.replace(/:\d{4,5}$/, '');
-    if (validateIPaddress(ip)) {
-      if (!users[connectedUser]) {
-        totalPlayers = totalPlayers  + 1;
-        users[connectedUser] = {
-          name: connectedUserName,
-          id:connectedUser,
-          ip: ip,
-          kills: 0,
-          deaths: 0,
-          kdr: 0,
-          chat: []
-        };
-      } else {
-        users[connectedUser].ip = ip;
-      }
-    }
   } else if (isSuicide) {
     var nameString = buildKillerNameString(word, isSuicide);
     var id = getID(nameString);
