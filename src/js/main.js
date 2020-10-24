@@ -148,7 +148,6 @@ function displayWeaponData(wrappers, weapons, kills) {
       precent = '< 1';
     }
     const weapContainer = document.createElement('div');
-    weapContainer.classList.add('weapon');
     weapContainer.classList.add('tooltip');
     const icon = document.createElement('div');
     const text = document.createElement('div');
