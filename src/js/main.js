@@ -256,6 +256,7 @@ function parseTopData(top) {
     const fav = HL2Weapons(player.weapons)
     const favWrapper = createWrapper();
     favWrapper.classList.add('tooltip');
+    favWrapper.classList.add('fav');
     const tooltip = document.createElement('div');
     const icon = document.createElement('div');
     const text = document.createElement('div');
@@ -283,15 +284,12 @@ function parseTopData(top) {
         animations.fadeOut(weaponWrapper1, 50).then(_ => {
           weaponWrapper1.style.display = 'none';
           weaponWrapper2.style.display = 'none';
-          favWrapper.style.display = 'flex';
           animations.fadeIn(favWrapper, 50);
           animations.animateHeight(card, '25px', 100);
         });
       } else {
         name.style.color = '#b94949';
-        animations.fadeOut(favWrapper, 50).then(_ => {
-          favWrapper.style.display = 'none';
-        });
+        animations.fadeOut(favWrapper, 50);
         animations.animateHeight(card, '154px', 100).then(_ => {
           weaponWrapper1.style.display = 'flex';
           weaponWrapper2.style.display = 'flex';
