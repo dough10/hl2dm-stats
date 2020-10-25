@@ -39,6 +39,9 @@ function cascadeCards(container) {
     const nocard = qs('.nocard')
     nocard.style.display = 'block';
     animations.animateElement(nocard, 'translateX(0)', 200, 1, i * 50);
+    setTimeout(_ => {
+      new animations.Toast('IP lookup provided by GeoJS.io api');
+    }, 200);
   });
 }
 
@@ -522,8 +525,5 @@ window.onload = registerServiceWorker().then(reg => {
   setInterval(fetchServerStatus, 5000);
   fetchTop();
   // console.log(reg);
-  setTimeout(_ => {
-    new animations.Toast('IP provided by GeoJS.io api');
-  }, 10000)
   return;
 }).then(loadRipples);
