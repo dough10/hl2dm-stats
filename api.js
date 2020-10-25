@@ -468,16 +468,22 @@ function scanLine(line) {
     var id = getID2(killerNameString);
     var name = getName(killerNameString);
     var sid = new SteamID(id);
-    console.log(name, id, sid.getSteam3RenderedID())
+    var id3 = getID3(sid.getSteam3RenderedID());
     // loop through users to find the right name.. I need superlogs to give steamid3 or use https://steamid.uk/steamidapi/ for lookup
-    for (var id in users) {
-      if (users[id].name === name) {
-        if (!users[id].headshots) {
-          users[id].headshots = 0;
-        }
-        users[id].headshots++;
-      }
+    if (!users[id3]) {
+      users[id3] = {
+        name: name,
+        id: id,
+        kills: 0,
+        deaths: 0,
+        kdr: 0,
+        chat: []
+      };
     }
+    if (!users[id3].headshots) {
+      users[id3].headshots = 0;
+    }
+    users[id3].headshots++;
   } else if (isStats) {
     var nameString = buildKillerNameString(word, isStats - 1);
     var stat = line.split('(');
