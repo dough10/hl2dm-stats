@@ -256,7 +256,7 @@ function parseTopData(top) {
     const fav = HL2Weapons(player.weapons)
     const favWrapper = createWrapper();
     favWrapper.classList.add('tooltip');
-    if (window.innerHeight <= 500) {
+    if (window.innerWidth <= 500) {
       favWrapper.style.display = 'none';
     }
     const tooltip = document.createElement('div');
