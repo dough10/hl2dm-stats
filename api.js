@@ -518,6 +518,7 @@ function getServerStatus() {
     serverStatus = state;
     if (serverStatus.players.length > 0) {
       for (var i = 0; i < serverStatus.players.length; i++) {
+        console.log(serverStatus.players[i].score === serverStatus.raw.rules.mp_fraglimit, serverStatus.raw.rules.mp_fraglimit)
         if (serverStatus.players[i].score === serverStatus.raw.rules.mp_fraglimit && !updated) {
           updated = true;
           cacheTopResponse();
@@ -551,7 +552,7 @@ function cleanUp() {
 
 console.log(`${new Date()} - Getting data`);
 cacheTopResponse();
-setInterval(cacheTopResponse, (config.logRefreshTime * 60) * 1000);
+setInterval(cacheTopResponse, 3600000);
 
 getServerStatus();
 setInterval(getServerStatus, 5000);
