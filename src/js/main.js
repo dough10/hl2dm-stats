@@ -522,8 +522,8 @@ window.onload = registerServiceWorker().then(reg => {
   setInterval(fetchServerStatus, 5000);
   fetchTop();
   // console.log(reg);
-  setTimeout(_ => {
-    new animations.Toast('IP lookup provided by GeoJS.io api', 1.2);
-  }, 10000);
+  // setTimeout(_ => {
+  //   new animations.Toast('IP lookup provided by GeoJS.io api', 1.2);
+  // }, 10000);
   return;
 }).then(loadRipples);
