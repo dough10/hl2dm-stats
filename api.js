@@ -53,7 +53,8 @@ function isWeapon(weapon) {
     'stunstick',
     'rpg_missile',
     'world',
-    'headshots'
+    'headshots',
+    'physcannon'
   ];
   return w.includes(weapon);
 }
