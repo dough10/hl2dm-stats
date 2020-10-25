@@ -185,7 +185,7 @@ function getID2(word) {
   if (!word) {
     return false;
   }
-  const u = word.search(/STEAM_\d:\d:/g);
+  const u = word.search(/STEAM_[0-1]:[0-1]:/g);
   if (u < 0) {
     return false;
   }
@@ -203,7 +203,7 @@ function getID3(word) {
   if (!word) {
     return false;
   }
-  const u = word.search('U:1:');
+  const u = word.search(/U:[0-1]:/);
   if (u < 0) {
     return false;
   }
