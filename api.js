@@ -32,33 +32,33 @@ Object.size = function(obj) {
   return size;
 };
 
-function saveID(lookupID, id) {
-  new Promise((resolve, reject) => {
-    const folder = './IDcache';
-    if (!fs.existsSync(folder)){
-      fs.mkdirSync(folder);
-    }
-    const idStr = JSON.stringify(id);
-    fs.writeFile(`${__dirname}/IDcache/${lookupID}.json`, idStr, (err) => {
-      if (err) return reject(err);
-      console.log(`${new Date()} - ID save for ${lookupID}`);
-      resolve(id);
-    });
-  })
-}
-
-function loadCachedID(lookupID) {
-  const file = `${__dirname}/IDcache/${lookupID}.json`
-  if (!fs.existsSync(`${__dirname}/IDcache/${lookupID}.json`)) {
-    // call function to get data
-    return false;
-  }
-  try {
-    return require(file);
-  } catch(e) {
-    return e;
-  }
-}
+// function saveID(lookupID, id) {
+//   new Promise((resolve, reject) => {
+//     const folder = './IDcache';
+//     if (!fs.existsSync(folder)){
+//       fs.mkdirSync(folder);
+//     }
+//     const idStr = JSON.stringify(id);
+//     fs.writeFile(`${__dirname}/IDcache/${lookupID}.json`, idStr, (err) => {
+//       if (err) return reject(err);
+//       console.log(`${new Date()} - ID save for ${lookupID}`);
+//       resolve(id);
+//     });
+//   })
+// }
+//
+// function loadCachedID(lookupID) {
+//   const file = `${__dirname}/IDcache/${lookupID}.json`
+//   if (!fs.existsSync(`${__dirname}/IDcache/${lookupID}.json`)) {
+//     // call function to get data
+//     return false;
+//   }
+//   try {
+//     return require(file);
+//   } catch(e) {
+//     return e;
+//   }
+// }
 
 function isWeapon(weapon) {
   var w = [
