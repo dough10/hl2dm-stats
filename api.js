@@ -469,7 +469,10 @@ function scanLine(line) {
     var name = getName(killerNameString);
     var sid = new SteamID(id);
     var id3 = getID3(sid.getSteam3RenderedID());
-    // loop through users to find the right name.. I need superlogs to give steamid3 or use https://steamid.uk/steamidapi/ for lookup
+    if (!id3) {
+      console.log(line)
+      return;
+    }
     if (!users[id3]) {
       users[id3] = {
         name: name,
