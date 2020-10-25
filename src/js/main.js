@@ -523,7 +523,7 @@ window.onload = registerServiceWorker().then(reg => {
   fetchTop();
   // console.log(reg);
   setTimeout(_ => {
-    new Toast('ip lookup done with GeoJS.io api');
+    new animations.Toast('ip lookup done with GeoJS.io api');
   }, 30000)
   return;
 }).then(loadRipples);
