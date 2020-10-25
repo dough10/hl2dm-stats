@@ -188,7 +188,7 @@ function showApp() {
   setTimeout(_ => {
     animations.animateElement(qs('#load'), 'translateY(-102%)', 350).then(_ => {
       if (new Date().getDate() === 1) {
-        animateElement(qs('#alert'), 'translateY(0)', 200, 1, 0);
+        animations.animateElement(qs('#alert'), 'translateY(0)', 200, 1, 0);
       } else {
         switch (numPlayersOnline) {
           case 0:
@@ -520,7 +520,7 @@ qs('#demos').onClick(_ => {
 
 var alert = qs('#alert');
 alert.onClick(_ => {
-  animateElement(alert, 'translateY(-120%)', 200, 0, 0);
+  animations.animateElement(alert, 'translateY(-120%)', 200, 0, 0);
 });
 
 qs('#fab').onClick(animations.animateScroll);
