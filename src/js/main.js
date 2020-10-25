@@ -140,6 +140,9 @@ function getWeaponIcon(weapon) {
     case "headshots":
       return "D";
       break;
+    case "physcannon":
+      return ",";
+      break;
   }
 }
 
