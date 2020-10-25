@@ -1,3 +1,6 @@
+(_ => {
+  console.log('closure')
+})();
 import * as animations from './modules/animations.js';
 import {qs, qsa} from './modules/helpers.js';
 import * as ripples from './modules/ripples.js';
@@ -185,7 +188,7 @@ function showApp() {
   setTimeout(_ => {
     animations.animateElement(qs('#load'), 'translateY(-102%)', 350).then(_ => {
       if (new Date().getDate() === 1) {
-        new animations.Toast('Stats have reset today.', 5);
+        animateElement(qs('#alert'), 'translateY(0)', 200, 1, 0);
       } else {
         switch (numPlayersOnline) {
           case 0:
@@ -513,6 +516,11 @@ qs('#demos').onClick(_ => {
   animations.animateElement(qs('#load'), 'translateY(0%)', 350).then(_ => {
     window.location.href = 'https://hl2dm.dough10.me/api/demos';
   });
+});
+
+var alert = qs('#alert');
+alert.onClick(_ => {
+  animateElement(alert, 'translateY(-120%)', 200, 0, 0);
 });
 
 qs('#fab').onClick(animations.animateScroll);
