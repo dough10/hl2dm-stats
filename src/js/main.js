@@ -40,7 +40,7 @@ function cascadeCards(container) {
     nocard.style.display = 'block';
     animations.animateElement(nocard, 'translateX(0)', 200, 1, i * 50);
     setTimeout(_ => {
-      new animations.Toast('IP lookup provided by GeoJS.io api');
+      new animations.Toast('IP lookup provided by GeoJS.io api', .8);
     }, 200);
   });
 }
