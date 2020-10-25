@@ -38,7 +38,7 @@ function saveID(lookupID, id) {
       fs.mkdirSync(folder);
     }
     const idStr = JSON.stringify(id);
-    fs.writeFile(`${lookupID}.json`, idStr, (err) => {
+    fs.writeFile(`${__dirname}/IDcache/${lookupID}.json`, idStr, (err) => {
       if (err) return reject(err);
       console.log(`${new Date()} - ID save for ${lookupID}`);
       resolve(id);
