@@ -7,7 +7,8 @@ const compression = require('compression');
 const app = express();
 app.use(compression());
 const Gamedig = require('gamedig');
-var schedule = require('node-schedule');
+const schedule = require('node-schedule');
+const SteamID = require('steamid');
 
 const config = require(`${__dirname}/config.json`);
 const logFolder = path.join(config.gameServerDir, 'logs');
@@ -180,7 +181,25 @@ function getName(word) {
   return str;
 }
 
-function getID(word) {
+function getID2(word) {
+  if (!word) {
+    return false;
+  }
+  const u = word.search(/_\d:\d:/g);
+  if (u < 0) {
+    return false;
+  }
+  const start = u + 5;
+  word = word.substring(start)
+  const end = word.search('>');
+  let str = '';
+  for (var i = 0; i < end; i++) {
+    str = str + word[i];
+  }
+  return str;
+}
+
+function getID3(word) {
   if (!word) {
     return false;
   }
@@ -291,7 +310,7 @@ function scanLine(line) {
   var isStats = lineIsStats(word);
   if (isChat) {
     var nameString = buildKillerNameString(word, isChat);
-    var id = getID(nameString);
+    var id = getID3(nameString);
     var name = getName(nameString);
     if (!users[id]) {
       users[id] = {
@@ -312,7 +331,7 @@ function scanLine(line) {
     users[id].chat.push(said);
   } else if (isConnect) {
     var connectedNameString = buildKillerNameString(word, isConnect);
-    var connectedUser = getID(connectedNameString);
+    var connectedUser = getID3(connectedNameString);
     var connectedUserName = getName(connectedNameString);
     var ip = word[isConnect  + 2].replace('"', '');
     ip = ip.replace('"', '');
@@ -334,10 +353,10 @@ function scanLine(line) {
     }
   } else if (isKill) {
     var killerNameString = buildKillerNameString(word, isKill);
-    var killerID = getID(killerNameString);
+    var killerID = getID3(killerNameString);
     var killerName = getName(killerNameString);
     var killedNameString = buildKilledNameString(word, isKill + 1);
-    var killedID = getID(killedNameString);
+    var killedID = getID3(killedNameString);
     var killedName = getName(killedNameString);
     var weapon = word[word.length - 1].replace('"', '');
     weapon = weapon.replace('"', '');
@@ -407,7 +426,7 @@ function scanLine(line) {
     weapons[weapon]++;
   } else if (isSuicide) {
     var nameString = buildKillerNameString(word, isSuicide);
-    var id = getID(nameString);
+    var id = getID3(nameString);
     var name = getName(nameString);
     if (!id) {
       console.log(new Date() + line +  ' id error');
@@ -446,7 +465,10 @@ function scanLine(line) {
     }
     weapons.headshots++;
     var killerNameString = buildKillerNameString(word, isHeadshot - 1);
+    var id = getID2(killerNameString);
     var name = getName(killerNameString);
+    var sid = new SteamID(id);
+    console.log(id, sid)
     // loop through users to find the right name.. I need superlogs to give steamid3 or use https://steamid.uk/steamidapi/ for lookup
     for (var id in users) {
       if (users[id].name === name) {
