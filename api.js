@@ -185,11 +185,11 @@ function getID2(word) {
   if (!word) {
     return false;
   }
-  const u = word.search(/_\d:\d:/g);
+  const u = word.search(/STEAM_\d:\d:/g);
   if (u < 0) {
     return false;
   }
-  const start = u + 5;
+  const start = u;
   word = word.substring(start)
   const end = word.search('>');
   let str = '';
