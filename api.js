@@ -518,8 +518,7 @@ function getServerStatus() {
     serverStatus = state;
     if (serverStatus.players.length > 0) {
       for (var i = 0; i < serverStatus.players.length; i++) {
-        console.log(serverStatus.players[i].score === serverStatus.raw.rules.mp_fraglimit, serverStatus.raw.rules.mp_fraglimit)
-        if (serverStatus.players[i].score === serverStatus.raw.rules.mp_fraglimit && !updated) {
+        if (serverStatus.players[i].score === Number(serverStatus.raw.rules.mp_fraglimit) && !updated) {
           updated = true;
           cacheTopResponse();
         }
