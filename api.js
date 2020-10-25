@@ -9,14 +9,9 @@ app.use(compression());
 const Gamedig = require('gamedig');
 var schedule = require('node-schedule');
 
-const config = require(__dirname + '/config.json');
+const config = require(`${__dirname}/config.json`);
 const logFolder = path.join(config.gameServerDir, 'logs');
 
-/**
- *
- *  global variables
- *
- */
 var users = {};              // all users go in this object ie. {steamid: {name:playername, kills: 1934, deaths: 1689, kdr: 1.14, .....}}
 var totalFiles = 0;          // total # of log files in "logs" folder
 var top = [];                // players with over 100 kills sorted by KDR
@@ -35,6 +30,34 @@ Object.size = function(obj) {
   }
   return size;
 };
+
+function saveID(lookupID, id) {
+  new Promise((resolve, reject) => {
+    const folder = './IDcache';
+    if (!fs.existsSync(folder)){
+      fs.mkdirSync(folder);
+    }
+    const idStr = JSON.stringify(id);
+    fs.writeFile(`${lookupID}.json`, idStr, (err) => {
+      if (err) return reject(err);
+      console.log(`${new Date()} - ID save for ${lookupID}`);
+      resolve(id);
+    });
+  })
+}
+
+function loadCachedID(lookupID) {
+  const file = `${__dirname}/IDcache/${lookupID}.json`
+  if (!fs.existsSync(`${__dirname}/IDcache/${lookupID}.json`)) {
+    // call function to get data
+    return false;
+  }
+  try {
+    return require(file);
+  } catch(e) {
+    return e;
+  }
+}
 
 function isWeapon(weapon) {
   var w = [
