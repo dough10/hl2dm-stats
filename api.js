@@ -31,21 +31,6 @@ Object.size = function(obj) {
   return size;
 };
 
-// function saveID(lookupID, id) {
-//   new Promise((resolve, reject) => {
-//     const folder = './IDcache';
-//     if (!fs.existsSync(folder)){
-//       fs.mkdirSync(folder);
-//     }
-//     const idStr = JSON.stringify(id);
-//     fs.writeFile(`${__dirname}/IDcache/${lookupID}.json`, idStr, (err) => {
-//       if (err) return reject(err);
-//       console.log(`${new Date()} - ID save for ${lookupID}`);
-//       resolve(id);
-//     });
-//   })
-// }
-
 function isWeapon(weapon) {
   var w = [
     '357',
@@ -87,8 +72,7 @@ function cacheTopResponse() {
     if (!weapons.world) {
       weapons.world = 0;
     }
-    weapons.physics = weapons.physics + weapons.physbox;
-    weapons.physics = weapons.physics + weapons.world;
+    weapons.physics = (weapons.physics + weapons.physbox) + weapons.world;
     delete weapons.physbox;
     delete weapons.world;
     if (weapons.physics === 0) {
@@ -107,8 +91,7 @@ function cacheTopResponse() {
       if (!top[i].world) {
         top[i].world = 0;
       }
-      top[i].physics = top[i].physics + top[i].physbox;
-      top[i].physics = top[i].physics + top[i].world;
+      top[i].physics = (top[i].physics + top[i].physbox) + top[i].world;
       delete top[i].physbox;
       delete top[i].world;
       if (top[i].physics === 0) {
