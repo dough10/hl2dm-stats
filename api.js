@@ -13,7 +13,7 @@ const SteamID = require('steamid');
 const config = require(`${__dirname}/config.json`);
 const logFolder = path.join(config.gameServerDir, 'logs');
 
-var users = {};              // all users go in this object ie. {steamid: {name:playername, kills: 1934, deaths: 1689, kdr: 1.14, .....}}
+var users = {};              // all users go in this object ie. {steamid: {name:playername, kills: 1934, deaths: 1689, kdr: 1.14, .....}, steamid: {..}, ..}
 var totalFiles = 0;          // total # of log files in "logs" folder
 var top = [];                // players with over 100 kills sorted by KDR
 var weapons = {};            // server wide kill count sorted by weapons
