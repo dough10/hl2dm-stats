@@ -227,7 +227,9 @@ function parseTopData(top) {
   const deathsIcon = "M12,2A9,9 0 0,0 3,11C3,14.03 4.53,16.82 7,18.47V22H9V19H11V22H13V19H15V22H17V18.46C19.47,16.81 21,14 21,11A9,9 0 0,0 12,2M8,11A2,2 0 0,1 10,13A2,2 0 0,1 8,15A2,2 0 0,1 6,13A2,2 0 0,1 8,11M16,11A2,2 0 0,1 18,13A2,2 0 0,1 16,15A2,2 0 0,1 14,13A2,2 0 0,1 16,11M12,14L13.5,17H10.5L12,14Z";
   const kdrIcon =   "M3 18.34C3 18.34 4 7.09 7 3L12 4L11 7.09H9V14.25H10C12 11.18 16.14 10.06 18.64 11.18C21.94 12.71 21.64 17.32 18.64 19.36C16.24 21 9 22.43 3 18.34Z";
   // if (!top[0].length) {
-  //   animations.animateElement(qs('#alert'), 'translateY(0)', 200, 1, 0);
+  //   setTimeout(_ => {
+  //     animations.animateElement(qs('#alert'), 'translateY(0)', 200, 1, 0);
+  //   }, 1500)
   // }
   for (let i = 0; i < top[0].length; i++) {
     const player = top[0][i];
@@ -532,8 +534,5 @@ window.onload = registerServiceWorker().then(reg => {
   setInterval(fetchServerStatus, 5000);
   fetchTop();
   // console.log(reg);
-  // setTimeout(_ => {
-  //   new animations.Toast('IP lookup provided by GeoJS.io api', 1.2);
-  // }, 10000);
   return;
 }).then(loadRipples);
