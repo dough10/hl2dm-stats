@@ -18,7 +18,6 @@ var totalFiles = 0;          // total # of log files in "logs" folder
 var top = [];                // players with over 100 kills sorted by KDR
 var weapons = {};            // server wide kill count sorted by weapons
 var serverStatus;            // placeholder for gamedig state
-var cachedIDs = {};          // maybe used for https://steamid.uk/steamidapi/ response caching
 var totalPlayers = 0;        // count of total players to have joined the server
 var updated = false;         // if stats have been updated when a player reaches end of game kill count
 
@@ -45,19 +44,6 @@ Object.size = function(obj) {
 //       resolve(id);
 //     });
 //   })
-// }
-//
-// function loadCachedID(lookupID) {
-//   const file = `${__dirname}/IDcache/${lookupID}.json`
-//   if (!fs.existsSync(`${__dirname}/IDcache/${lookupID}.json`)) {
-//     // call function to get data
-//     return false;
-//   }
-//   try {
-//     return require(file);
-//   } catch(e) {
-//     return e;
-//   }
 // }
 
 function isWeapon(weapon) {
@@ -470,7 +456,7 @@ function scanLine(line) {
     var sid = new SteamID(id);
     var id3 = getID3(sid.getSteam3RenderedID());
     if (!id3) {
-      console.log(line)
+      console.log(line);
       return;
     }
     if (!users[id3]) {
