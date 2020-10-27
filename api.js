@@ -472,8 +472,8 @@ function scanLine(line) {
           items[o] = Number(items[o]);
         }
       }
+      console.log(items)
     }
-    console.log(items[1][1])
   }
 }
 
