@@ -22,6 +22,8 @@ var serverStatus;            // placeholder for gamedig state
 var totalPlayers = 0;        // count of total players to have joined the server
 var updated = false;         // if stats have been updated when a player reaches end of game kill count
 
+var socket;
+
 console.log(`${new Date()} - Load Functions`);
 
 Object.size = obj => {
@@ -629,9 +631,8 @@ app.get('/demos', (reg,res) => {
 });
 
 app.ws('/', (ws, req) => {
-  ws.on('message', (msg) => {
-    console.log(msg);
-  });
+  socket = ws;
+  socket.send(top)
 });
 
 app.listen(3000);
