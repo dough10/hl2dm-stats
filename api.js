@@ -473,8 +473,8 @@ function scanLine(line) {
         }
       }
       var weapon = items[1][1];
-      var shot = items[1][2];
-      var hit = items[1][3];
+      var shots = items[1][2];
+      var hits = items[1][3];
       console.log(weapon, shots, hits)
     }
   }
