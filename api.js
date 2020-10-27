@@ -6,6 +6,7 @@ const express = require('express');
 const compression = require('compression');
 const app = express();
 app.use(compression());
+var expressWs = require('express-ws')(app);
 const Gamedig = require('gamedig');
 const schedule = require('node-schedule');
 const SteamID = require('steamid');
@@ -625,6 +626,12 @@ app.get('/demos', (reg,res) => {
    }
    res.send(`${html}</table>`);
  });
+});
+
+app.ws('/', (ws, req) => {
+  ws.on('message', (msg) => {
+    console.log(msg);
+  });
 });
 
 app.listen(3000);
