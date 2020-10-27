@@ -400,15 +400,15 @@ function parseServerStatus(status) {
   }
 }
 
-function fetchServerStatus() {
-  fetch('/api/status').then(response => {
-    if (response.status !== 200) {
-      console.error(response.status);
-      return;
-    }
-    response.json().then(parseServerStatus);
-  });
-}
+// function fetchServerStatus() {
+//   fetch('/api/status').then(response => {
+//     if (response.status !== 200) {
+//       console.error(response.status);
+//       return;
+//     }
+//     response.json().then(parseServerStatus);
+//   });
+// }
 
 function isLocalIP(ip) {
   const rx = /(^127\.)|(^192\.168\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^::1$)|(^[fF][cCdD])/;
@@ -529,15 +529,14 @@ qs('#fab').onClick(animations.animateScroll);
 
 window.onload = registerServiceWorker().then(reg => {
   // console.log(reg);
-  fetchServerStatus();
-  setInterval(fetchServerStatus, 5000);
   fetchTop();
-   if ("WebSocket" in window) {
-     const socket = new WebSocket('wss://hl2dm.dough10.me/api');
-     socket.onopen = console.log(`${new Date()} WebSocket connected`);
-     socket.onmessage = event => {
-      console.log(JSON.parse(event.data));
+  if ("WebSocket" in window) {
+    const socket = new WebSocket('wss://hl2dm.dough10.me/api');
+    socket.onopen = console.log(`${new Date()} WebSocket connected`);
+    socket.onmessage = event => {
+      const data = JSON.parse(event.data);
+      parseServerStatus(data);
     };
-   }
+  }
   return;
 }).then(loadRipples);
