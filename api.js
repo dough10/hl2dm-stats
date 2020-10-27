@@ -464,6 +464,7 @@ function scanLine(line) {
     var id3 = getID3(sid.getSteam3RenderedID());
     var name = getName(killerNameString);
     console.log(name, id3);
+    console.log(typeof stat)
   }
 }
 
