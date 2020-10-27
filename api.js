@@ -473,7 +473,8 @@ function scanLine(line) {
         }
         console.log(items[o], o)
       }
-
+      var weapons = items[o];
+      console.log(weapon)
     }
   }
 }
