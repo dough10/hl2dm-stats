@@ -458,13 +458,16 @@ function scanLine(line) {
     users[id3].headshots++;
   } else if (isStats) {
     var nameString = buildKillerNameString(word, isStats - 1);
-    var stat = line.split('(');
+    var stats = line.split('(');
     var id = getID2(nameString);
     var sid = new SteamID(id);
     var id3 = getID3(sid.getSteam3RenderedID());
     var name = getName(killerNameString);
     console.log(name, id3);
-    console.log(typeof stat)
+    for (var i = 0; i < stats.length; i++) {
+      var items = stats[i].split(' ');
+      console.log(items)
+    }
   }
 }
 
