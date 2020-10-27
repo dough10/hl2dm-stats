@@ -459,7 +459,15 @@ function scanLine(line) {
   } else if (isStats) {
     var nameString = buildKillerNameString(word, isStats - 1);
     var stat = line.split('(');
-
+    var id = getID2(nameString);
+    var sid = new SteamID(id);
+    var id3 = getID3(sid.getSteam3RenderedID());
+    var name = getName(killerNameString);
+    console.log(name, id3);
+    for (var i = 0; i < stat.length; i++) {
+      var items= stat.split(' ');
+      console.log(items);
+    }
   }
 }
 
