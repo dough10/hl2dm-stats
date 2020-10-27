@@ -538,7 +538,7 @@ window.onload = registerServiceWorker().then(reg => {
        socket.send('connection');
      };
      socket.onmessage = event => {
-      console.log(event.data);
+      console.log(JSON.parse(event.data));
     };
    }
   return;
