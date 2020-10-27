@@ -464,7 +464,7 @@ function scanLine(line) {
     var id3 = getID3(sid.getSteam3RenderedID());
     var name = getName(killerNameString);
     console.log(name, id3);
-    for (var i = 0; i < stats.length; i++) {
+    for (var i = 1; i < stats.length; i++) {
       var items = stats[i].split(' ');
       for (var o = 0; o < items.length; o++) {
         items[o] = items[o].replace('"', '').replace('"', '');
