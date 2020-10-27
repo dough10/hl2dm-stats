@@ -473,7 +473,7 @@ function scanLine(line) {
         }
       }
     }
-    console.log(items[0][1])
+    console.log(items[1][1])
   }
 }
 
