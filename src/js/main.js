@@ -534,9 +534,7 @@ window.onload = registerServiceWorker().then(reg => {
   fetchTop();
    if ("WebSocket" in window) {
      const socket = new WebSocket('wss://hl2dm.dough10.me/api');
-     socket.onopen = _ => {
-       socket.send('connection');
-     };
+     socket.onopen = console.log(`${new Date()} WebSocket connected`);
      socket.onmessage = event => {
       console.log(JSON.parse(event.data));
     };
