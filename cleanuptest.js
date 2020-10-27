@@ -22,3 +22,7 @@ function cleanUp() {
   });
   console.log(`${new Date()} - Clean up complete. Removed ${numFiles} files`);
 ;}
+
+
+
+  cleanUp();
