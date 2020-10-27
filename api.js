@@ -464,6 +464,7 @@ function scanLine(line) {
     var id3 = getID3(sid.getSteam3RenderedID());
     var name = getName(nameString);
     var arr = [];
+    var arr2 = [];
     console.log(name, id3);
     for (var i = 1; i < stats.length; i++) {
       var items = stats[i].split(' ');
@@ -473,8 +474,10 @@ function scanLine(line) {
           items[o] = Number(items[o])
         }
       }
+      arr2.push(items[0]);
       arr.push(items[1]);
     }
+    console.log(arr2)
     console.log(arr)
   }
 }
