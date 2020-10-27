@@ -472,7 +472,8 @@ function scanLine(line) {
           items[o] = Number(items[o]);
         }
       }
-      console.log(items)
+      console.log(items[0])
+
       // console.log(weapon, shots)
     }
   }
