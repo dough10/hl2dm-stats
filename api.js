@@ -465,8 +465,8 @@ function scanLine(line) {
     var name = getName(killerNameString);
     console.log(name, id3);
     for (var i = 0; i < stat.length; i++) {
-      var items= stat.split(' ');
-      console.log(items);
+      // var items = stat.split(' ');
+      console.log(stat typeof stat);
     }
   }
 }
