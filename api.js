@@ -469,7 +469,7 @@ function scanLine(line) {
       for (var o = 0; o < items.length; o++) {
         items[o] = items[o].replace('"', '').replace('"', '').replace(')', '');
       }
-      console.log(items)
+      console.log(items[o])
     }
   }
 }
