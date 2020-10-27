@@ -629,6 +629,9 @@ app.get('/demos', (reg,res) => {
 });
 
 app.ws('/', (ws, req) => {
+  ws.on('connection', _ => {
+    console.log('connected?')
+  })
   ws.on('message', (msg) => {
     console.log(msg);
   });
