@@ -42,6 +42,10 @@ server {
         proxy_set_header X-NginX-Proxy true;
         rewrite ^/api/?(.*) /$1 break;
         proxy_pass http://LOCALHOST:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_set_header Host $host;
         proxy_redirect off;
     }
     location ~* \.(webp|jpg|jpeg|png|gif|ico|woff2|woff|ttf|svg|eot)$ {
