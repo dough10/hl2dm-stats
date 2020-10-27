@@ -470,7 +470,8 @@ function scanLine(line) {
         items[o] = items[o].replace('"', '').replace('"', '').replace(')', '');
         items[o] = Number(items[o]);
       }
-      console.log(items)
+
+      // console.log(items)
     }
   }
 }
