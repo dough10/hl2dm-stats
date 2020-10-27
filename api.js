@@ -476,8 +476,8 @@ function scanLine(line) {
     }
     var weapon = items[0][1];
     var shots = items[1][1];
-    var hits = items[2][1];
-    console.log(weapon, shots, hits, (hits / shots) * 100)
+    // var hits = items[2][1];
+    // console.log(weapon, shots, hits, (hits / shots) * 100)
   }
 }
 
