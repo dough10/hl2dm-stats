@@ -632,7 +632,7 @@ app.get('/demos', (reg,res) => {
 
 app.ws('/', (ws, req) => {
   socket = ws;
-  socket.send(top)
+  socket.send(JSON.stringify(top))
 });
 
 app.listen(3000);
