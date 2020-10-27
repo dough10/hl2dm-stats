@@ -468,7 +468,7 @@ function scanLine(line) {
       var items = stats[i].split(' ');
       for (var o = 1; o < items.length; o++) {
         items[o] = items[o].replace('"', '').replace('"', '').replace(')', '');
-        if (o > 0) {
+        if (o > 1) {
           items[o] = Number(items[o]);
         }
       }
