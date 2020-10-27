@@ -470,6 +470,7 @@ function scanLine(line) {
         items[o] = items[o].replace('"', '').replace('"', '').replace(')', '');
         if (o > 1) {
         }
+        console.log(o)
         items[o] = Number(items[o]);
       }
       console.log(items)
