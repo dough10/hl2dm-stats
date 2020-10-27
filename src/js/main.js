@@ -536,7 +536,7 @@ window.onload = registerServiceWorker().then(reg => {
      const socket = new WebSocket('wss://hl2dm.dough10.me/api');
      socket.onopen = _ => {
        console.log('opened');
-       socket.send("it's a bitch");
+       socket.send('connection');
      };
    }
   return;
