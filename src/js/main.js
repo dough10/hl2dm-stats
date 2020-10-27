@@ -528,9 +528,16 @@ alert.onClick(_ => {
 qs('#fab').onClick(animations.animateScroll);
 
 window.onload = registerServiceWorker().then(reg => {
+  // console.log(reg);
   fetchServerStatus();
   setInterval(fetchServerStatus, 5000);
   fetchTop();
-  // console.log(reg);
+   if ("WebSocket" in window) {
+     const socket = new WebSocket('/api');
+     socket.on('open', _ => {
+       console.log('opened');
+       socket.send("it's a bitch");
+     });
+   }
   return;
 }).then(loadRipples);
