@@ -400,16 +400,6 @@ function parseServerStatus(status) {
   }
 }
 
-// function fetchServerStatus() {
-//   fetch('/api/status').then(response => {
-//     if (response.status !== 200) {
-//       console.error(response.status);
-//       return;
-//     }
-//     response.json().then(parseServerStatus);
-//   });
-// }
-
 function isLocalIP(ip) {
   const rx = /(^127\.)|(^192\.168\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^::1$)|(^[fF][cCdD])/;
   return rx.test(ip);

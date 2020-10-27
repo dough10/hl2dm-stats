@@ -568,6 +568,7 @@ function getServerStatus() {
       }
       console.log(`${new Date()} - `, serverStatus.players);
     }
+    socket.send(JSON.stringify(serverStatus));
   }).catch((error) => {
     serverStatus = 'offline';
   });
@@ -632,7 +633,7 @@ app.get('/demos', (reg,res) => {
 
 app.ws('/', (ws, req) => {
   socket = ws;
-  socket.send(JSON.stringify(serverStatus))
+  socket.send(JSON.stringify(serverStatus));
 });
 
 app.listen(3000);
