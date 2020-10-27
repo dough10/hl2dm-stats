@@ -17,7 +17,7 @@ function applyRipples() {
     qsa('.button').forEach(ripples.attachButtonRipple);
     qsa('.icon-button').forEach(ripples.attachRoundButtonRipple);
     qsa('.link').forEach(ripples.attachButtonRipple);
-    ripples.attachButtonRipple(qs('#alert'));
+    ripples.attachButtonRipple(qs('#reset'));
     resolve();
   });
 }
@@ -186,7 +186,7 @@ function showApp() {
   setTimeout(_ => {
     animations.animateElement(qs('#load'), 'translateY(-102%)', 350).then(_ => {
       if (new Date().getDate() === 1) {
-        animations.animateElement(qs('#alert'), 'translateY(0)', 800, 1, 0);
+        animations.animateElement(qs('#reset'), 'translateY(0)', 800, 1, 0);
       }
       switch (numPlayersOnline) {
         case 0:
@@ -226,7 +226,7 @@ function parseTopData(top) {
   const kdrIcon =   "M3 18.34C3 18.34 4 7.09 7 3L12 4L11 7.09H9V14.25H10C12 11.18 16.14 10.06 18.64 11.18C21.94 12.71 21.64 17.32 18.64 19.36C16.24 21 9 22.43 3 18.34Z";
   // if (!top[0].length) {
   //   setTimeout(_ => {
-  //     animations.animateElement(qs('#alert'), 'translateY(0)', 200, 1, 0);
+  //     animations.animateElement(qs('#reset'), 'translateY(0)', 200, 1, 0);
   //   }, 1500)
   // }
   for (let i = 0; i < top[0].length; i++) {
@@ -520,7 +520,7 @@ qs('#demos').onClick(_ => {
   });
 });
 
-var alert = qs('#alert');
+var alert = qs('#reset');
 alert.onClick(_ => {
   animations.animateElement(alert, 'translateY(-120%)', 800, 0, 0);
 });

@@ -23,7 +23,7 @@ var updated = false;         // if stats have been updated when a player reaches
 
 console.log(`${new Date()} - Load Functions`);
 
-Object.size = function(obj) {
+Object.size = obj => {
   var size = 0, key;
   for (key in obj) {
     if (obj.hasOwnProperty(key)) size++;
