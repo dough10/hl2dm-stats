@@ -534,10 +534,10 @@ window.onload = registerServiceWorker().then(reg => {
   fetchTop();
    if ("WebSocket" in window) {
      const socket = new WebSocket('wss://hl2dm.dough10.me/api');
-     socket.on('open', _ => {
+     socket.onopen = _ => {
        console.log('opened');
        socket.send("it's a bitch");
-     });
+     };
    }
   return;
 }).then(loadRipples);
