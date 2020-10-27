@@ -228,6 +228,13 @@ class Toast {
   }
 }
 
+/**
+ * animate transform / opacity on a give element
+ *
+ * @param {HTMLElement} el *required*
+ * @param {String} height *required*
+ * @param {Number} time
+ */
 function animateHeight(el, height, time) {
   return new Promise(resolve => {
     var timer = 0;
