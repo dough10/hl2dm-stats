@@ -471,13 +471,13 @@ function scanLine(line) {
         if (o > 0) {
           items[o] = Number(items[o]);
         }
+        console.log(items[o])
       }
-      // console.log(items)
     }
     var weapon = items[0][1];
     var shots = items[1][1];
     // var hits = items[2][1];
-    console.log(weapon, shots)
+    // console.log(weapon, shots)
   }
 }
 
