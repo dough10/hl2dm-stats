@@ -522,6 +522,7 @@ window.onload = registerServiceWorker().then(reg => {
   console.log(reg);
   return;
 }).then(loadRipples).then(_ => {
+  console.log('?')
   fetchTop();
   if ("WebSocket" in window) {
     const socket = new WebSocket('wss://hl2dm.dough10.me/api');
