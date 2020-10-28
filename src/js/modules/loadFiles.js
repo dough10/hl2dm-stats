@@ -18,7 +18,7 @@ function loadJSFile(src) {
     script.async = true;
     script.defer = true;
     script.src = src;
-    script.onload = requestAnimationFrame(resolve);
+    script.onload = setTimeout(resolve, 50);
     script.onerror = reject;
     qs('body').appendChild(script);
   });

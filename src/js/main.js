@@ -18,7 +18,6 @@ function applyRipples() {
     qsa('.icon-button').forEach(ripples.attachRoundButtonRipple);
     qsa('.link').forEach(ripples.attachButtonRipple);
     ripples.attachButtonRipple(qs('#reset'));
-    console.log('$')
     resolve();
   });
 }
@@ -26,13 +25,8 @@ function applyRipples() {
 function loadRipples() {
   return new Promise((resolve, reject) => {
     loadCSSFile("../css/paper-ripple.min.css")
-    .then(_ => {
-      loadJSFile('../js/paper-ripple.min.js');
-    }).then(_ => {
-      setTimeout(_ => {
-        applyRipples(resolve);
-      }, 50);
-    }).catch(reject);
+    .then(_ => loadJSFile('../js/paper-ripple.min.js'))
+    .then(_ => applyRipples(resolve)).catch(reject);
   });
 }
 
