@@ -32,7 +32,7 @@ function loadRipples() {
       setTimeout(_ => {
         applyRipples(resolve);
       }, 50);
-    }).catch(reject));
+    }).catch(reject);
   });
 }
 
