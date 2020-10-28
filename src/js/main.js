@@ -541,6 +541,6 @@ window.onload = registerServiceWorker().then(reg => {
     };
   } else {
     fetchServerStatus();
-    setTimeout(fetchServerStatus, 5000;
+    setTimeout(fetchServerStatus, 5000);
   }
 }).then(loadRipples);
