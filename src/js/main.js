@@ -314,7 +314,6 @@ function parseTopData(top) {
     card.appendChild(weaponWrapper2);
     qs('#cardsWrapper').appendChild(card);
     setTimeout(_ => {
-      showApp();
       ripples.attachButtonRipple(card);
     }, 200);
   }
@@ -339,6 +338,7 @@ function parseTopData(top) {
   allWeaponsCard.appendChild(wrapper1);
   allWeaponsCard.appendChild(wrapper2);
   qs('#cardsWrapper').appendChild(allWeaponsCard);
+  showApp();
 }
 
 function parseServerStatus(status) {
@@ -428,6 +428,7 @@ function ipLookup(ip) {
 }
 
 function fetchTop() {
+  console.log('call')
   fetch('/api/stats').then(response => {
     if (response.status !== 200) {
       console.error(response.status);
@@ -519,18 +520,17 @@ alert.onClick(_ => {
 qs('#fab').onClick(animations.animateScroll);
 
 window.onload = registerServiceWorker().then(reg => {
-  console.log(reg);
+  // console.log(reg);
   return;
-}).then(loadRipples).then(_ => {
   fetchTop();
   if ("WebSocket" in window) {
     const socket = new WebSocket('wss://hl2dm.dough10.me/api');
     socket.onopen = console.log(`${new Date()} WebSocket connected`);
     socket.onmessage = event => {
       const data = JSON.parse(event.data);
+      parseServerStatus(data);
       if (Array.isArray(data)) {
-        parseServerStatus(data);
       }
     };
   }
-});
+}).then(loadRipples);
