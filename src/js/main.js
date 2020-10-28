@@ -3,7 +3,7 @@ import {qs, qsa} from './modules/helpers.js';
 import * as ripples from './modules/ripples.js';
 import {loadCSSFile, loadJSFile} from './modules/loadFiles.js';
 
-// var numPlayersOnline  = 0;
+var numPlayersOnline  = 0;
 var playersOnline = [];
 var loaded = false;
 
@@ -188,6 +188,36 @@ function showApp() {
   }, 1200);
 }
 
+function displayPlayerOnline(playersOnline) {
+  if (new Date().getDate() === 1) {
+    animations.animateElement(qs('#reset'), 'translateY(0)', 800, 1, 0);
+  }
+  switch (playersOnline) {
+    case 0:
+    new animations.Toast(`${playersOnline} players online.`, 2);
+    break;
+    case 1:
+    new animations.Toast(`${playersOnline} players online. He needs someone to kill`, 2);
+    break;
+    case 2:
+    new animations.Toast(`${playersOnline} players online. 1v1 in progress`, 2);
+    break;
+    case 3:
+    new animations.Toast(`${playersOnline} players online. Deathmatch had begun`, 2);
+    break;
+    case 4:
+    new animations.Toast(`${playersOnline} players online. Shits poppin off`, 2);
+    break;
+    case 5:
+    new animations.Toast(`${playersOnline} players online. Room for one more`, 2);
+    break;
+    case 6:
+    new animations.Toast(`${playersOnline} players online. Server full`, 2);
+    break;
+  }
+  loaded = true;
+}
+
 function formatNumber(num) {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
@@ -309,10 +339,12 @@ function parseTopData(top) {
   allWeaponsCard.appendChild(wrapper1);
   allWeaponsCard.appendChild(wrapper2);
   qs('#cardsWrapper').appendChild(allWeaponsCard);
+  setTimeout(_ => {
+    displayPlayerOnline(numPlayersOnline);
+  }, 1700);
 }
 
 function parseServerStatus(status) {
-  showApp();
   const pContainer = qs('#players');
   pContainer.innerHTML = '';
   if (status !== "offline") {
@@ -320,36 +352,7 @@ function parseServerStatus(status) {
     qs('.hostname').textContent = status.name;
     qs('#numPlayers').textContent = status.maxplayers;
     qs('#map').textContent = status.map;
-    var numPlayersOnline = status.players.length;
-    setTimeout(_ => {
-      if (new Date().getDate() === 1) {
-        animations.animateElement(qs('#reset'), 'translateY(0)', 800, 1, 0);
-      }
-      switch (numPlayersOnline) {
-        case 0:
-        new animations.Toast(`${numPlayersOnline} players online.`, 2);
-        break;
-        case 1:
-        new animations.Toast(`${numPlayersOnline} players online. He needs someone to kill`, 2);
-        break;
-        case 2:
-        new animations.Toast(`${numPlayersOnline} players online. 1v1 in progress`, 2);
-        break;
-        case 3:
-        new animations.Toast(`${numPlayersOnline} players online. Deathmatch had begun`, 2);
-        break;
-        case 4:
-        new animations.Toast(`${numPlayersOnline} players online. Shits poppin off`, 2);
-        break;
-        case 5:
-        new animations.Toast(`${numPlayersOnline} players online. Room for one more`, 2);
-        break;
-        case 6:
-        new animations.Toast(`${numPlayersOnline} players online. Server full`, 2);
-        break;
-      }
-      loaded = true;
-    }, 2000);
+    numPlayersOnline = status.players.length;
     if (numPlayersOnline === 0) {
       const div = document.createElement('div');
       div.textContent = "No Players Online";
@@ -398,6 +401,7 @@ function parseServerStatus(status) {
     div.textContent = "Server offline";
     pContainer.appendChild(div);
   }
+  showApp();
 }
 
 function isLocalIP(ip) {
