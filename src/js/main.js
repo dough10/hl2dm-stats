@@ -349,6 +349,7 @@ function parseServerStatus(status) {
     // qs('#next_map').textContent = status.raw.rules.sm_nextmap;
     const pContainer = qs('#players');
     pContainer.innerHTML = '';
+    console.log(status)
     if (status.players.length === 0) {
       const div = document.createElement('div');
       div.textContent = "No Players Online";
