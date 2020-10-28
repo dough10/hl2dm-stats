@@ -533,6 +533,4 @@ window.onload = registerServiceWorker().then(reg => {
       }
     };
   }
-}).then(loadRipples).then(_ => {
-  console.log('?')
-});
+}).then(loadRipples);
