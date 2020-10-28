@@ -12,13 +12,12 @@ HTMLElement.prototype.onClick = function (cb) {
 };
 
 function applyRipples() {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     ripples.attachButtonRipple(qs('#fab'));
     qsa('.button').forEach(ripples.attachButtonRipple);
     qsa('.icon-button').forEach(ripples.attachRoundButtonRipple);
     qsa('.link').forEach(ripples.attachButtonRipple);
     ripples.attachButtonRipple(qs('#reset'));
-    console.log('made it this far')
     resolve();
   });
 }
@@ -428,7 +427,6 @@ function ipLookup(ip) {
 }
 
 function fetchTop() {
-  console.log('call')
   fetch('/api/stats').then(response => {
     if (response.status !== 200) {
       console.error(response.status);
