@@ -185,33 +185,33 @@ function displayWeaponData(wrappers, weapons, kills) {
 function showApp() {
   setTimeout(_ => {
     animations.animateElement(qs('#load'), 'translateY(-102%)', 350).then(_ => {
-      if (new Date().getDate() === 1) {
-        animations.animateElement(qs('#reset'), 'translateY(0)', 800, 1, 0);
-      }
-      switch (numPlayersOnline) {
-        case 0:
-          new animations.Toast(`${numPlayersOnline} players online.`, 2);
-          break;
-        case 1:
-          new animations.Toast(`${numPlayersOnline} players online. He needs someone to kill`, 2);
-          break;
-        case 2:
-          new animations.Toast(`${numPlayersOnline} players online. 1v1 in progress`, 2);
-          break;
-        case 3:
-          new animations.Toast(`${numPlayersOnline} players online. Deathmatch had begun`, 2);
-          break;
-        case 4:
-          new animations.Toast(`${numPlayersOnline} players online. Shits poppin off`, 2);
-          break;
-        case 5:
-          new animations.Toast(`${numPlayersOnline} players online. Room for one more`, 2);
-          break;
-        case 6:
-          new animations.Toast(`${numPlayersOnline} players online. Server full`, 2);
-          break;
-      }
-      loaded = true;
+      // if (new Date().getDate() === 1) {
+      //   animations.animateElement(qs('#reset'), 'translateY(0)', 800, 1, 0);
+      // }
+      // switch (numPlayersOnline) {
+      //   case 0:
+      //     new animations.Toast(`${numPlayersOnline} players online.`, 2);
+      //     break;
+      //   case 1:
+      //     new animations.Toast(`${numPlayersOnline} players online. He needs someone to kill`, 2);
+      //     break;
+      //   case 2:
+      //     new animations.Toast(`${numPlayersOnline} players online. 1v1 in progress`, 2);
+      //     break;
+      //   case 3:
+      //     new animations.Toast(`${numPlayersOnline} players online. Deathmatch had begun`, 2);
+      //     break;
+      //   case 4:
+      //     new animations.Toast(`${numPlayersOnline} players online. Shits poppin off`, 2);
+      //     break;
+      //   case 5:
+      //     new animations.Toast(`${numPlayersOnline} players online. Room for one more`, 2);
+      //     break;
+      //   case 6:
+      //     new animations.Toast(`${numPlayersOnline} players online. Server full`, 2);
+      //     break;
+      // }
+      // loaded = true;
     });
   }, 1200);
 }
@@ -337,10 +337,10 @@ function parseTopData(top) {
   allWeaponsCard.appendChild(wrapper1);
   allWeaponsCard.appendChild(wrapper2);
   qs('#cardsWrapper').appendChild(allWeaponsCard);
-  showApp();
 }
 
 function parseServerStatus(status) {
+  showApp();
   const pContainer = qs('#players');
   pContainer.innerHTML = '';
   if (status !== "offline") {
