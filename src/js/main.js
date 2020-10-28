@@ -518,15 +518,18 @@ alert.onClick(_ => {
 qs('#fab').onClick(animations.animateScroll);
 
 window.onload = registerServiceWorker().then(reg => {
-  // console.log(reg);
+  console.log(reg);
+  return;
+}).then(loadRipples).then(_ => {
   fetchTop();
   if ("WebSocket" in window) {
     const socket = new WebSocket('wss://hl2dm.dough10.me/api');
     socket.onopen = console.log(`${new Date()} WebSocket connected`);
     socket.onmessage = event => {
       const data = JSON.parse(event.data);
-      parseServerStatus(data);
+      if (Array.isArray(data)) {
+        parseServerStatus(data);
+      }
     };
   }
-  return;
-}).then(loadRipples);
+});
