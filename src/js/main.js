@@ -211,11 +211,9 @@ function showApp() {
           new animations.Toast(`${numPlayersOnline} players online. Server full`, 2);
           break;
       }
-      setTimeout(_ => {
-        loaded = true;
-      }, 1000)
+      loaded = true;
     });
-  }, 1000);
+  }, 1200);
 }
 
 function formatNumber(num) {
