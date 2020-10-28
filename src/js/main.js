@@ -185,6 +185,9 @@ function displayWeaponData(wrappers, weapons, kills) {
 function showApp() {
   setTimeout(_ => {
     animations.animateElement(qs('#load'), 'translateY(-102%)', 350);
+    if (!loaded) {
+      displayPlayerOnline(numPlayersOnline);
+    }
   }, 1200);
 }
 
@@ -339,9 +342,6 @@ function parseTopData(top) {
   allWeaponsCard.appendChild(wrapper1);
   allWeaponsCard.appendChild(wrapper2);
   qs('#cardsWrapper').appendChild(allWeaponsCard);
-  setTimeout(_ => {
-    displayPlayerOnline(numPlayersOnline);
-  }, 1700);
 }
 
 function parseServerStatus(status) {
