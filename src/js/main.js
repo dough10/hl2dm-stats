@@ -354,10 +354,6 @@ function parseServerStatus(status) {
       const div = document.createElement('div');
       div.textContent = "No Players Online";
       pContainer.appendChild(div);
-      // for (var n = 0; n < playersOnline.length; n++) {
-      //   new animations.Toast(`${playersOnline[n]} has left the server`, 2);
-      //   playersOnline.splice(playersOnline.indexOf(playersOnline[n]), 1);
-      // }
     } else {
       numPlayersOnline = status.players.length;
       for (let i = 0; i < numPlayersOnline; i++) {
@@ -536,9 +532,7 @@ window.onload = registerServiceWorker().then(reg => {
     socket.onopen = console.log(`${new Date()} WebSocket connected`);
     socket.onmessage = event => {
       const data = JSON.parse(event.data);
-      if (Array.isArray(data)) {
-        parseServerStatus(data);
-      }
+      parseServerStatus(data);
     };
   } else {
     fetchServerStatus();
