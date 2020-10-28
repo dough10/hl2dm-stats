@@ -535,8 +535,8 @@ window.onload = registerServiceWorker().then(reg => {
     socket.onopen = console.log(`${new Date()} WebSocket connected`);
     socket.onmessage = event => {
       const data = JSON.parse(event.data);
-      parseServerStatus(data);
       if (Array.isArray(data)) {
+        parseServerStatus(data);
       }
     };
   } else {
