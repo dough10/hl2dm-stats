@@ -426,6 +426,16 @@ function ipLookup(ip) {
   });
 }
 
+function fetchServerStatus() {
+  fetch('/api/status').then(response => {
+    if (response.status !== 200) {
+      console.error(response.status);
+      return;
+    }
+    response.json().then(parseServerStatus);
+  });
+}
+
 function fetchTop() {
   fetch('/api/stats').then(response => {
     if (response.status !== 200) {
@@ -529,5 +539,8 @@ window.onload = registerServiceWorker().then(reg => {
       if (Array.isArray(data)) {
       }
     };
+  } else {
+    fetchServerStatus();
+    setTimeout(fetchServerStatus, 5000;
   }
 }).then(loadRipples);
