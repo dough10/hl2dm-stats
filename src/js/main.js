@@ -213,7 +213,7 @@ function showApp() {
       }
       loaded = true;
     });
-  }, 1200);
+  }, 1000);
 }
 
 function formatNumber(num) {
@@ -337,7 +337,6 @@ function parseTopData(top) {
   allWeaponsCard.appendChild(wrapper1);
   allWeaponsCard.appendChild(wrapper2);
   qs('#cardsWrapper').appendChild(allWeaponsCard);
-  showApp();
 }
 
 function parseServerStatus(status) {
@@ -524,6 +523,7 @@ window.onload = registerServiceWorker().then(reg => {
     const socket = new WebSocket('wss://hl2dm.dough10.me/api');
     socket.onopen = console.log(`${new Date()} WebSocket connected`);
     socket.onmessage = event => {
+      showApp();
       const data = JSON.parse(event.data);
       parseServerStatus(data);
     };
