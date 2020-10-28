@@ -521,8 +521,6 @@ qs('#fab').onClick(animations.animateScroll);
 window.onload = registerServiceWorker().then(reg => {
   console.log(reg);
   return;
-}).then(loadRipples).then(_ => {
-  console.log('?')
   fetchTop();
   if ("WebSocket" in window) {
     const socket = new WebSocket('wss://hl2dm.dough10.me/api');
@@ -534,4 +532,6 @@ window.onload = registerServiceWorker().then(reg => {
       }
     };
   }
+}).then(loadRipples).then(_ => {
+  console.log('?')
 });
