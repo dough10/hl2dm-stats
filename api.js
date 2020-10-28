@@ -576,18 +576,29 @@ function getServerStatus() {
 
 function cleanUp() {
   console.count('cleanup-function')
-  console.log(`${new Date()} - Running file clean up`);
-  var numFiles = 0;
-  fs.readdir(logFolder, (err, files) => {
-    numFiles = numFiles + files.length;
-    files.forEach(fs.unlinkSync);
-    fs.readdir(config.gameServerDir, (err, files) => {
-      files.forEach(file => {
-        numFiles = numFiles + files.length;
-        if (path.extname(file) === '.dem') {
-          fs.unlinkSync(file);
-          console.log(`${new Date()} - Clean up complete. Removed ${numFiles} files`);
-        }
+  var now = new Date();
+  var lastMonth = now.setMonth(now.getMonth() - 1);
+  var folder = './oldTop';
+  if (!fs.existsSync(folder)){
+    fs.mkdirSync(folder);
+  }
+  fs.writeFile(`./oldTop/${lastMonth}.json`, JSON.stringify(top), e => {
+    if (err) return console.log(err);
+    console.log(`${new Date()} - Last month top data saved as ${lastMonth}.json`);
+    var numFiles = 0;
+    fs.readdir(logFolder, (err, files) => {
+      console.log(`${new Date()} - Running file clean up`);
+      numFiles = numFiles + files.length;
+      files.forEach(fs.unlinkSync);
+      fs.readdir(config.gameServerDir, (err, files) => {
+        files.forEach(file => {
+          numFiles = numFiles + files.length;
+          if (path.extname(file) === '.dem') {
+            fs.unlinkSync(file);
+          }
+        });
+        console.log(`${new Date()} - Clean up complete. Removed ${numFiles} files`);
+        parseLogs();
       });
     });
   });
