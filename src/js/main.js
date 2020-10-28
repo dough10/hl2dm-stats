@@ -3,7 +3,7 @@ import {qs, qsa} from './modules/helpers.js';
 import * as ripples from './modules/ripples.js';
 import {loadCSSFile, loadJSFile} from './modules/loadFiles.js';
 
-var numPlayersOnline  = 0;
+// var numPlayersOnline  = 0;
 var playersOnline = [];
 var loaded = false;
 
@@ -184,35 +184,7 @@ function displayWeaponData(wrappers, weapons, kills) {
 
 function showApp() {
   setTimeout(_ => {
-    animations.animateElement(qs('#load'), 'translateY(-102%)', 350).then(_ => {
-      // if (new Date().getDate() === 1) {
-      //   animations.animateElement(qs('#reset'), 'translateY(0)', 800, 1, 0);
-      // }
-      // switch (numPlayersOnline) {
-      //   case 0:
-      //     new animations.Toast(`${numPlayersOnline} players online.`, 2);
-      //     break;
-      //   case 1:
-      //     new animations.Toast(`${numPlayersOnline} players online. He needs someone to kill`, 2);
-      //     break;
-      //   case 2:
-      //     new animations.Toast(`${numPlayersOnline} players online. 1v1 in progress`, 2);
-      //     break;
-      //   case 3:
-      //     new animations.Toast(`${numPlayersOnline} players online. Deathmatch had begun`, 2);
-      //     break;
-      //   case 4:
-      //     new animations.Toast(`${numPlayersOnline} players online. Shits poppin off`, 2);
-      //     break;
-      //   case 5:
-      //     new animations.Toast(`${numPlayersOnline} players online. Room for one more`, 2);
-      //     break;
-      //   case 6:
-      //     new animations.Toast(`${numPlayersOnline} players online. Server full`, 2);
-      //     break;
-      // }
-      // loaded = true;
-    });
+    animations.animateElement(qs('#load'), 'translateY(-102%)', 350);
   }, 1200);
 }
 
@@ -353,7 +325,36 @@ function parseServerStatus(status) {
       div.textContent = "No Players Online";
       pContainer.appendChild(div);
     } else {
-      numPlayersOnline = status.players.length;
+      var numPlayersOnline = status.players.length;
+      setTimeout(_ => {        
+        if (new Date().getDate() === 1) {
+          animations.animateElement(qs('#reset'), 'translateY(0)', 800, 1, 0);
+        }
+        switch (numPlayersOnline) {
+          case 0:
+          new animations.Toast(`${numPlayersOnline} players online.`, 2);
+          break;
+          case 1:
+          new animations.Toast(`${numPlayersOnline} players online. He needs someone to kill`, 2);
+          break;
+          case 2:
+          new animations.Toast(`${numPlayersOnline} players online. 1v1 in progress`, 2);
+          break;
+          case 3:
+          new animations.Toast(`${numPlayersOnline} players online. Deathmatch had begun`, 2);
+          break;
+          case 4:
+          new animations.Toast(`${numPlayersOnline} players online. Shits poppin off`, 2);
+          break;
+          case 5:
+          new animations.Toast(`${numPlayersOnline} players online. Room for one more`, 2);
+          break;
+          case 6:
+          new animations.Toast(`${numPlayersOnline} players online. Server full`, 2);
+          break;
+        }
+        loaded = true;
+      }, 2000)
       for (let i = 0; i < numPlayersOnline; i++) {
         var playerName = status.players[i].name;
         const wrapper = document.createElement('div');
