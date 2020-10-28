@@ -211,7 +211,9 @@ function showApp() {
           new animations.Toast(`${numPlayersOnline} players online. Server full`, 2);
           break;
       }
-      loaded = true;
+      setTimeout(_ => {
+        loaded = true;
+      }, 1000)
     });
   }, 1000);
 }
