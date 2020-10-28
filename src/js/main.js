@@ -520,7 +520,7 @@ alert.onClick(_ => {
 qs('#fab').onClick(animations.animateScroll);
 
 window.onload = registerServiceWorker().then(reg => {
-  console.log(reg);
+  // console.log(reg);
   return;
   fetchTop();
   if ("WebSocket" in window) {
