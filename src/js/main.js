@@ -341,14 +341,13 @@ function parseTopData(top) {
 }
 
 function parseServerStatus(status) {
+  const pContainer = qs('#players');
+  pContainer.innerHTML = '';
   if (status !== "offline") {
     document.title = status.name;
     qs('.hostname').textContent = status.name;
     qs('#numPlayers').textContent = status.maxplayers;
     qs('#map').textContent = status.map;
-    // qs('#next_map').textContent = status.raw.rules.sm_nextmap;
-    const pContainer = qs('#players');
-    pContainer.innerHTML = '';
     if (status.players.length === 0) {
       const div = document.createElement('div');
       div.textContent = "No Players Online";
@@ -393,6 +392,10 @@ function parseServerStatus(status) {
       new animations.Toast(`${player} has left the server`, 2);
       playersOnline.splice(playersOnline.indexOf(player), 1);
     });
+  } else {
+    const div = document.createElement('div');
+    div.textContent = "Server offline";
+    pContainer.appendChild(div);
   }
 }
 
