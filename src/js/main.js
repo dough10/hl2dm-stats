@@ -314,7 +314,6 @@ function parseTopData(top) {
     card.appendChild(weaponWrapper2);
     qs('#cardsWrapper').appendChild(card);
     setTimeout(_ => {
-      showApp();
       ripples.attachButtonRipple(card);
     }, 200);
   }
@@ -339,6 +338,7 @@ function parseTopData(top) {
   allWeaponsCard.appendChild(wrapper1);
   allWeaponsCard.appendChild(wrapper2);
   qs('#cardsWrapper').appendChild(allWeaponsCard);
+  showApp();
 }
 
 function parseServerStatus(status) {
