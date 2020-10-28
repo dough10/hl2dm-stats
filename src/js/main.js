@@ -532,5 +532,4 @@ window.onload = registerServiceWorker().then(reg => {
       }
     };
   }
-  return;
 }).then(loadRipples);
