@@ -18,6 +18,7 @@ function applyRipples() {
     qsa('.icon-button').forEach(ripples.attachRoundButtonRipple);
     qsa('.link').forEach(ripples.attachButtonRipple);
     ripples.attachButtonRipple(qs('#reset'));
+    console.log('made it this far')
     resolve();
   });
 }
