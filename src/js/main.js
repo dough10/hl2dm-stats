@@ -530,19 +530,20 @@ qs('#fab').onClick(animations.animateScroll);
 
 window.onload = registerServiceWorker().then(reg => {
   // console.log(reg);
-  // if ("WebSocket" in window) {
-  //   const socket = new WebSocket('wss://hl2dm.dough10.me/api');
-  //   socket.onopen = console.log(`${new Date()} WebSocket connected`);
-  //   socket.onmessage = event => {
-  //     const data = JSON.parse(event.data);
-  //     if (Array.isArray(data)) {
-  //       parseServerStatus(data);
-  //     }
-  //   };
-  // }
   fetchTop();
-  fetchServerStatus();
-  setTimeout(fetchServerStatus, 5000);
+  if ("WebSocket" in window) {
+    const socket = new WebSocket('wss://hl2dm.dough10.me/api');
+    socket.onopen = console.log(`${new Date()} WebSocket connected`);
+    socket.onmessage = event => {
+      const data = JSON.parse(event.data);
+      if (Array.isArray(data)) {
+        parseServerStatus(data);
+      }
+    };
+  } else {
+    fetchServerStatus();
+    setTimeout(fetchServerStatus, 5000);
+  }
 }).then(loadRipples).then(_ => {
   console.log('?')
 });
