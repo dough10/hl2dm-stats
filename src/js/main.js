@@ -18,6 +18,7 @@ function applyRipples() {
     qsa('.icon-button').forEach(ripples.attachRoundButtonRipple);
     qsa('.link').forEach(ripples.attachButtonRipple);
     ripples.attachButtonRipple(qs('#reset'));
+    console.log('made it this far')
     resolve();
   });
 }
@@ -427,6 +428,7 @@ function ipLookup(ip) {
 }
 
 function fetchTop() {
+  console.log('call')
   fetch('/api/stats').then(response => {
     if (response.status !== 200) {
       console.error(response.status);
@@ -519,6 +521,7 @@ qs('#fab').onClick(animations.animateScroll);
 
 window.onload = registerServiceWorker().then(reg => {
   // console.log(reg);
+  return;
   fetchTop();
   if ("WebSocket" in window) {
     const socket = new WebSocket('wss://hl2dm.dough10.me/api');
@@ -526,7 +529,8 @@ window.onload = registerServiceWorker().then(reg => {
     socket.onmessage = event => {
       const data = JSON.parse(event.data);
       parseServerStatus(data);
+      if (Array.isArray(data)) {
+      }
     };
   }
-  return;
 }).then(loadRipples);
