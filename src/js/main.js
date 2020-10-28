@@ -313,6 +313,7 @@ function parseTopData(top) {
     card.appendChild(weaponWrapper2);
     qs('#cardsWrapper').appendChild(card);
     setTimeout(_ => {
+      showApp();
       ripples.attachButtonRipple(card);
     }, 200);
   }
@@ -523,7 +524,6 @@ window.onload = registerServiceWorker().then(reg => {
     const socket = new WebSocket('wss://hl2dm.dough10.me/api');
     socket.onopen = console.log(`${new Date()} WebSocket connected`);
     socket.onmessage = event => {
-      showApp();
       const data = JSON.parse(event.data);
       parseServerStatus(data);
     };
