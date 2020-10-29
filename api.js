@@ -294,9 +294,7 @@ function scanLine(line) {
         chat: []
       };
     }
-    if (users[id].name !== name) {
-      users[id].name = name;
-    }
+    users[id].name = name;
     var said = '';
     for (var i = (isChat + 1); i < word.length; i++) {
       said = `${said}${word[i]} `;
@@ -325,9 +323,7 @@ function scanLine(line) {
       } else {
         users[connectedUser].ip = ip;
       }
-      if (users[connectedUser].name !== connectedUserName) {
-        users[connectedUser].name = connectedUserName;
-      }
+      users[connectedUser].name = connectedUserName;
     }
   } else if (isKill) {
     var killerNameString = buildKillerNameString(word, isKill);
@@ -379,12 +375,8 @@ function scanLine(line) {
         chat: []
       };
     }
-    if (users[killerID].name !== killerName) {
-      users[killerID].name = killerName;
-    }
-    if (users[killedID].name !== killedName) {
-      users[killedID].name = killedName;
-    }
+    users[killerID].name = killerName;
+    users[killedID].name = killedName;
     // add kill
     users[killerID].kills++;
     // add death
@@ -425,9 +417,7 @@ function scanLine(line) {
         chat: []
       };
     }
-    if (users[id].name !== name) {
-      users[id].name = name;
-    }
+    users[id].name = name;
     users[id].kills--;
     users[id].deaths++;
     users[id].kdr = Number((users[id].kills / users[id].deaths).toFixed(2));
@@ -469,9 +459,7 @@ function scanLine(line) {
       users[id3].headshots = 0;
     }
     users[id3].headshots++;
-    if (users[id3].name !== name) {
-      users[id3].name = name;
-    }
+    users[id3].name = name;
   }
   // else if (isStats) {
   //   var nameString = buildKillerNameString(word, isStats - 1);
