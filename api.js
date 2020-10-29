@@ -281,9 +281,10 @@ function scanLine(line) {
   var isHeadshot  = lineIsHeadshot(word);
   var isStats = lineIsStats(word);
   if (isChat) {
-    var nameString = buildKillerNameString(word, isChat);
-    var id = getID3(nameString);
-    var name = getName(nameString);
+    const lineTime = `${word[3].slice(0, -1)} ${word[1]}`;
+    const nameString = buildKillerNameString(word, isChat);
+    const id = getID3(nameString);
+    const name = getName(nameString);
     if (!users[id]) {
       users[id] = {
         name: name,
@@ -291,10 +292,14 @@ function scanLine(line) {
         kills: 0,
         deaths: 0,
         kdr: 0,
+        updated: lineTime,
         chat: []
       };
     }
-    users[id].name = name;
+    if (lineTime > user[id].updated) {
+      users[id].updated = lineTime;
+      users[id].name = name;
+    }
     var said = '';
     for (var i = (isChat + 1); i < word.length; i++) {
       said = `${said}${word[i]} `;
@@ -303,12 +308,11 @@ function scanLine(line) {
     said.replace('"', '');
     users[id].chat.push(said);
   } else if (isConnect) {
-    var connectedNameString = buildKillerNameString(word, isConnect);
-    var connectedUser = getID3(connectedNameString);
-    var connectedUserName = getName(connectedNameString);
-    var ip = word[isConnect  + 2].replace('"', '');
-    ip = ip.replace('"', '');
-    ip = ip.replace(/:\d{4,5}$/, '');
+    const lineTime = `${word[3].slice(0, -1)} ${word[1]}`;
+    const connectedNameString = buildKillerNameString(word, isConnect);
+    const connectedUser = getID3(connectedNameString);
+    const connectedUserName = getName(connectedNameString);
+    const ip = word[isConnect  + 2].replace('"', '').replace('"', '').replace(/:\d{4,5}$/, '');
     if (validateIPaddress(ip)) {
       if (!users[connectedUser]) {
         users[connectedUser] = {
@@ -318,21 +322,26 @@ function scanLine(line) {
           kills: 0,
           deaths: 0,
           kdr: 0,
+          updated: lineTime,
           chat: []
         };
       } else {
         users[connectedUser].ip = ip;
       }
-      users[connectedUser].name = connectedUserName;
+      if (lineTime > user[connectedUser].updated) {
+        users[connectedUser].updated = lineTime;
+        users[connectedUser].name = connectedUserName;
+      }
     }
   } else if (isKill) {
-    var killerNameString = buildKillerNameString(word, isKill);
-    var killerID = getID3(killerNameString);
-    var killerName = getName(killerNameString);
-    var killedNameString = buildKilledNameString(word, isKill + 1);
-    var killedID = getID3(killedNameString);
-    var killedName = getName(killedNameString);
-    var weapon = word[word.length - 1].replace('"', '').replace('"', '');
+    const lineTime = `${word[3].slice(0, -1)} ${word[1]}`;
+    const killerNameString = buildKillerNameString(word, isKill);
+    const killerID = getID3(killerNameString);
+    const killerName = getName(killerNameString);
+    const killedNameString = buildKilledNameString(word, isKill + 1);
+    const killedID = getID3(killedNameString);
+    const killedName = getName(killedNameString);
+    const weapon = word[word.length - 1].replace('"', '').replace('"', '');
     if (!killerID) {
       console.log(`${line} killer error`);
       return;
@@ -361,6 +370,7 @@ function scanLine(line) {
         kills: 0,
         deaths: 0,
         kdr: 0,
+        updated: lineTime,
         chat: []
       };
     }
@@ -372,12 +382,19 @@ function scanLine(line) {
         kills: 0,
         deaths: 0,
         kdr: 0,
+        updated: lineTime,
         chat: []
       };
     }
-    var lineTime = `${word[3].slice(0, -1)} ${word[1]}`;
+    if (lineTime > user[killerID].updated) {
+      users[killerID].updated = lineTime;
+      users[killerID].name = killerName;
+    }
+    if (lineTime > user[killedID].updated) {
+      users[killedID].updated = lineTime;
+      users[killedID].name = killedName;
+    }
     console.log(lineTime, `${new Date(lineTime).getTime()}`);
-    users[killerID].name = killerName;
     users[killedID].name = killedName;
     // add kill
     users[killerID].kills++;
@@ -402,9 +419,10 @@ function scanLine(line) {
     // add server wide weapon kill
     weapons[weapon]++;
   } else if (isSuicide) {
-    var nameString = buildKillerNameString(word, isSuicide);
-    var id = getID3(nameString);
-    var name = getName(nameString);
+    const lineTime = `${word[3].slice(0, -1)} ${word[1]}`;
+    const nameString = buildKillerNameString(word, isSuicide);
+    const id = getID3(nameString);
+    const name = getName(nameString);
     if (!id) {
       console.log(new Date() + line +  ' id error');
       return;
@@ -419,7 +437,10 @@ function scanLine(line) {
         chat: []
       };
     }
-    users[id].name = name;
+    if (lineTime > user[id].updated) {
+      users[id].updated = lineTime;
+      users[id].name = name;
+    }
     users[id].kills--;
     users[id].deaths++;
     users[id].kdr = Number((users[id].kills / users[id].deaths).toFixed(2));
@@ -438,11 +459,12 @@ function scanLine(line) {
       weapons.headshots = 0;
     }
     weapons.headshots++;
-    var killerNameString = buildKillerNameString(word, isHeadshot - 1);
-    var id = getID2(killerNameString);
-    var name = getName(killerNameString);
-    var sid = new SteamID(id);
-    var id3 = getID3(sid.getSteam3RenderedID());
+    const lineTime = `${word[3].slice(0, -1)} ${word[1]}`;
+    const killerNameString = buildKillerNameString(word, isHeadshot - 1);
+    const id = getID2(killerNameString);
+    const name = getName(killerNameString);
+    const sid = new SteamID(id);
+    const id3 = getID3(sid.getSteam3RenderedID());
     if (!id3) {
       console.log(line);
       return;
@@ -450,9 +472,10 @@ function scanLine(line) {
     if (!users[id3]) {
       users[id3] = {
         name: name,
-        id: id,
+        id: id3,
         kills: 0,
         deaths: 0,
+        updated: lineTime,
         kdr: 0,
         chat: []
       };
@@ -461,7 +484,10 @@ function scanLine(line) {
       users[id3].headshots = 0;
     }
     users[id3].headshots++;
-    users[id3].name = name;
+    if (lineTime > user[id3].updated) {
+      users[id3].updated = lineTime;
+      users[id3].name = name;
+    }
   }
 }
 
