@@ -375,6 +375,7 @@ function scanLine(line) {
         chat: []
       };
     }
+    console.log(new Date(`${word[3]} - ${word[1]}`).getTime());
     users[killerID].name = killerName;
     users[killedID].name = killedName;
     // add kill
@@ -461,30 +462,6 @@ function scanLine(line) {
     users[id3].headshots++;
     users[id3].name = name;
   }
-  // else if (isStats) {
-  //   var nameString = buildKillerNameString(word, isStats - 1);
-  //   var stats = line.split('(');
-  //   var id = getID2(nameString);
-  //   var sid = new SteamID(id);
-  //   var id3 = getID3(sid.getSteam3RenderedID());
-  //   var name = getName(nameString);
-  //   var arr = [];
-  //   var arr2 = [];
-  //   console.log(name, id3);
-  //   for (var i = 1; i < stats.length; i++) {
-  //     var items = stats[i].split(' ');
-  //     for (var o = 0; o < items.length; o++) {
-  //       items[o] = items[o].replace('"', '').replace('"', '').replace(')', '');
-  //       if (o < 0) {
-  //         items[o] = Number(items[o])
-  //       }
-  //     }
-  //     arr2.push(items[0]);
-  //     arr.push(items[1]);
-  //   }
-  //   console.log(arr2)
-  //   console.log(arr)
-  // }
 }
 
 function sortWeapons(user) {
