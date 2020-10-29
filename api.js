@@ -375,7 +375,6 @@ function scanLine(line) {
         chat: []
       };
     }
-    console.log(users[killerID].name, killerName)
     users[killerID].name = killerName;
     users[killedID].name = killedName;
     // add kill
