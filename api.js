@@ -519,6 +519,7 @@ function sortUsersByKDR() {
     return a.kdr - b.kdr;
   });
   arr.reverse();
+  console.log(users);
   users = {};
   return arr;
 }
