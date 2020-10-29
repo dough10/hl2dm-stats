@@ -1,23 +1,21 @@
+import * as ripples from './ripples.js';
+import {transitionEvent} from './whichtransistion.js';
+import {qs} from './helpers.js';
 export {Toast};
 
-function whichTransitionEvent() {
-  let t;
-  const el = document.createElement('fakeelement');
-  const transitions = {
-    'WebkitTransition' :'webkitTransitionEnd',
-    'MozTransition'    :'transitionend',
-    'MSTransition'     :'msTransitionEnd',
-    'OTransition'      :'oTransitionEnd',
-    'transition'       :'transitionEnd'
-  };
-  for (t in transitions) {
-    if (el.style[t] !== undefined ) {
-      return transitions[t];
-    }
+const toastCache = [];
+
+setInterval(_ => {
+  if (!toastCache.length) {
+    return;
   }
-}
-// the browser transition event name
-const transitionEvent = whichTransitionEvent();
+  if (qs('#toast')) {
+    return;
+  }
+  new Toast(toastCache[0][0], toastCache[0][1]);
+  toastCache.splice(0,1);
+  console.log(toastCache)
+}, 500);
 
 /**
  * display a toast message
@@ -30,44 +28,28 @@ class Toast {
     // bind this to internal functions
     this._transitionEnd = this._transitionEnd.bind(this);
     this._cleanUp = this._cleanUp.bind(this);
+    const previous = qs('#toast');
+    if (previous) {
+      toastCache.push([
+        message,
+        _timeout
+      ]);
+      return;
+    }
     // create the toast
-    this._checkPrevious().then(_ => {
-      this._timer = false;
-      this._timeout = _timeout * 1000 || 4500;
-      this.toast = this._createToast();
-      this.toast.addEventListener(transitionEvent, this._transitionEnd, true);
-      this.toast.addEventListener('click', this._cleanUp, true);
-      this.toast.textContent = message;
-      document.querySelector('body').appendChild(this.toast);
-      ripples.attachButtonRipple(this.toast);
-      setTimeout(_ => requestAnimationFrame(_ => {
-        this.toast.style.opacity = 1;
-        this.toast.style.transform = 'translateY(0px)';
-      }), 50);
-    });
-  }
+    this._timer = false;
+    this._timeout = _timeout * 1000 || 4500;
+    this.toast = this._createToast();
+    this.toast.addEventListener(transitionEvent, this._transitionEnd, true);
+    this.toast.addEventListener('click', this._cleanUp, true);
+    this.toast.textContent = message;
+    qs('body').appendChild(this.toast);
+    ripples.attachButtonRipple(this.toast);
+    setTimeout(_ => requestAnimationFrame(_ => {
+      this.toast.style.opacity = 1;
+      this.toast.style.transform = 'translateY(0px)';
+    }), 50);
 
-  /**
-   * check if there is a existing toast
-   */
-  _checkPrevious() {
-    return new Promise(resolve => {
-      let previous = document.querySelector('#toast');
-      if (!previous) {
-        resolve();
-        return;
-      }
-      previous.addEventListener(transitionEvent, _ => {
-        if (previous.parentNode) {
-          previous.parentNode.removeChild(previous);
-        }
-        resolve();
-      });
-      requestAnimationFrame(_ => {
-        previous.style.opacity = 0;
-        previous.style.transform = 'translateY(80px)';
-      });
-    });
   }
 
   /**
