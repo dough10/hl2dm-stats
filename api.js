@@ -375,7 +375,7 @@ function scanLine(line) {
         chat: []
       };
     }
-    console.log(`${word[3]} ${word[1]}`);
+    console.log(`${new Date(word[3].slice(0, -1) word[1]).getTime()}`);
     users[killerID].name = killerName;
     users[killedID].name = killedName;
     // add kill
