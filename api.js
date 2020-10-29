@@ -97,6 +97,7 @@ function cacheTopResponse() {
       top[i].physics = (top[i].physics + top[i].physbox) + top[i].world;
       delete top[i].physbox;
       delete top[i].world;
+      delete top[i].updated;
       if (top[i].physics === 0) {
         delete top[i].physics;
       }
@@ -386,7 +387,6 @@ function scanLine(line) {
         chat: []
       };
     }
-    console.log(lineTime > users[killerID].updated);
     if (lineTime > users[killerID].updated) {
       users[killerID].updated = lineTime;
       users[killerID].name = killerName;
