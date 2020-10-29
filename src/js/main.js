@@ -239,7 +239,7 @@ function parseTopData(top) {
     name.textContent = player.name;
     name.title = player.name;
     name.style.transition = `color 200ms ease-in 0ms`;
-    name.style.height = '20px';
+    name.style.height = '24px';
     const weaponWrapper1 = createWrapper();
     weaponWrapper1.style.marginTop = '24px'
     weaponWrapper1.style.display = 'none';
