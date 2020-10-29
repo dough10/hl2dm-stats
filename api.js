@@ -97,7 +97,7 @@ function cacheTopResponse() {
       top[i].physics = (top[i].physics + top[i].physbox) + top[i].world;
       delete top[i].physbox;
       delete top[i].world;
-      // delete top[i].updated;
+      delete top[i].updated;
       if (top[i].physics === 0) {
         delete top[i].physics;
       }
@@ -395,7 +395,6 @@ function scanLine(line) {
       users[killedID].updated = lineTime;
       users[killedID].name = killedName;
     }
-    users[killedID].name = killedName;
     // add kill
     users[killerID].kills++;
     // add death
