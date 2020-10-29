@@ -390,7 +390,7 @@ function scanLine(line) {
       users[killerID].updated = lineTime;
       users[killerID].name = killerName;
     }
-    if (lineTime > user[killedID].updated) {
+    if (lineTime > users[killedID].updated) {
       users[killedID].updated = lineTime;
       users[killedID].name = killedName;
     }
