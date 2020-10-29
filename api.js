@@ -281,7 +281,7 @@ function scanLine(line) {
   var isHeadshot  = lineIsHeadshot(word);
   var isStats = lineIsStats(word);
   if (isChat) {
-    const lineTime = `${word[3].slice(0, -1)} ${word[1]}`;
+    const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
     const nameString = buildKillerNameString(word, isChat);
     const id = getID3(nameString);
     const name = getName(nameString);
@@ -308,7 +308,7 @@ function scanLine(line) {
     said.replace('"', '');
     users[id].chat.push(said);
   } else if (isConnect) {
-    const lineTime = `${word[3].slice(0, -1)} ${word[1]}`;
+    const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
     const connectedNameString = buildKillerNameString(word, isConnect);
     const connectedUser = getID3(connectedNameString);
     const connectedUserName = getName(connectedNameString);
@@ -334,7 +334,7 @@ function scanLine(line) {
       }
     }
   } else if (isKill) {
-    const lineTime = `${word[3].slice(0, -1)} ${word[1]}`;
+    const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
     const killerNameString = buildKillerNameString(word, isKill);
     const killerID = getID3(killerNameString);
     const killerName = getName(killerNameString);
@@ -394,7 +394,6 @@ function scanLine(line) {
       users[killedID].updated = lineTime;
       users[killedID].name = killedName;
     }
-    console.log(lineTime, `${new Date(lineTime).getTime()}`);
     users[killedID].name = killedName;
     // add kill
     users[killerID].kills++;
@@ -419,7 +418,7 @@ function scanLine(line) {
     // add server wide weapon kill
     weapons[weapon]++;
   } else if (isSuicide) {
-    const lineTime = `${word[3].slice(0, -1)} ${word[1]}`;
+    const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
     const nameString = buildKillerNameString(word, isSuicide);
     const id = getID3(nameString);
     const name = getName(nameString);
@@ -459,7 +458,7 @@ function scanLine(line) {
       weapons.headshots = 0;
     }
     weapons.headshots++;
-    const lineTime = `${word[3].slice(0, -1)} ${word[1]}`;
+    const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
     const killerNameString = buildKillerNameString(word, isHeadshot - 1);
     const id = getID2(killerNameString);
     const name = getName(killerNameString);
