@@ -296,7 +296,7 @@ function scanLine(line) {
         chat: []
       };
     }
-    if (lineTime > user[id].updated) {
+    if (lineTime > users[id].updated) {
       users[id].updated = lineTime;
       users[id].name = name;
     }
@@ -328,7 +328,7 @@ function scanLine(line) {
       } else {
         users[connectedUser].ip = ip;
       }
-      if (lineTime > user[connectedUser].updated) {
+      if (lineTime > users[connectedUser].updated) {
         users[connectedUser].updated = lineTime;
         users[connectedUser].name = connectedUserName;
       }
@@ -386,7 +386,7 @@ function scanLine(line) {
         chat: []
       };
     }
-    if (lineTime > user[killerID].updated) {
+    if (lineTime > users[killerID].updated) {
       users[killerID].updated = lineTime;
       users[killerID].name = killerName;
     }
@@ -437,7 +437,7 @@ function scanLine(line) {
         chat: []
       };
     }
-    if (lineTime > user[id].updated) {
+    if (lineTime > users[id].updated) {
       users[id].updated = lineTime;
       users[id].name = name;
     }
@@ -484,7 +484,7 @@ function scanLine(line) {
       users[id3].headshots = 0;
     }
     users[id3].headshots++;
-    if (lineTime > user[id3].updated) {
+    if (lineTime > users[id3].updated) {
       users[id3].updated = lineTime;
       users[id3].name = name;
     }
