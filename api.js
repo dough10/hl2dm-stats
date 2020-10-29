@@ -587,9 +587,13 @@ function cleanUp() {
   if (!fs.existsSync(folder)){
     fs.mkdirSync(folder);
   }
-  fs.writeFile(`./oldTop/${lastMonth}.json`, JSON.stringify(top), e => {
-    if (err) return console.log(err);
-    console.log(`${new Date()} - Last month top data saved as ${lastMonth}.json`);
+  var filename = `./oldTop/${lastMonth}.json`;
+  fs.writeFile(filename, JSON.stringify(top), e => {
+    if (err) return console.log(`${new Date()} - Error saving ${__dirname}/oldTop/${lastMonth}.json`, err);
+    if (!fs.existsSync(filename)){
+      return console.log(`${new Date()} - Error saving ${__dirname}/oldTop/${lastMonth}.json`);
+    }
+    console.log(`${new Date()} - top player data saved as ${__dirname}/oldTop/${lastMonth}.json`);
     var numFiles = 0;
     fs.readdir(logFolder, (err, files) => {
       console.log(`${new Date()} - Running file clean up`);
