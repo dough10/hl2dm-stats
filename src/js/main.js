@@ -198,25 +198,25 @@ function displayPlayerOnline(playersOnline) {
   }
   switch (playersOnline) {
     case 0:
-    new Toast(`${playersOnline} players online.`, 2);
+    new animations.Toast(`${playersOnline} players online.`, 2);
     break;
     case 1:
-    new Toast(`${playersOnline} players online. He needs someone to kill`, 2);
+    new animations.Toast(`${playersOnline} players online. He needs someone to kill`, 2);
     break;
     case 2:
-    new Toast(`${playersOnline} players online. 1v1 in progress`, 2);
+    new animations.Toast(`${playersOnline} players online. 1v1 in progress`, 2);
     break;
     case 3:
-    new Toast(`${playersOnline} players online. Deathmatch had begun`, 2);
+    new animations.Toast(`${playersOnline} players online. Deathmatch had begun`, 2);
     break;
     case 4:
-    new Toast(`${playersOnline} players online. Shits poppin off`, 2);
+    new animations.Toast(`${playersOnline} players online. Shits poppin off`, 2);
     break;
     case 5:
-    new Toast(`${playersOnline} players online. Room for one more`, 2);
+    new animations.Toast(`${playersOnline} players online. Room for one more`, 2);
     break;
     case 6:
-    new Toast(`${playersOnline} players online. Server full`, 2);
+    new animations.Toast(`${playersOnline} players online. Server full`, 2);
     break;
   }
   loaded = true;
@@ -372,7 +372,7 @@ function parseServerStatus(status) {
         if (playerName && !playersOnline.includes(playerName)) {
           playersOnline.push(playerName);
           if (loaded) {
-            new Toast(`${playerName} has joined the game`, 2);
+            new animations.Toast(`${playerName} has joined the game`, 2);
           }
         }
       }
@@ -389,7 +389,7 @@ function parseServerStatus(status) {
     }
     // remove player from online array and notify UI
     notOnline.forEach(player => {
-      new Toast(`${player} has left the server`, 2);
+      new animations.Toast(`${player} has left the server`, 2);
       playersOnline.splice(playersOnline.indexOf(player), 1);
     });
   } else {
