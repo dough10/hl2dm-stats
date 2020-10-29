@@ -517,7 +517,6 @@ function sortUsersByKDR() {
     return a.kdr - b.kdr;
   });
   arr.reverse();
-  console.log(users);
   users = {};
   return arr;
 }
@@ -575,7 +574,7 @@ function getServerStatus() {
           cacheTopResponse();
         }
       }
-      // console.log(`${new Date()} - `, serverStatus.players);
+      console.log(`${new Date()} - `, serverStatus.players);
     }
     socket.send(JSON.stringify(serverStatus));
   }).catch((error) => {
