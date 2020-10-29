@@ -330,6 +330,7 @@ function scanLine(line) {
         users[connectedUser].ip = ip;
       }
       if (lineTime >= users[connectedUser].updated) {
+        console.log(connectedUserName);
         users[connectedUser].updated = lineTime;
         users[connectedUser].name = connectedUserName;
       }
