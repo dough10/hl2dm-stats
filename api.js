@@ -336,8 +336,7 @@ function scanLine(line) {
     var killedNameString = buildKilledNameString(word, isKill + 1);
     var killedID = getID3(killedNameString);
     var killedName = getName(killedNameString);
-    var weapon = word[word.length - 1].replace('"', '');
-    weapon = weapon.replace('"', '');
+    var weapon = word[word.length - 1].replace('"', '').replace('"', '');
     if (!killerID) {
       console.log(`${line} killer error`);
       return;
