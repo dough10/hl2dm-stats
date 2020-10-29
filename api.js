@@ -386,6 +386,7 @@ function scanLine(line) {
         chat: []
       };
     }
+    console.log(lineTime > users[killerID].updated);
     if (lineTime > users[killerID].updated) {
       users[killerID].updated = lineTime;
       users[killerID].name = killerName;
