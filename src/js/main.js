@@ -2,6 +2,7 @@ import * as animations from './modules/animations.js';
 import {qs, qsa} from './modules/helpers.js';
 import * as ripples from './modules/ripples.js';
 import {loadCSSFile, loadJSFile} from './modules/loadFiles.js';
+import {Toast} from './modules/toast.js';
 
 var numPlayersOnline  = 0;
 var playersOnline = [];
@@ -197,25 +198,25 @@ function displayPlayerOnline(playersOnline) {
   }
   switch (playersOnline) {
     case 0:
-    new animations.Toast(`${playersOnline} players online.`, 2);
+    new Toast(`${playersOnline} players online.`, 2);
     break;
     case 1:
-    new animations.Toast(`${playersOnline} players online. He needs someone to kill`, 2);
+    new Toast(`${playersOnline} players online. He needs someone to kill`, 2);
     break;
     case 2:
-    new animations.Toast(`${playersOnline} players online. 1v1 in progress`, 2);
+    new Toast(`${playersOnline} players online. 1v1 in progress`, 2);
     break;
     case 3:
-    new animations.Toast(`${playersOnline} players online. Deathmatch had begun`, 2);
+    new Toast(`${playersOnline} players online. Deathmatch had begun`, 2);
     break;
     case 4:
-    new animations.Toast(`${playersOnline} players online. Shits poppin off`, 2);
+    new Toast(`${playersOnline} players online. Shits poppin off`, 2);
     break;
     case 5:
-    new animations.Toast(`${playersOnline} players online. Room for one more`, 2);
+    new Toast(`${playersOnline} players online. Room for one more`, 2);
     break;
     case 6:
-    new animations.Toast(`${playersOnline} players online. Server full`, 2);
+    new Toast(`${playersOnline} players online. Server full`, 2);
     break;
   }
   loaded = true;
@@ -371,7 +372,7 @@ function parseServerStatus(status) {
         if (playerName && !playersOnline.includes(playerName)) {
           playersOnline.push(playerName);
           if (loaded) {
-            new animations.Toast(`${playerName} has joined the game`, 2);
+            new Toast(`${playerName} has joined the game`, 2);
           }
         }
       }
@@ -388,7 +389,7 @@ function parseServerStatus(status) {
     }
     // remove player from online array and notify UI
     notOnline.forEach(player => {
-      new animations.Toast(`${player} has left the server`, 2);
+      new Toast(`${player} has left the server`, 2);
       playersOnline.splice(playersOnline.indexOf(player), 1);
     });
   } else {
