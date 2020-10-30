@@ -486,7 +486,7 @@ function connectWSS() {
       connectWSS();
     }, seconds * 1000);
   };
-  socket.onerror = _ => {
+  socket.onerror = err => {
     console.error(`${new Date()} - Socket encountered error: ${err.message} closing socket`);
     socket.close();
   };
