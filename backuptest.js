@@ -51,7 +51,7 @@ function cleanUp() {
 
 function copyFile(filename) {
   var now = new Date();
-  var lastMonth = now.setMonth(now.getMonth() - 1).getTIme();
+  var lastMonth = now.setMonth(now.getMonth() - 1);
   var folder = './oldLogs';
   if (!fs.existsSync(folder)){
     fs.mkdirSync(folder);
