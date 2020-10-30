@@ -27,7 +27,7 @@ function cleanUp() {
       numFiles = numFiles + files.length;
       var howMany = files.length;
       files.forEach(file => {
-        copyLogFile(file);
+        copyLogFile(file, lastMonth);
         // console.log(path.join(logFolder, file));
       });
       fs.readdir(config.gameServerDir, (err, files) => {
@@ -48,9 +48,7 @@ function cleanUp() {
   });
 ;}
 
-function copyLogFile(filename) {
-  var now = new Date();
-  var lastMonth = now.setMonth(now.getMonth() - 1);
+function copyLogFile(filename, lastMonth) {
   var folder = './oldLogs';
   if (!fs.existsSync(folder)){
     fs.mkdirSync(folder);
