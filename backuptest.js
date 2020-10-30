@@ -7,16 +7,17 @@ var top = {data: 'is here'};
 
 
 function cleanUp() {
-  console.count('cleanup-function')
+  console.count('cleanup count')
   var now = new Date();
   var lastMonth = now.setMonth(now.getMonth() - 1);
+  var start = new Date().getTime();
   zipLogs(lastMonth).then(zipDemos).then(saveTop).then(_ => {
     var numFiles = 0;
     fs.readdir(logFolder, (err, files) => {
       console.log(`${new Date()} - Running log file clean up`);
       numFiles = numFiles + files.length;
       files.forEach(file => {
-        // console.log(path.join(logFolder, file));
+        // fs.unlinkSync(path.join(logFolder, file));
       });
       fs.readdir(config.gameServerDir, (err, filess) => {
         console.log(`${new Date()} - Running demo file clean up`);
@@ -24,14 +25,18 @@ function cleanUp() {
         numFiles = numFiles + filess.length;
         filess.forEach(file => {
           if (path.extname(file) === '.dem') {
-            // console.log(path.join(config.gameServerDir, file));
+            // fs.unlinkSync(path.join(config.gameServerDir, file));
             howMany--;
             if (howMany <= 0) {
               var end = new Date().getTime();
-              var past = end - now;
-              console.log(past);
-              console.log(timePast(past));
-              // console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up`);
+              var ms = end - start;
+              var seconds = ms / 1000;
+              var hours = parseInt( seconds / 3600 );
+              seconds = seconds % 3600;
+              var minutes = parseInt( seconds / 60 );
+              seconds = seconds % 60;
+              console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up.`);
+              console.log(`${new Date()} - Backup process took ${hours} hours ${minutes} minutes  ${seconds} seconds to complete`)
               // parseLogs();
             }
           }
@@ -41,15 +46,6 @@ function cleanUp() {
   }).catch(e => {
     console.log(e.message);
   });
-}
-
-function timePast(ms) {
-  var seconds = ms / 1000;
-  var hours = parseInt( seconds / 3600 );
-  seconds = seconds % 3600;
-  var minutes = parseInt( seconds / 60 );
-  seconds = seconds % 60;
-  return `${hours}:${minutes}:${seconds}`;
 }
 
 function saveTop(lastMonth) {

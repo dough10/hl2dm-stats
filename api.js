@@ -584,7 +584,7 @@ function getServerStatus() {
 }
 
 function cleanUp() {
-  console.count('cleanup-function')
+  console.count('cleanup count')
   var now = new Date();
   var lastMonth = now.setMonth(now.getMonth() - 1);
   zipLogs(lastMonth).then(zipDemos).then(saveTop).then(_ => {
