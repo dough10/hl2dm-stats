@@ -14,19 +14,19 @@ function cleanUp() {
   if (!fs.existsSync(folder)){
     fs.mkdirSync(folder);
   }
-  copyLogsFiles(lastMonth).then(saveOldTop).then(_ => {
+  zipLogsFiles(lastMonth).then(saveOldTop).then(_ => {
     var numFiles = 0;
     fs.readdir(logFolder, (err, files) => {
       console.log(`${new Date()} - Running log file clean up`);
       numFiles = numFiles + files.length;
-      var howMany = files.length;
       files.forEach(file => {
         // console.log(path.join(logFolder, file));
       });
-      fs.readdir(config.gameServerDir, (err, files) => {
+      fs.readdir(config.gameServerDir, (err, filess) => {
         console.log(`${new Date()} - Running demo file clean up`);
-        files.forEach(file => {
-          numFiles = numFiles + files.length;
+        var howMany = filess.length;
+        numFiles = numFiles + filess.length;
+        filess.forEach(file => {
           if (path.extname(file) === '.dem') {
             console.log(path.join(config.gameServerDir, file));
             howMany--;
@@ -61,7 +61,7 @@ function saveOldTop(lastMonth) {
 }
 
 
-function copyLogsFiles(lastMonth) {
+function zipLogsFiles(lastMonth) {
   return new Promise((resolve, reject) => {
     var folder = './oldLogs';
     if (!fs.existsSync(folder)){
