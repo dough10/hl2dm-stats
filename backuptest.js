@@ -31,7 +31,7 @@ function cleanUp() {
             console.log(path.join(config.gameServerDir, file));
             howMany--;
             console.log(howMany)
-            if (howMany <= 0) {
+            if (howMany <= 16) {
               // console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up to ${__dirname}/oldLogs/${lastMonth}`);
               // parseLogs();
             }
