@@ -27,7 +27,7 @@ function cleanUp() {
       numFiles = numFiles + files.length;
       var howMany = files.length;
       files.forEach(file => {
-        copyFile(logFolder, file, lastMonth);
+        copyFiles(logFolder, file, lastMonth);
         // console.log(path.join(logFolder, file));
       });
       fs.readdir(config.gameServerDir, (err, files) => {
@@ -35,7 +35,7 @@ function cleanUp() {
         files.forEach(file => {
           numFiles = numFiles + files.length;
           if (path.extname(file) === '.dem') {
-            copyFile(config.gameServerDir, file, lastMonth);
+            copyFiles(config.gameServerDir, file, lastMonth);
             howMany--;
             if (howMany <= 0) {
               console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up to ${__dirname}/oldLogs/${lastMonth}`);
