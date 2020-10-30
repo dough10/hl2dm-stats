@@ -59,7 +59,6 @@ function saveOldTop(lastMonth) {
   });
 }
 
-
 function zipLogsFiles(lastMonth) {
   return new Promise((resolve, reject) => {
     var folder = './oldLogs';

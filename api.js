@@ -591,13 +591,13 @@ function cleanUp() {
   if (!fs.existsSync(folder)){
     fs.mkdirSync(folder);
   }
-  zipLogsFiles(lastMonth).then(saveOldTop).then(_ => {
+  zipLogsFiles(lastMonth).then(zipDemoFiles).then(saveOldTop).then(_ => {
     var numFiles = 0;
     fs.readdir(logFolder, (err, files) => {
       console.log(`${new Date()} - Running log file clean up`);
       numFiles = numFiles + files.length;
       files.forEach(file => {
-        fs.unlinkSync(path.join(logFolder, file));
+        console.log(path.join(logFolder, file));
       });
       fs.readdir(config.gameServerDir, (err, filess) => {
         console.log(`${new Date()} - Running demo file clean up`);
@@ -605,11 +605,11 @@ function cleanUp() {
         numFiles = numFiles + filess.length;
         filess.forEach(file => {
           if (path.extname(file) === '.dem') {
-            fs.unlinkSync(path.join(config.gameServerDir, file));
+            console.log(path.join(config.gameServerDir, file));
             howMany--;
             if (howMany <= 0) {
               console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up to ${__dirname}/oldLogs/${lastMonth}.zip`);
-              parseLogs();
+              // parseLogs();
             }
           }
         });
@@ -636,21 +636,30 @@ function saveOldTop(lastMonth) {
   });
 }
 
-
 function zipLogsFiles(lastMonth) {
   return new Promise((resolve, reject) => {
     var folder = './oldLogs';
     if (!fs.existsSync(folder)){
       fs.mkdirSync(folder);
     }
-    if (!fs.existsSync(`${__dirname}/oldLogs/${lastMonth}`)){
-      fs.mkdirSync(`${__dirname}/oldLogs/${lastMonth}`);
-    }
     child_process.execSync(`zip -r ${__dirname}/oldLogs/${lastMonth}.zip *`, {
       cwd: '/appdata/hl2dm/hl2mp/logs'
     });
     resolve(lastMonth);
   });
+}
+
+function zipDemoFiles(lastMonth) {
+  return new Promise((resolve, reject) => {
+    var folder = './oldDemos';
+    if (!fs.existsSync(folder)){
+      fs.mkdirSync(folder);
+    }
+    child_process.execSync(`zip -r ${__dirname}/oldDemos/${lastMonth}.zip * '*.dem'`, {
+      cwd: '/appdata/hl2dm/hl2mp'
+    });
+    resolve(lastMonth);
+  })
 }
 
 console.log(`${new Date()} - Getting data`);
