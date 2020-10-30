@@ -59,8 +59,8 @@ function copyFile(filename) {
   if (!fs.existsSync(`${lastMonth}`)){
     fs.mkdirSync(`${lastMonth}`);
   }
-  console.log(filename, path.join(logFolder, filename), path.join(__dirname, 'oldLogs', lastMonth, filename))
-  fs.createReadStream(path.join(logFolder, filename)).pipe(fs.createWriteStream(path.join(__dirname, 'oldLogs', lastMonth, filename)));
+  console.log(filename, path.join(logFolder, filename), `${__dirname}/oldLogs/${lastMonth}/${filename}`)
+  fs.createReadStream(path.join(logFolder, filename)).pipe(fs.createWriteStream(`${__dirname}/oldLogs/${lastMonth}/${filename}`));
 }
 
 cleanUp();
