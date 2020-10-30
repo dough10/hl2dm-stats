@@ -28,7 +28,7 @@ function cleanUp() {
       var howMany = files.length;
       files.forEach(file => {
         copyFile(file);
-        console.log(path.join(logFolder, file));
+        // console.log(path.join(logFolder, file));
       });
       fs.readdir(config.gameServerDir, (err, files) => {
         console.log(`${new Date()} - Running demo file clean up`);
