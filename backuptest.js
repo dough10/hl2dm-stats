@@ -28,14 +28,14 @@ function cleanUp() {
       var howMany = files.length;
       files.forEach(file => {
         copyFiles(logFolder, file, lastMonth);
-        // console.log(path.join(logFolder, file));
+        // delete path.join(logFolder, file);
       });
       fs.readdir(config.gameServerDir, (err, files) => {
         console.log(`${new Date()} - Running demo file clean up`);
         files.forEach(file => {
           numFiles = numFiles + files.length;
           if (path.extname(file) === '.dem') {
-            copyFiles(config.gameServerDir, file, lastMonth);
+            // copyFiles(config.gameServerDir, file, lastMonth);
             howMany--;
             if (howMany <= 0) {
               console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up to ${__dirname}/oldLogs/${lastMonth}`);
@@ -56,7 +56,7 @@ function copyFiles(root, filename, lastMonth) {
   if (!fs.existsSync(`${__dirname}/oldLogs/${lastMonth}`)){
     fs.mkdirSync(`${__dirname}/oldLogs/${lastMonth}`);
   }
-  fs.createReadStream(path.join(root, filename)).pipe(fs.createWriteStream(`${__dirname}/oldLogs/${lastMonth}/${filename}`));
+  // fs.createReadStream(path.join(root, filename)).pipe(fs.createWriteStream(`${__dirname}/oldLogs/${lastMonth}/${filename}`));
 }
 
 cleanUp();
