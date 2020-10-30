@@ -24,15 +24,15 @@ function cleanUp() {
       });
       fs.readdir(config.gameServerDir, (err, filess) => {
         console.log(`${new Date()} - Running demo file clean up`);
-        var howMany = filess.length;
+        var howMany = filess.length - 16;
         numFiles = numFiles + filess.length;
         filess.forEach(file => {
           if (path.extname(file) === '.dem') {
             console.log(path.join(config.gameServerDir, file));
             howMany--;
             console.log(howMany)
-            if (howMany <= 17) {
-              // console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up to ${__dirname}/oldLogs/${lastMonth}`);
+            if (howMany <= 0) {
+              console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up to ${__dirname}/oldLogs/${lastMonth}`);
               // parseLogs();
             }
           }
