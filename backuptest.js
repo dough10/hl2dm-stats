@@ -7,7 +7,7 @@ const logFolder = path.join(config.gameServerDir, 'logs');
 function cleanUp() {
   console.count('cleanup-function')
   var now = new Date();
-  var lastMonth = now.setMonth(now.getMonth() - 1).getTime();
+  var lastMonth = now.setMonth(now.getMonth() - 1);
   var folder = './oldTop';
   if (!fs.existsSync(folder)){
     fs.mkdirSync(folder);
