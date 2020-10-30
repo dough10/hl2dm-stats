@@ -14,7 +14,7 @@ function cleanUp() {
   if (!fs.existsSync(folder)){
     fs.mkdirSync(folder);
   }
-  zipLogsFiles(lastMonth).then(saveOldTop).then(_ => {
+  zipLogsFiles(lastMonth).then(zipDemoFiles).then(saveOldTop).then(_ => {
     var numFiles = 0;
     fs.readdir(logFolder, (err, files) => {
       console.log(`${new Date()} - Running log file clean up`);
@@ -66,14 +66,24 @@ function zipLogsFiles(lastMonth) {
     if (!fs.existsSync(folder)){
       fs.mkdirSync(folder);
     }
-    if (!fs.existsSync(`${__dirname}/oldLogs/${lastMonth}`)){
-      fs.mkdirSync(`${__dirname}/oldLogs/${lastMonth}`);
-    }
     child_process.execSync(`zip -r ${__dirname}/oldLogs/${lastMonth}.zip *`, {
       cwd: '/appdata/hl2dm/hl2mp/logs'
     });
     resolve(lastMonth);
   });
+}
+
+function zipDemoFiles(lastMonth) {
+  return new Promise((resolve, reject) => {
+    var folder = './oldDemos';
+    if (!fs.existsSync(folder)){
+      fs.mkdirSync(folder);
+    }
+    child_process.execSync(`zip -r ${__dirname}/oldDemos/${lastMonth}.zip * '*.dem'`, {
+      cwd: '/appdata/hl2dm/hl2mp'
+    });
+    resolve(lastMonth);
+  })
 }
 
 cleanUp();

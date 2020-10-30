@@ -2,14 +2,15 @@ console.log(`${new Date()} - Loading imports`);
 const path = require('path');
 const fs = require('fs');
 const readline = require('readline');
+const Gamedig = require('gamedig');
+const schedule = require('node-schedule');
+const SteamID = require('steamid');
+const child_process = require("child_process");
 const express = require('express');
 const compression = require('compression');
 const app = express();
 app.use(compression());
 var expressWs = require('express-ws')(app);
-const Gamedig = require('gamedig');
-const schedule = require('node-schedule');
-const SteamID = require('steamid');
 
 const config = require(`${__dirname}/config.json`);
 const logFolder = path.join(config.gameServerDir, 'logs');
@@ -585,57 +586,71 @@ function getServerStatus() {
 function cleanUp() {
   console.count('cleanup-function')
   var now = new Date();
-  var lastMonth = now.setMonth(now.getMonth() - 1).getTime();
-  var folder = './oldTop';
+  var lastMonth = now.setMonth(now.getMonth() - 1);
+  var folder = `${__dirname}/oldTop`;
   if (!fs.existsSync(folder)){
     fs.mkdirSync(folder);
   }
-  var filename = `./oldTop/${lastMonth}.json`;
-  fs.writeFile(filename, JSON.stringify(top), e => {
-    if (err) return console.log(`${new Date()} - Error saving ${__dirname}/oldTop/${lastMonth}.json`, err);
-    if (!fs.existsSync(filename)){
-      return console.log(`${new Date()} - Error saving ${__dirname}/oldTop/${lastMonth}.json`);
-    }
-    console.log(`${new Date()} - top player data saved as ${__dirname}/oldTop/${lastMonth}.json`);
+  zipLogsFiles(lastMonth).then(saveOldTop).then(_ => {
     var numFiles = 0;
     fs.readdir(logFolder, (err, files) => {
       console.log(`${new Date()} - Running log file clean up`);
       numFiles = numFiles + files.length;
-      var howMany = files.length;
       files.forEach(file => {
-        copyFile(file);
-        fs.unlinkSync(file);
+        fs.unlinkSync(path.join(logFolder, file));
       });
-      fs.readdir(config.gameServerDir, (err, files) => {
+      fs.readdir(config.gameServerDir, (err, filess) => {
         console.log(`${new Date()} - Running demo file clean up`);
-        files.forEach(file => {
-          numFiles = numFiles + files.length;
+        var howMany = filess.length - 16;
+        numFiles = numFiles + filess.length;
+        filess.forEach(file => {
           if (path.extname(file) === '.dem') {
-            copyFile(file);
-            fs.unlinkSync(file);
+            fs.unlinkSync(path.join(config.gameServerDir, file));
             howMany--;
             if (howMany <= 0) {
-              console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up to ${__dirname}/oldLogs/${lastMonth}`);
+              console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up to ${__dirname}/oldLogs/${lastMonth}.zip`);
               parseLogs();
             }
           }
         });
       });
     });
+  }).catch(e => {
+    console.log(e.message);
   });
-;}
+}
 
-function copyFile(filename) {
-  var now = new Date();
-  var lastMonth = now.setMonth(now.getMonth() - 1).getTIme();
-  var folder = './oldLogs';
-  if (!fs.existsSync(folder)){
-    fs.mkdirSync(folder);
-  }
-  if (!fs.existsSync(lastMonth)){
-    fs.mkdirSync(lastMonth);
-  }
-  fs.createReadStream(`${logFolder}/${filename}`).pipe(fs.createWriteStream(`${__dirname}/oldLogs/${lastMonth}/${filename}`));
+function saveOldTop(lastMonth) {
+  return new Promise((resolve, reject) => {
+    var filename = `${__dirname}/oldTop/${lastMonth}.json`;
+    fs.writeFile(filename, JSON.stringify(top), e => {
+      if (e) {
+        reject();
+      }
+      if (!fs.existsSync(filename)){
+        reject();
+      }
+      console.log(`${new Date()} - top player data saved as ${__dirname}/oldTop/${lastMonth}.json`);
+      resolve();
+    });
+  });
+}
+
+
+function zipLogsFiles(lastMonth) {
+  return new Promise((resolve, reject) => {
+    var folder = './oldLogs';
+    if (!fs.existsSync(folder)){
+      fs.mkdirSync(folder);
+    }
+    if (!fs.existsSync(`${__dirname}/oldLogs/${lastMonth}`)){
+      fs.mkdirSync(`${__dirname}/oldLogs/${lastMonth}`);
+    }
+    child_process.execSync(`zip -r ${__dirname}/oldLogs/${lastMonth}.zip *`, {
+      cwd: '/appdata/hl2dm/hl2mp/logs'
+    });
+    resolve(lastMonth);
+  });
 }
 
 console.log(`${new Date()} - Getting data`);
