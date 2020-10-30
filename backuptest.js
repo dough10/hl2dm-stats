@@ -31,7 +31,7 @@ function cleanUp() {
             console.log(path.join(config.gameServerDir, file));
             howMany--;
             console.log(howMany)
-            if (howMany <= 16) {
+            if (howMany <= 17) {
               // console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up to ${__dirname}/oldLogs/${lastMonth}`);
               // parseLogs();
             }
@@ -40,7 +40,7 @@ function cleanUp() {
       });
     });
   }).catch(e => {
-    console.log(`${new Date()} - Error saving ${__dirname}/oldTop/${lastMonth}.json`, e.message);
+    console.log(e.message);
   });
 }
 
