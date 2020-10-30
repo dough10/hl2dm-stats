@@ -1,7 +1,7 @@
-const config = require(`${__dirname}/config.json`);
-const logFolder = path.join(config.gameServerDir, 'logs');
 const path = require('path');
 const fs = require('fs');
+const config = require(`${__dirname}/config.json`);
+const logFolder = path.join(config.gameServerDir, 'logs');
 
 
 function cleanUp() {
