@@ -36,7 +36,6 @@ function cleanUp() {
           numFiles = numFiles + files.length;
           if (path.extname(file) === '.dem') {
             copyFile(file);
-            console.log(path.join(config.gameServerDir, file));
             howMany--;
             if (howMany <= 0) {
               console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up to ${__dirname}/oldLogs/${lastMonth}`);
