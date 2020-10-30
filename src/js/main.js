@@ -557,6 +557,11 @@ window.onload = registerServiceWorker().then(reg => {
     fetchServerStatus();
     setTimeout(fetchServerStatus, 5000);
   }
+  setTimeout(_ => {
+    for (var i = 0; i < 100; i++) {
+      new Toast(`Test toast #${i}`);
+    }
+  }, 10000);
 }).then(loadRipples).then(_ => {
   console.log('?')
 });
