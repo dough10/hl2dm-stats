@@ -16,7 +16,7 @@ function cleanUp() {
       console.log(`${new Date()} - Running log file clean up`);
       numFiles = numFiles + files.length;
       files.forEach(file => {
-        console.log(path.join(logFolder, file));
+        // console.log(path.join(logFolder, file));
       });
       fs.readdir(config.gameServerDir, (err, filess) => {
         console.log(`${new Date()} - Running demo file clean up`);
@@ -24,10 +24,14 @@ function cleanUp() {
         numFiles = numFiles + filess.length;
         filess.forEach(file => {
           if (path.extname(file) === '.dem') {
-            console.log(path.join(config.gameServerDir, file));
+            // console.log(path.join(config.gameServerDir, file));
             howMany--;
             if (howMany <= 0) {
-              console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up`);
+              var end = new Date().getTime();
+              var past = end - now;
+              console.log(past);
+              console.log(timePast(past));
+              // console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up`);
               // parseLogs();
             }
           }
@@ -37,6 +41,15 @@ function cleanUp() {
   }).catch(e => {
     console.log(e.message);
   });
+}
+
+function timePast(ms) {
+  var seconds = ms / 1000;
+  var hours = parseInt( seconds / 3600 );
+  seconds = seconds % 3600;
+  var minutes = parseInt( seconds / 60 );
+  seconds = seconds % 60;
+  return `${hours}:${minutes}:${seconds}`;
 }
 
 function saveTop(lastMonth) {
