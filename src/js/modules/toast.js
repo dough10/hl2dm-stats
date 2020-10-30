@@ -3,8 +3,15 @@ import {transitionEvent} from './whichtransistion.js';
 import {qs} from './helpers.js';
 export {Toast};
 
+/**
+ * Overflow Toasts.
+ * when more thrn one toast happens in a short period of time overflow will be pushed here
+ */
 const _toastCache = [];
 
+/**
+ * checkes overflow for messages and displays them after the last has finished
+ */
 setInterval(_ => {
   if (!_toastCache.length) {
     return;
