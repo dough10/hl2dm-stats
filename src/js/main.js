@@ -472,6 +472,26 @@ function HL2Weapons(weapons) {
   ];
 }
 
+function connectWSS() {
+  const socket = new WebSocket('wss://hl2dm.dough10.me/api');
+  socket.onopen = console.log(`${new Date()} WebSocket connected`);
+  socket.onmessage = event => {
+    const data = JSON.parse(event.data);
+    parseServerStatus(data);
+  };
+  socket.onclose = _ => {
+    var seconds = 2;
+    console.log(`${new Date()} - Socket close. Reconnecting in ${seconds} seconds.`);
+    setTimeout(_ => {
+      connectWSS();
+    }, seconds * 1000);
+  };
+  socket.onerror = _ => {
+    console.error(`${new Date()} - Socket encountered error: ${err.message} closing socket`);
+    socket.close();
+  };
+}
+
 qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
   const infoHeight = qs('#info').offsetHeight
   const wrapper = qs('#cardsWrapper');
@@ -532,12 +552,7 @@ window.onload = registerServiceWorker().then(reg => {
   // console.log(reg);
   fetchTop();
   if ("WebSocket" in window) {
-    const socket = new WebSocket('wss://hl2dm.dough10.me/api');
-    socket.onopen = console.log(`${new Date()} WebSocket connected`);
-    socket.onmessage = event => {
-      const data = JSON.parse(event.data);
-      parseServerStatus(data);
-    };
+    connectWSS();
   } else {
     fetchServerStatus();
     setTimeout(fetchServerStatus, 5000);
