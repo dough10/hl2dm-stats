@@ -27,7 +27,7 @@ function cleanUp() {
       numFiles = numFiles + files.length;
       var howMany = files.length;
       files.forEach(file => {
-        copyFile(file);
+        copyFLogile(file);
         // console.log(path.join(logFolder, file));
       });
       fs.readdir(config.gameServerDir, (err, files) => {
@@ -35,7 +35,7 @@ function cleanUp() {
         files.forEach(file => {
           numFiles = numFiles + files.length;
           if (path.extname(file) === '.dem') {
-            copyFile(file);
+            // copyFile(file);
             howMany--;
             if (howMany <= 0) {
               console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up to ${__dirname}/oldLogs/${lastMonth}`);
@@ -48,7 +48,7 @@ function cleanUp() {
   });
 ;}
 
-function copyFile(filename) {
+function copyLogFile(filename) {
   var now = new Date();
   var lastMonth = now.setMonth(now.getMonth() - 1);
   var folder = './oldLogs';
