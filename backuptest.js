@@ -48,7 +48,7 @@ function cleanUp() {
   });
 }
 
-function makeFolders() {
+function copyFiles(path, filename, lastMonth) {
   var folder = './oldLogs';
   if (!fs.existsSync(folder)){
     fs.mkdirSync(folder);
@@ -56,10 +56,6 @@ function makeFolders() {
   if (!fs.existsSync(`${__dirname}/oldLogs/${lastMonth}`)){
     fs.mkdirSync(`${__dirname}/oldLogs/${lastMonth}`);
   }
-}
-
-function copyFiles(path, filename, lastMonth) {
-  makeFolders();
   fs.createReadStream(path.join(path, filename)).pipe(fs.createWriteStream(`${__dirname}/oldLogs/${lastMonth}/${filename}`));
 }
 
