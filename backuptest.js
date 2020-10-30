@@ -43,7 +43,7 @@ function cleanUp() {
   });
 }
 
-function saveOldTop() {
+function saveOldTop(lastMonth) {
   return new Promise((resolve, reject) => {
     var filename = `${__dirname}/oldTop/${lastMonth}.json`;
     fs.writeFile(filename, JSON.stringify(top), e => {
@@ -72,7 +72,7 @@ function copyLogsFiles(lastMonth) {
     child_process.execSync(`zip -r ${__dirname}/oldLogs/${lastMonth}.zip *`, {
       cwd: '/appdata/hl2dm/hl2mp/logs'
     });
-    resolve();
+    resolve(lastMonth);
   });
 }
 
