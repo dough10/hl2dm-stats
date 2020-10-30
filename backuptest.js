@@ -27,7 +27,7 @@ function cleanUp() {
       numFiles = numFiles + files.length;
       var howMany = files.length;
       files.forEach(file => {
-        copyLogFile(logFolder, file, lastMonth);
+        copyFile(logFolder, file, lastMonth);
         // console.log(path.join(logFolder, file));
       });
       fs.readdir(config.gameServerDir, (err, files) => {
