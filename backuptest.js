@@ -10,7 +10,6 @@ function cleanUp() {
   console.count('cleanup-function')
   var now = new Date();
   var lastMonth = now.setMonth(now.getMonth() - 1);
-  var zip = new JSZip();
   var folder = `${__dirname}/oldTop`;
   if (!fs.existsSync(folder)){
     fs.mkdirSync(folder);
