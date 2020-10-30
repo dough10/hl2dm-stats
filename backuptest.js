@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const config = require(`${__dirname}/config.json`);
 const logFolder = path.join(config.gameServerDir, 'logs');
-
+var JSZip = require("jszip");
 var top = {data: 'is here'};
 
 
@@ -11,6 +11,7 @@ function cleanUp() {
   var now = new Date();
   var lastMonth = now.setMonth(now.getMonth() - 1);
   var folder = `${__dirname}/oldTop`;
+  var zip = new JSZip();
   if (!fs.existsSync(folder)){
     fs.mkdirSync(folder);
   }
