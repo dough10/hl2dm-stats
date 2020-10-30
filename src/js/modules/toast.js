@@ -25,17 +25,17 @@ setInterval(_ => {
  */
 class Toast {
   constructor(message, _timeout) {
-    // bind this to internal functions
-    this._transitionEnd = this._transitionEnd.bind(this);
-    this._cleanUp = this._cleanUp.bind(this);
-    const previous = qs('#toast');
-    if (previous) {
+    // push toast to cache if current toast exist
+    if (qs('#toast')) {
       toastCache.push([
         message,
         _timeout
       ]);
       return;
     }
+    // bind this to internal functions
+    this._transitionEnd = this._transitionEnd.bind(this);
+    this._cleanUp = this._cleanUp.bind(this);
     // create the toast
     this._timer = false;
     this._timeout = _timeout * 1000 || 4500;
