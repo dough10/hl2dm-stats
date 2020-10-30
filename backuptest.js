@@ -69,7 +69,7 @@ function copyLogsFiles(lastMonth) {
     if (!fs.existsSync(`${__dirname}/oldLogs/${lastMonth}`)){
       fs.mkdirSync(`${__dirname}/oldLogs/${lastMonth}`);
     }
-    child_process.execSync(`zip -r ${__dirname}/oldLogs/${lastMonth}.zip ${lastMonth}*`, {
+    child_process.execSync(`zip -r ${__dirname}/oldLogs/${lastMonth}.zip *`, {
       cwd: '/appdata/hl2dm/hl2mp/logs'
     });
     resolve();
