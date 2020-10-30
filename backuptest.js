@@ -60,7 +60,7 @@ function copyFile(filename) {
   }
   // console.log('from', path.join(logFolder, filename))
   // console.log('to', `${__dirname}/oldLogs/${lastMonth}/${filename}`);
-  // fs.createReadStream(path.join(logFolder, filename)).pipe(fs.createWriteStream(`${__dirname}/oldLogs/${lastMonth}/${filename}`));
+  fs.createReadStream(path.join(logFolder, filename)).pipe(fs.createWriteStream(`${__dirname}/oldLogs/${lastMonth}/${filename}`));
 }
 
 cleanUp();
