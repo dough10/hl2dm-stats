@@ -38,8 +38,8 @@ function cleanUp() {
         });
       });
     });
-  }).catch(_ => {
-    console.log(`${new Date()} - Error saving ${__dirname}/oldTop/${lastMonth}.json`);
+  }).catch(e => {
+    console.log(`${new Date()} - Error saving ${__dirname}/oldTop/${lastMonth}.json`, e.message);
   });
 }
 
