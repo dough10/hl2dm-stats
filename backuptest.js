@@ -10,11 +10,11 @@ function cleanUp() {
   console.count('cleanup-function')
   var now = new Date();
   var lastMonth = now.setMonth(now.getMonth() - 1);
-  var folder = './oldTop';
+  var folder = `${__dirname}/oldTop`;
   if (!fs.existsSync(folder)){
     fs.mkdirSync(folder);
   }
-  var filename = `./oldTop/${lastMonth}.json`;
+  var filename = `${__dirname}/oldTop/${lastMonth}.json`;
   fs.writeFile(filename, JSON.stringify(top), e => {
     if (e) return console.log(`${new Date()} - Error saving ${__dirname}/oldTop/${lastMonth}.json`, err);
     if (!fs.existsSync(filename)){
@@ -56,11 +56,11 @@ function copyFile(filename) {
   if (!fs.existsSync(folder)){
     fs.mkdirSync(folder);
   }
-  if (!fs.existsSync(`${lastMonth}`)){
-    fs.mkdirSync(`${lastMonth}`);
+  if (!fs.existsSync(`${__dirname}/oldLogs/${lastMonth}`)){
+    fs.mkdirSync(`${__dirname}/oldLogs/${lastMonth}`);
   }
-  console.log(filename, path.join(logFolder, filename), `${__dirname}/oldLogs/${lastMonth}/${filename}`)
-  fs.createReadStream(path.join(logFolder, filename)).pipe(fs.createWriteStream(`${__dirname}/oldLogs/${lastMonth}/${filename}`));
+  console.log(path.join(logFolder, filename), `${__dirname}/oldLogs/${lastMonth}/${filename}`)
+  // fs.createReadStream(path.join(logFolder, filename)).pipe(fs.createWriteStream(`${__dirname}/oldLogs/${lastMonth}/${filename}`));
 }
 
 cleanUp();
