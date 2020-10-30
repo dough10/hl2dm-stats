@@ -3,18 +3,17 @@ import {transitionEvent} from './whichtransistion.js';
 import {qs} from './helpers.js';
 export {Toast};
 
-const toastCache = [];
+const _toastCache = [];
 
 setInterval(_ => {
-  if (!toastCache.length) {
+  if (!_toastCache.length) {
     return;
   }
   if (qs('#toast')) {
     return;
   }
-  new Toast(toastCache[0][0], toastCache[0][1]);
-  toastCache.splice(0,1);
-  console.log(toastCache)
+  new Toast(_toastCache[0][0], _toastCache[0][1]);
+  _toastCache.splice(0,1);
 }, 500);
 
 /**
@@ -27,7 +26,7 @@ class Toast {
   constructor(message, _timeout) {
     // push toast to cache if current toast exist
     if (qs('#toast')) {
-      toastCache.push([
+      _toastCache.push([
         message,
         _timeout
       ]);
@@ -61,7 +60,7 @@ class Toast {
     toast.classList.add('toast');
     toast.style.opacity = 0;
     toast.style.transform = 'translateY(80px)';
-    toast.style.willChange = 'transform opacity';
+    toast.style.willChange = 'auto';
     toast.style.transition = 'all 300ms cubic-bezier(.33,.17,.85,1.1) 0ms';
     return toast;
   }
