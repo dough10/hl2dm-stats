@@ -16,7 +16,7 @@ function cleanUp() {
   }
   var filename = `./oldTop/${lastMonth}.json`;
   fs.writeFile(filename, JSON.stringify(top), e => {
-    if (err) return console.log(`${new Date()} - Error saving ${__dirname}/oldTop/${lastMonth}.json`, err);
+    if (e) return console.log(`${new Date()} - Error saving ${__dirname}/oldTop/${lastMonth}.json`, err);
     if (!fs.existsSync(filename)){
       return console.log(`${new Date()} - Error saving ${__dirname}/oldTop/${lastMonth}.json`);
     }
