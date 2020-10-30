@@ -567,6 +567,7 @@ function getServerStatus() {
     host: config.serverHostname
   }).then((state) => {
     serverStatus = state;
+    socket.send(JSON.stringify(serverStatus));
     if (serverStatus.players.length > 0) {
       for (var i = 0; i < serverStatus.players.length; i++) {
         if (serverStatus.players[i].score === Number(serverStatus.raw.rules.mp_fraglimit) && !updated) {
@@ -576,7 +577,6 @@ function getServerStatus() {
       }
       console.log(`${new Date()} - `, serverStatus.players);
     }
-    socket.send(JSON.stringify(serverStatus));
   }).catch((error) => {
     serverStatus = 'offline';
   });
