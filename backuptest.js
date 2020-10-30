@@ -57,7 +57,7 @@ function copyFile(filename) {
     fs.mkdirSync(folder);
   }
   if (!fs.existsSync(lastMonth)){
-    fs.mkdirSync(lastMonth);
+    fs.mkdirSync(`${lastMonth}`);
   }
   fs.createReadStream(`${logFolder}/${filename}`).pipe(fs.createWriteStream(`${__dirname}/oldLogs/${lastMonth}/${filename}`));
 }
