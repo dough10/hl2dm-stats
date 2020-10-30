@@ -27,7 +27,7 @@ function cleanUp() {
       numFiles = numFiles + files.length;
       var howMany = files.length;
       files.forEach(file => {
-        copyLogFile(file, lastMonth);
+        copyLogFile(logFolder, file, lastMonth);
         // console.log(path.join(logFolder, file));
       });
       fs.readdir(config.gameServerDir, (err, files) => {
@@ -35,7 +35,7 @@ function cleanUp() {
         files.forEach(file => {
           numFiles = numFiles + files.length;
           if (path.extname(file) === '.dem') {
-            // copyFile(file);
+            copyFile(config.gameServerDir, file, lastMonth);
             howMany--;
             if (howMany <= 0) {
               console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up to ${__dirname}/oldLogs/${lastMonth}`);
@@ -46,9 +46,9 @@ function cleanUp() {
       });
     });
   });
-;}
+}
 
-function copyLogFile(filename, lastMonth) {
+function makeFolders() {
   var folder = './oldLogs';
   if (!fs.existsSync(folder)){
     fs.mkdirSync(folder);
@@ -56,9 +56,11 @@ function copyLogFile(filename, lastMonth) {
   if (!fs.existsSync(`${__dirname}/oldLogs/${lastMonth}`)){
     fs.mkdirSync(`${__dirname}/oldLogs/${lastMonth}`);
   }
-  // console.log('from', path.join(logFolder, filename))
-  // console.log('to', `${__dirname}/oldLogs/${lastMonth}/${filename}`);
-  fs.createReadStream(path.join(logFolder, filename)).pipe(fs.createWriteStream(`${__dirname}/oldLogs/${lastMonth}/${filename}`));
+}
+
+function copyFiles(path, filename, lastMonth) {
+  makeFolders();
+  fs.createReadStream(path.join(path, filename)).pipe(fs.createWriteStream(`${__dirname}/oldLogs/${lastMonth}/${filename}`));
 }
 
 cleanUp();
