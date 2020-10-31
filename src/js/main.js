@@ -198,7 +198,7 @@ function displayPlayerOnline(playersOnline) {
   now.setMinutes(0);
   now.setSeconds(0);
   now.setMonth(now.getMonth() + 1, 1);
-  qs('#soon-text').textContent = `${new Date(now).toDateString()} @ ${now.getHours()} AM`;
+  qs('#soon-text').textContent = `${new Date(now).toDateString()} @ ${now.getHours()}am CST`;
   if (new Date().getDate() >= 28) {
     animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
   }

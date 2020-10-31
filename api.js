@@ -594,7 +594,12 @@ function getServerStatus() {
       }
       console.log(`${new Date()} - Players Online`);
       for (var i = 0; i < serverStatus.players.length; i++) {
-        console.log(`${serverStatus.players[i].name}   score:${serverStatus.players[i].score}`)
+        var l = (100 - serverStatus.players[i].name.length) - serverStatus.players[i].score.length;
+        var space = '';
+        for (var n = 0; n < l; n++) {
+          space = space + '-';
+        }
+        console.log(`${serverStatus.players[i].name} ${space} score: ${serverStatus.players[i].score}`)
       }
     }
   }).catch((error) => {
