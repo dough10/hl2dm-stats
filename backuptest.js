@@ -6,6 +6,7 @@ const child_process = require("child_process");
 var top = {data: 'is here'};
 
 
+
 function cleanUp() {
   console.count('cleanup count')
   var now = new Date();
@@ -36,7 +37,7 @@ function cleanUp() {
               var minutes = parseInt( seconds / 60 );
               seconds = seconds % 60;
               console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up.`);
-              console.log(`${new Date()} - Backup process took ${hours} hours ${minutes} minutes  ${seconds} seconds to complete`)
+              console.log(`${new Date()} - Backup process took ${hours} hours ${minutes} minutes  ${seconds.toFixed(2)} seconds to complete`)
               // parseLogs();
             }
           }
@@ -55,14 +56,18 @@ function saveTop(lastMonth) {
       fs.mkdirSync(folder);
     }
     var filename = `${__dirname}/old-top/${lastMonth}.json`;
-    fs.writeFile(filename, JSON.stringify(top), e => {
+    fs.writeFile(filename, JSON.stringify([
+      top
+      // weaponstats
+      // total players
+    ]), e => {
       if (e) {
         reject();
       }
       if (!fs.existsSync(filename)){
         reject();
       }
-      console.log(`${new Date()} - top player data saved as ${__dirname}/old-top/${lastMonth}.json`);
+      console.log(`${new Date()} - top player data saved to ${__dirname}/old-top/${lastMonth}.json`);
       resolve();
     });
   });
@@ -96,4 +101,4 @@ function zipDemos(lastMonth) {
   })
 }
 
-cleanUp();
+var j = schedule.scheduleJob('20 19 30 * *', cleanUp);

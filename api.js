@@ -584,9 +584,10 @@ function getServerStatus() {
 }
 
 function cleanUp() {
-  console.count('cleanup count')
+  console.count('cleanup run count');
   var now = new Date();
   var lastMonth = now.setMonth(now.getMonth() - 1);
+  var start = new Date().getTime();
   zipLogs(lastMonth).then(zipDemos).then(saveTop).then(_ => {
     var numFiles = 0;
     fs.readdir(logFolder, (err, files) => {
@@ -604,8 +605,16 @@ function cleanUp() {
             fs.unlinkSync(path.join(config.gameServerDir, file));
             howMany--;
             if (howMany <= 0) {
-              console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up`);
-              // parseLogs();
+              var end = new Date().getTime();
+              var ms = end - start;
+              var seconds = ms / 1000;
+              var hours = parseInt( seconds / 3600 );
+              seconds = seconds % 3600;
+              var minutes = parseInt( seconds / 60 );
+              seconds = seconds % 60;
+              console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up.`);
+              console.log(`${new Date()} - Complete process took ${hours} hours ${minutes} minutes  ${seconds.toFixed(3)} seconds`)
+              parseLogs();
             }
           }
         });
@@ -623,14 +632,18 @@ function saveTop(lastMonth) {
       fs.mkdirSync(folder);
     }
     var filename = `${__dirname}/old-top/${lastMonth}.json`;
-    fs.writeFile(filename, JSON.stringify(top), e => {
+    fs.writeFile(filename, JSON.stringify([
+      top,
+      weapons,
+      totalPlayers
+    ]), e => {
       if (e) {
-        reject();
+        reject(e);
       }
       if (!fs.existsSync(filename)){
         reject();
       }
-      console.log(`${new Date()} - top player data saved as ${__dirname}/old-top/${lastMonth}.json`);
+      console.log(`${new Date()} - top player data saved to ${__dirname}/old-top/${lastMonth}.json`);
       resolve();
     });
   });
@@ -671,7 +684,7 @@ setInterval(cacheTopResponse, 3600000);
 getServerStatus();
 setInterval(getServerStatus, 5000);
 
-var j = schedule.scheduleJob('* * * 1 * *', cleanUp);
+var j = schedule.scheduleJob('0 5 1 * *', cleanUp);
 
 console.log(`${new Date()} - Loading API backend calls`);
 app.get('/stats', (req, res) => {
@@ -688,7 +701,10 @@ app.get('/status', (reg, res) => {
 
 app.get('/download/:file', (reg, res) => {
   var dl = `${config.gameServerDir}/${reg.params.file}`;
-  console.log(`${new Date()} - File downloaded `, dl);
+  if (!fs.existsSync(dl)){
+    res.status(404).send('File does not exist');
+  }
+  console.log(`${new Date()} - File downloaded ${dl}`);
   res.download(dl, reg.params.file);
 });
 
