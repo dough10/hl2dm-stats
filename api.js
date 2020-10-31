@@ -589,10 +589,13 @@ function getServerStatus() {
       for (var i = 0; i < serverStatus.players.length; i++) {
         if (serverStatus.players[i].score === Number(serverStatus.raw.rules.mp_fraglimit) && !updated) {
           updated = true;
-          cacheTopResponse();
+          setTimeout(cacheTopResponse, 10000);
         }
       }
-      console.log(`${new Date()} - `, serverStatus.players);
+      console.log(`${new Date()} - Players Online`);
+      for (var i = 0; i < serverStatus.players.length; i++) {
+        console.log(`${serverStatus.players[i].name}   score:${serverStatus.players[i].score}`)
+      }
     }
   }).catch((error) => {
     serverStatus = 'offline';
