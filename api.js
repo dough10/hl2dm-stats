@@ -300,7 +300,9 @@ function scanLine(line) {
   var isHeadshot  = lineIsHeadshot(word);
   var isStats = lineIsStats(word);
   var isConsole = lineIsConsole(word);
-  if (isChat) {
+  if (isConsole) {
+    console.log(line);
+  } else if (isChat) {
     const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
     const nameString = buildKillerNameString(word, isChat);
     const id = getID3(nameString);
@@ -506,8 +508,6 @@ function scanLine(line) {
       users[id3].updated = lineTime;
       users[id3].name = name;
     }
-  } else if (isConsole) {
-    console.log(line);
   }
 }
 
