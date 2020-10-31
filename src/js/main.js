@@ -223,26 +223,32 @@ function displayPlayerOnline(playersOnline) {
   }
   switch (playersOnline) {
     case 0:
-    new Toast(`${playersOnline} players online.`, 2);
-    break;
+      new Toast(`${playersOnline} players online.`, 2);
+      break;
     case 1:
-    new Toast(`${playersOnline} players online. He needs someone to kill`, 2);
-    break;
+      new Toast(`${playersOnline} players online. He needs someone to kill`, 2);
+      break;
     case 2:
-    new Toast(`${playersOnline} players online. 1v1 in progress`, 2);
-    break;
+      new Toast(`${playersOnline} players online. 1v1 in progress`, 2);
+      break;
     case 3:
-    new Toast(`${playersOnline} players online. Deathmatch had begun`, 2);
-    break;
+      new Toast(`${playersOnline} players online. Deathmatch had begun`, 2);
+      break;
     case 4:
-    new Toast(`${playersOnline} players online. Shits poppin off`, 2);
-    break;
+      new Toast(`${playersOnline} players online. Shits poppin off`, 2);
+      break;
     case 5:
-    new Toast(`${playersOnline} players online. Room for one more`, 2);
-    break;
+      new Toast(`${playersOnline} players online. Room for a few more`, 2);
+      break;
     case 6:
-    new Toast(`${playersOnline} players online. Server full`, 2);
-    break;
+      new Toast(`${playersOnline} players online. Server getting crowded`, 2);
+      break;
+    case 7:
+      new Toast(`${playersOnline} players online. It's a mad house`, 2);
+      break;
+    case 8:
+      new Toast(`${playersOnline} players online. Full house`, 2);
+      break;
   }
   loaded = true;
 }
