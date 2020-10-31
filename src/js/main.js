@@ -193,6 +193,11 @@ function showApp() {
 }
 
 function displayPlayerOnline(playersOnline) {
+  var now = new Date();
+  qs('#soon-text').textContent = now.setMonth(now.getMonth() + 1);
+  if (new Date().getDate() >= 29) {
+    animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
+  }
   if (new Date().getDate() === 1) {
     animations.animateElement(qs('#reset'), 'translateY(0)', 800, 1, 0);
   }
@@ -544,6 +549,11 @@ qs('#demos').onClick(_ => {
 var alert = qs('#reset');
 alert.onClick(_ => {
   animations.animateElement(alert, 'translateY(-120%)', 800, 0, 0);
+});
+
+var soon = qs('#soon');
+soon.onClick(_ => {
+  animations.animateElement(soon, 'translateY(-120%)', 800, 0, 0);
 });
 
 qs('#fab').onClick(animations.animateScroll);

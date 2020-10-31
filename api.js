@@ -729,7 +729,7 @@ app.get('/demos', (reg,res) => {
  var html = '<head><title>Lo-g Deathmatch Hoedown Demos</title></head><h1 style="text-align: center">Lo-g Deathmatch Hoedown Demos</h1><table style="width: 100%"><tr><th>filename</th><th>size</th><th>date/time</th></tr>';
  getDemos().then(demos => {
    for (var i = 0; i < demos.length; i++) {
-     html = `${html}<tr><th><a href=/api/download/${demos[i]}>${demos[i]}</a></th><th>${bytesToSize(getFilesizeInBytes(`${config.gameServerDir }/${demos[i]}`))}</th><th>${createdDate(`${config.gameServerDir}/${demos[i]}`)}</th></tr>`;
+     html = `${html}<tr><th><a href=/api/download/${demos[i]}>${demos[i]}</a></th><th>${bytesToSize(getFilesizeInBytes(`${config.gameServerDir}/${demos[i]}`))}</th><th>${createdDate(`${config.gameServerDir}/${demos[i]}`)}</th></tr>`;
    }
    res.send(`${html}</table>`);
  });
