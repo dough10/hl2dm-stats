@@ -280,12 +280,8 @@ function lineIsStats(line) {
 function lineIsConsole(line) {
   var ipstring = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):\d{4,5}$/
   for (var i = 0; i < line.length; i++) {
-    if (line[i] === 'rcon') {
-      if (line[i + 1] === 'from') {
-        if (ipstring.test(line[i + 2].slice(0, -1).replace('"', '').replace('"', ''))) {
-          return i;
-        }
-      }
+    if (line[i] === 'rcon' && line[i + 1] === 'from' && ipstring.test(line[i + 2].slice(0, -1).replace('"', '').replace('"', ''))) {
+      return i;
     }
   }
   return false;
