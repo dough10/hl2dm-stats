@@ -10,6 +10,7 @@ const express = require('express');
 const compression = require('compression');
 const app = express();
 app.use(compression());
+app.disable('x-powered-by');
 var expressWs = require('express-ws')(app);
 
 const config = require(`${__dirname}/config.json`);
