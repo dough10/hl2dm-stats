@@ -200,10 +200,7 @@ function displayPlayerOnline(playersOnline) {
   resetTime.setMinutes(0);
   resetTime.setSeconds(0);
   resetTime.setMonth(resetTime.getMonth() + 1, 1);
-  if (loadtime.getDate() >= lastDay - 3) {
-    qs('#soon-text').textContent = `${new Date(resetTime).toDateString()} at ${resetTime.toLocaleTimeString()}`;
-    animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
-  } else if (loadtime.getDate() >= lastDay) {
+  if (loadtime.getDate() >= lastDay) {
     var x = setInterval(_ => {
       var now = new Date().getTime();
       var distance = resetTime - now;
@@ -215,6 +212,9 @@ function displayPlayerOnline(playersOnline) {
         clearInterval(x);
       }
     }, 1000);
+  } else if (loadtime.getDate() >= lastDay - 3) {
+    qs('#soon-text').textContent = `${new Date(resetTime).toDateString()} at ${resetTime.toLocaleTimeString()}`;
+    animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
   } else if (loadtime.getDate() <= 2) {
     animations.animateElement(qs('#reset'), 'translateY(0)', 800, 1, 0);
   }
