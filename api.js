@@ -595,10 +595,8 @@ function getServerStatus() {
       console.log(`${new Date()} - Players Online`);
       for (var i = 0; i < serverStatus.players.length; i++) {
         if (serverStatus.players[i].name) {
-          var l = (100 - serverStatus.players[i].name.length) - serverStatus.players[i].score.length;
+          var l = (100 - serverStatus.players[i].name.length) - 2;
           var space = '';
-          console.log(l, serverStatus.players[i].name.length, serverStatus.players[i].score.length);
-
           for (var n = 0; n < l; n++) {
             space = space + '-';
           }
