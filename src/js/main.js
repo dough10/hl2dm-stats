@@ -195,7 +195,7 @@ function showApp() {
 function displayPlayerOnline(playersOnline) {
   var now = new Date();
   now.setHours(5);
-  now.setMinuites(0);
+  now.setMinutes(0);
   now.setSeconds(0);
   now.setMonth(now.getMonth() + 1, 1);
   qs('#soon-text').textContent = `${new Date(now).totoUTCString()}`;
