@@ -196,10 +196,10 @@ function displayPlayerOnline(playersOnline) {
   var now = new Date();
   now.setMonth(now.getMonth() + 1, 1);
   qs('#soon-text').textContent = `${new Date(now).toDateString()} @ 5am CST`;
-  if (new Date().getDate() >= 29) {
+  if (new Date().getDate() >= 28) {
     animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
   }
-  if (new Date().getDate() === 1) {
+  if (new Date().getDate() <= 3) {
     animations.animateElement(qs('#reset'), 'translateY(0)', 800, 1, 0);
   }
   switch (playersOnline) {
