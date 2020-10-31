@@ -251,7 +251,7 @@ function displayPlayerOnline(playersOnline) {
       say = `${playersOnline} players online. Full house...`;
       break;
   }
-  new Toast(say, 2, 'steam://connect/hl2dm.dough10.me:27015', 'join');
+  new Toast(say, 2, 'steam://connect/hl2dm.dough10.me:27015');
   loaded = true;
 }
 
