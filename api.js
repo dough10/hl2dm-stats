@@ -594,12 +594,16 @@ function getServerStatus() {
       }
       console.log(`${new Date()} - Players Online`);
       for (var i = 0; i < serverStatus.players.length; i++) {
-        var l = (100 - serverStatus.players[i].name.length) - serverStatus.players[i].score.length;
-        var space = '';
-        for (var n = 0; n < l; n++) {
-          space = space + '-';
+        if (serverStatus.players[i].name) {
+          var l = (100 - serverStatus.players[i].name.length) - serverStatus.players[i].score.length;
+          var space = '';
+          console.log(l);
+          
+          for (var n = 0; n < l; n++) {
+            space = space + '-';
+          }
+          console.log(`${serverStatus.players[i].name} ${space} score: ${serverStatus.players[i].score}`)
         }
-        console.log(`${serverStatus.players[i].name} ${space} score: ${serverStatus.players[i].score}`)
       }
     }
   }).catch((error) => {
