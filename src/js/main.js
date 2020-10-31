@@ -199,7 +199,7 @@ function displayPlayerOnline(playersOnline) {
   resetTime.setHours(5);
   resetTime.setMinutes(0);
   resetTime.setSeconds(0);
-  resetTime.setMonth(now.getMonth() + 1, 1);
+  resetTime.setMonth(resetTime.getMonth() + 1, 1);
   if (loadtime.getDate() >= lastDay - 3) {
     qs('#soon-text').textContent = `${new Date(resetTime).toDateString()} at ${resetTime.toLocaleTimeString()}`;
     animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
