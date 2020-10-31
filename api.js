@@ -282,8 +282,8 @@ function lineIsConsole(line) {
   for (var i = 0; i < line.length; i++) {
     if (line[i] === 'rcon') {
       if (line[i + 1] === 'from') {
-        console.log(line)
-        if (line[i + 2] === ipstring) {
+        if (line[i + 2].slice(0, -1).replace('"', '').replace('"', '') === ipstring) {
+          console.log(line[i + 2])
           return i;
         }
       }
