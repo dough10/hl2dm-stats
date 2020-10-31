@@ -195,8 +195,10 @@ function showApp() {
 function displayPlayerOnline(playersOnline) {
   var now = new Date();
   now.setHours(5);
+  now.setMinutes(0);
+  now.setSeconds(0);
   now.setMonth(now.getMonth() + 1, 1);
-  qs('#soon-text').textContent = new Date(now);
+  qs('#soon-text').textContent = new Date(now).toDateString();
   if (new Date().getDate() >= 29) {
     animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
   }
