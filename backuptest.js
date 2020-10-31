@@ -101,4 +101,4 @@ function zipDemos(lastMonth) {
   })
 }
 
-var j = schedule.scheduleJob('20 19 30 * *', cleanUp);
+var j = schedule.scheduleJob('0 24 19 30 * *', cleanUp);

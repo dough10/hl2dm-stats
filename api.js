@@ -684,7 +684,7 @@ setInterval(cacheTopResponse, 3600000);
 getServerStatus();
 setInterval(getServerStatus, 5000);
 
-var j = schedule.scheduleJob('0 5 1 * *', cleanUp);
+var j = schedule.scheduleJob('0 0 5 1 * *', cleanUp);
 
 console.log(`${new Date()} - Loading API backend calls`);
 app.get('/stats', (req, res) => {
