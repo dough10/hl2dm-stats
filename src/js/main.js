@@ -212,6 +212,7 @@ function displayPlayerOnline(playersOnline) {
         clearInterval(x);
       }
     }, 1000);
+    animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
   } else if (loadtime.getDate() >= lastDay - 3) {
     qs('#soon-text').textContent = `${new Date(resetTime).toDateString()} at ${resetTime.toLocaleTimeString()}`;
     animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
