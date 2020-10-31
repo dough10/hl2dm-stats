@@ -591,13 +591,15 @@ function getServerStatus() {
           updated = true;
           setTimeout(cacheTopResponse, 20000);
         }
+        if (serverStatus.players[0].name) {
+          console.log(`${new Date()} - Players Online`);
+        }
       }
-      console.log(`${new Date()} - Players Online`);
       for (var i = 0; i < serverStatus.players.length; i++) {
         if (serverStatus.players[i].name) {
           var name = serverStatus.players[i].name;
           var score = serverStatus.players[i].score.toString();
-          var l = ((80 - name.length) - score.length) - 3;
+          var l = ((80 - name.length) - score.length) - 9;
           var space = '';
           for (var n = 0; n < l; n++) {
             space = space + '-';
