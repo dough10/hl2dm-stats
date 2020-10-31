@@ -63,52 +63,55 @@ function validateIPaddress(ip) {
 }
 
 function cacheTopResponse() {
-  console.log(`${new Date()} - Clearing cache & parsing logs`);
-  parseLogs().then(stats => {
-    top = stats;
-    // merge physics kills
-    if (!weapons.physics) {
-      weapons.physics = 0;
-    }
-    if (!weapons.physbox) {
-      weapons.physbox = 0;
-    }
-    if (!weapons.world) {
-      weapons.world = 0;
-    }
-    weapons.physics = (weapons.physics + weapons.physbox) + weapons.world;
-    delete weapons.physbox;
-    delete weapons.world;
-    if (weapons.physics === 0) {
-      delete weapons.physics;
-    }
-    // convert weapons object into sorted by kill count array
-    weapons = sortWeapons(weapons);
-    for (var i = 0; i < top.length; i++) {
-      // merge player physics kills
-      if (!top[i].physics) {
-        top[i].physics = 0;
+  return new Promise((resolve, reject) => {
+    console.log(`${new Date()} - Clearing cache & parsing logs`);
+    parseLogs().then(stats => {
+      top = stats;
+      // merge physics kills
+      if (!weapons.physics) {
+        weapons.physics = 0;
       }
-      if (!top[i].physbox) {
-        top[i].physbox = 0;
+      if (!weapons.physbox) {
+        weapons.physbox = 0;
       }
-      if (!top[i].world) {
-        top[i].world = 0;
+      if (!weapons.world) {
+        weapons.world = 0;
       }
-      top[i].physics = (top[i].physics + top[i].physbox) + top[i].world;
-      delete top[i].physbox;
-      delete top[i].world;
-      delete top[i].updated;
-      if (top[i].physics === 0) {
-        delete top[i].physics;
+      weapons.physics = (weapons.physics + weapons.physbox) + weapons.world;
+      delete weapons.physbox;
+      delete weapons.world;
+      if (weapons.physics === 0) {
+        delete weapons.physics;
       }
-      // extract weapons from player object and place in sorted by kill count array
-      top[i].weapons = sortWeapons(top[i]);
-    }
-    setTimeout(_ => {
-      updated = false;
-    }, 60000);
-    console.log(`${new Date()} - Logs parsed & cached`);
+      // convert weapons object into sorted by kill count array
+      weapons = sortWeapons(weapons);
+      for (var i = 0; i < top.length; i++) {
+        // merge player physics kills
+        if (!top[i].physics) {
+          top[i].physics = 0;
+        }
+        if (!top[i].physbox) {
+          top[i].physbox = 0;
+        }
+        if (!top[i].world) {
+          top[i].world = 0;
+        }
+        top[i].physics = (top[i].physics + top[i].physbox) + top[i].world;
+        delete top[i].physbox;
+        delete top[i].world;
+        delete top[i].updated;
+        if (top[i].physics === 0) {
+          delete top[i].physics;
+        }
+        // extract weapons from player object and place in sorted by kill count array
+        top[i].weapons = sortWeapons(top[i]);
+      }
+      setTimeout(_ => {
+        updated = false;
+      }, 60000);
+      console.log(`${new Date()} - Logs parsed & cached`);
+      resolve();
+    });
   });
 }
 
@@ -588,7 +591,7 @@ function cleanUp() {
   var now = new Date();
   var lastMonth = now.setMonth(now.getMonth() - 1);
   var start = new Date().getTime();
-  zipLogs(lastMonth).then(zipDemos).then(saveTop).then(_ => {
+  zipDemos(lastMonth).then(zipLogs).then(cacheTopResponse).then(saveTop).then(_ => {
     var numFiles = 0;
     fs.readdir(logFolder, (err, files) => {
       console.log(`${new Date()} - Running log file clean up`);
@@ -614,7 +617,7 @@ function cleanUp() {
               seconds = seconds % 60;
               console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up.`);
               console.log(`${new Date()} - Complete process took ${hours} hours ${minutes} minutes  ${seconds.toFixed(3)} seconds`)
-              parseLogs();
+              cacheTopResponse();
             }
           }
         });
@@ -684,7 +687,7 @@ setInterval(cacheTopResponse, 3600000);
 getServerStatus();
 setInterval(getServerStatus, 5000);
 
-var j = schedule.scheduleJob('0 0 5 1 * *', cleanUp);
+var j = schedule.scheduleJob('0 5 1 * *', cleanUp);
 
 console.log(`${new Date()} - Loading API backend calls`);
 app.get('/stats', (req, res) => {
