@@ -597,8 +597,8 @@ function getServerStatus() {
         if (serverStatus.players[i].name) {
           var l = (100 - serverStatus.players[i].name.length) - serverStatus.players[i].score.length;
           var space = '';
-          console.log(l);
-          
+          console.log(l, serverStatus.players[i].name.length, serverStatus.players[i].score.length);
+
           for (var n = 0; n < l; n++) {
             space = space + '-';
           }
