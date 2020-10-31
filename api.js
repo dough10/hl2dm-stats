@@ -277,6 +277,20 @@ function lineIsStats(line) {
   return false;
 }
 
+function lineIsConsole(line) {
+  var ipstring = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):\d{4,5}$/
+  for (var i = 0; i < line.length; i++) {
+    if (line[i] === 'rcon') {
+      if (line[i + 1] === 'from') {
+        if (line[i + 2] === ipstring) {
+          return i;
+        }
+      }
+    }
+  }
+  return false;
+}
+
 function scanLine(line) {
   var word  = line.split(' ');
   var isKill = lineIsKill(word);
@@ -285,6 +299,7 @@ function scanLine(line) {
   var isChat = lineIsChat(word);
   var isHeadshot  = lineIsHeadshot(word);
   var isStats = lineIsStats(word);
+  var isConsole = lineIsConsole(word);
   if (isChat) {
     const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
     const nameString = buildKillerNameString(word, isChat);
@@ -491,6 +506,8 @@ function scanLine(line) {
       users[id3].updated = lineTime;
       users[id3].name = name;
     }
+  } else if (isConsole) {
+    console.log(line);
   }
 }
 
