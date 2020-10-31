@@ -221,35 +221,37 @@ function displayPlayerOnline(playersOnline) {
   } else if (loadtime.getTime() > resetTime.getTime() && loadtime.getDate() <= 2) {
     animations.animateElement(qs('#reset'), 'translateY(0)', 800, 1, 0);
   }
+  var say = '';
   switch (playersOnline) {
     case 0:
-      new Toast(`${playersOnline} players online.`, 2);
+      say = `${playersOnline} players online.`;
       break;
     case 1:
-      new Toast(`${playersOnline} players online. He needs someone to kill`, 2);
+      say = `${playersOnline} players online. He needs someone to kill`;
       break;
     case 2:
-      new Toast(`${playersOnline} players online. 1v1 in progress`, 2);
+      say = `${playersOnline} players online. 1v1 in progress`;
       break;
     case 3:
-      new Toast(`${playersOnline} players online. Deathmatch had begun`, 2);
+      say = `${playersOnline} players online. 3's company too`;
       break;
     case 4:
-      new Toast(`${playersOnline} players online. Shits poppin off`, 2);
+      say = `${playersOnline} players online. Deathmatch had begun`;
       break;
     case 5:
-      new Toast(`${playersOnline} players online. Room for a few more`, 2);
+      say = `${playersOnline} players online. Shits poppin off`;
       break;
     case 6:
-      new Toast(`${playersOnline} players online. Server getting crowded`, 2);
+      say = `${playersOnline} players online. Server getting crowded`;
       break;
     case 7:
-      new Toast(`${playersOnline} players online. It's a mad house`, 2);
+      say = `${playersOnline} players online. It's a mad house`;
       break;
     case 8:
-      new Toast(`${playersOnline} players online. Full house`, 2);
+      say = `${playersOnline} players online. Full house...`;
       break;
   }
+  new Toast(say, 2, 'steam://connect/hl2dm.dough10.me:27015', 'join');
   loaded = true;
 }
 

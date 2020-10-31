@@ -66,7 +66,11 @@ class Toast {
       const messagetext = document.createElement('div');
       messagetext.textContent = message;
       const ltext = document.createElement('div');
+      ltext.classList.add('link');
       ltext.textContent = this.linkText;
+      wrapper.appendChild(messagetext);
+      wrapper.appendChild(ltext);
+      this.toast.appendChild(wrapper);
     } else {
       this.toast.textContent = message;
     }
