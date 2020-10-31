@@ -405,7 +405,7 @@ function parseServerStatus(status) {
         if (playerName && !playersOnline.includes(playerName)) {
           playersOnline.push(playerName);
           if (loaded) {
-            new Toast(`${playerName} has joined the game`, 2);
+            new Toast(`${playerName} has joined the game`, 2, 'steam://connect/hl2dm.dough10.me:27015');
           }
         }
       }
