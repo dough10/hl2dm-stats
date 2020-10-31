@@ -719,6 +719,7 @@ app.get('/download/:file', (reg, res) => {
   var dl = `${config.gameServerDir}/${reg.params.file}`;
   if (!fs.existsSync(dl)){
     res.status(404).send('File does not exist');
+    return;
   }
   console.log(`${new Date()} - File downloaded ${dl}`);
   res.download(dl, reg.params.file);
