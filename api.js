@@ -599,12 +599,12 @@ function getServerStatus() {
         if (serverStatus.players[i].name) {
           var name = serverStatus.players[i].name;
           var score = serverStatus.players[i].score.toString();
-          var l = ((80 - name.length) - score.length) - 9;
+          var l = ((80 - name.length) - score.length) - 17;
           var space = '';
           for (var n = 0; n < l; n++) {
             space = space + '-';
           }
-          console.log(`${name} ${space} score: ${score}`)
+          console.log(`player: ${name} ${space} score: ${score}`)
         }
       }
     }
