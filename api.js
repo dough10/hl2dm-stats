@@ -589,7 +589,7 @@ function getServerStatus() {
       for (var i = 0; i < serverStatus.players.length; i++) {
         if (serverStatus.players[i].score === Number(serverStatus.raw.rules.mp_fraglimit) && !updated) {
           updated = true;
-          setTimeout(cacheTopResponse, 20000);
+          setTimeout(cacheTopResponse, 10000);
         }
       }
       if (serverStatus.players[0].name) {
