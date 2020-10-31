@@ -193,18 +193,29 @@ function showApp() {
 }
 
 function displayPlayerOnline(playersOnline) {
-  var now = new Date();
-  var lastDay = new Date(now.getYear(), now.getMonth() + 1, 0);
-  if (new Date().getDate() >= lastDay - 2) {
-    var resetTime = new Date();
-    resetTime.setHours(5);
-    resetTime.setMinutes(0);
-    resetTime.setSeconds(0);
-    resetTime.setMonth(now.getMonth() + 1, 1);
+  var loadtime = new Date();
+  var lastDay = new Date(loadtime.getYear(), loadtime.getMonth() + 1, 0);
+  var resetTime = new Date();
+  resetTime.setHours(5);
+  resetTime.setMinutes(0);
+  resetTime.setSeconds(0);
+  resetTime.setMonth(now.getMonth() + 1, 1);
+  if (loadtime.getDate() >= lastDay - 3) {
     qs('#soon-text').textContent = `${new Date(resetTime).toDateString()} at ${resetTime.toLocaleTimeString()}`;
     animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
-  }
-  if (new Date().getDate() <= 2) {
+  } else if (loadtime.getDate() >= lastDay) {
+    var x = setInterval(_ => {
+      var now = new Date().getTime();
+      var distance = resetTime - now;
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      qs('#soon-text').textContent = `${hours}h ${minutes}m ${seconds}s `;
+      if (distance < 0) {
+        clearInterval(x);
+      }
+    }, 1000);
+  } else if (loadtime.getDate() <= 2) {
     animations.animateElement(qs('#reset'), 'translateY(0)', 800, 1, 0);
   }
   switch (playersOnline) {
