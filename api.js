@@ -3,8 +3,8 @@ const path = require('path');
 const fs = require('fs');
 const readline = require('readline');
 const Gamedig = require('gamedig');
-const schedule = require('node-schedule');
 const SteamID = require('steamid');
+const schedule = require('node-schedule');
 const child_process = require("child_process");
 const express = require('express');
 const compression = require('compression');
@@ -589,7 +589,7 @@ function getServerStatus() {
       for (var i = 0; i < serverStatus.players.length; i++) {
         if (serverStatus.players[i].score === Number(serverStatus.raw.rules.mp_fraglimit) && !updated) {
           updated = true;
-          setTimeout(cacheTopResponse, 10000);
+          setTimeout(cacheTopResponse, 20000);
         }
       }
       console.log(`${new Date()} - Players Online`);
