@@ -51,7 +51,6 @@ class Toast {
     this._timer = false;
     this._timeout = _timeout * 1000 || 4500;
     this.link = link;
-    this.linkText = linkText;
     this.toast = this._createToast();
     this.toast.addEventListener(transitionEvent, this._transitionEnd, true);
     this.toast.addEventListener('click', this._cleanUp, true);
