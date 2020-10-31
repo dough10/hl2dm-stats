@@ -682,28 +682,28 @@ function saveTop(lastMonth) {
 
 function zipLogs(lastMonth) {
   return new Promise((resolve, reject) => {
-    var folder = '/media/nas/old-stats/logs';
+    var folder = `${config.bulkStorage}/logs`;
     if (!fs.existsSync(folder)){
       fs.mkdirSync(folder);
     }
-    child_process.execSync(`zip -r /media/nas/old-stats/logs/${lastMonth}.zip *`, {
+    child_process.execSync(`zip -r ${config.bulkStorage}/logs/${lastMonth}.zip *`, {
       cwd: '/appdata/hl2dm/hl2mp/logs'
     });
-    console.log(`${new Date()} - Logs saved to /media/nas/old-stats/logs/${lastMonth}.zip`);
+    console.log(`${new Date()} - Logs saved to ${config.bulkStorage}/logs/${lastMonth}.zip`);
     resolve(lastMonth);
   });
 }
 
 function zipDemos(lastMonth) {
   return new Promise((resolve, reject) => {
-    var folder = '/media/nas/old-stats/demos';
+    var folder = `${config.bulkStorage}/demos`;
     if (!fs.existsSync(folder)){
       fs.mkdirSync(folder);
     }
-    child_process.execSync(`zip -r /media/nas/old-stats/demos/${lastMonth}.zip * '*.dem'`, {
+    child_process.execSync(`zip -r ${config.bulkStorage}/demos/${lastMonth}.zip * '*.dem'`, {
       cwd: '/appdata/hl2dm/hl2mp'
     });
-    console.log(`${new Date()} - Demos saved to /media/nas/old-stats/demos/${lastMonth}.zip`);
+    console.log(`${new Date()} - Demos saved to ${config.bulkStorage}/demos/${lastMonth}.zip`);
     resolve(lastMonth);
   })
 }

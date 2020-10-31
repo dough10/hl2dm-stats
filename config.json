@@ -1,5 +1,6 @@
 {
   "gameServerDir": "/appdata/hl2dm/hl2mp",
   "serverHostname": "hl2dm.dough10.me",
-  "logRefreshTime": 60
+  "logRefreshTime": 60,
+  "bulkStorage": "/media/nas/old-stats"
 }
