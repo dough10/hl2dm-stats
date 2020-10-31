@@ -47,13 +47,14 @@ class Toast {
     // bind this to internal functions
     this._transitionEnd = this._transitionEnd.bind(this);
     this._cleanUp = this._cleanUp.bind(this);
+    this._clicked = this._clicked.bind(this);
     // create the toast
     this._timer = false;
     this._timeout = _timeout * 1000 || 4500;
     this.link = link;
     this.toast = this._createToast();
     this.toast.addEventListener(transitionEvent, this._transitionEnd, true);
-    this.toast.addEventListener('click', this._cleanUp, true);
+    this.toast.addEventListener('click', this._clicked, true);
     this.toast.textContent = message;
     qs('body').appendChild(this.toast);
     ripples.attachButtonRipple(this.toast);
@@ -79,17 +80,23 @@ class Toast {
   }
 
   /**
+   * event handler for toast click
+   */
+  _clicked() {
+    if (this.link) {
+      window.location.href = this.link;
+    }
+    this._cleanUp();
+  }
+
+  /**
    * play closing animation and remove element from document
    */
-  _cleanUp(e) {
+  _cleanUp() {
     if (this._timer) {
       clearTimeout(this._timer);
       this._timer = false;
     }
-    console.log(e)
-    // if (this.link) {
-    //   window.location.href = this.link;
-    // }
     this.toast.addEventListener(transitionEvent, _ => {
       if (this.toast.parentNode) {
         this.toast.parentNode.removeChild(this.toast);
