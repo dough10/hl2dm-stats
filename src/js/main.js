@@ -200,22 +200,23 @@ function displayPlayerOnline(playersOnline) {
   resetTime.setMinutes(0);
   resetTime.setSeconds(0);
   resetTime.setMonth(resetTime.getMonth() + 1, 1);
-  if (loadtime.getDate() >= lastDay) {
-    var doTime = _ => {
-      var now = new Date().getTime();
-      var distance = resetTime - now;
-      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      qs('#soon-text').textContent = `in ${hours} hours ${minutes} minutes ${seconds} seconds`;
-      if (distance < 0) {
-        clearInterval(x);
-      }
-    };
-    doTime();
-    var x = setInterval(doTime, 1000);
-    animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
-  } else if (loadtime.getDate() >= lastDay - 3) {
+  // if (loadtime.getDate() >= lastDay) {
+  //   var doTime = _ => {
+  //     var now = new Date().getTime();
+  //     var distance = resetTime - now;
+  //     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  //     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  //     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  //     qs('#soon-text').textContent = `in ${hours} hours ${minutes} minutes ${seconds} seconds`;
+  //     if (distance < 0) {
+  //       clearInterval(x);
+  //     }
+  //   };
+  //   doTime();
+  //   var x = setInterval(doTime, 1000);
+  //   animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
+  // } else
+  if (loadtime.getDate() >= lastDay - 3) {
     qs('#soon-text').textContent = `${new Date(resetTime).toDateString()} at ${resetTime.toLocaleTimeString()}`;
     animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
   } else if (loadtime.getTime() > resetTime.getTime() && loadtime.getDate() <= 2) {
