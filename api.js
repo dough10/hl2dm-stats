@@ -281,7 +281,9 @@ function lineIsConsole(line) {
   var ipstring = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):\d{4,5}$/
   for (var i = 0; i < line.length; i++) {
     if (line[i] === 'rcon') {
+      console.log(line[i])
       if (line[i + 1] === 'from') {
+        console.log(line[i + 1])
         if (line[i + 2] === ipstring) {
           return i;
         }
