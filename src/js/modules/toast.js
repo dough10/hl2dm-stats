@@ -19,7 +19,12 @@ setInterval(_ => {
   if (qs('#toast')) {
     return;
   }
-  new Toast(_toastCache[0][0], _toastCache[0][1]);
+  new Toast(
+    _toastCache[0][0],
+    _toastCache[0][1],
+    _toastCache[0][2],
+    _toastCache[0][3]
+  );
   _toastCache.splice(0,1);
 }, 500);
 
@@ -30,12 +35,14 @@ setInterval(_ => {
  * @param {Number} timeout in seconds  || defualt 5 seconds  ** optional
  */
 class Toast {
-  constructor(message, _timeout) {
+  constructor(message, _timeout, link, linkText) {
     // push toast to cache if current toast exist
     if (qs('#toast')) {
       _toastCache.push([
         message,
-        _timeout
+        _timeout,
+        link,
+        linkText
       ]);
       return;
     }
@@ -45,10 +52,24 @@ class Toast {
     // create the toast
     this._timer = false;
     this._timeout = _timeout * 1000 || 4500;
+    this.link = link;
+    this.linkText = linkText;
     this.toast = this._createToast();
     this.toast.addEventListener(transitionEvent, this._transitionEnd, true);
     this.toast.addEventListener('click', this._cleanUp, true);
-    this.toast.textContent = message;
+    if (this.link && this.linkText) {
+      const wrapper = document.createElement('div');
+      wrapper.style.display = 'flex';
+      wrapper.style.justifyContent = 'space-between';
+      wrapper.style.alignItems = 'center';
+      wrapper.style.overflow = 'none';
+      const messagetext = document.createElement('div');
+      messagetext.textContent = message;
+      const ltext = document.createElement('div');
+      ltext.textContent = this.linkText;
+    } else {
+      this.toast.textContent = message;
+    }
     qs('body').appendChild(this.toast);
     ripples.attachButtonRipple(this.toast);
     setTimeout(_ => requestAnimationFrame(_ => {
@@ -79,6 +100,9 @@ class Toast {
     if (this._timer) {
       clearTimeout(this._timer);
       this._timer = false;
+    }
+    if (this.link && this.linkText) {
+      window.location.href = this.link;
     }
     this.toast.addEventListener(transitionEvent, _ => {
       if (this.toast.parentNode) {
