@@ -201,7 +201,6 @@ function displayPlayerOnline(playersOnline) {
   resetTime.setSeconds(0);
   resetTime.setMonth(resetTime.getMonth() + 1, 1);
   if (loadtime.getDate() >= lastDay) {
-    var x = setInterval(doTime, 1000);
     var doTime = _ => {
       var now = new Date().getTime();
       var distance = resetTime - now;
@@ -214,6 +213,7 @@ function displayPlayerOnline(playersOnline) {
       }
     };
     doTime();
+    var x = setInterval(doTime, 1000);
     animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
   } else if (loadtime.getDate() >= lastDay - 3) {
     qs('#soon-text').textContent = `${new Date(resetTime).toDateString()} at ${resetTime.toLocaleTimeString()}`;
@@ -366,7 +366,6 @@ function parseTopData(top) {
 }
 
 function parseServerStatus(status) {
-  console.count('Socket data');
   const pContainer = qs('#players');
   pContainer.innerHTML = '';
   if (status !== "offline") {
