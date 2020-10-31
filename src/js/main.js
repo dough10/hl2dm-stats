@@ -218,10 +218,9 @@ function displayPlayerOnline(playersOnline) {
   } else if (loadtime.getDate() >= lastDay - 3) {
     qs('#soon-text').textContent = `${new Date(resetTime).toDateString()} at ${resetTime.toLocaleTimeString()}`;
     animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
-  } else if (loadtime.getTime() > resetTime && loadtime.getDate() <= 2) {
+  } else if (loadtime.getTime() > resetTime.getTime() && loadtime.getDate() <= 2) {
     animations.animateElement(qs('#reset'), 'translateY(0)', 800, 1, 0);
   }
-  console.log(loadtime.getTime() > resetTime.getTime(), loadtime.getTime(), resetTime.getTime())
   switch (playersOnline) {
     case 0:
     new Toast(`${playersOnline} players online.`, 2);
