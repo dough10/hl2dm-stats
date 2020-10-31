@@ -193,13 +193,15 @@ function showApp() {
 }
 
 function displayPlayerOnline(playersOnline) {
-  if (new Date().getDate() >= 30) {
-    var now = new Date();
-    now.setHours(5);
-    now.setMinutes(0);
-    now.setSeconds(0);
-    now.setMonth(now.getMonth() + 1, 1);
-    qs('#soon-text').textContent = `${new Date(now).toDateString()} at ${now.toLocaleTimeString()}`;
+  var now = new Date();
+  var lastDay = new Date(now.getYear(), now.getMonth() + 1, 0);
+  if (new Date().getDate() >= lastDay - 2) {
+    var resetTime = new Date();
+    resetTime.setHours(5);
+    resetTime.setMinutes(0);
+    resetTime.setSeconds(0);
+    resetTime.setMonth(now.getMonth() + 1, 1);
+    qs('#soon-text').textContent = `${new Date(resetTime).toDateString()} at ${resetTime.toLocaleTimeString()}`;
     animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
   }
   if (new Date().getDate() <= 2) {

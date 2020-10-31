@@ -597,12 +597,12 @@ function getServerStatus() {
         if (serverStatus.players[i].name) {
           var name = serverStatus.players[i].name;
           var score = serverStatus.players[i].score.toString();
-          var l = (80 - name.length) - score.length;
+          var l = ((80 - name.length) - score.length) - 3;
           var space = '';
           for (var n = 0; n < l; n++) {
             space = space + '-';
           }
-          console.log(`${serverStatus.players[i].name} ${space} score: ${serverStatus.players[i].score}`)
+          console.log(`${name} ${space} score: ${score}`)
         }
       }
     }
