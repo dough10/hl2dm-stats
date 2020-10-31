@@ -591,9 +591,9 @@ function getServerStatus() {
           updated = true;
           setTimeout(cacheTopResponse, 20000);
         }
-        if (serverStatus.players[0].name) {
-          console.log(`${new Date()} - Players Online`);
-        }
+      }
+      if (serverStatus.players[0].name) {
+        console.log(`${new Date()} - Players Online`);
       }
       for (var i = 0; i < serverStatus.players.length; i++) {
         if (serverStatus.players[i].name) {
