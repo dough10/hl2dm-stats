@@ -221,7 +221,7 @@ function displayPlayerOnline(playersOnline) {
   } else if (loadtime.getTime() > resetTime && loadtime.getDate() <= 2) {
     animations.animateElement(qs('#reset'), 'translateY(0)', 800, 1, 0);
   }
-  console.log(loadtime.getTime() > resetTime, loadtime.getTime(), resetTime)
+  console.log(loadtime.getTime() > resetTime.getTime(), loadtime.getTime(), resetTime.getTime())
   switch (playersOnline) {
     case 0:
     new Toast(`${playersOnline} players online.`, 2);
