@@ -34,7 +34,7 @@ setInterval(_ => {
  * @param {Number} timeout in seconds  || defualt 5 seconds  ** optional
  */
 class Toast {
-  constructor(message, _timeout, link) {
+  constructor(message, _timeout, link, linkText) {
     // push toast to cache if current toast exist
     if (qs('#toast')) {
       _toastCache.push([
@@ -52,10 +52,27 @@ class Toast {
     this._timer = false;
     this._timeout = _timeout * 1000 || 4500;
     this.link = link;
+    this.linkText = linkText;
     this.toast = this._createToast();
     this.toast.addEventListener(transitionEvent, this._transitionEnd, true);
     this.toast.addEventListener('click', this._clicked, true);
-    this.toast.textContent = message;
+    if (this.link && this.linkText) {
+      const wrapper = document.createElement('div');
+      wrapper.style.display = 'flex';
+      wrapper.style.justifyContent = 'space-between';
+      wrapper.style.alignItems = 'center';
+      wrapper.style.overflow = 'none';
+      var mText = document.createElement('div');
+      mText.textContent = message;
+      var lText = document.createElement('div');
+      lText.textContent = linkText;
+      lText.classList.add('yellow-text');
+      wrapper.appendChild(mText);
+      wrapper.appendChild(lText);
+      this.toast.appendChild(wrapper);
+    } else {
+      this.toast.textContent = message;
+    }
     qs('body').appendChild(this.toast);
     ripples.attachButtonRipple(this.toast);
     setTimeout(_ => requestAnimationFrame(_ => {

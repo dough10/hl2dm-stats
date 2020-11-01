@@ -201,9 +201,7 @@ function displayPlayerOnline(playersOnline) {
   resetTime.setSeconds(0);
   resetTime.setMonth(resetTime.getMonth() + 1, 1);
   console.log(loadtime.getDate() <= 2, loadtime.getDate() === lastDay, loadtime.getDate() > lastDay - 3)
-  if (loadtime.getDate() <= 2) {
-    animations.animateElement(qs('#reset'), 'translateY(0)', 800, 1, 0);
-  } else if (loadtime.getDate() === lastDay) {
+  if (loadtime.getDate() === lastDay.getDate()) {
     resetTime.setHours(4);
     var doTime = _ => {
       var now = new Date().getTime();
@@ -219,9 +217,11 @@ function displayPlayerOnline(playersOnline) {
     doTime();
     var x = setInterval(doTime, 1000);
     animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
-  } else if (loadtime.getDate() > lastDay - 3) {
+  } else if (loadtime.getDate() > lastDay.getDate() - 3) {
     qs('#soon-text').textContent = `${resetTime.toDateString()} at ${resetTime.toLocaleTimeString()}`;
     animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
+  } else if (loadtime.getDate() <= 2) {
+    animations.animateElement(qs('#reset'), 'translateY(0)', 800, 1, 0);
   }
   var say = '';
   switch (playersOnline) {
@@ -238,7 +238,7 @@ function displayPlayerOnline(playersOnline) {
       say = `${playersOnline} players online. 3's company too`;
       break;
     case 4:
-      say = `${playersOnline} players online. Deathmatch had begun`;
+      say = `${playersOnline} players online. Deathmatch has begun`;
       break;
     case 5:
       say = `${playersOnline} players online. Shits poppin off`;
@@ -250,10 +250,10 @@ function displayPlayerOnline(playersOnline) {
       say = `${playersOnline} players online. It's a mad house`;
       break;
     case 8:
-      say = `${playersOnline} players online. Full house...`;
+      say = `${playersOnline} players online. Full... And it hurts.`;
       break;
   }
-  new Toast(say, 2, 'steam://connect/hl2dm.dough10.me:27015');
+  new Toast(say, 2, 'steam://connect/hl2dm.dough10.me:27015', 'Join');
   loaded = true;
 }
 
