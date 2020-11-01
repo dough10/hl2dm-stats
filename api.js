@@ -629,12 +629,12 @@ function cleanUp() {
       });
       fs.readdir(config.gameServerDir, (err, filess) => {
         console.log(`${new Date()} - Running demo file clean up`);
-        var howMany = filess.length - 16;
+        var howMany = filess.length;
         numFiles = numFiles + filess.length;
         filess.forEach(file => {
+          howMany--;
           if (path.extname(file) === '.dem') {
             fs.unlinkSync(path.join(config.gameServerDir, file));
-            howMany--;
             if (howMany <= 0) {
               var end = new Date().getTime();
               var ms = end - start;
