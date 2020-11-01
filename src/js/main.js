@@ -200,7 +200,7 @@ function displayPlayerOnline(playersOnline) {
   resetTime.setMinutes(0);
   resetTime.setSeconds(0);
   resetTime.setMonth(resetTime.getMonth() + 1, 1);
-  if (loadtime.getDate() >= lastDay) {
+  if (loadtime.getDate() === lastDay) {
     resetTime.setHours(4);
     var doTime = _ => {
       var now = new Date().getTime();

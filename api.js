@@ -619,7 +619,7 @@ function cleanUp() {
   var now = new Date();
   var lastMonth = now.setMonth(now.getMonth() - 1);
   var start = new Date().getTime();
-  zipDemos(lastMonth).then(zipLogs).then(cacheTopResponse).then(saveTop).then(_ => {
+  zipDemos(lastMonth).then(zipLogs).then(saveTop).then(_ => {
     var numFiles = 0;
     fs.readdir(logFolder, (err, files) => {
       console.log(`${new Date()} - Running log file clean up`);
@@ -687,7 +687,7 @@ function zipLogs(lastMonth) {
       fs.mkdirSync(folder);
     }
     child_process.execSync(`zip -r ${config.bulkStorage}/logs/${lastMonth}.zip *`, {
-      cwd: '/appdata/hl2dm/hl2mp/logs'
+      cwd: logFolder
     });
     console.log(`${new Date()} - Logs saved to ${config.bulkStorage}/logs/${lastMonth}.zip`);
     resolve(lastMonth);
@@ -701,7 +701,7 @@ function zipDemos(lastMonth) {
       fs.mkdirSync(folder);
     }
     child_process.execSync(`zip -r ${config.bulkStorage}/demos/${lastMonth}.zip * '*.dem'`, {
-      cwd: '/appdata/hl2dm/hl2mp'
+      cwd: config.gameServerDir
     });
     console.log(`${new Date()} - Demos saved to ${config.bulkStorage}/demos/${lastMonth}.zip`);
     resolve(lastMonth);
