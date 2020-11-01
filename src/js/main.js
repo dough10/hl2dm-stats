@@ -194,6 +194,7 @@ function showApp() {
 
 function displayPlayerOnline(playersOnline) {
   console.log(window.location.href)
+  var el = qs('#reset');
   var loadtime = new Date();
   var lastDay = new Date(loadtime.getFullYear(), loadtime.getMonth() + 1, 0);
   var resetTime = new Date();
@@ -209,24 +210,24 @@ function displayPlayerOnline(playersOnline) {
       var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      qs('#soon-text').textContent = `in ${hours} hours ${minutes} minutes ${seconds} seconds`;
+      qs('#reset-text').textContent = `Stats will reset in ${hours} hours ${minutes} minutes ${seconds} seconds`;
       if (distance < 0) {
         clearInterval(x);
       }
     };
     doTime();
     var x = setInterval(doTime, 1000);
-    animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
+    animations.animateElement(el, 'translateY(0)', 800, 1, 0);
   } else if (loadtime.getDate() > lastDay.getDate() - 3) {
-    qs('#soon-text').textContent = `${resetTime.toDateString()} at ${resetTime.toLocaleTimeString()}`;
-    animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
+    qs('#reset-text').textContent = `Stats will reset ${resetTime.toDateString()} at ${resetTime.toLocaleTimeString()}`;
+    animations.animateElement(el, 'translateY(0)', 800, 1, 0);
   } else if (loadtime.getDate() <= 2) {
     var lastReset =  new Date(loadtime.getFullYear(), loadtime.getMonth(), 1);
     lastReset.setHours(5);
     lastReset.setMinutes(0);
     lastReset.setSeconds(0);
-    qs('#reset-text').textContent = `on ${lastReset.toDateString()} at ${lastReset.toLocaleTimeString()}`;
-    animations.animateElement(qs('#reset'), 'translateY(0)', 800, 1, 0);
+    qs('#reset-text').textContent = `Stats were reset ${lastReset.toDateString()} at ${lastReset.toLocaleTimeString()}`;
+    animations.animateElement(el, 'translateY(0)', 800, 1, 0);
   }
   var say = '';
   switch (playersOnline) {
@@ -583,11 +584,6 @@ qs('#demos').onClick(_ => {
 var alert = qs('#reset');
 alert.onClick(_ => {
   animations.animateElement(alert, 'translateY(-120%)', 800, 0, 0);
-});
-
-var soon = qs('#soon');
-soon.onClick(_ => {
-  animations.animateElement(soon, 'translateY(-120%)', 800, 0, 0);
 });
 
 qs('#fab').onClick(animations.animateScroll);
