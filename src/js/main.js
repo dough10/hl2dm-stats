@@ -203,7 +203,6 @@ function displayPlayerOnline(playersOnline) {
   resetTime.setMonth(resetTime.getMonth() + 1, 1);
   console.log(loadtime.getDate() <= 2, loadtime.getDate() === lastDay, loadtime.getDate() > lastDay - 3)
   if (loadtime.getDate() === lastDay.getDate()) {
-    resetTime.setHours(4);
     var doTime = _ => {
       var now = new Date().getTime();
       var distance = resetTime.getTime() - now;
