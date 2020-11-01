@@ -615,7 +615,6 @@ function getServerStatus() {
 }
 
 function cleanUp() {
-  console.count('cleanup run count');
   var now = new Date();
   var lastMonth = now.setMonth(now.getMonth() - 1);
   var start = new Date().getTime();
@@ -645,6 +644,8 @@ function cleanUp() {
               seconds = seconds % 60;
               console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up.`);
               console.log(`${new Date()} - Complete process took ${hours} hours ${minutes} minutes  ${seconds.toFixed(3)} seconds`)
+              top = [];
+              users = {};
               cacheTopResponse();
             }
           }
