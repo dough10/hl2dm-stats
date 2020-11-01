@@ -223,7 +223,10 @@ function displayPlayerOnline(playersOnline) {
     animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
   } else if (loadtime.getDate() <= 2) {
     var lastReset =  new Date(loadtime.getFullYear(), loadtime.getMonth(), 1);
-    qs('#reset-text').textContent = `on ${lastReset.toDateString()}`;
+    lastReset.setHours(5);
+    lastReset.setMinutes(0);
+    lastReset.setSeconds(0);
+    qs('#reset-text').textContent = `on ${lastReset.toDateString()} at ${lastReset.toLocaleTimeString()}`;
     animations.animateElement(qs('#reset'), 'translateY(0)', 800, 1, 0);
   }
   var say = '';
