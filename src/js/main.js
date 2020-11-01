@@ -194,7 +194,7 @@ function showApp() {
 
 function displayPlayerOnline(playersOnline) {
   var loadtime = new Date();
-  var lastDay = new Date(loadtime.getMonth() + 1, 0);
+  var lastDay = new Date(loadtime.getMonth() + 1);
   var resetTime = new Date();
   resetTime.setHours(5);
   resetTime.setMinutes(0);
