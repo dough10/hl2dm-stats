@@ -216,10 +216,10 @@ function displayPlayerOnline(playersOnline) {
     doTime();
     var x = setInterval(doTime, 1000);
     animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
-  } else if (loadtime.getDate() >= lastDay - 3) {
+  } else if (loadtime.getDate() > lastDay - 3) {
     qs('#soon-text').textContent = `${resetTime.toDateString()} at ${resetTime.toLocaleTimeString()}`;
     animations.animateElement(qs('#soon'), 'translateY(0)', 800, 1, 0);
-  } else if (loadtime.getTime() > resetTime.getTime() && loadtime.getDate() <= 2) {
+  } else if (loadtime.getDate() <= 2) {
     animations.animateElement(qs('#reset'), 'translateY(0)', 800, 1, 0);
   }
   var say = '';
