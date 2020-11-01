@@ -36,7 +36,6 @@ image/gif;
         http2_push /fonts/hl2mp.ttf;
         http2_push /fonts/csd.ttf;
         http2_push /fonts/roboto-v15-latin-regular.woff2;
-        proxy_set_header Accept-Encoding "";
     }
     location /api {
         proxy_set_header X-Real-IP $remote_addr;
@@ -50,6 +49,7 @@ image/gif;
         proxy_set_header Connection "Upgrade";
         proxy_set_header Host $host;
         proxy_redirect off;
+        proxy_set_header Accept-Encoding "";
     }
     location ~* \.(webp|jpg|jpeg|png|gif|ico|woff2|woff|ttf|svg|eot)$ {
        expires 30d;
