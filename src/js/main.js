@@ -394,6 +394,9 @@ function parseServerStatus(status) {
       const div = document.createElement('div');
       div.textContent = "No Players Online";
       pContainer.appendChild(div);
+      const spacer = document.createElement('div');
+      spacer.classList.add('spacer');
+      pContainer.appendChild(spacer);
     } else {
       for (let i = 0; i < numPlayersOnline; i++) {
         var playerName = status.players[i].name;
