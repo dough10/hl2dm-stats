@@ -701,7 +701,7 @@ function zipDemos(lastMonth) {
     if (!fs.existsSync(folder)){
       fs.mkdirSync(folder);
     }
-    child_process.execSync(`zip -r ${config.bulkStorage}/demos/${lastMonth}.zip * '*.dem'`, {
+    child_process.execSync(`zip -r ${config.bulkStorage}/demos/${lastMonth}.zip '*.dem'`, {
       cwd: config.gameServerDir
     });
     console.log(`${new Date()} - Demos saved to ${config.bulkStorage}/demos/${lastMonth}.zip`);
