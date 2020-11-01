@@ -193,7 +193,6 @@ function showApp() {
 }
 
 function displayPlayerOnline(playersOnline) {
-  console.log(window.location.href)
   var el = qs('#reset');
   var loadtime = new Date();
   var lastDay = new Date(loadtime.getFullYear(), loadtime.getMonth() + 1, 0);
