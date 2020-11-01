@@ -8,7 +8,7 @@ var numPlayersOnline  = 0;
 var playersOnline = [];
 var loaded = false;
 
-HTMLElement.prototype.onClick = function (cb) {
+HTMLElement.prototype.onClick = cb => {
   this.addEventListener('click', cb, false);
 };
 
