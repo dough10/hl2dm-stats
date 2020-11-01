@@ -200,7 +200,7 @@ function displayPlayerOnline(playersOnline) {
   resetTime.setMinutes(0);
   resetTime.setSeconds(0);
   resetTime.setMonth(resetTime.getMonth() + 1, 1);
-  console.log(lastDay, loadtime.getDate() > lastDay - 3)
+  console.log(lastDay, resetTime)
   if (loadtime.getDate() <= 2) {
     animations.animateElement(qs('#reset'), 'translateY(0)', 800, 1, 0);
   } else if (loadtime.getDate() === lastDay) {
