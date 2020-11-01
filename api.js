@@ -616,6 +616,7 @@ function getServerStatus() {
 
 function cleanUp() {
   var now = new Date();
+  console.log(`${now} - Clean up started`);
   var lastMonth = now.setMonth(now.getMonth() - 1);
   var start = new Date().getTime();
   zipDemos(lastMonth).then(zipLogs).then(saveTop).then(_ => {
