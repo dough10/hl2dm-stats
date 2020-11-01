@@ -253,7 +253,7 @@ function displayPlayerOnline(playersOnline) {
       say = `${playersOnline} players online. Full... And it hurts.`;
       break;
   }
-  new Toast(say, 2, 'steam://connect/hl2dm.dough10.me:27015', 'Join');
+  new Toast(say, 200, 'steam://connect/hl2dm.dough10.me:27015', 'Join');
   loaded = true;
 }
 
