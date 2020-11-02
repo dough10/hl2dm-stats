@@ -590,6 +590,16 @@ qs('#fab').onClick(animations.animateScroll);
 
 window.onload = registerServiceWorker().then(reg => {
   // console.log(reg);
+  page('/', _ => {
+    console.log('page1');
+  });
+  page('/old-stats', _ => {
+    console.log('old-stats');
+  });
+  page('/demos', _ => {
+    console.log('old-stats');
+  });
+  page();
   fetchTop();
   if ("WebSocket" in window) {
     connectWSS();
