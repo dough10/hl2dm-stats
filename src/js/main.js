@@ -633,7 +633,7 @@ window.onload = registerServiceWorker().then(reg => {
     var month = new Date();
     month.setMonth(month.getMonth() - 1);
     fetchOldMonths();
-    fetchOldMonths(month);
+    fetchOldMonths(month.getMonth());
   });
   page('/demos', _ => {
     fetchDemos();
