@@ -600,12 +600,12 @@ function getServerStatus() {
         if (serverStatus.players[i].name) {
           var name = serverStatus.players[i].name;
           var score = serverStatus.players[i].score.toString();
-          var l = ((80 - name.length) - score.length) - 17;
+          var l = ((80 - name.length) - score.length) - 11;
           var space = '';
           for (var n = 0; n < l; n++) {
             space = space + '-';
           }
-          console.log(`player: ${name} ${space} score: ${score}`)
+          console.log(`<${name}> ${space} score: ${score}`)
         }
       }
     }
@@ -720,6 +720,7 @@ setInterval(getServerStatus, 5000);
 var j = schedule.scheduleJob('0 5 1 * *', cleanUp);
 
 console.log(`${new Date()} - Loading API backend calls`);
+
 app.get('/stats', (req, res) => {
   res.send(JSON.stringify([
     top,
