@@ -466,6 +466,16 @@ function ipLookup(ip) {
   });
 }
 
+function fetchDemos() {
+  fetch('/api/demos').then(response => {
+    if (response.status !== 200) {
+      console.error(response.status);
+      return;
+    }
+    response.json().then(console.log);
+  });
+}
+
 function fetchServerStatus() {
   fetch('/api/status').then(response => {
     if (response.status !== 200) {
@@ -599,11 +609,11 @@ window.onload = registerServiceWorker().then(reg => {
     }
     fetchTop();
   });
-  page('/old-stats', _ => {
-    console.log('old-stats');
+  page('/old-stats/:month', ctx => {
+    console.log(ctx.params.month);
   });
   page('/demos', _ => {
-    console.log('demos');
+    fetchDemos();
   });
   page();
 }).then(loadRipples).then(_ => {
