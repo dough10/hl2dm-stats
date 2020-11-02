@@ -658,6 +658,29 @@ function cleanUp() {
   });
 }
 
+function getOldStatsList(month) {
+  return new Promise((resolve, reject) => {
+    fs.readdir(`${__dirname}/old-top`, (err, files) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      if (!month) {
+        res.send(files);
+        return;
+      }
+      month = Number(month);
+      for (var i = 0; i < files.length; i++) {
+        var date = path.basename(files[i]);
+        var fileMonth = new Date(date).getMonth();
+        if (fileMonth === month) {
+          var data = require(`${__dirname}/old-top/${files[i]}`)
+        }
+      }
+    });
+  });
+}
+
 function saveTop(lastMonth) {
   return new Promise((resolve, reject) => {
     var folder = `${__dirname}/old-top`;
@@ -743,7 +766,15 @@ app.get('/download/:file', (reg, res) => {
   res.download(dl, reg.params.file);
 });
 
-app.get('/demos', (reg,res) => {
+app.get('/old-months', (reg, res) => {
+  getOldStatsList();
+});
+
+app.get('/old-stats/:month', (reg, res) => {
+  getOldStatsList(reg.params.month);
+});
+
+app.get('/demos', (reg, res) => {
  var html = '<head><title>Lo-g Deathmatch Hoedown Demos</title></head><h1 style="text-align: center">Lo-g Deathmatch Hoedown Demos</h1><table style="width: 100%"><tr><th>filename</th><th>size</th><th>date/time</th></tr>';
  getDemos().then(demos => {
    for (var i = 0; i < demos.length; i++) {

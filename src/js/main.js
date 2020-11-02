@@ -476,6 +476,19 @@ function fetchDemos() {
   });
 }
 
+function fetchOldMonths(month) {
+  if (!month) {
+    fetch('/api/old-months').then(response => {
+      if (response.status !== 200) {
+        console.error(response.status);
+        return;
+      }
+      response.json().then(console.log);
+    });
+    return;
+  }
+}
+
 function fetchServerStatus() {
   fetch('/api/status').then(response => {
     if (response.status !== 200) {
@@ -609,8 +622,11 @@ window.onload = registerServiceWorker().then(reg => {
     }
     fetchTop();
   });
-  page('/old-stats/:month', ctx => {
-    console.log(ctx.params.month);
+  page('/old-stats', _ => {
+    var month = new Date();
+    month.setMonth(month.getMonth() - 1);
+    fetchOldMonths();
+    fetchOldMonths(month);
   });
   page('/demos', _ => {
     fetchDemos();
