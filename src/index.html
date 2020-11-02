@@ -455,12 +455,14 @@
         display: flex;
         justify-content: center;
         text-align: center;
+      }
+      .stuff-below svg {
         opacity: 1;
-        animation: fade 2s linear;
+        animation: fade 1.5s infinite;
       }
       @keyframes fade {
-        0%,100% { opacity: 0 }
-        50% { opacity: 1 }
+        0%,100% { opacity: 0; }
+        50% { opacity: 1; }
       }
       @media only screen and (max-width: 500px) {
         .button:active:after {
