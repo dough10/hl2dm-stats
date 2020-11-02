@@ -658,7 +658,7 @@ function cleanUp() {
   });
 }
 
-function getOldStatsList(month) {
+function getOldStatsList(res, month) {
   return new Promise((resolve, reject) => {
     fs.readdir(`${__dirname}/old-top`, (err, files) => {
       if (err) {
@@ -674,7 +674,8 @@ function getOldStatsList(month) {
         var date = path.basename(files[i]);
         var fileMonth = new Date(date).getMonth();
         if (fileMonth === month) {
-          var data = require(`${__dirname}/old-top/${files[i]}`)
+          var data = require(`${__dirname}/old-top/${files[i]}`);
+          res.send(data);
         }
       }
     });
@@ -767,11 +768,11 @@ app.get('/download/:file', (reg, res) => {
 });
 
 app.get('/old-months', (reg, res) => {
-  getOldStatsList();
+  getOldStatsList(res);
 });
 
 app.get('/old-stats/:month', (reg, res) => {
-  getOldStatsList(reg.params.month);
+  getOldStatsList(res, reg.params.month);
 });
 
 app.get('/demos', (reg, res) => {
