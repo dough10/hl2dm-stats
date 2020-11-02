@@ -22,7 +22,8 @@ setInterval(_ => {
   new Toast(
     _toastCache[0][0],
     _toastCache[0][1],
-    _toastCache[0][2]
+    _toastCache[0][2],
+    _toastCache[0][3]
   );
   _toastCache.splice(0,1);
 }, 500);
@@ -40,7 +41,8 @@ class Toast {
       _toastCache.push([
         message,
         _timeout,
-        link
+        link,
+        linkText
       ]);
       return;
     }
