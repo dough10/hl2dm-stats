@@ -541,13 +541,15 @@ qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
   if (top <= 65) {
     top = 65;
   }
+  if (scrollTop > infoHeight / 2) {
+    animations.fadeOut(qs('.stuff-below'));
+  }
   if (scrollTop > infoHeight) {
     cascadeCards(wrapper);
     animations.animateElement(fab, "translateY(0px)");
   } else {
     animations.animateElement(fab, "translateY(80px)");
   }
-  animations.fadeOut(qs('.stuff-below'));
   let scale = 1 - (change / (200 - 65));
   if (scale <= 0.495) {
     scale = 0.495;
