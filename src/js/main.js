@@ -547,6 +547,7 @@ qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
   } else {
     animations.animateElement(fab, "translateY(80px)");
   }
+  animations.fadeOut(qs('.stuff-below');
   let scale = 1 - (change / (200 - 65));
   if (scale <= 0.495) {
     scale = 0.495;
