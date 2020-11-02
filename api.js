@@ -670,7 +670,9 @@ function getOldStatsList(res, month) {
         return;
       }
       month = Number(month);
+      consoloe.log(month)
       for (var i = 0; i < files.length; i++) {
+        console.log(files[i])
         var date = path.basename(files[i]);
         var fileMonth = new Date(date).getMonth();
         if (fileMonth === month) {
