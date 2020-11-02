@@ -258,7 +258,7 @@ function displayPlayerOnline(playersOnline) {
       say = `${playersOnline} players online. Full... And it hurts.`;
       break;
   }
-  new Toast(say, 2, 'steam://connect/hl2dm.dough10.me:27015', 'Join');
+  new Toast(say, 3, 'steam://connect/hl2dm.dough10.me:27015', 'Join');
   loaded = true;
 }
 
@@ -412,7 +412,7 @@ function parseServerStatus(status) {
         if (playerName && !playersOnline.includes(playerName)) {
           playersOnline.push(playerName);
           if (loaded) {
-            new Toast(`${playerName} has joined the game`, 2, 'steam://connect/hl2dm.dough10.me:27015', 'Join');
+            new Toast(`${playerName} has joined the game`, 3, 'steam://connect/hl2dm.dough10.me:27015', 'Join');
           }
         }
       }
@@ -429,7 +429,7 @@ function parseServerStatus(status) {
     }
     // remove player from online array and notify UI
     notOnline.forEach(player => {
-      new Toast(`${player} has left the server`, 2);
+      new Toast(`${player} has left the server`, 3);
       playersOnline.splice(playersOnline.indexOf(player), 1);
     });
   } else {
