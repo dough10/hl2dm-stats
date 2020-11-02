@@ -487,6 +487,13 @@ function fetchOldMonths(month) {
     });
     return;
   }
+  fetch(`/api/old-stats/${month}`).then(response => {
+    if (response.status !== 200) {
+      console.error(response.status);
+      return;
+    }
+    response.json().then(console.log);
+  });
 }
 
 function fetchServerStatus() {
