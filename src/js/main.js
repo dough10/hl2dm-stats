@@ -591,22 +591,21 @@ qs('#fab').onClick(animations.animateScroll);
 window.onload = registerServiceWorker().then(reg => {
   // console.log(reg);
   page('/', _ => {
-    console.log('page1');
+    if ("WebSocket" in window) {
+      connectWSS();
+    } else {
+      fetchServerStatus();
+      setTimeout(fetchServerStatus, 5000);
+    }
+    fetchTop();
   });
   page('/old-stats', _ => {
     console.log('old-stats');
   });
   page('/demos', _ => {
-    console.log('old-stats');
+    console.log('demos');
   });
   page();
-  fetchTop();
-  if ("WebSocket" in window) {
-    connectWSS();
-  } else {
-    fetchServerStatus();
-    setTimeout(fetchServerStatus, 5000);
-  }
 }).then(loadRipples).then(_ => {
   console.log('?')
 });
