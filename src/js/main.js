@@ -186,7 +186,7 @@ function displayWeaponData(wrappers, weapons, kills) {
 function showApp() {
   setTimeout(_ => {
     animations.animateElement(qs('#load'), 'translateY(-102%)', 350);
-    if (!loaded) {
+    if (!loaded && qs('#page1').style.display !== 'none') {
       displayPlayerOnline(numPlayersOnline);
     }
   }, 1200);
