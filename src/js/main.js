@@ -483,7 +483,13 @@ function fetchOldMonths(month) {
         console.error(response.status);
         return;
       }
-      response.json().then(console.log);
+      response.json().then(months => {
+        for (var i = 0; i < months.length; i++) {
+          months[i] = months[i].replace('.json', '');
+        }
+        console.log(months);
+        fetchOldMonths(months[0]));
+      });
     });
     return;
   }
@@ -630,10 +636,7 @@ window.onload = registerServiceWorker().then(reg => {
     fetchTop();
   });
   page('/old-stats', _ => {
-    var month = new Date();
-    month.setMonth(month.getMonth() - 1);
     fetchOldMonths();
-    fetchOldMonths(month.getMonth());
   });
   page('/demos', _ => {
     fetchDemos();
