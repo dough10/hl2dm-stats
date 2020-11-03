@@ -488,7 +488,7 @@ function fetchOldMonths(month) {
           months[i] = months[i].replace('.json', '');
         }
         console.log(months);
-        fetchOldMonths(months[0]));
+        fetchOldMonths(months[0]);
       });
     });
     return;
