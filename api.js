@@ -783,11 +783,13 @@ app.get('/demos', (reg, res) => {
   var arr = [];
   getDemos().then(demos => {
    for (var i = 0; i < demos.length; i++) {
-     arr.push([
-       demos[i],
-       bytesToSize(getFilesizeInBytes(`${config.gameServerDir}/${demos[i]}`)),
-       createdDate(`${config.gameServerDir}/${demos[i]}`)
-     ]);
+     if (i !== demos.length - 1) {
+       arr.push([
+         demos[i],
+         bytesToSize(getFilesizeInBytes(`${config.gameServerDir}/${demos[i]}`)),
+         createdDate(`${config.gameServerDir}/${demos[i]}`)
+       ]);
+     }
    }
    arr.reverse();
    res.send(arr);
