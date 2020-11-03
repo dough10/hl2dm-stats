@@ -675,7 +675,7 @@ function getOldStatsList(res, month) {
         console.log(files[i])
         var date = path.basename(files[i]);
         var fileMonth = new Date(Number(date)).getMonth();
-        console.log(fileMonth === month)
+        console.log(fileMonth === month, fileMonth, month)
         if (fileMonth === month) {
           var data = require(`${__dirname}/old-top/${files[i]}`);
           res.send(data);
