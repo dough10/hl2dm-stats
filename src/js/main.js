@@ -395,7 +395,7 @@ function parseDemos(demos) {
     a.download = true;
     const wrapper = createWrapper();
     wrapper.style.borderTop = '1px solid #cccccc61';
-    wrapper.style.padding = '16px';
+    wrapper.style.padding = '16px 0';
     const name = document.createElement('div');
     name.textContent = demo[0];
     const size = document.createElement('div');
