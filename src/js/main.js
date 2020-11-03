@@ -617,6 +617,10 @@ qs('#demos').onClick(_ => {
   });
 });
 
+qs('#oldStats').onClick(_ => {
+  window.location.href = `https://hl2dm.dough10.me/old-stats`;
+});
+
 var alert = qs('#reset');
 alert.onClick(_ => {
   animations.animateElement(alert, 'translateY(-120%)', 800, 0, 0);
