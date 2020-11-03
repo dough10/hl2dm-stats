@@ -468,8 +468,8 @@ function parseDemos(demos) {
     wrapper.appendChild(size);
     wrapper.appendChild(time);
     a.appendChild(wrapper);
-    ripples.attachButtonRipple(a);
     qs('#demoEl').appendChild(a);
+    ripples.attachButtonRipple(a);
   });
 }
 
