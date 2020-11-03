@@ -663,6 +663,14 @@ qsa('.paypal').forEach(button => {
   });
 });
 
+qsa('.home').forEach(button => {
+  button.onClick(_ => {
+    animations.animateElement(qs('#load'), 'translateY(0%)', 350).then(_ => {
+      window.location.href = `https://hl2dm.dough10.me`;
+    });
+  });
+});
+
 qsa('.demos').forEach(button => {
   button.onClick(_ => {
     animations.animateElement(qs('#load'), 'translateY(0%)', 350).then(_ => {
