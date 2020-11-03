@@ -478,6 +478,7 @@ function parseDemos(demos) {
   qs('#page3').style.display = 'block';
   demos.forEach(demo => {
     const wrapper = createWrapper();
+    wrapper.style.cursor = 'pointer';
     const name = document.createElement('div');
     name.textContent = demo[0];
     const size = document.createElement('div');
@@ -488,6 +489,9 @@ function parseDemos(demos) {
     wrapper.appendChild(size);
     wrapper.appendChild(time);
     qs('#demoEl').appendChild(wrapper);
+    wrapper.onClick(_ => {
+      window.location.href = `https://hl2dm.dough10.me/api/download/${demo[0]}`;
+    });
     const spacer = document.createElement('div');
     spacer.classList.add('spacer');
     qs('#demoEl').appendChild(spacer);
