@@ -673,7 +673,7 @@ function getOldStatsList(res, month) {
       console.log(month)
       for (var i = 0; i < files.length; i++) {
         console.log(files[i])
-        var date = path.basename(files[i]);
+        var date = path.basename(files[i], '.json');
         var fileMonth = new Date(Number(date)).getMonth();
         console.log(fileMonth === month, fileMonth, date, typeof date)
         if (fileMonth === month) {
