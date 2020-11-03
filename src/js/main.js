@@ -639,13 +639,13 @@ qs('#fab').onClick(animations.animateScroll);
 
 window.onload = registerServiceWorker().then(reg => {
   // console.log(reg);
-  if ("WebSocket" in window) {
-    connectWSS();
-  } else {
-    fetchServerStatus();
-    setTimeout(fetchServerStatus, 5000);
-  }
   page('/', _ => {
+    if ("WebSocket" in window) {
+      connectWSS();
+    } else {
+      fetchServerStatus();
+      setTimeout(fetchServerStatus, 5000);
+    }
     fetchTop();
   });
   page('/old-stats', _ => {
