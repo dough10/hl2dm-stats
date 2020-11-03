@@ -776,9 +776,18 @@ app.get('/old-stats/:month', (reg, res) => {
 });
 
 app.get('/demos', (reg, res) => {
- getDemos().then(demos => {
-   res.send(demos);
- });
+  var arr = [];
+  getDemos().then(demos => {
+   for (var i = 0; i < demos.length; i++) {
+     arr.push([
+       demos[i],
+       bytesToSize(getFilesizeInBytes(`${config.gameServerDir}/${demos[i]}`)),
+       createdDate(`${config.gameServerDir}/${demos[i]}`)
+     ]
+   }
+   arr.reverse();
+   res.send(arr);
+  });
 });
 
 app.ws('/', (ws, req) => {
