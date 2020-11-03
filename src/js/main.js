@@ -382,7 +382,6 @@ function parseTopData(top) {
   allWeaponsCard.appendChild(wrapper1);
   allWeaponsCard.appendChild(wrapper2);
   qs('#cardsWrapper').appendChild(allWeaponsCard);
-  showApp();
 }
 
 function parseServerStatus(status) {
@@ -444,6 +443,7 @@ function parseServerStatus(status) {
     div.textContent = "Server offline";
     pContainer.appendChild(div);
   }
+  showApp();
 }
 
 function parseDemos(demos) {
@@ -471,7 +471,6 @@ function parseDemos(demos) {
     spacer.classList.add('spacer');
     qs('#demoEl').appendChild(spacer);
   });
-  showApp();
 }
 
 function isLocalIP(ip) {
@@ -515,7 +514,6 @@ function parseOldLogs(top) {
   qs('#page1').style.display = 'none';
   qs('#page2').style.display = 'block';
   qs('#page3').style.display = 'none';
-  showApp();
 }
 
 function fetchOldMonths(month) {
