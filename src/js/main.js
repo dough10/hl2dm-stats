@@ -466,13 +466,17 @@ function ipLookup(ip) {
   });
 }
 
+function parseDemos(demos) {
+  console.log(demos)
+}
+
 function fetchDemos() {
   fetch('/api/demos').then(response => {
     if (response.status !== 200) {
       console.error(response.status);
       return;
     }
-    response.json().then(console.log);
+    response.json().then(parseDemos);
   });
 }
 
