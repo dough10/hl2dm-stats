@@ -498,8 +498,8 @@ function fetchOldMonths(month) {
       console.error(response.status);
       return;
     }
-    qs('#page1').syle.display = 'none';
-    qs('#page2').syle.display = 'block';
+    qs('#page1').style.display = 'none';
+    qs('#page2').style.display = 'block';
     response.json().then(console.log);
   });
 }
