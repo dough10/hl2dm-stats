@@ -620,7 +620,9 @@ qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
     top = 65;
   }
   if (scrollTop > infoHeight) {
-    if (qs('#page1').style.disply !== 'none') cascadeCards(wrapper);
+    if (wrapper) {
+      cascadeCards(wrapper);
+    }
     animations.fadeOut(qs('.stuff-below'));
     animations.animateElement(fab, "translateY(0px)");
   } else {
