@@ -613,7 +613,7 @@ qs('#paypal').onClick(_ => {
 
 qs('#demos').onClick(_ => {
   animations.animateElement(qs('#load'), 'translateY(0%)', 350).then(_ => {
-    window.location.href = `${window.location.href}/api/demos`;
+    window.location.href = `${window.location.href}/demos`;
   });
 });
 
