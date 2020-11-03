@@ -783,7 +783,7 @@ app.get('/demos', (reg, res) => {
        demos[i],
        bytesToSize(getFilesizeInBytes(`${config.gameServerDir}/${demos[i]}`)),
        createdDate(`${config.gameServerDir}/${demos[i]}`)
-     ]
+     ]);
    }
    arr.reverse();
    res.send(arr);
