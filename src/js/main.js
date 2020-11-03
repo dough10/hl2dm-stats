@@ -472,10 +472,26 @@ function ipLookup(ip) {
 }
 
 function parseDemos(demos) {
-  console.log(demos)
+  console.log(demos);
   qs('#page1').style.display = 'none';
   qs('#page2').style.display = 'none';
   qs('#page3').style.display = 'block';
+  demos.forEach(demo => {
+    const wrapper = createWrapper();
+    const name = document.createElement('div');
+    name.textContent = demo[0];
+    const size = document.createElement('div');
+    size.textContent = demo[1];
+    const time = document.createElement('div');
+    time.textContent = demo[2];
+    wrapper.appendChild(name);
+    wrapper.appendChild(size);
+    wrapper.appendChild(time);
+    qs('#demoEl').appendChild(wrapper);
+    const spacer = document.createElement('div');
+    spacer.classList.add('spacer');
+    qs('#demoEl').appendChild(spacer);
+  });
   showApp();
 }
 
