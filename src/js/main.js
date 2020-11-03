@@ -468,6 +468,7 @@ function ipLookup(ip) {
 
 function parseDemos(demos) {
   console.log(demos)
+  showApp();
 }
 
 function fetchDemos() {
