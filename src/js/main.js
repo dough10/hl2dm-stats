@@ -625,7 +625,9 @@ qs('#demos').onClick(_ => {
 });
 
 qs('#oldStats').onClick(_ => {
-  window.location.href = `https://hl2dm.dough10.me/old-stats`;
+  animations.animateElement(qs('#load'), 'translateY(0%)', 350).then(_ => {
+    window.location.href = `https://hl2dm.dough10.me/old-stats`;
+  });
 });
 
 var alert = qs('#reset');
@@ -647,7 +649,7 @@ window.onload = registerServiceWorker().then(reg => {
     fetchTop();
   });
   page('/old-stats', _ => {
-    animations.animateElement(qs('#load'), 'translateY(0%)', 350).then(fetchOldMonths);
+    fetchOldMonths();
   });
   page('/old-stats/:month', ctx => {
     fetchOldMonths(ctx.params.month);
