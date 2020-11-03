@@ -638,6 +638,9 @@ window.onload = registerServiceWorker().then(reg => {
   page('/old-stats', _ => {
     fetchOldMonths();
   });
+  page('/old-stats/:month', ctx => {
+    fetchOldMonths(ctx.params.month);
+  });
   page('/demos', _ => {
     fetchDemos();
   });
