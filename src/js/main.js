@@ -484,7 +484,8 @@ function parseDemos(demos) {
     const size = document.createElement('div');
     size.textContent = demo[1];
     const time = document.createElement('div');
-    time.textContent = demo[2];
+    var demoTime = new Date(demo[2]);
+    time.textContent = `${demoTime.toDateString()} at ${demoTime.toLocaleTimeString()}`;
     wrapper.appendChild(name);
     wrapper.appendChild(size);
     wrapper.appendChild(time);
