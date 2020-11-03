@@ -452,10 +452,11 @@ function parseDemos(demos) {
   qs('#page3').style.display = 'block';
   demos.forEach(demo => {
     const a = document.createElement('a');
+    a.style.position = 'relative';
     a.href = `https://hl2dm.dough10.me/api/download/${demo[0]}`;
     const wrapper = createWrapper();
     wrapper.style.borderTop = '1px solid #cccccc61';
-    wrapper.style.padding = '8px';
+    wrapper.style.padding = '16px';
     const name = document.createElement('div');
     name.textContent = demo[0];
     const size = document.createElement('div');
@@ -467,6 +468,7 @@ function parseDemos(demos) {
     wrapper.appendChild(size);
     wrapper.appendChild(time);
     a.appendChild(wrapper);
+    ripples.applyRipples(a);
     qs('#demoEl').appendChild(a);
   });
 }
