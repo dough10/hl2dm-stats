@@ -452,7 +452,6 @@ function parseDemos(demos) {
   qs('#page3').style.display = 'block';
   demos.forEach(demo => {
     const a = document.createElement('a');
-    a.style.position = 'relative';
     a.href = `https://hl2dm.dough10.me/api/download/${demo[0]}`;
     a.download = true;
     const wrapper = createWrapper();
@@ -470,7 +469,7 @@ function parseDemos(demos) {
     wrapper.appendChild(time);
     a.appendChild(wrapper);
     qs('#demoEl').appendChild(a);
-    ripples.attachButtonRipple(wrapper);
+    ripples.attachButtonRipple(a);
   });
 }
 
