@@ -464,6 +464,7 @@ function parseDemos(demos) {
     wrapper.appendChild(size);
     wrapper.appendChild(time);
     qs('#demoEl').appendChild(wrapper);
+    ripples.attachButtonRipple(wrapper);
     wrapper.onClick(_ => {
       window.location.href = `https://hl2dm.dough10.me/api/download/${demo[0]}`;
     });
