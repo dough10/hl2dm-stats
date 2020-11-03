@@ -382,6 +382,43 @@ function parseTopData(top) {
   allWeaponsCard.appendChild(wrapper1);
   allWeaponsCard.appendChild(wrapper2);
   qs('#cardsWrapper').appendChild(allWeaponsCard);
+  showApp();
+}
+
+function parseDemos(demos) {
+  qs('#page1').style.display = 'none';
+  qs('#page2').style.display = 'none';
+  qs('#page3').style.display = 'block';
+  demos.forEach(demo => {
+    const a = document.createElement('a');
+    a.href = `https://hl2dm.dough10.me/api/download/${demo[0]}`;
+    a.download = true;
+    const wrapper = createWrapper();
+    wrapper.style.borderTop = '1px solid #cccccc61';
+    wrapper.style.padding = '16px';
+    const name = document.createElement('div');
+    name.textContent = demo[0];
+    const size = document.createElement('div');
+    size.textContent = demo[1];
+    const time = document.createElement('div');
+    var demoTime = new Date(demo[2]);
+    time.textContent = `${demoTime.toDateString()} at ${demoTime.toLocaleTimeString()}`;
+    wrapper.appendChild(name);
+    wrapper.appendChild(size);
+    wrapper.appendChild(time);
+    a.appendChild(wrapper);
+    qs('#demoEl').appendChild(a);
+    ripples.attachButtonRipple(a);
+  });
+  showApp();
+}
+
+function parseOldLogs(top) {
+  console.log(top);
+  qs('#page1').style.display = 'none';
+  qs('#page2').style.display = 'block';
+  qs('#page3').style.display = 'none';
+  showApp();
 }
 
 function parseServerStatus(status) {
@@ -443,34 +480,6 @@ function parseServerStatus(status) {
     div.textContent = "Server offline";
     pContainer.appendChild(div);
   }
-  showApp();
-}
-
-function parseDemos(demos) {
-  qs('#page1').style.display = 'none';
-  qs('#page2').style.display = 'none';
-  qs('#page3').style.display = 'block';
-  demos.forEach(demo => {
-    const a = document.createElement('a');
-    a.href = `https://hl2dm.dough10.me/api/download/${demo[0]}`;
-    a.download = true;
-    const wrapper = createWrapper();
-    wrapper.style.borderTop = '1px solid #cccccc61';
-    wrapper.style.padding = '16px';
-    const name = document.createElement('div');
-    name.textContent = demo[0];
-    const size = document.createElement('div');
-    size.textContent = demo[1];
-    const time = document.createElement('div');
-    var demoTime = new Date(demo[2]);
-    time.textContent = `${demoTime.toDateString()} at ${demoTime.toLocaleTimeString()}`;
-    wrapper.appendChild(name);
-    wrapper.appendChild(size);
-    wrapper.appendChild(time);
-    a.appendChild(wrapper);
-    qs('#demoEl').appendChild(a);
-    ripples.attachButtonRipple(a);
-  });
 }
 
 function isLocalIP(ip) {
@@ -507,13 +516,6 @@ function fetchDemos() {
     }
     response.json().then(parseDemos);
   });
-}
-
-function parseOldLogs(top) {
-  console.log(top);
-  qs('#page1').style.display = 'none';
-  qs('#page2').style.display = 'block';
-  qs('#page3').style.display = 'none';
 }
 
 function fetchOldMonths(month) {
@@ -558,7 +560,9 @@ function fetchTop() {
       console.error(response.status);
       return;
     }
-    response.json().then(parseTopData);
+    response.json().then(top => {
+      parseTopData(top).then(arr => {});
+    });
   });
 }
 
@@ -635,31 +639,43 @@ qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
   qs(':root').style.setProperty('--header-height', `${top}px`);
 });
 
-qs('#join').onClick(_ => {
-  window.location.href = 'steam://connect/hl2dm.dough10.me:27015';
-});
-
-qs('#discord').onClick(_ => {
-  window.location.href = 'https://discord.gg/ZBTqwvw';
-});
-
-qs('#github').onClick(_ => {
-  window.location.href = 'https://github.com/dough10/hl2dm-stats';
-});
-
-qs('#paypal').onClick(_ => {
-  window.location.href = 'https://www.paypal.me/jdough10';
-});
-
-qs('#demos').onClick(_ => {
-  animations.animateElement(qs('#load'), 'translateY(0%)', 350).then(_ => {
-    window.location.href = `https://hl2dm.dough10.me/demos`;
+qsa('.join').forEach(button => {
+  button.onClick(_ => {
+    window.location.href = 'steam://connect/hl2dm.dough10.me:27015';
   });
 });
 
-qs('#oldStats').onClick(_ => {
-  animations.animateElement(qs('#load'), 'translateY(0%)', 350).then(_ => {
-    window.location.href = `https://hl2dm.dough10.me/old-stats`;
+qsa('.discord').forEach(button => {
+  button.onClick(_ => {
+    window.location.href = 'https://discord.gg/ZBTqwvw';
+  });
+});
+
+qsa('.github').forEach(button => {
+  button.onClick(_ => {
+    window.location.href = 'https://github.com/dough10/hl2dm-stats';
+  });
+});
+
+qsa('.paypal').forEach(button => {
+  button.onClick(_ => {
+    window.location.href = 'https://www.paypal.me/jdough10';
+  });
+});
+
+qsa('.demos').forEach(button => {
+  button.onClick(_ => {
+    animations.animateElement(qs('#load'), 'translateY(0%)', 350).then(_ => {
+      window.location.href = `https://hl2dm.dough10.me/demos`;
+    });
+  });
+});
+
+qsa('.oldStats').forEach(button => {
+  button.onClick(_ => {
+    animations.animateElement(qs('#load'), 'translateY(0%)', 350).then(_ => {
+      window.location.href = `https://hl2dm.dough10.me/old-stats`;
+    });
   });
 });
 
