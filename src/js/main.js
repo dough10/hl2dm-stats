@@ -463,10 +463,7 @@ function parseDemos(demos) {
     wrapper.appendChild(name);
     wrapper.appendChild(size);
     wrapper.appendChild(time);
-    wrapper.style.overflow = 'hidden';
     qs('#demoEl').appendChild(wrapper);
-    ripples.attachButtonRipple(wrapper);
-
     wrapper.onClick(_ => {
       window.location.href = `https://hl2dm.dough10.me/api/download/${demo[0]}`;
     });
