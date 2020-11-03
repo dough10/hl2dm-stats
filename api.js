@@ -776,7 +776,9 @@ app.get('/old-stats/:month', (reg, res) => {
 });
 
 app.get('/demos', (reg, res) => {
- getDemos().then(res.send);
+ getDemos().then(demos => {
+   res.send(demos);
+ });
 });
 
 app.ws('/', (ws, req) => {
