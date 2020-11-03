@@ -658,7 +658,7 @@ function cleanUp() {
   });
 }
 
-function getOldStatsList(res, month) {
+function getOldStatsList(month) {
   return new Promise((resolve, reject) => {
     fs.readdir(`${__dirname}/old-top`, (err, files) => {
       if (err) {
@@ -666,7 +666,7 @@ function getOldStatsList(res, month) {
         return;
       }
       if (!month) {
-        res.send(files);
+        resolve(files);
         return;
       }
       month = Number(month);
@@ -675,7 +675,7 @@ function getOldStatsList(res, month) {
         var fileMonth = new Date(Number(date)).getMonth();
         if (fileMonth === month) {
           var data = require(`${__dirname}/old-top/${files[i]}`);
-          res.send(data);
+          resolve(data);
         }
       }
     });
@@ -768,11 +768,15 @@ app.get('/download/:file', (reg, res) => {
 });
 
 app.get('/old-months', (reg, res) => {
-  getOldStatsList(res);
+  getOldStatsList().then(stats => {
+    res.send(stats);
+  });
 });
 
 app.get('/old-stats/:month', (reg, res) => {
-  getOldStatsList(res, reg.params.month);
+  getOldStatsList(reg.params.month).then(stats => {
+    res.send(stats);
+  });
 });
 
 app.get('/demos', (reg, res) => {

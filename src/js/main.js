@@ -35,6 +35,7 @@ function cascadeCards(container) {
   return new Promise(resolve => {
     const cards = qsa('.card', container);
     for (var i = 0; i < cards.length; i++) {
+      if (!cards[i]) return;
       cards[i].style.display = 'block';
       animations.animateElement(cards[i], 'translateX(0)', 200, 1, i * 50);
     }
@@ -445,34 +446,7 @@ function parseServerStatus(status) {
   }
 }
 
-function isLocalIP(ip) {
-  const rx = /(^127\.)|(^192\.168\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^::1$)|(^[fF][cCdD])/;
-  return rx.test(ip);
-}
-
-function ipLookup(ip) {
-  return new Promise((resolve, reject) => {
-    if (isLocalIP(ip)) {
-      resolve({
-        country: "US",
-        country_3: "USA",
-        ip: ip,
-        name: "United States"
-      });
-      return;
-    }
-    fetch(`https://get.geojs.io/v1/ip/country/${ip}.json`).then(response => {
-      if (response.status !== 200) {
-        reject(response.status);
-        return;
-      }
-      response.json().then(resolve);
-    });
-  });
-}
-
 function parseDemos(demos) {
-  console.log(demos);
   qs('#page1').style.display = 'none';
   qs('#page2').style.display = 'none';
   qs('#page3').style.display = 'block';
@@ -498,6 +472,32 @@ function parseDemos(demos) {
     qs('#demoEl').appendChild(spacer);
   });
   showApp();
+}
+
+function isLocalIP(ip) {
+  const rx = /(^127\.)|(^192\.168\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^::1$)|(^[fF][cCdD])/;
+  return rx.test(ip);
+}
+
+function ipLookup(ip) {
+  return new Promise((resolve, reject) => {
+    if (isLocalIP(ip)) {
+      resolve({
+        country: "US",
+        country_3: "USA",
+        ip: ip,
+        name: "United States"
+      });
+      return;
+    }
+    fetch(`https://get.geojs.io/v1/ip/country/${ip}.json`).then(response => {
+      if (response.status !== 200) {
+        reject(response.status);
+        return;
+      }
+      response.json().then(resolve);
+    });
+  });
 }
 
 function fetchDemos() {
@@ -620,9 +620,7 @@ qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
     top = 65;
   }
   if (scrollTop > infoHeight) {
-    if (wrapper) {
-      cascadeCards(wrapper);
-    }
+    cascadeCards(wrapper);
     animations.fadeOut(qs('.stuff-below'));
     animations.animateElement(fab, "translateY(0px)");
   } else {
