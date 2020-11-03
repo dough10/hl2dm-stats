@@ -389,7 +389,9 @@ function parseServerStatus(status) {
   pContainer.innerHTML = '';
   if (status !== "offline") {
     document.title = status.name;
-    qs('.hostname').textContent = status.name;
+    qsa('.hostname').forEach(el => {
+      el.textContent = status.name;
+    });
     qs('#numPlayers').textContent = status.maxplayers;
     qs('#map').textContent = status.map;
     numPlayersOnline = status.players.length;
@@ -651,13 +653,13 @@ qs('#fab').onClick(animations.animateScroll);
 
 window.onload = registerServiceWorker().then(reg => {
   // console.log(reg);
+  if ("WebSocket" in window) {
+    connectWSS();
+  } else {
+    fetchServerStatus();
+    setTimeout(fetchServerStatus, 5000);
+  }
   page('/', _ => {
-    if ("WebSocket" in window) {
-      connectWSS();
-    } else {
-      fetchServerStatus();
-      setTimeout(fetchServerStatus, 5000);
-    }
     fetchTop();
   });
   page('/old-stats', _ => {
