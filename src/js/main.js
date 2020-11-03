@@ -468,7 +468,7 @@ function parseDemos(demos) {
     wrapper.appendChild(size);
     wrapper.appendChild(time);
     a.appendChild(wrapper);
-    ripples.attachButtonRipples(a);
+    ripples.attachButtonRipple(a);
     qs('#demoEl').appendChild(a);
   });
 }
