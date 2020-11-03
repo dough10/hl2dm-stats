@@ -35,11 +35,11 @@ function cascadeCards(container) {
   return new Promise(resolve => {
     const cards = qsa('.card', container);
     for (var i = 0; i < cards.length; i++) {
-      if (!cards[i]) return;
       cards[i].style.display = 'block';
       animations.animateElement(cards[i], 'translateX(0)', 200, 1, i * 50);
     }
     const nocard = qs('.nocard')
+    if (!nocard) return;
     nocard.style.display = 'block';
     animations.animateElement(nocard, 'translateX(0)', 200, 1, i * 50);
   });
