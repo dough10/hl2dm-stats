@@ -378,6 +378,7 @@ function parseTopData(top) {
   allWeaponsCard.appendChild(wrapper1);
   allWeaponsCard.appendChild(wrapper2);
   qs('#cardsWrapper').appendChild(allWeaponsCard);
+  showApp();
 }
 
 function parseServerStatus(status) {
@@ -437,7 +438,6 @@ function parseServerStatus(status) {
     div.textContent = "Server offline";
     pContainer.appendChild(div);
   }
-  showApp();
 }
 
 function isLocalIP(ip) {
@@ -626,13 +626,13 @@ qs('#fab').onClick(animations.animateScroll);
 
 window.onload = registerServiceWorker().then(reg => {
   // console.log(reg);
+  if ("WebSocket" in window) {
+    connectWSS();
+  } else {
+    fetchServerStatus();
+    setTimeout(fetchServerStatus, 5000);
+  }
   page('/', _ => {
-    if ("WebSocket" in window) {
-      connectWSS();
-    } else {
-      fetchServerStatus();
-      setTimeout(fetchServerStatus, 5000);
-    }
     fetchTop();
   });
   page('/old-stats', _ => {
