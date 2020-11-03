@@ -613,7 +613,7 @@ qs('#paypal').onClick(_ => {
 
 qs('#demos').onClick(_ => {
   animations.animateElement(qs('#load'), 'translateY(0%)', 350).then(_ => {
-    window.location.href = `${window.location.href}/demos`;
+    window.location.href = `https://hl2dm.dough10.me/demos`;
   });
 });
 
