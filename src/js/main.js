@@ -454,6 +454,7 @@ function parseDemos(demos) {
     const a = document.createElement('a');
     a.style.position = 'relative';
     a.href = `https://hl2dm.dough10.me/api/download/${demo[0]}`;
+    a.download = true;
     const wrapper = createWrapper();
     wrapper.style.borderTop = '1px solid #cccccc61';
     wrapper.style.padding = '16px';
