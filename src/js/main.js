@@ -190,7 +190,7 @@ function showApp() {
     if (!loaded && qs('#page1').style.display !== 'none') {
       displayPlayerOnline(numPlayersOnline);
     }
-  }, 1200);
+  }, 800);
 }
 
 function displayPlayerOnline(playersOnline) {
