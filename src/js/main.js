@@ -476,7 +476,8 @@ function fetchDemos() {
   });
 }
 
-function parseOldLog(top) {
+function parseOldLogs(top) {
+  console.log(top);
   qs('#page1').style.display = 'none';
   qs('#page2').style.display = 'block';
   showApp();
@@ -504,7 +505,7 @@ function fetchOldMonths(month) {
       console.error(response.status);
       return;
     }
-    response.json().then(parseOldLog);
+    response.json().then(parseOldLogs);
   });
 }
 
