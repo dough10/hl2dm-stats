@@ -498,6 +498,8 @@ function fetchOldMonths(month) {
       console.error(response.status);
       return;
     }
+    qs('#page1').syle.display = 'none';
+    qs('#page2').syle.display = 'block';
     response.json().then(console.log);
   });
 }
@@ -638,13 +640,9 @@ window.onload = registerServiceWorker().then(reg => {
   }
   page('/', _ => {
     fetchTop();
-    qs('#page1').syle.display = 'block';
-    qs('#page2').syle.display = 'none';
   });
   page('/old-stats', _ => {
     fetchOldMonths();
-    qs('#page1').syle.display = 'none';
-    qs('#page2').syle.display = 'block';
   });
   page('/old-stats/:month', ctx => {
     fetchOldMonths(ctx.params.month);
