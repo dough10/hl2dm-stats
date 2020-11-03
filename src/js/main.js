@@ -476,6 +476,12 @@ function fetchDemos() {
   });
 }
 
+function parseOldLog(top) {
+  qs('#page1').style.display = 'none';
+  qs('#page2').style.display = 'block';
+  showApp();
+}
+
 function fetchOldMonths(month) {
   if (!month) {
     fetch('/api/old-months').then(response => {
@@ -498,9 +504,7 @@ function fetchOldMonths(month) {
       console.error(response.status);
       return;
     }
-    qs('#page1').style.display = 'none';
-    qs('#page2').style.display = 'block';
-    response.json().then(console.log);
+    response.json().then(parseOldLog);
   });
 }
 
@@ -642,7 +646,7 @@ window.onload = registerServiceWorker().then(reg => {
     fetchTop();
   });
   page('/old-stats', _ => {
-    fetchOldMonths();
+    animations.animateElement(qs('#load'), 'translateY(0%)', 350).then(fetchOldMonths);
   });
   page('/old-stats/:month', ctx => {
     fetchOldMonths(ctx.params.month);
