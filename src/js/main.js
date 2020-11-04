@@ -411,10 +411,10 @@ function parseDemos(demos) {
     wrapper.appendChild(name);
     wrapper.appendChild(size);
     wrapper.appendChild(time);
-    a.appendChild(wrapper);
-    card.appendChild(a);
-    qs('#demoEl').appendChild(card);
-    ripples.attachButtonRipple(a);
+    card.appendChild(wrapper);
+    a.appendChild(card);
+    qs('#demoEl').appendChild(a);
+    ripples.attachButtonRipple(card);
   });
   showApp();
 }
