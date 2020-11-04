@@ -57,8 +57,20 @@ image/gif;
     }
     location ~* \.(webp|jpg|jpeg|png|gif|ico|woff2|woff|ttf|svg|eot)$ {
        expires 30d;
+       allow all;
+       add_header Pragma public;
+       add_header Cache-Control "public";
     }
     location ~* \.(css|js|json)$ {
        expires 7d;
+       allow all;
+       add_header Pragma public;
+       add_header Cache-Control "public";
+    }
+    location ~ \.(php)$ {
+        allow all;
+        expires 1h;
+        add_header Pragma public;
+        add_header Cache-Control "public";
     }
  }
