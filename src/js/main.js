@@ -614,25 +614,29 @@ function homePage() {
 }
 
 function demosPage() {
+  fetchDemos();
+  window.history.pushState({}, null, '/demos');
+  qs('#page2').style.display = 'none';
+
   var home = qs('#home');
-  home.style.display = 'inline-flex;';
+  home.style.display = 'inline-flex';
   animations.fadeIn(home);
+
   var demos = qs('#demos');
   animations.fadeOut(demos).then(_ => {
     demos.style.display = 'none';
   })
+
   var stats = qs('#oldStats');
   stats.style.display = 'inline-flex;';
   animations.fadeIn(stats);
-  var page1 = qs('#page1');
-  var page3 = qs('#page3');
+
   var stuff = qs('#stuff-below');
-  window.history.pushState({}, null, '/demos');
-  fetchDemos();
-  qs('#page2').style.display = 'none';
   animations.fadeOut(stuff).then(_ => {
     stuff.style.display = 'none';
   });
+  var page1 = qs('#page1');
+  var page3 = qs('#page3');
   animations.fadeOut(page1).then(_ => {
     page1.style.display = 'none';
     page3.style.display = 'block';
