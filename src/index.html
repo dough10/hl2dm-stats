@@ -453,7 +453,7 @@
         margin-left: 30px;
         color: yellow;
       }
-      .stuff-below {
+      #stuff-below {
         position: absolute;
         bottom: 0;
         display: flex;
@@ -468,6 +468,9 @@
       .button-grid {
         max-width: 360px;
         margin: auto;
+      }
+      #contentLoader {
+         background: var(--background-color);
       }
       @keyframes fade {
         0%,100% { opacity: 0; }
@@ -555,19 +558,22 @@
           </div>
         </div>
         <div class="lil-space"></div>
+        <div id="contentLoader">
+
+        </div>
         <div id="page1">
           <div id="cardsWrapper"></div>
         </div>
-        <div id="page2">
+        <div id="page2" style="opacity: 0; display: none;">
 
         </div>
-        <div id="page3">
+        <div id="page3" style="opacity: 0; display: none;">
           <div id="demoEl"></div>
         </div>
         <div class="foot"></div>
       </div>
     </div>
-    <div class="stuff-below">
+    <div id="stuff-below">
       <svg style="width:24px;height:24px" viewBox="0 0 24 24">
         <path fill="currentColor" d="M9,4H15V12H19.84L12,19.84L4.16,12H9V4Z" />
       </svg>

@@ -42,6 +42,7 @@ function cascadeCards(container) {
     if (!nocard) return;
     nocard.style.display = 'block';
     animations.animateElement(nocard, 'translateX(0)', 200, 1, i * 50);
+    resolve();
   });
 }
 
@@ -172,7 +173,6 @@ function displayWeaponData(wrappers, weapons, kills) {
     text.textContent = count;
     tooltip.classList.add('tooltiptext');
     tooltip.textContent = `${weaponName}: ${precent}% of all kills`;
-    // weapContainer.title = `${weaponName}: ${precent}% of all kills`;
     weapContainer.appendChild(tooltip);
     weapContainer.appendChild(icon);
     weapContainer.appendChild(text);
@@ -603,6 +603,48 @@ function connectWSS() {
   };
 }
 
+function homePage() {
+  qs('#home').style.display = 'none';
+  qs('#demos').style.display = 'inline-flex;';
+  qs('#oldStats').style.display = 'inline-flex;';
+  qs('#page1').style.display = 'block';
+  qs('#page2').style.display = 'none';
+  qs('#page3').style.display = 'none';
+  fetchTop();
+}
+
+function demosPage() {
+  qs('#home').style.display = 'inline-flex;';
+  qs('#demos').style.display = 'none';
+  qs('#oldStats').style.display = 'inline-flex;';
+  var page1 = qs('#page1');
+
+  var page3 = qs('#page3');
+  var stuff = qs('#stuff-below');
+  fetchDemos();
+  qs('#page2').style.display = 'none';
+  animations.fadeOut(stuff).then(_ => {
+    stuff.style.display = 'none';
+  });
+  animations.fadeOut(page1).then(_ => {
+    page1.style.display = 'none';
+    page3.style.display = 'block';
+    animations.fadeIn(page3);
+    stuff.style.disple = 'flex';
+    animations.fadeIn(stuff)
+  });
+}
+
+function oldStatsPage() {
+  qs('#home').style.display = 'inline-flex;';
+  qs('#demos').style.display = 'inline-flex;';
+  qs('#oldStats').style.display = 'none';
+  qs('#page1').style.display = 'none';
+  qs('#page2').style.display = 'block';
+  qs('#page3').style.display = 'none';
+  fetchOldMonths();
+}
+
 qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
   const infoHeight = qs('#info').offsetHeight
   const wrapper = qs('#content');
@@ -653,11 +695,7 @@ qs('#home').onClick(_ => {
   });
 });
 
-qs('#demos').onClick(_ => {
-  animations.animateElement(qs('#load'), 'translateY(0%)', 350).then(_ => {
-    window.location.href = `https://hl2dm.dough10.me/demos`;
-  });
-});
+qs('#demos').onClick(demosPage);
 
 qs('#oldStats').onClick(_ => {
   animations.animateElement(qs('#load'), 'translateY(0%)', 350).then(_ => {
@@ -680,33 +718,13 @@ window.onload = registerServiceWorker().then(reg => {
     fetchServerStatus();
     setTimeout(fetchServerStatus, 5000);
   }
-  page('/', _ => {
-    qs('#home').style.display = 'none';
-    qs('#demos').style.display = 'inline-flex;';
-    qs('#oldStats').style.display = 'inline-flex;';
-    qs('#page1').style.display = 'block';
-    qs('#page2').style.display = 'none';
-    qs('#page3').style.display = 'none';
-    fetchTop();
-  });
-  page('/old-stats', _ => {
-    qs('#home').style.display = 'inline-flex;';
-    qs('#demos').style.display = 'inline-flex;';
-    qs('#oldStats').style.display = 'none';
-    qs('#page1').style.display = 'none';
-    qs('#page2').style.display = 'block';
-    qs('#page3').style.display = 'none';
-    fetchOldMonths();
-  });
-  page('/demos', _ => {
-    qs('#home').style.display = 'inline-flex;';
-    qs('#demos').style.display = 'none';
-    qs('#oldStats').style.display = 'inline-flex;';
-    qs('#page1').style.display = 'none';
-    qs('#page2').style.display = 'none';
-    qs('#page3').style.display = 'block';
-    fetchDemos();
-  });
+  if (!page) {
+    console.error('Error loading page.js');
+    return;
+  }
+  page('/', homepage);
+  page('/old-stats', oldStatsPage);
+  page('/demos', demosPage);
   page();
 }).then(loadRipples).then(_ => {
   console.log('?')
