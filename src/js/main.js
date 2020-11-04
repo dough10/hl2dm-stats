@@ -269,8 +269,8 @@ function formatNumber(num) {
 
 function parseTopData(top) {
   qs('#home').style.display = 'none';
-  qs('#demos').style.display = 'block';
-  qs('#oldStats').style.display = 'block';
+  qs('#demos').style.display = 'inline-flex;';
+  qs('#oldStats').style.display = 'inline-flex;';
   qs('#page1').style.display = 'block';
   qs('#page2').style.display = 'none';
   qs('#page3').style.display = 'none';
@@ -389,9 +389,9 @@ function parseTopData(top) {
 }
 
 function parseDemos(demos) {
-  qs('#home').style.display = 'block';
+  qs('#home').style.display = 'inline-flex;';
   qs('#demos').style.display = 'none';
-  qs('#oldStats').style.display = 'block';
+  qs('#oldStats').style.display = 'inline-flex;';
   qs('#page1').style.display = 'none';
   qs('#page2').style.display = 'none';
   qs('#page3').style.display = 'block';
@@ -421,8 +421,8 @@ function parseDemos(demos) {
 
 function parseOldLogs(top) {
   console.log(top);
-  qs('#home').style.display = 'block';
-  qs('#demos').style.display = 'block';
+  qs('#home').style.display = 'inline-flex;';
+  qs('#demos').style.display = 'inline-flex;';
   qs('#oldStats').style.display = 'none';
   qs('#page1').style.display = 'none';
   qs('#page2').style.display = 'block';
