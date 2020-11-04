@@ -554,7 +554,7 @@ function fetchTop() {
       return;
     }
     response.json().then(top => {
-      parseTopData(top).then(arr => {});
+      parseTopData(top);
     });
   });
 }
