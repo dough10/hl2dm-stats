@@ -604,13 +604,41 @@ function connectWSS() {
 }
 
 function homePage() {
+  fetchTop();
   qs('#home').style.display = 'none';
   qs('#demos').style.display = 'inline-flex;';
   qs('#oldStats').style.display = 'inline-flex;';
-  qs('#page1').style.display = 'block';
+
+  window.history.pushState({}, null, '/');
   qs('#page2').style.display = 'none';
-  qs('#page3').style.display = 'none';
-  fetchTop();
+
+  var home = qs('#home');
+  animations.fadeout(home).then(_ => {
+    home.style.display = 'none';
+  });
+
+  var demos = qs('#demos');
+  demos.style.display = 'inline-flex';
+  animations.fadeIn(demos);
+
+  var stats = qs('#oldStats');
+  stats.style.display = 'inline-flex;';
+  animations.fadeIn(stats);
+
+  var stuff = qs('#stuff-below');
+  animations.fadeOut(stuff).then(_ => {
+    stuff.style.display = 'none';
+  });
+
+  var page1 = qs('#page1');
+  var page3 = qs('#page3');
+  animations.fadeOut(page3).then(_ => {
+    page3.style.display = 'none';
+    page1.style.display = 'block';
+    animations.fadeIn(page1);
+    stuff.style.display = 'block';
+    animations.fadeIn(stuff);
+   });
 }
 
 function demosPage() {
