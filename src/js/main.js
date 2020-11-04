@@ -625,7 +625,6 @@ function demosPage() {
   stats.style.display = 'inline-flex;';
   animations.fadeIn(stats);
   var page1 = qs('#page1');
-
   var page3 = qs('#page3');
   var stuff = qs('#stuff-below');
   window.hostory.pushState({}, null, '/demos');
@@ -665,7 +664,7 @@ qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
   }
   if (scrollTop > infoHeight) {
     cascadeCards(wrapper);
-    animations.fadeOut(qs('.stuff-below'));
+    animations.fadeOut(qs('#stuff-below'));
     animations.animateElement(fab, "translateY(0px)");
   } else {
     animations.animateElement(fab, "translateY(80px)");
