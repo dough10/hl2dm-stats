@@ -412,6 +412,7 @@ function parseDemos(demos) {
     wrapper.appendChild(size);
     wrapper.appendChild(time);
     card.appendChild(wrapper);
+    card.classList.add('stat')
     a.appendChild(card);
     qs('#demoEl').appendChild(a);
     ripples.attachButtonRipple(card);
