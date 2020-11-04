@@ -722,7 +722,7 @@ window.onload = registerServiceWorker().then(reg => {
     console.error('Error loading page.js');
     return;
   }
-  page('/', homepage);
+  page('/', homePage);
   page('/old-stats', oldStatsPage);
   page('/demos', demosPage);
   page();
