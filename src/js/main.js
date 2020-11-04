@@ -622,7 +622,7 @@ function connectWSS() {
 
 qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
   const infoHeight = qs('#info').offsetHeight
-  const wrapper = qs('#cardsWrapper');
+  const wrapper = qs('#content');
   const scrollTop = e.target.scrollTop;
   const fab = qs('#fab');
   const change = scrollTop / 6;
