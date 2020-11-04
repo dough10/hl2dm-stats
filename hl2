@@ -67,10 +67,4 @@ image/gif;
        add_header Pragma public;
        add_header Cache-Control "public";
     }
-    location ~ \.(php)$ {
-        allow all;
-        expires 1h;
-        add_header Pragma public;
-        add_header Cache-Control "public";
-    }
  }
