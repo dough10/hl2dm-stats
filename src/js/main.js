@@ -627,7 +627,7 @@ function demosPage() {
   var page1 = qs('#page1');
   var page3 = qs('#page3');
   var stuff = qs('#stuff-below');
-  window.hostory.pushState({}, null, '/demos');
+  window.history.pushState({}, null, '/demos');
   fetchDemos();
   qs('#page2').style.display = 'none';
   animations.fadeOut(stuff).then(_ => {
