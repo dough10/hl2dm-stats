@@ -605,15 +605,11 @@ function connectWSS() {
 
 function homePage() {
   fetchTop();
-  qs('#home').style.display = 'none';
-  qs('#demos').style.display = 'inline-flex;';
-  qs('#oldStats').style.display = 'inline-flex;';
-
   window.history.pushState({}, null, '/');
   qs('#page2').style.display = 'none';
 
   var home = qs('#home');
-  animations.fadeout(home).then(_ => {
+  animations.fadeOut(home).then(_ => {
     home.style.display = 'none';
   });
 
