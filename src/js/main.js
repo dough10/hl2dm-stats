@@ -728,11 +728,7 @@ qs('#paypal').onClick(_ => {
   window.location.href = 'https://www.paypal.me/jdough10';
 });
 
-qs('#home').onClick(_ => {
-  animations.animateElement(qs('#load'), 'translateY(0%)', 350).then(_ => {
-    window.location.href = `https://hl2dm.dough10.me`;
-  });
-});
+qs('#home').onClick(homePage);
 
 qs('#demos').onClick(demosPage);
 
