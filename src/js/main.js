@@ -626,6 +626,7 @@ function homePage() {
   var page1 = qs('#page1');
   var page3 = qs('#page3');
   animations.fadeOut(page3).then(_ => {
+    qs('#demoEl').innerHTML = '';
     page3.style.display = 'none';
     page1.style.display = 'block';
     animations.fadeIn(page1);
@@ -656,6 +657,7 @@ function demosPage() {
   var page1 = qs('#page1');
   var page3 = qs('#page3');
   animations.fadeOut(page1).then(_ => {
+    qs('#cardsWrapper').innerHTML = '';
     page1.style.display = 'none';
     page3.style.display = 'block';
     animations.fadeIn(page3);
