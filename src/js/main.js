@@ -619,17 +619,12 @@ function homePage() {
   var stats = qs('#oldStats');
   stats.style.display = 'inline-flex;';
 
-  var stuff = qs('#stuff-below');
-  animations.fadeOut(stuff).then(_ => {
-    stuff.style.display = 'none';
-  });
-
   var page1 = qs('#page1');
   var page3 = qs('#page3');
   animations.fadeOut(page3).then(_ => {
-    qs('#demoEl').innerHTML = '';
     page3.style.display = 'none';
     page1.style.display = 'block';
+    qs('#demoEl').innerHTML = '';
     animations.fadeIn(page1);
     stuff.style.display = 'block';
    });
@@ -650,15 +645,11 @@ function demosPage() {
   var stats = qs('#oldStats');
   stats.style.display = 'inline-flex;';
 
-  var stuff = qs('#stuff-below');
-  animations.fadeOut(stuff).then(_ => {
-    stuff.style.display = 'none';
-  });
   var page1 = qs('#page1');
   var page3 = qs('#page3');
   animations.fadeOut(page1).then(_ => {
-    qs('#cardsWrapper').innerHTML = '';
     page1.style.display = 'none';
+    qs('#cardsWrapper').innerHTML = '';
     page3.style.display = 'block';
     animations.fadeIn(page3);
     stuff.style.display = 'block';
