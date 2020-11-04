@@ -641,7 +641,7 @@ function demosPage() {
     page1.style.display = 'none';
     page3.style.display = 'block';
     animations.fadeIn(page3);
-    stuff.style.display = 'flex';
+    stuff.style.display = 'block';
     animations.fadeIn(stuff)
   });
 }
