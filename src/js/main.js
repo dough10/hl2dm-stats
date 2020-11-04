@@ -614,13 +614,21 @@ function homePage() {
 }
 
 function demosPage() {
-  qs('#home').style.display = 'inline-flex;';
-  qs('#demos').style.display = 'none';
-  qs('#oldStats').style.display = 'inline-flex;';
+  var home = qs('#home');
+  home.style.display = 'inline-flex;';
+  animations.fadeIn(home);
+  var demos = qs('#demos');
+  animations.fadeOut(demos).then(_ => {
+    demos.style.display = 'none';
+  })
+  var stats = qs('#oldStats');
+  stats.style.display = 'inline-flex;';
+  animations.fadeIn(stats);
   var page1 = qs('#page1');
 
   var page3 = qs('#page3');
   var stuff = qs('#stuff-below');
+  window.hostory.pushState({}, null, '/demos');
   fetchDemos();
   qs('#page2').style.display = 'none';
   animations.fadeOut(stuff).then(_ => {
