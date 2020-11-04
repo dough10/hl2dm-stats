@@ -609,17 +609,14 @@ function homePage() {
   qs('#page2').style.display = 'none';
 
   var home = qs('#home');
-  animations.fadeOut(home).then(_ => {
-    home.style.display = 'none';
-  });
+  home.style.display = 'none';
+
 
   var demos = qs('#demos');
   demos.style.display = 'inline-flex';
-  animations.fadeIn(demos);
 
   var stats = qs('#oldStats');
   stats.style.display = 'inline-flex;';
-  animations.fadeIn(stats);
 
   var stuff = qs('#stuff-below');
   animations.fadeOut(stuff).then(_ => {
@@ -644,16 +641,13 @@ function demosPage() {
 
   var home = qs('#home');
   home.style.display = 'inline-flex';
-  animations.fadeIn(home);
 
   var demos = qs('#demos');
-  animations.fadeOut(demos).then(_ => {
-    demos.style.display = 'none';
-  })
+  demos.style.display = 'none';
+
 
   var stats = qs('#oldStats');
   stats.style.display = 'inline-flex;';
-  animations.fadeIn(stats);
 
   var stuff = qs('#stuff-below');
   animations.fadeOut(stuff).then(_ => {
