@@ -15,7 +15,7 @@ const files = [
   'css/paper-ripple.min.css',
   'js/paper-ripple.min.js',
   'js/analytics.js',
-  'js/page.js',
+  'js/page.min.js',
   'fonts/roboto-v15-latin-regular.woff2',
   'fonts/roboto-v15-latin-regular.woff',
   'fonts/roboto-v15-latin-regular.ttf',
