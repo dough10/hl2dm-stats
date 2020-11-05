@@ -576,7 +576,7 @@ function fetchOldMonths(month) {
           var mNum = new Date(Number(months[i])).getMonth();
           makeOption(monthName(mNum), months[i], qs('#months'));
         }
-        var m = new Date(Number(months[0])).getMonth()
+        var m = new Date(Number(months[0])).getMonth();
         fetchOldMonths(m);
       });
     });
@@ -820,6 +820,12 @@ qs('#home').onClick(homePage);
 qs('#demos').onClick(demosPage);
 
 qs('#oldStats').onClick(oldStatsPage);
+
+qs('#months').addEventListener('change', e => {
+  console.log(e)
+  // fetchOldMonths(month)
+  // var m = new Date(Number(months[0])).getMonth();
+});
 
 var alert = qs('#reset');
 alert.onClick(_ => {
