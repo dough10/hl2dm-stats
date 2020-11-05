@@ -39,7 +39,7 @@ function cascadeCards(container) {
       animations.animateElement(cards[i], 'translateX(0)', 200, 1, i * 50);
     }
     const nocard = qs('.nocard', container);
-    console.log(nocard, container)
+    // console.log(nocard, container)
     if (!nocard) return;
     nocard.style.display = 'block';
     animations.animateElement(nocard, 'translateX(0)', 200, 1, i * 50);
