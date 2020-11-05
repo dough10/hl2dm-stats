@@ -507,6 +507,7 @@ function fetchDemos() {
       console.error(response.status);
       return;
     }
+    qs('#demoEl').innerHTML = '';
     response.json().then(parseDemos);
   });
 }
@@ -553,6 +554,7 @@ function fetchTop() {
       console.error(response.status);
       return;
     }
+    qs('#cardsWrapper').innerHTML = '';
     response.json().then(top => {
       parseTopData(top);
     });
@@ -624,9 +626,7 @@ function homePage() {
   animations.fadeOut(page3).then(_ => {
     page3.style.display = 'none';
     page1.style.display = 'block';
-    animations.fadeIn(page1).then(_ => {
-      qs('#demoEl').innerHTML = '';
-    });
+    animations.fadeIn(page1);
    });
 }
 
@@ -650,9 +650,7 @@ function demosPage() {
   animations.fadeOut(page1).then(_ => {
     page1.style.display = 'none';
     page3.style.display = 'block';
-    animations.fadeIn(page3).then(_ => {
-      qs('#cardsWrapper').innerHTML = '';
-    });
+    animations.fadeIn(page3);
   });
 }
 
