@@ -409,11 +409,6 @@ function parseDemos(demos) {
   showApp();
 }
 
-function parseOldLogs(top) {
-  console.log(top);
-  showApp();
-}
-
 function parseServerStatus(status) {
   const pContainer = qs('#players');
   pContainer.innerHTML = '';
@@ -537,7 +532,7 @@ function fetchOldMonths(month) {
       return;
     }
     response.json().then(logs => {
-      parseOldLogs(logs, '#page2');
+      parseTop(logs, '#page2');
     });
   });
 }
