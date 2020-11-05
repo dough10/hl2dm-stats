@@ -822,7 +822,7 @@ qs('#demos').onClick(demosPage);
 qs('#oldStats').onClick(oldStatsPage);
 
 qs('#months').addEventListener('change', e => {
-  console.log(e)
+  console.log(e.target.value, typeof e.target.value)
   // fetchOldMonths(month)
   // var m = new Date(Number(months[0])).getMonth();
 });
