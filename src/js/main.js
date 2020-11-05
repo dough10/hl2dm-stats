@@ -768,7 +768,7 @@ qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
   const infoHeight = qs('#info').offsetHeight / 2;
   var wrapper;
   var page1 = qs('#page1');
-  var page2 = qs('#oldData');
+  var page2 = qs('#page2');
   var page3 = qs('#page3');
   if (page1.style.display === 'block') {
     wrapper = page1;
@@ -785,7 +785,6 @@ qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
     top = 65;
   }
   if (scrollTop > infoHeight) {
-    console.log(wrapper)
     cascadeCards(wrapper);
     animations.fadeOut(qs('#stuff-below'));
     animations.animateElement(fab, "translateY(0px)");
