@@ -773,7 +773,7 @@ qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
     wrapper = page1;
   } else if (page2.style.display !== 'none') {
     wrapper = page2;
-  } else if (page3.style.display !== 'none') {
+  } else if (page3.style.display === 'block') {
     wrapper = page3;
   }
   const scrollTop = e.target.scrollTop;
