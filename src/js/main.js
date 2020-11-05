@@ -423,8 +423,8 @@ function parseTopData(top, page, cb) {
   allWeaponsCard.appendChild(wrapper1);
   allWeaponsCard.appendChild(wrapper2);
   qs(page).appendChild(allWeaponsCard);
+  console.log('thing')
   if (qs('#page2').style.display === 'block') {
-    console.log('thing')
     var month = qs('#months').value;
     var de = document.createElement('div');
     de.classList.add('button');
