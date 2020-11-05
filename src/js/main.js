@@ -769,9 +769,9 @@ qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
   var page1 = qs('#page1');
   var page2 = qs('#oldData');
   var page3 = qs('#page3');
-  if (page1.style.display !== 'none') {
+  if (page1.style.display === 'block') {
     wrapper = page1;
-  } else if (page2.style.display !== 'none') {
+  } else if (page2.style.display === 'block') {
     wrapper = page2;
   } else if (page3.style.display === 'block') {
     wrapper = page3;
