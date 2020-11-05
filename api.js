@@ -767,6 +767,26 @@ app.get('/download/:file', (reg, res) => {
   res.download(dl, reg.params.file);
 });
 
+app.get('/download/logs-zip/:file', (reg, res) => {
+  var dl = `/media/nas/old-stats/logs/${reg.params.file}.zip`;
+  if (!fs.existsSync(dl)){
+    res.status(404).send('File does not exist');
+    return;
+  }
+  console.log(`${new Date()} - File downloaded ${dl}`);
+  res.download(dl, reg.params.file);
+});
+
+app.get('/download/demos-zip/:file', (reg, res) => {
+  var dl = `/media/nas/old-stats/demos/${reg.params.file}.zip`;
+  if (!fs.existsSync(dl)){
+    res.status(404).send('File does not exist');
+    return;
+  }
+  console.log(`${new Date()} - File downloaded ${dl}`);
+  res.download(dl, reg.params.file);
+});
+
 app.get('/old-months', (reg, res) => {
   getOldStatsList().then(stats => {
     res.send(stats);
