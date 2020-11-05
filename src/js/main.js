@@ -620,13 +620,19 @@ function homePage() {
   var stats = qs('#oldStats');
   stats.style.display = 'inline-flex;';
 
-  var page3 = qs('#page3');
-  var page1 = qs('#page1');
-  animations.fadeOut(page3).then(_ => {
-    page3.style.display = 'none';
-    page1.style.display = 'block';
-    animations.fadeIn(page1);
-   });
+  if (page2.style.display !== 'none') {
+    animations.fadeOut(page2).then(_ => {
+      page2.style.display = 'none';
+      page1.style.display = 'block';
+      animations.fadeIn(page1);
+    });
+  } else if (page3.style.display !== 'none') {
+      animations.fadeOut(page3).then(_ => {
+        page3.style.display = 'none';
+        page1.style.display = 'block';
+        animations.fadeIn(page1);
+      });
+    }
 }
 
 function demosPage() {
@@ -644,22 +650,54 @@ function demosPage() {
   stats.style.display = 'inline-flex';
 
   var page1 = qs('#page1');
+  var page2 = qs('#page2');
   var page3 = qs('#page3');
-  animations.fadeOut(page1).then(_ => {
-    page1.style.display = 'none';
-    page3.style.display = 'block';
-    animations.fadeIn(page3);
-  });
+
+  if (page1.style.display !== 'none') {
+    animations.fadeOut(page1).then(_ => {
+      page1.style.display = 'none';
+      page3.style.display = 'block';
+      animations.fadeIn(page3);
+    });
+  } else if (page2.style.display !== 'none') {
+    animations.fadeOut(page2).then(_ => {
+      page2.style.display = 'none';
+      page3.style.display = 'block';
+      animations.fadeIn(page3);
+    });
+  }
 }
 
 function oldStatsPage() {
-  qs('#home').style.display = 'inline-flex;';
-  qs('#demos').style.display = 'inline-flex;';
-  qs('#oldStats').style.display = 'none';
-  qs('#page1').style.display = 'none';
-  qs('#page2').style.display = 'block';
-  qs('#page3').style.display = 'none';
   fetchOldMonths();
+  window.history.pushState({}, null, '/old-stats');
+
+  var home = qs('#home');
+  home.style.display = 'inline-flex';
+
+  var demos = qs('#demos');
+  demos.style.display = 'none';
+
+  var stats = qs('#oldStats');
+  stats.style.display = 'inline-flex';
+
+  var page1 = qs('#page1');
+  var page2 = qs('#page2');
+  var page3 = qs('#page3');
+
+  if (page1.style.display !== 'none') {
+    animations.fadeOut(page1).then(_ => {
+      page1.style.display = 'none';
+      page2.style.display = 'block';
+      animations.fadeIn(page2);
+    });
+  } else if (page3.style.display !== 'none') {
+    animations.fadeOut(page3).then(_ => {
+      page3.style.display = 'none';
+      page2.style.display = 'block';
+      animations.fadeIn(page2);
+    });
+  }
 }
 
 qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
@@ -710,11 +748,7 @@ qs('#home').onClick(homePage);
 
 qs('#demos').onClick(demosPage);
 
-qs('#oldStats').onClick(_ => {
-  animations.animateElement(qs('#load'), 'translateY(0%)', 350).then(_ => {
-    window.location.href = `https://hl2dm.dough10.me/old-stats`;
-  });
-});
+qs('#oldStats').onClick(oldStatsPage);
 
 var alert = qs('#reset');
 alert.onClick(_ => {
