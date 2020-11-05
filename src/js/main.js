@@ -38,11 +38,14 @@ function cascadeCards(container) {
       cards[i].style.display = 'block';
       animations.animateElement(cards[i], 'translateX(0)', 200, 1, i * 50);
     }
-    const nocard = qs('.nocard', container);
+    const nocard = qsa('.nocard', container);
     // console.log(nocard, container)
-    if (!nocard) return;
-    nocard.style.display = 'block';
-    animations.animateElement(nocard, 'translateX(0)', 200, 1, i * 50);
+    if (!nocard.length) return;
+    var till = nocard.length + i
+    for (var o = i; 0 < till; o++) {
+      nocard[o].style.display = 'block';
+      animations.animateElement(nocard[o], 'translateX(0)', 200, 1, o * 50);
+    }
     resolve();
   });
 }
