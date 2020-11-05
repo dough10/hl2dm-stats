@@ -268,7 +268,7 @@ function formatNumber(num) {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 
-function parseTopData(top) {
+function parseTopData(top, page) {
   const killsIcon = "M7,5H23V9H22V10H16A1,1 0 0,0 15,11V12A2,2 0 0,1 13,14H9.62C9.24,14 8.89,14.22 8.72,14.56L6.27,19.45C6.1,19.79 5.76,20 5.38,20H2C2,20 -1,20 3,14C3,14 6,10 2,10V5H3L3.5,4H6.5L7,5M14,12V11A1,1 0 0,0 13,10H12C12,10 11,11 12,12A2,2 0 0,1 10,10A1,1 0 0,0 9,11V12A1,1 0 0,0 10,13H13A1,1 0 0,0 14,12Z";
   const deathsIcon = "M12,2A9,9 0 0,0 3,11C3,14.03 4.53,16.82 7,18.47V22H9V19H11V22H13V19H15V22H17V18.46C19.47,16.81 21,14 21,11A9,9 0 0,0 12,2M8,11A2,2 0 0,1 10,13A2,2 0 0,1 8,15A2,2 0 0,1 6,13A2,2 0 0,1 8,11M16,11A2,2 0 0,1 18,13A2,2 0 0,1 16,15A2,2 0 0,1 14,13A2,2 0 0,1 16,11M12,14L13.5,17H10.5L12,14Z";
   const kdrIcon =   "M3 18.34C3 18.34 4 7.09 7 3L12 4L11 7.09H9V14.25H10C12 11.18 16.14 10.06 18.64 11.18C21.94 12.71 21.64 17.32 18.64 19.36C16.24 21 9 22.43 3 18.34Z";
@@ -354,7 +354,7 @@ function parseTopData(top) {
     ], player.weapons, player.kills);
     card.appendChild(weaponWrapper1);
     card.appendChild(weaponWrapper2);
-    qs('#page1').appendChild(card);
+    qs(page).appendChild(card);
     setTimeout(_ => {
       ripples.attachButtonRipple(card);
     }, 200);
@@ -379,7 +379,7 @@ function parseTopData(top) {
   allWeaponsCard.appendChild(head);
   allWeaponsCard.appendChild(wrapper1);
   allWeaponsCard.appendChild(wrapper2);
-  qs('#page1').appendChild(allWeaponsCard);
+  qs(page).appendChild(allWeaponsCard);
   showApp();
 }
 
@@ -522,6 +522,7 @@ function fetchOldMonths(month) {
       response.json().then(months => {
         for (var i = 0; i < months.length; i++) {
           months[i] = months[i].replace('.json', '');
+          console.log(months[i]);
         }
         var m = new Date(Number(months[0])).getMonth()
         fetchOldMonths(m);
@@ -534,7 +535,9 @@ function fetchOldMonths(month) {
       console.error(response.status);
       return;
     }
-    response.json().then(parseOldLogs);
+    response.json().then(logs => {
+      parseOldLogs(logs, '#page2');
+    });
   });
 }
 
@@ -556,7 +559,7 @@ function fetchTop() {
       return;
     }
     response.json().then(top => {
-      parseTopData(top);
+      parseTopData(top, '#page1');
     });
   });
 }
