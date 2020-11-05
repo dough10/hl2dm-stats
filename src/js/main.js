@@ -188,7 +188,7 @@ function showApp() {
   animations.fadeIn(qs('#stuff-below'));
   setTimeout(_ => {
     animations.animateElement(qs('#load'), 'translateY(-102%)', 350);
-    if (!loaded && qs('#page1').style.display !== 'none') {
+    if (!loaded) {
       displayPlayerOnline(numPlayersOnline);
     }
   }, 800);
