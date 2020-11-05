@@ -99,40 +99,40 @@ function createSVG(d, count, title) {
 
 function monthName(month) {
   switch (month) {
-    case 1:
+    case 0:
       return 'January';
       break;
-    case 2:
+    case 1:
       return 'Febuary';
       break;
-    case 3:
+    case 2:
       return 'March';
       break;
-    case 4:
+    case 3:
       return 'April';
       break;
-    case 5:
+    case 4:
       return 'May';
       break;
-    case 6:
+    case 5:
       return 'June';
       break;
-    case 7:
+    case 6:
       return 'July';
       break;
-    case 8:
+    case 7:
       return 'August';
       break;
-    case 9:
+    case 8:
       return 'September';
       break;
-    case 10:
+    case 9:
       return 'October';
       break;
-    case 11:
+    case 10:
       return 'November';
       break;
-    case 12:
+    case 11:
       return 'December';
       break;
 
