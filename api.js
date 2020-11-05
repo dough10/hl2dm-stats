@@ -768,7 +768,7 @@ app.get('/download/:file', (reg, res) => {
 });
 
 app.get('/download/logs-zip/:file', (reg, res) => {
-  var dl = `/media/nas/old-stats/logs/${reg.params.file}.zip`;
+  var dl = `/media/nas/old-stats/logs/${reg.params.file}`;
   if (!fs.existsSync(dl)){
     res.status(404).send('File does not exist');
     return;
@@ -778,7 +778,7 @@ app.get('/download/logs-zip/:file', (reg, res) => {
 });
 
 app.get('/download/demos-zip/:file', (reg, res) => {
-  var dl = `/media/nas/old-stats/demos/${reg.params.file}.zip`;
+  var dl = `/media/nas/old-stats/demos/${reg.params.file}`;
   if (!fs.existsSync(dl)){
     res.status(404).send('File does not exist');
     return;
