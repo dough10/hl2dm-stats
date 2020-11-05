@@ -532,7 +532,7 @@ function fetchOldMonths(month) {
       return;
     }
     response.json().then(logs => {
-      parseTop(logs, '#page2');
+      parseTopData(logs, '#page2');
     });
   });
 }
