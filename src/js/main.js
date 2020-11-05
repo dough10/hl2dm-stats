@@ -624,8 +624,9 @@ function homePage() {
   animations.fadeOut(page3).then(_ => {
     page3.style.display = 'none';
     page1.style.display = 'block';
-    qs('#demoEl').innerHTML = '';
-    animations.fadeIn(page1);
+    animations.fadeIn(page1).then(_ => {
+      qs('#demoEl').innerHTML = '';
+    });
    });
 }
 
@@ -648,9 +649,10 @@ function demosPage() {
   var page3 = qs('#page3');
   animations.fadeOut(page1).then(_ => {
     page1.style.display = 'none';
-    qs('#cardsWrapper').innerHTML = '';
     page3.style.display = 'block';
-    animations.fadeIn(page3);
+    animations.fadeIn(page3).then(_ => {
+      qs('#cardsWrapper').innerHTML = '';
+    });
   });
 }
 
