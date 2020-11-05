@@ -424,6 +424,18 @@ function parseTopData(top, page, cb) {
   allWeaponsCard.appendChild(wrapper2);
   qs(page).appendChild(allWeaponsCard);
   showApp();
+  if (qs('#page2').style.display === 'block') {
+    var month = qs('#months').value;
+    var w = createWrapper();
+    var de = document.createElement('div');
+    de.classList.add('button');
+    de.textContent = 'demos';
+    de.onClick(_ => {
+      window.location.href = `${window.location.href}/api/download/demos-zip/${month}.zip`;
+    });
+    w.appendChild(de);
+    qs('#page2').appendChild(w);
+  }
   if (cb) cb();
 }
 
