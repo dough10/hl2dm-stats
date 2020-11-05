@@ -704,7 +704,17 @@ function oldStatsPage() {
 
 qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
   const infoHeight = qs('#info').offsetHeight / 2;
-  const wrapper = qs('#content');
+  var wrapper;
+  var page1 = qs('#page1');
+  var page2 = qs('#page2');
+  var page3 = qs('#page3');
+  if (page1.style.display !== 'none') {
+    wrapper = page1;
+  } else if (page2.style.display !== 'none') {
+    wrapper = page2;
+  } else if (page3.style.display !== 'none') {
+    wrapper = page3;
+  }
   const scrollTop = e.target.scrollTop;
   const fab = qs('#fab');
   const change = scrollTop / 6;
