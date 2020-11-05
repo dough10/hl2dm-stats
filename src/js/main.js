@@ -38,7 +38,7 @@ function cascadeCards(container) {
       cards[i].style.display = 'block';
       animations.animateElement(cards[i], 'translateX(0)', 200, 1, i * 50);
     }
-    const nocard = qs('.nocard')
+    const nocard = qs('.nocard', container);
     if (!nocard) return;
     nocard.style.display = 'block';
     animations.animateElement(nocard, 'translateX(0)', 200, 1, i * 50);
@@ -95,6 +95,48 @@ function createSVG(d, count, title) {
   text.textContent = count;
   wrapper.appendChild(text);
   return wrapper;
+}
+
+function monthName(month) {
+  switch (month) {
+    case 1:
+      return 'January';
+      break;
+    case 2:
+      return 'Febuary';
+      break;
+    case 3:
+      return 'March';
+      break;
+    case 4:
+      return 'April';
+      break;
+    case 5:
+      return 'May';
+      break;
+    case 6:
+      return 'June';
+      break;
+    case 7:
+      return 'July';
+      break;
+    case 8:
+      return 'August';
+      break;
+    case 9:
+      return 'September';
+      break;
+    case 10:
+      return 'October';
+      break;
+    case 11:
+      return 'November';
+      break;
+    case 12:
+      return 'December';
+      break;
+
+  }
 }
 
 function getWeaponIcon(weapon) {
@@ -507,6 +549,20 @@ function fetchDemos() {
   });
 }
 
+/**
+ * create a option element and append to the parent element
+ *
+ * @param {String} option - name the client will see in UI
+ * @param {Number} value - the decimal identifier for the keystroke
+ * @param {Element} parent - the element to append the finished option element
+ */
+function makeOption(option, value, parent) {
+ var el = document.createElement('option');
+ el.textContent = option;
+ el.value = value;
+ parent.appendChild(el);
+}
+
 function fetchOldMonths(month) {
   if (!month) {
     fetch('/api/old-months').then(response => {
@@ -517,7 +573,7 @@ function fetchOldMonths(month) {
       response.json().then(months => {
         for (var i = 0; i < months.length; i++) {
           months[i] = months[i].replace('.json', '');
-          console.log(months[i]);
+          makeOption(new Date(months[i]).getMonth(), months[i], qs('#months'));
         }
         var m = new Date(Number(months[0])).getMonth()
         fetchOldMonths(m);
