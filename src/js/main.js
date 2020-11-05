@@ -434,7 +434,7 @@ function parseTopData(top, page, cb) {
       window.location.href = `${window.location.href}/api/download/demos-zip/${month}.zip`;
     });
     w.appendChild(de);
-    qs('#page2').appendChild(w);
+    qs('#oldData').appendChild(w);
   }
   if (cb) cb();
 }
