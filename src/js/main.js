@@ -354,7 +354,7 @@ function parseTopData(top) {
     ], player.weapons, player.kills);
     card.appendChild(weaponWrapper1);
     card.appendChild(weaponWrapper2);
-    qs('#cardsWrapper').appendChild(card);
+    qs('#page1').appendChild(card);
     setTimeout(_ => {
       ripples.attachButtonRipple(card);
     }, 200);
@@ -379,7 +379,7 @@ function parseTopData(top) {
   allWeaponsCard.appendChild(head);
   allWeaponsCard.appendChild(wrapper1);
   allWeaponsCard.appendChild(wrapper2);
-  qs('#cardsWrapper').appendChild(allWeaponsCard);
+  qs('#page1').appendChild(allWeaponsCard);
   showApp();
 }
 
@@ -403,7 +403,7 @@ function parseDemos(demos) {
     card.appendChild(wrapper);
     card.classList.add('stat')
     a.appendChild(card);
-    qs('#demoEl').appendChild(a);
+    qs('#page3').appendChild(a);
     ripples.attachButtonRipple(card);
   });
   showApp();
@@ -507,7 +507,7 @@ function fetchDemos() {
       console.error(response.status);
       return;
     }
-    qs('#demoEl').innerHTML = '';
+    qs('#page3').innerHTML = '';
     response.json().then(parseDemos);
   });
 }
@@ -554,7 +554,7 @@ function fetchTop() {
       console.error(response.status);
       return;
     }
-    qs('#cardsWrapper').innerHTML = '';
+    qs('#page1').innerHTML = '';
     response.json().then(top => {
       parseTopData(top);
     });
@@ -614,15 +614,14 @@ function homePage() {
   var home = qs('#home');
   home.style.display = 'none';
 
-
   var demos = qs('#demos');
   demos.style.display = 'inline-flex';
 
   var stats = qs('#oldStats');
   stats.style.display = 'inline-flex;';
 
-  var page1 = qs('#page1');
   var page3 = qs('#page3');
+  var page1 = qs('#page1');
   animations.fadeOut(page3).then(_ => {
     page3.style.display = 'none';
     page1.style.display = 'block';
