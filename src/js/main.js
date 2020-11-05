@@ -640,7 +640,6 @@ function demosPage() {
   var demos = qs('#demos');
   demos.style.display = 'none';
 
-
   var stats = qs('#oldStats');
   stats.style.display = 'inline-flex';
 
