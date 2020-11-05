@@ -676,10 +676,10 @@ function oldStatsPage() {
   home.style.display = 'inline-flex';
 
   var demos = qs('#demos');
-  demos.style.display = 'none';
+  demos.style.display = 'inline-flex';
 
   var stats = qs('#oldStats');
-  stats.style.display = 'inline-flex';
+  stats.style.display = 'none';
 
   var page1 = qs('#page1');
   var page2 = qs('#page2');
