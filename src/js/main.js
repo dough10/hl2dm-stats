@@ -502,12 +502,12 @@ function ipLookup(ip) {
 }
 
 function fetchDemos() {
+  qs('#page3').innerHTML = '';
   fetch('/api/demos').then(response => {
     if (response.status !== 200) {
       console.error(response.status);
       return;
     }
-    qs('#page3').innerHTML = '';
     response.json().then(parseDemos);
   });
 }
@@ -549,12 +549,12 @@ function fetchServerStatus() {
 }
 
 function fetchTop() {
+  qs('#page1').innerHTML = '';
   fetch('/api/stats').then(response => {
     if (response.status !== 200) {
       console.error(response.status);
       return;
     }
-    qs('#page1').innerHTML = '';
     response.json().then(top => {
       parseTopData(top);
     });
