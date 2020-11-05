@@ -423,7 +423,6 @@ function parseTopData(top, page, cb) {
   allWeaponsCard.appendChild(wrapper1);
   allWeaponsCard.appendChild(wrapper2);
   qs(page).appendChild(allWeaponsCard);
-  showApp();
   if (qs('#page2').style.display === 'block') {
     console.log('thing')
     var month = qs('#months').value;
@@ -438,6 +437,7 @@ function parseTopData(top, page, cb) {
     qs('#oldData').appendChild(w);
   }
   if (cb) cb();
+  showApp();
 }
 
 function parseDemos(demos) {
