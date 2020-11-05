@@ -525,14 +525,14 @@ function fetchOldMonths(month) {
     });
     return;
   }
-  qs('#page2').innerHTML = '';
+  qs('#oldData').innerHTML = '';
   fetch(`/api/old-stats/${month}`).then(response => {
     if (response.status !== 200) {
       console.error(response.status);
       return;
     }
     response.json().then(logs => {
-      parseTopData(logs, '#page2');
+      parseTopData(logs, '#oldData');
     });
   });
 }
@@ -708,7 +708,7 @@ qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
   const infoHeight = qs('#info').offsetHeight / 2;
   var wrapper;
   var page1 = qs('#page1');
-  var page2 = qs('#page2');
+  var page2 = qs('#oldData');
   var page3 = qs('#page3');
   if (page1.style.display !== 'none') {
     wrapper = page1;
