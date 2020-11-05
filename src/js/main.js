@@ -782,6 +782,7 @@ qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
     top = 65;
   }
   if (scrollTop > infoHeight) {
+    console.log(wrapper)
     cascadeCards(wrapper);
     animations.fadeOut(qs('#stuff-below'));
     animations.animateElement(fab, "translateY(0px)");
@@ -822,9 +823,8 @@ qs('#demos').onClick(demosPage);
 qs('#oldStats').onClick(oldStatsPage);
 
 qs('#months').addEventListener('change', e => {
-  console.log(e.target.value, typeof e.target.value)
-  // fetchOldMonths(month)
-  // var m = new Date(Number(months[0])).getMonth();
+  var m = new Date(Number(e.target.value)).getMonth();
+  fetchOldMonths(m);
 });
 
 var alert = qs('#reset');
