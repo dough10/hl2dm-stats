@@ -530,6 +530,7 @@ function fetchOldMonths(month) {
     });
     return;
   }
+  qs('#page2').innerHTML = '';
   fetch(`/api/old-stats/${month}`).then(response => {
     if (response.status !== 200) {
       console.error(response.status);
