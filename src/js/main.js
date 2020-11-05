@@ -573,7 +573,7 @@ function fetchOldMonths(month) {
       response.json().then(months => {
         for (var i = 0; i < months.length; i++) {
           months[i] = months[i].replace('.json', '');
-          makeOption(new Date(months[i]).getMonth(), months[i], qs('#months'));
+          makeOption(new Date(Number(months[i])).getMonth(), months[i], qs('#months'));
         }
         var m = new Date(Number(months[0])).getMonth()
         fetchOldMonths(m);
