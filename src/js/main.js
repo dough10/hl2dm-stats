@@ -629,7 +629,8 @@ function homePage() {
       page1.style.display = 'block';
       animations.fadeIn(page1);
     });
-  } else if (page3.style.display !== 'none') {
+  }
+  if (page3.style.display !== 'none') {
       animations.fadeOut(page3).then(_ => {
         page3.style.display = 'none';
         page1.style.display = 'block';
@@ -661,7 +662,8 @@ function demosPage() {
       page3.style.display = 'block';
       animations.fadeIn(page3);
     });
-  } else if (page2.style.display !== 'none') {
+  }
+  if (page2.style.display !== 'none') {
     animations.fadeOut(page2).then(_ => {
       page2.style.display = 'none';
       page3.style.display = 'block';
@@ -693,7 +695,8 @@ function oldStatsPage() {
       page2.style.display = 'block';
       animations.fadeIn(page2);
     });
-  } else if (page3.style.display !== 'none') {
+  }
+  if (page3.style.display !== 'none') {
     animations.fadeOut(page3).then(_ => {
       page3.style.display = 'none';
       page2.style.display = 'block';
