@@ -430,7 +430,7 @@ function parseTopData(top, page, cb) {
     de.classList.add('button');
     de.textContent = 'demos';
     de.onClick(_ => {
-      window.location.href = `${window.location.href}/api/download/demos-zip/${month}.zip`;
+      window.location.href = `https://hl2dm.dough10.me/api/download/demos-zip/${month}.zip`;
     });
     var w = createWrapper();
     w.appendChild(de);
