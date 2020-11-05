@@ -626,7 +626,6 @@ function homePage() {
     page1.style.display = 'block';
     qs('#demoEl').innerHTML = '';
     animations.fadeIn(page1);
-    stuff.style.display = 'block';
    });
 }
 
@@ -652,7 +651,6 @@ function demosPage() {
     qs('#cardsWrapper').innerHTML = '';
     page3.style.display = 'block';
     animations.fadeIn(page3);
-    stuff.style.display = 'block';
   });
 }
 
@@ -667,7 +665,7 @@ function oldStatsPage() {
 }
 
 qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
-  const infoHeight = qs('#info').offsetHeight
+  const infoHeight = qs('#info').offsetHeight / 2;
   const wrapper = qs('#content');
   const scrollTop = e.target.scrollTop;
   const fab = qs('#fab');
