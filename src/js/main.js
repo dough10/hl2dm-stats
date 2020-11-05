@@ -609,7 +609,6 @@ function connectWSS() {
 function homePage() {
   fetchTop();
   window.history.pushState({}, null, '/');
-  qs('#page2').style.display = 'none';
 
   var home = qs('#home');
   home.style.display = 'none';
@@ -619,6 +618,10 @@ function homePage() {
 
   var stats = qs('#oldStats');
   stats.style.display = 'inline-flex;';
+
+  var page1 = qs('#page1');
+  var page2 = qs('#page2');
+  var page3 = qs('#page3');
 
   if (page2.style.display !== 'none') {
     animations.fadeOut(page2).then(_ => {
@@ -638,7 +641,6 @@ function homePage() {
 function demosPage() {
   fetchDemos();
   window.history.pushState({}, null, '/demos');
-  qs('#page2').style.display = 'none';
 
   var home = qs('#home');
   home.style.display = 'inline-flex';
