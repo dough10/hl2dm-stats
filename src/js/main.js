@@ -642,7 +642,7 @@ function demosPage() {
 
 
   var stats = qs('#oldStats');
-  stats.style.display = 'inline-flex;';
+  stats.style.display = 'inline-flex';
 
   var page1 = qs('#page1');
   var page3 = qs('#page3');
