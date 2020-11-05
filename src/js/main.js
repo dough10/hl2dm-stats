@@ -825,7 +825,7 @@ qs('#demos').onClick(demosPage);
 qs('#oldStats').onClick(oldStatsPage);
 
 qs('#demoZip').onClick(_ => {
-  window.location.href = `https://hl2dm.dough10.me/api/download/demos-zip/${qs('#months').value}.zip`;
+  window.open(`https://hl2dm.dough10.me/api/download/demos-zip/${qs('#months').value}.zip`, '_self');
 });
 
 qs('#logZip').onClick(_ => {
