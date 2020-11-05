@@ -423,19 +423,6 @@ function parseTopData(top, page, cb) {
   allWeaponsCard.appendChild(wrapper1);
   allWeaponsCard.appendChild(wrapper2);
   qs(page).appendChild(allWeaponsCard);
-  console.log(qs('#page2').style.display === 'block')
-  if (qs('#page2').style.display === 'block') {
-    var month = qs('#months').value;
-    var de = document.createElement('div');
-    de.classList.add('button');
-    de.textContent = 'demos';
-    de.onClick(_ => {
-      window.location.href = `https://hl2dm.dough10.me/api/download/demos-zip/${month}.zip`;
-    });
-    var w = createWrapper();
-    w.appendChild(de);
-    qs('#oldData').appendChild(w);
-  }
   if (cb) cb();
   showApp();
 }
@@ -836,6 +823,14 @@ qs('#home').onClick(homePage);
 qs('#demos').onClick(demosPage);
 
 qs('#oldStats').onClick(oldStatsPage);
+
+qs('#demoZip').onClick(_ => {
+  window.location.href = `https://hl2dm.dough10.me/api/download/demos-zip/${qs('#months').value}.zip`;
+});
+
+qs('#logZip').onClick(_ => {
+  window.location.href = `https://hl2dm.dough10.me/api/download/logs-zip/${qs('#months').value}.zip`;
+});
 
 qs('#months').addEventListener('change', e => {
   var m = new Date(Number(e.target.value)).getMonth();
