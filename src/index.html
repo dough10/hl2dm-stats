@@ -269,15 +269,6 @@
         justify-content: center;
         align-items: center;
       }
-      .button[disabled] {
-        background: rgba(84, 84, 84, 0.4);
-        box-shadow: none;
-        cursor: none;
-        pointer-events: none;
-      }
-      .button[disabled]:active {
-        box-shadow: none;
-      }
       .button:after {
         display: inline-block;
         z-index: -1;
@@ -297,16 +288,19 @@
       .button:hover:active:after {
         opacity: 0;
       }
-      .button[noshadow] {
+      .button[disabled] {
+        background: rgba(84, 84, 84, 0.4);
+        box-shadow: none;
+        cursor: none;
+        pointer-events: none;
+      }
+      .button[disabled]:active {
         box-shadow: none;
       }
       .button[noshadow]:active {
         box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
       }
-      .button[noshadow]:hover {
-        box-shadow: none;
-      }
-      .button[noshadow]:hover::after {
+      .button[noshadow], .button[noshadow]:hover, .button[noshadow]:hover::after {
         box-shadow: none;
       }
       .player-name {
