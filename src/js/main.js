@@ -827,7 +827,14 @@ qs('#demos').onClick(demosPage);
 qs('#oldStats').onClick(oldStatsPage);
 
 qs('#demoZip').onClick(_ => {
-  window.location.href = `https://hl2dm.dough10.me/api/download/demos-zip/${qs('#months').value}.zip`;
+  const a = document.createElement('a')
+  a.href = `https://hl2dm.dough10.me/api/download/demos-zip/${qs('#months').value}.zip`
+  a.type = 'application/zip'
+  a.download = true;
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  // window.location.href = `https://hl2dm.dough10.me/api/download/demos-zip/${qs('#months').value}.zip`;
 });
 
 qs('#logZip').onClick(_ => {
