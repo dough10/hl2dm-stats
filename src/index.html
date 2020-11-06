@@ -493,6 +493,93 @@
           opacity: 1;
         }
       }
+      .select {
+        font-family:
+          'Roboto','Helvetica','Arial',sans-serif;
+      	position: relative;
+      	width: 350px;
+      }
+      .select-text {
+      	position: relative;
+      	font-family: inherit;
+      	background-color: transparent;
+      	width: 350px;
+      	padding: 10px 10px 10px 0;
+      	font-size: 18px;
+      	border-radius: 0;
+      	border: none;
+      	border-bottom: 1px solid rgba(0,0,0, 0.12);
+      }
+      .select-text:focus {
+      	outline: none;
+      	border-bottom: 1px solid rgba(0,0,0, 0);
+      }
+      .select .select-text {
+      	appearance: none;
+      	-webkit-appearance:none
+      }
+      .select:after {
+      	position: absolute;
+      	top: 18px;
+      	right: 10px;
+      	/* Styling the down arrow */
+      	width: 0;
+      	height: 0;
+      	padding: 0;
+      	content: '';
+      	border-left: 6px solid transparent;
+      	border-right: 6px solid transparent;
+      	border-top: 6px solid rgba(0, 0, 0, 0.12);
+      	pointer-events: none;
+      }
+      .select-label {
+      	color: rgba(0,0,0, 0.26);
+      	font-size: 18px;
+      	font-weight: normal;
+      	position: absolute;
+      	pointer-events: none;
+      	left: 0;
+      	top: 10px;
+      	transition: 0.2s ease all;
+      }
+      .select-text:focus ~ .select-label, .select-text:valid ~ .select-label {
+      	color: #2F80ED;
+      	top: -20px;
+      	transition: 0.2s ease all;
+      	font-size: 14px;
+      }
+      .select-bar {
+      	position: relative;
+      	display: block;
+      	width: 350px;
+      }
+      .select-bar:before, .select-bar:after {
+      	content: '';
+      	height: 2px;
+      	width: 0;
+      	bottom: 1px;
+      	position: absolute;
+      	background: #2F80ED;
+      	transition: 0.2s ease all;
+      }
+      .select-bar:before {
+      	left: 50%;
+      }
+      .select-bar:after {
+      	right: 50%;
+      }
+      .select-text:focus ~ .select-bar:before, .select-text:focus ~ .select-bar:after {
+      	width: 50%;
+      }
+      .select-highlight {
+      	position: absolute;
+      	height: 60%;
+      	width: 100px;
+      	top: 25%;
+      	left: 0;
+      	pointer-events: none;
+      	opacity: 0.5;
+      }
     </style>
     <title>Lo-g Deathmatch Hoedown</title>
   </head>
@@ -574,7 +661,12 @@
               </svg>
               demos zip
             </div>
-            <select name="months" id="months"></select>
+            <div class="select">
+              <select class="select-text" name="months" id="months"></select>
+              <span class="select-highlight"></span>
+              <span class="select-bar"></span>
+              <label class="select-label">Month</label>
+            </div>
             <div class="button w" id="logZip">
               <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" />
