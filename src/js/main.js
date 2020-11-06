@@ -432,6 +432,7 @@ function parseDemos(demos) {
     const a = document.createElement('a');
     a.href = `https://hl2dm.dough10.me/api/download/${demo[0]}`;
     a.download = true;
+    a.classList.add('link');
     const card = createCard();
     const wrapper = createWrapper();
     const name = document.createElement('div');
