@@ -800,7 +800,7 @@ app.get('/old-stats/:month', (reg, res) => {
   getOldStatsList(reg.params.month).then(stats => {
     res.send(stats);
   }).catch(e => {
-    res.status(404).send('File does not exist');
+    res.status(404).send('no stats exist for this month');
   });
 });
 
