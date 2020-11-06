@@ -577,7 +577,7 @@ function fetchOldMonths(month, cb) {
         for (var i = 0; i < months.length; i++) {
           months[i] = months[i].replace('.json', '');
           var now = new Date(Number(months[i]));
-          makeOption(`${monthName(now.getMonth())} ${now.getYear()}`, months[i], qs('#months'));
+          makeOption(`${monthName(now.getMonth())} ${now.getFullYear()}`, months[i], qs('#months'));
         }
         var m = new Date(Number(months[0])).getMonth();
         fetchOldMonths(m);
