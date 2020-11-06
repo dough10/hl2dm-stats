@@ -681,11 +681,13 @@ function homePage() {
   var page1 = qs('#page1');
   var page2 = qs('#page2');
   var page3 = qs('#page3');
+  var dlBut = qs('#dl-buttons');
 
   if (page2.style.display !== 'none') {
     animations.fadeOut(page2).then(_ => {
       page2.style.display = 'none';
       page1.style.display = 'block';
+      dlBut.style.opacity = 0;
       animations.fadeIn(page1);
     });
   }
@@ -693,6 +695,7 @@ function homePage() {
       animations.fadeOut(page3).then(_ => {
         page3.style.display = 'none';
         page1.style.display = 'block';
+        dlBut.style.opacity = 0;
         animations.fadeIn(page1);
       });
     }
@@ -714,11 +717,13 @@ function demosPage() {
   var page1 = qs('#page1');
   var page2 = qs('#page2');
   var page3 = qs('#page3');
+  var dlBut = qs('#dl-buttons');
 
   if (page1.style.display !== 'none') {
     animations.fadeOut(page1).then(_ => {
       page1.style.display = 'none';
       page3.style.display = 'block';
+      dlBut.style.opacity = 0;
       animations.fadeIn(page3);
     });
   }
@@ -726,6 +731,7 @@ function demosPage() {
     animations.fadeOut(page2).then(_ => {
       page2.style.display = 'none';
       page3.style.display = 'block';
+      dlBut.style.opacity = 0;
       animations.fadeIn(page3);
     });
   }
@@ -747,12 +753,14 @@ function oldStatsPage() {
   var page1 = qs('#page1');
   var page2 = qs('#page2');
   var page3 = qs('#page3');
+  var dlBut = qs('#dl-buttons');
 
   if (page1.style.display !== 'none') {
     animations.fadeOut(page1).then(_ => {
       page1.style.display = 'none';
       page2.style.display = 'block';
       animations.fadeIn(page2);
+      animations.fadeIn(dlBut);
     });
   }
   if (page3.style.display !== 'none') {
@@ -760,6 +768,7 @@ function oldStatsPage() {
       page3.style.display = 'none';
       page2.style.display = 'block';
       animations.fadeIn(page2);
+      animations.fadeIn(dlBut);
     });
   }
 }
