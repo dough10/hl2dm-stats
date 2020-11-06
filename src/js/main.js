@@ -681,13 +681,11 @@ function homePage() {
   var page1 = qs('#page1');
   var page2 = qs('#page2');
   var page3 = qs('#page3');
-  var dlBut = qs('#dl-buttons');
 
   if (page2.style.display !== 'none') {
     animations.fadeOut(page2).then(_ => {
       page2.style.display = 'none';
       page1.style.display = 'block';
-      dlBut.style.opacity = 0;
       animations.fadeIn(page1);
     });
   }
@@ -717,13 +715,11 @@ function demosPage() {
   var page1 = qs('#page1');
   var page2 = qs('#page2');
   var page3 = qs('#page3');
-  var dlBut = qs('#dl-buttons');
 
   if (page1.style.display !== 'none') {
     animations.fadeOut(page1).then(_ => {
       page1.style.display = 'none';
       page3.style.display = 'block';
-      dlBut.style.opacity = 0;
       animations.fadeIn(page3);
     });
   }
@@ -822,9 +818,9 @@ qs('#github').onClick(_ => {
   window.location.href = 'https://github.com/dough10/hl2dm-stats';
 });
 
-qs('#paypal').onClick(_ => {
-  window.location.href = 'https://www.paypal.me/jdough10';
-});
+// qs('#paypal').onClick(_ => {
+//   window.location.href = 'https://www.paypal.me/jdough10';
+// });
 
 qs('#home').onClick(homePage);
 
