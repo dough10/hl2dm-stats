@@ -325,6 +325,7 @@
         justify-content: space-between;
         align-items: center;
         max-width: 675px;
+        margin: 16px auto;
       }
       #load {
         position: absolute;
@@ -472,9 +473,6 @@
       #contentLoader {
          background: var(--background-color);
       }
-      select {
-        margin-bottom: 24px;
-      }
       @keyframes fade {
         0%,100% { opacity: 0; }
         50% { opacity: 1; }
@@ -563,7 +561,7 @@
         <div id="page2">
           <label for="months">Month:</label>
           <select name="months" id="months"></select>
-          <div class="playeronline">
+          <div class="playeronline" style="margin-bottom: 16px;">
             <div class="button w" id="demoZip">
               <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" />
