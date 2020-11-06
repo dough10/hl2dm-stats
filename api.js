@@ -678,6 +678,7 @@ function getOldStatsList(month) {
           resolve(data);
         }
       }
+      reject();
     });
   });
 }
@@ -790,12 +791,16 @@ app.get('/download/demos-zip/:file', (reg, res) => {
 app.get('/old-months', (reg, res) => {
   getOldStatsList().then(stats => {
     res.send(stats);
+  }).catch(e => {
+    res.status(404).send('File does not exist');
   });
 });
 
 app.get('/old-stats/:month', (reg, res) => {
   getOldStatsList(reg.params.month).then(stats => {
     res.send(stats);
+  }).catch(e => {
+    res.status(404).send('File does not exist');
   });
 });
 
