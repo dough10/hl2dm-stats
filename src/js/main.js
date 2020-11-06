@@ -753,14 +753,12 @@ function oldStatsPage() {
   var page1 = qs('#page1');
   var page2 = qs('#page2');
   var page3 = qs('#page3');
-  var dlBut = qs('#dl-buttons');
 
   if (page1.style.display !== 'none') {
     animations.fadeOut(page1).then(_ => {
       page1.style.display = 'none';
       page2.style.display = 'block';
       animations.fadeIn(page2);
-      animations.fadeIn(dlBut);
     });
   }
   if (page3.style.display !== 'none') {
@@ -768,7 +766,6 @@ function oldStatsPage() {
       page3.style.display = 'none';
       page2.style.display = 'block';
       animations.fadeIn(page2);
-      animations.fadeIn(dlBut);
     });
   }
 }
@@ -794,6 +791,7 @@ qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
     top = 65;
   }
   if (scrollTop > infoHeight) {
+    animations.fadeIn(qs('#dl-buttons'));
     cascadeCards(wrapper);
     animations.fadeOut(qs('#stuff-below'));
     animations.animateElement(fab, "translateY(0px)");
