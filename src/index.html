@@ -269,13 +269,13 @@
         justify-content: center;
         align-items: center;
       }
-      .button.disabled {
+      .button[disabled] {
         background: rgba(84, 84, 84, 0.4);
         box-shadow: none;
         cursor: none;
         pointer-events: none;
       }
-      .button.disabled:active {
+      .button[disabled]:active {
         box-shadow: none;
       }
       .button:after {
@@ -297,13 +297,16 @@
       .button:hover:active:after {
         opacity: 0;
       }
-      .button.noshadow {
+      .button[noshadow] {
         box-shadow: none;
       }
-      .button.noshadow:active {
+      .button[noshadow]:active {
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
+      }
+      .button[noshadow]:hover {
         box-shadow: none;
       }
-      .button.noshadow:hover::after {
+      .button[noshadow]:hover::after {
         box-shadow: none;
       }
       .player-name {
@@ -661,7 +664,7 @@
         <div id="page1"></div>
         <div id="page2">
           <div id="dl-buttons">
-            <div class="button noshadow" id="demoZip">
+            <div class="button" noshadow id="demoZip">
               <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" />
               </svg>
@@ -673,7 +676,7 @@
               <span class="select-bar"></span>
               <label for="months" class="select-label">Month</label>
             </div>
-            <div class="button noshadow" id="logZip">
+            <div class="button" noshadow id="logZip">
               <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" />
               </svg>
