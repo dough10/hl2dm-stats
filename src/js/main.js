@@ -693,7 +693,6 @@ function homePage() {
       animations.fadeOut(page3).then(_ => {
         page3.style.display = 'none';
         page1.style.display = 'block';
-        dlBut.style.opacity = 0;
         animations.fadeIn(page1);
       });
     }
@@ -727,7 +726,6 @@ function demosPage() {
     animations.fadeOut(page2).then(_ => {
       page2.style.display = 'none';
       page3.style.display = 'block';
-      dlBut.style.opacity = 0;
       animations.fadeIn(page3);
     });
   }
