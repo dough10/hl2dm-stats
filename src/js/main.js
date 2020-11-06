@@ -754,6 +754,7 @@ function oldStatsPage() {
   var page2 = qs('#page2');
   var page3 = qs('#page3');
 
+  qs('#dl-buttons')style.opacity = 0;
   if (page1.style.display !== 'none') {
     animations.fadeOut(page1).then(_ => {
       page1.style.display = 'none';
