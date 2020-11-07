@@ -24,6 +24,8 @@ var serverStatus;            // placeholder for gamedig state
 var totalPlayers = 0;        // count of total players to have joined the server
 var updated = false;         // if stats have been updated when a player reaches end of game kill count
 
+var weaponStats =  {};
+
 var socket;
 
 console.log(`${new Date()} - Load Functions`);
@@ -512,7 +514,11 @@ function scanLine(line) {
     const name = getName(killedNameString);
     const sid = new SteamID(id);
     const id3 = getID3(sid.getSteam3RenderedID());
-    console.log(killedNameString, id, id3, name)
+    if (!weaponStats[id3]) {
+      weaponStats[id3] = {};
+    }
+
+    console.log(word)
   }
 }
 
