@@ -517,7 +517,9 @@ function scanLine(line) {
     if (!weaponStats[id3]) {
       weaponStats[id3] = {};
     }
-
+    for (var i = 0; i < word.length; i++) {
+      word[i] = word[i].replace('"', '').replace('(', '').replace(')', '').replace('"', '');
+    }
     console.log(word)
   }
 }
