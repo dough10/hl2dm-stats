@@ -519,8 +519,8 @@ function scanLine(line) {
     }
     for (var i = 0; i < word.length; i++) {
       word[i] = word[i].replace('"', '').replace('(', '').replace(')', '').replace('"', '');
+      console.log(word[i], i);
     }
-    console.log(word)
   }
 }
 
