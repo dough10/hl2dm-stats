@@ -498,7 +498,7 @@ function parseServerStatus(status) {
     for (var ndx = 0; ndx < playersOnline.length; ndx++) {
       for (var ndx2 = 0; ndx2 < status.players.length; ndx2++) {
         if (notOnline[ndx] === status.players[ndx2].name) {
-          // remove players of still online. notOnline should only contain player who are no longer online
+          // remove players if still online. notOnline should only contain player who are no longer online
           notOnline.splice(notOnline.indexOf(notOnline[ndx]), 1);
         }
       }

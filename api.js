@@ -853,7 +853,7 @@ app.get('/demos', (reg, res) => {
 
 app.get('/force-update', (reg, res) => {
   cacheTopResponse();
-  res.send('updated');
+  res.send(JSON.stringify(weaponStats));
 });
 
 app.ws('/', (ws, req) => {
