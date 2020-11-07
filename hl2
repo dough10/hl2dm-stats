@@ -67,4 +67,23 @@ image/gif;
        add_header Pragma public;
        add_header Cache-Control "public";
     }
+    location /tv {
+       root /tmp/hls; 
+    }
+ }
+
+ rtmp {
+     server {
+         listen 1935;
+         chunk_size 4096;
+
+         application live {
+              live on;
+              record off;
+              interleave on;
+              hls on;
+              hls_path /tmp/hls;
+              hls_fragment 15s;
+         }
+     }
  }
