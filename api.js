@@ -524,6 +524,7 @@ function scanLine(line) {
     var weaponName = word[isStats + 2];
     if (!weaponStats[id3][weaponName]) {
       weaponStats[id3][weaponName] = {
+        kills: 0,
         shots: 0,
         hits: 0,
         headshots:0
@@ -564,7 +565,6 @@ function sortUsersByKDR() {
   });
   arr.reverse();
   users = {};
-  weaponStats = {};
   return arr;
 }
 
@@ -853,6 +853,7 @@ app.get('/demos', (reg, res) => {
 app.get('/force-update', (reg, res) => {
   cacheTopResponse();
   res.send(JSON.stringify(weaponStats));
+  weaponStats = {};
 });
 
 app.ws('/', (ws, req) => {
