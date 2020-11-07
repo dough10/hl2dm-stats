@@ -505,6 +505,11 @@ function scanLine(line) {
       users[id3].updated = lineTime;
       users[id3].name = name;
     }
+  } else if (isStats) {
+    const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
+    const killedNameString = buildKillerNameString(word, isStats - 1);
+    const id = getID2(killedNameString);
+    console.log(killedNameString, id)
   }
 }
 
@@ -600,12 +605,12 @@ function getServerStatus() {
         if (serverStatus.players[i].name) {
           var name = serverStatus.players[i].name;
           var score = serverStatus.players[i].score.toString();
-          var l = ((80 - name.length) - score.length) - 11;
+          var l = ((80 - name.length) - score.length) - 13;
           var space = '';
           for (var n = 0; n < l; n++) {
             space = space + '-';
           }
-          console.log(`<${name}> ${space} score: ${score}`)
+          console.log(`<${name}> |${space}| score: ${score}`)
         }
       }
     }
