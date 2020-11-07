@@ -564,6 +564,7 @@ function sortUsersByKDR() {
   });
   arr.reverse();
   users = {};
+  weaponStats = {};
   return arr;
 }
 
