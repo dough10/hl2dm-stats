@@ -509,7 +509,10 @@ function scanLine(line) {
     const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
     const killedNameString = buildKillerNameString(word, isStats - 1);
     const id = getID2(killedNameString);
-    console.log(killedNameString, id)
+    const name = getName(killedNameString);
+    const sid = new SteamID(id);
+    const id3 = getID3(sid.getSteam3RenderedID());
+    console.log(killedNameString, id, id3, name)
   }
 }
 
