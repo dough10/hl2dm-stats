@@ -517,11 +517,18 @@ function scanLine(line) {
     if (!weaponStats[id3]) {
       weaponStats[id3] = {};
     }
+    // clean up extra chars
     for (var i = 0; i < word.length; i++) {
       word[i] = word[i].replace('"', '').replace('(', '').replace(')', '').replace('"', '');
     }
     var weaponName = word[isStats + 2];
-    console.log(weaponName);
+    if (!weaponStats[id3][weaponName]) {
+      weaponStats[id3][weaponName] = {};
+    }
+    weaponStats[id3][weaponName].shots = Number(word[isStats + 4]);
+    weaponStats[id3][weaponName].hits = Number(word[isStats + 6]);
+    weaponStats[id3][weaponName].headshots = Number(word[isStats + 8];)
+    // console.log(weaponName);
   }
 }
 
@@ -553,6 +560,7 @@ function sortUsersByKDR() {
   });
   arr.reverse();
   users = {};
+  console.log(weaponStats);
   return arr;
 }
 
