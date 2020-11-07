@@ -121,6 +121,7 @@ function cacheTopResponse() {
 function parseLogs() {
   return new Promise((resolve, reject) => {
     weapons = {};
+    weaponStats = {};
     fs.readdir(logFolder, (err, files) => {
       var remaining = '';
       if (err) {
@@ -851,7 +852,6 @@ app.get('/demos', (reg, res) => {
 });
 
 app.get('/force-update', (reg, res) => {
-  weaponStats = {};
   cacheTopResponse();
   res.send(JSON.stringify(weaponStats));
 });
