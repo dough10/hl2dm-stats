@@ -67,7 +67,4 @@ image/gif;
        add_header Pragma public;
        add_header Cache-Control "public";
     }
-    location /tv {
-       root /tmp/hls;
-    }
  }
