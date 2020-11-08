@@ -194,7 +194,7 @@ function getWeaponIcon(weapon) {
 }
 
 function isLessThenOne(p) {
-  if (precent === 0) {
+  if (p === 0) {
     return '< 1';
   }
   return p;
