@@ -38,6 +38,10 @@ Object.size = obj => {
   return size;
 };
 
+/**
+ * checks of weapon selection is a valid weapon name
+ * @param {String} weapon - name of a weapon
+ */
 function isWeapon(weapon) {
   var w = [
     '357',
@@ -61,10 +65,18 @@ function isWeapon(weapon) {
   return w.includes(weapon);
 }
 
+/**
+ * scheck if ip  address is valid
+ * @param {String} ip - ip address
+ */
 function validateIPaddress(ip) {
   return /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ip);
 }
 
+/**
+ * stores top data in memory for fast response times
+ * cleans up un nessacery entrys and merges physics kills
+ */
 function cacheTopResponse() {
   return new Promise((resolve, reject) => {
     console.log(`${new Date()} - Clearing cache & parsing logs`);
@@ -118,6 +130,9 @@ function cacheTopResponse() {
   });
 }
 
+/**
+ * get list of log files and send to scanner line by line
+ */
 function parseLogs() {
   return new Promise((resolve, reject) => {
     weapons = {};
@@ -227,6 +242,10 @@ function buildKilledNameString(line, start) {
   return name;
 }
 
+/**
+ * scans the line for landmarks in order to get usable strings of data
+ * @param {String} line - one line of the log file being parsed
+ */
 function lineIsKill(line) {
   for (var i = 0; i < line.length; i++) {
     if (line[i] === 'killed') {
@@ -236,6 +255,10 @@ function lineIsKill(line) {
   return false;
 }
 
+/**
+ * scans the line for landmarks in order to get usable strings of data
+ * @param {String} line - one line of the log file being parsed
+ */
 function lineIsConnect(line) {
   for (var i = 0; i < line.length; i++) {
     if (line[i] === 'connected,') {
@@ -245,6 +268,10 @@ function lineIsConnect(line) {
   return false;
 }
 
+/**
+ * scans the line for landmarks in order to get usable strings of data
+ * @param {String} line - one line of the log file being parsed
+ */
 function lineIsSuicide(line) {
   for (var i = 0; i < line.length; i++) {
     if (line[i] === 'committed') {
@@ -254,6 +281,10 @@ function lineIsSuicide(line) {
   return false;
 }
 
+/**
+ * scans the line for landmarks in order to get usable strings of data
+ * @param {String} line - one line of the log file being parsed
+ */
 function lineIsChat(line) {
   for (var i = 0; i < line.length; i++) {
     if (line[i] === 'say') {
@@ -263,6 +294,10 @@ function lineIsChat(line) {
   return false;
 }
 
+/**
+ * scans the line for landmarks in order to get usable strings of data
+ * @param {String} line - one line of the log file being parsed
+ */
 function lineIsHeadshot(line) {
   for (var i = 0; i < line.length; i++) {
     if (line[i] === '"headshot"') {
@@ -272,6 +307,10 @@ function lineIsHeadshot(line) {
   return false;
 }
 
+/**
+ * scans the line for landmarks in order to get usable strings of data
+ * @param {String} line - one line of the log file being parsed
+ */
 function lineIsStats(line) {
   for (var i = 0; i < line.length; i++) {
     if (line[i] === '"weaponstats"') {
@@ -281,6 +320,10 @@ function lineIsStats(line) {
   return false;
 }
 
+/**
+ * scans the line for landmarks in order to get usable strings of data
+ * @param {String} line - one line of the log file being parsed
+ */
 function lineIsConsole(line) {
   var ipstring = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):\d{4,5}$/
   for (var i = 0; i < line.length; i++) {
@@ -648,6 +691,9 @@ function bytesToSize(bytes) {
    return `${Math.round(bytes / Math.pow(1024, i), 2)} ${sizes[i]}`;
 }
 
+/**
+ * get GameDig data from game server
+ */
 function getServerStatus() {
   Gamedig.query({
     type: 'hl2dm',
@@ -683,6 +729,9 @@ function getServerStatus() {
   });
 }
 
+/**
+ * end of month file cleanup process
+ */
 function cleanUp() {
   var now = new Date();
   console.log(`${now} - Clean up started`);
@@ -727,6 +776,10 @@ function cleanUp() {
   });
 }
 
+/**
+ * grabs stats object from json file for a given month
+ * @param {Number} month - number of the month 0 - 11
+ */
 function getOldStatsList(month) {
   return new Promise((resolve, reject) => {
     fs.readdir(`${__dirname}/old-top`, (err, files) => {
@@ -752,6 +805,10 @@ function getOldStatsList(month) {
   });
 }
 
+/**
+ * saves top data before log clear
+ * @param {Number} lastMonth - new Date() output for the time cleanup was run
+ */
 function saveTop(lastMonth) {
   return new Promise((resolve, reject) => {
     var folder = `${__dirname}/old-top`;
@@ -776,6 +833,10 @@ function saveTop(lastMonth) {
   });
 }
 
+/**
+ * zips up log files before clear
+ * @param {Number} lastMonth - new Date() output for the time cleanup was run
+ */
 function zipLogs(lastMonth) {
   return new Promise((resolve, reject) => {
     var folder = `${config.bulkStorage}/logs`;
@@ -790,6 +851,10 @@ function zipLogs(lastMonth) {
   });
 }
 
+/**
+ * zip up demo files before clear
+ * @param {Number} lastMonth - new Date() output for the time cleanup was run
+ */
 function zipDemos(lastMonth) {
   return new Promise((resolve, reject) => {
     var folder = `${config.bulkStorage}/demos`;
