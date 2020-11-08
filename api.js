@@ -548,7 +548,7 @@ function sortWeapons(user) {
       // console.log(user)
     } else if (isWeapon(weapon)) {
       if (weaponStats[user.id][weapon]) {
-        acc = `${((weaponStats[user.id][weapon].hits / weaponStats[user.id][weapon].shots) * 100)/toFixed(2);}`;
+        acc = `${((weaponStats[user.id][weapon].hits / weaponStats[user.id][weapon].shots) * 100)/toFixed(2)}`;
         console.log(weapon, acc);
       }
       sortArr.push([
