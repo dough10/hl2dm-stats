@@ -543,13 +543,15 @@ function scanLine(line) {
 function sortWeapons(user) {
   var sortArr = [];
   var acc;
+  var hs;
   for (var weapon in user) {
     if (user.id === undefined) {
       // console.log(user)
     } else if (isWeapon(weapon)) {
       if (weaponStats[user.id][weapon]) {
-        acc = `${((weaponStats[user.id][weapon].hits / weaponStats[user.id][weapon].shots) * 100).toFixed(2)}`;
-        console.log(weapon, acc);
+        acc = Math.round((weaponStats[user.id][weapon].hits / weaponStats[user.id][weapon].shots) * 100);
+        hs = Math.round((weaponStats[user.id][weapon].headshots / weaponStats[user.id][weapon].hits) * 100);
+        console.log(weapon, acc, hs);
       }
       sortArr.push([
         weapon,
