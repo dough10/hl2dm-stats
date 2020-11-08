@@ -194,8 +194,8 @@ function getWeaponIcon(weapon) {
 }
 
 function displayWeaponData(wrappers, weapons, kills) {
-  console.log(weapons);
   for (let i = 0; i < weapons.length; i++) {
+    console.log(weapons[i]);
     const weaponName = weapons[i][0];
     const count = weapons[i][1];
     let precent = Math.round((count / kills) * 100);
