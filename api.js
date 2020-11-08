@@ -557,12 +557,7 @@ function sortWeapons(user) {
       }
       sortArr.push([
         weapon,
-        user[weapon],
-        [
-          shots,
-          acc,
-          hs
-        ]
+        user[weapon]
       ]);
       delete user[weapon];
     }
