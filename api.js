@@ -551,11 +551,11 @@ function sortWeapons(user) {
         shots = weaponStats[user.id][weapon].shots;
         acc = Math.round((weaponStats[user.id][weapon].hits / weaponStats[user.id][weapon].shots) * 100);
         hs = Math.round((weaponStats[user.id][weapon].headshots / weaponStats[user.id][weapon].shots) * 100);
-        console.log(user.name, weapon, shots, acc, hs);
       }
       sortArr.push([
         weapon,
-        user[weapon]
+        user[weapon],
+        [shots, acc, hs]
       ]);
       delete user[weapon];
     }
