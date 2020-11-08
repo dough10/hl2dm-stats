@@ -547,7 +547,7 @@ function sortWeapons(user) {
     if (user.id === undefined) {
       console.log(user)
     } else if (isWeapon(weapon)) {
-      console.log(user.id, weapon);
+      console.log(weaponStats[user.id][weapon]);
       sortArr.push([weapon, user[weapon]]);
       delete user[weapon];
     }
