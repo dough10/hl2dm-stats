@@ -225,8 +225,8 @@ function displayWeaponData(wrappers, weapons, kills) {
     text.textContent = count;
     tooltip.classList.add('tooltiptext');
     tooltip.textContent = `${weaponName}: ${precent}% of all kills`;
-    if (shots && hitPrecent && hsPrecent) {
-      tooltip.textContent = `${tooltip.textContent}, ${shots} fired, ${hitPrecent}% hits, ${hsPrecent}% headshots`; 
+    if (shots && hitPrecent && hsPrecent && weaponName !== 'headshots') {
+      tooltip.textContent = `${tooltip.textContent}, ${shots} fired, ${hitPrecent}% hits, ${hsPrecent}% headshots`;
     }
     weapContainer.appendChild(tooltip);
     weapContainer.appendChild(icon);
