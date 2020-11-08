@@ -550,7 +550,7 @@ function sortWeapons(user) {
     } else if (isWeapon(weapon)) {
       if (weaponStats[user.id][weapon]) {
         acc = Math.round((weaponStats[user.id][weapon].hits / weaponStats[user.id][weapon].shots) * 100);
-        hs = Math.round((weaponStats[user.id][weapon].headshots / weaponStats[user.id][weapon].hits) * 100);
+        hs = Math.round((weaponStats[user.id][weapon].headshots / weaponStats[user.id][weapon].shots) * 100);
         console.log(weapon, acc, hs);
       }
       sortArr.push([
