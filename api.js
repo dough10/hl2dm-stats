@@ -852,7 +852,6 @@ app.get('/demos', (reg, res) => {
 });
 
 app.get('/force-update', (reg, res) => {
-  cacheTopResponse();
   res.send(JSON.stringify(weaponStats));
 });
 
