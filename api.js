@@ -542,7 +542,7 @@ function sortWeapons(user) {
   var sortArr = [];
   for (var weapon in user) {
     if (isWeapon(weapon)) {
-      console.log(user, weaponStats[user.id][weapon]);
+      console.log(user.id, weapon);
       sortArr.push([weapon, user[weapon]]);
       delete user[weapon];
     }
