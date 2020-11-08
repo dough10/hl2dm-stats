@@ -543,9 +543,9 @@ function scanLine(line) {
 function sortWeapons(user) {
   var sortArr = [];
   for (var weapon in user) {
-    var acc;
-    var hs;
-    var shots;
+    var acc = 0;
+    var hs = 0;
+    var shots = 0;
     if (isWeapon(weapon)) {
       if (weaponStats[user.id] && weaponStats[user.id][weapon]) {
         if (weapon === 'headshots') {
