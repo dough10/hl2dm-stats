@@ -807,7 +807,7 @@ function getOldStatsList(month) {
 
 /**
  * saves top data before log clear
- * @param {Number} lastMonth - new Date() output for the time cleanup was run
+ * @param {Number} lastMonth - new Date() output for the time cleanup() was run
  */
 function saveTop(lastMonth) {
   return new Promise((resolve, reject) => {
@@ -835,7 +835,7 @@ function saveTop(lastMonth) {
 
 /**
  * zips up log files before clear
- * @param {Number} lastMonth - new Date() output for the time cleanup was run
+ * @param {Number} lastMonth - new Date() output for the time cleanup() was run
  */
 function zipLogs(lastMonth) {
   return new Promise((resolve, reject) => {
@@ -853,7 +853,7 @@ function zipLogs(lastMonth) {
 
 /**
  * zip up demo files before clear
- * @param {Number} lastMonth - new Date() output for the time cleanup was run
+ * @param {Number} lastMonth - new Date() output for the time cleanup() was run
  */
 function zipDemos(lastMonth) {
   return new Promise((resolve, reject) => {
