@@ -515,6 +515,9 @@ function scanLine(line) {
     const name = getName(killedNameString);
     const sid = new SteamID(id);
     const id3 = getID3(sid.getSteam3RenderedID());
+    if (!id3) {
+      return;
+    }
     if (!weaponStats[id3]) {
       weaponStats[id3] = {};
     }
