@@ -547,7 +547,7 @@ function sortWeapons(user) {
     var hs;
     var shots;
     if (user.id === undefined) {
-      // console.log(user)
+      console.log(user)
     } else if (isWeapon(weapon)) {
       if (weaponStats[user.id][weapon]) {
         shots = weaponStats[user.id][weapon].shots;
