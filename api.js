@@ -528,7 +528,6 @@ function scanLine(line) {
     var weaponName = word[isStats + 2];
     if (!weaponStats[id3][weaponName]) {
       weaponStats[id3][weaponName] = {
-        kills: 0,
         shots: 0,
         hits: 0,
         headshots:0
@@ -543,14 +542,19 @@ function scanLine(line) {
 
 function sortWeapons(user) {
   var sortArr = [];
+  var acc;
   for (var weapon in user) {
     if (user.id === undefined) {
-      console.log(user)
+      // console.log(user)
     } else if (isWeapon(weapon)) {
       if (weaponStats[user.id][weapon]) {
-        console.log(weaponStats[user.id][weapon]);
+        acc = `${((weaponStats[user.id][weapon].hits / weaponStats[user.id][weapon].shots) * 100)/toFixed(2);}`;
+        console.log(weapon, acc);
       }
-      sortArr.push([weapon, user[weapon]]);
+      sortArr.push([
+        weapon,
+        user[weapon]
+      ]);
       delete user[weapon];
     }
   }
