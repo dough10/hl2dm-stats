@@ -857,7 +857,9 @@ app.get('/demos', (reg, res) => {
 
 app.get('/force-update', (reg, res) => {
   cacheTopResponse();
-  setTimeout(res.send(JSON.stringify(weaponStats)), 1000);
+  setTimeout(_ => {
+    res.send(JSON.stringify(weaponStats));
+  }, 1000);
 });
 
 app.ws('/', (ws, req) => {
