@@ -536,7 +536,6 @@ function scanLine(line) {
     weaponStats[id3][weaponName].shots = weaponStats[id3][weaponName].shots + Number(word[isStats + 4]);
     weaponStats[id3][weaponName].hits = weaponStats[id3][weaponName].hits + Number(word[isStats + 6]);
     weaponStats[id3][weaponName].headshots = weaponStats[id3][weaponName].headshots + Number(word[isStats + 8]);
-    // console.log(weaponName);
   }
 }
 
@@ -865,12 +864,6 @@ app.get('/demos', (reg, res) => {
   });
 });
 
-app.get('/force-update', (reg, res) => {
-  cacheTopResponse();
-  setTimeout(_ => {
-    res.send(JSON.stringify(weaponStats));
-  }, 1000);
-});
 
 app.ws('/', (ws, req) => {
   socket = ws;

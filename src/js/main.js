@@ -12,6 +12,9 @@ HTMLElement.prototype.onClick = function (cb) {
   this.addEventListener('click', cb, false);
 };
 
+/**
+ * apply paper-ripples effect to UI elements
+ */
 function applyRipples() {
   return new Promise((resolve, reject) => {
     ripples.attachButtonRipple(qs('#fab'));
@@ -23,6 +26,9 @@ function applyRipples() {
   });
 }
 
+/**
+ * loads paper ripples effec to DOM
+ */
 function loadRipples() {
   return new Promise((resolve, reject) => {
     loadCSSFile("../css/paper-ripple.min.css")
@@ -31,6 +37,10 @@ function loadRipples() {
   });
 }
 
+/**
+ * animate cards in from right side of screen
+ * @param {Element} container - element cards are in side of
+ */
 function cascadeCards(container) {
   return new Promise(resolve => {
     const cards = qsa('.card', container);
@@ -47,6 +57,9 @@ function cascadeCards(container) {
   });
 }
 
+/**
+ * returns flex container element
+ */
 function createWrapper() {
   const wrapper = document.createElement('div');
   wrapper.style.display = 'flex';
@@ -56,6 +69,9 @@ function createWrapper() {
   return wrapper;
 }
 
+/**
+ * returns styled card element
+ */
 function createCard() {
   const card = document.createElement('div');
   card.classList.add('card');
@@ -65,6 +81,9 @@ function createCard() {
   return card;
 }
 
+/**
+ * returns non styled card element
+ */
 function createNoCard() {
   const card = document.createElement('div');
   card.classList.add('nocard');
@@ -74,6 +93,12 @@ function createNoCard() {
   return card;
 }
 
+/**
+ * returns svg element
+ * @param {String} d - svg string value
+ * @param {Number} count - number of kills or deaths
+ * @param {String} title - thing needing icon
+ */
 function createSVG(d, count, title) {
   const wrapper = createWrapper();
   const tooltip = document.createElement('div');
@@ -98,6 +123,10 @@ function createSVG(d, count, title) {
   return wrapper;
 }
 
+/**
+ * returns month name in string form
+ * @param {Number} month - month number 0 - 11
+ */
 function monthName(month) {
   switch (month) {
     case 0:
@@ -140,6 +169,10 @@ function monthName(month) {
   }
 }
 
+/**
+ * returns the text valuse to represent the weapon used
+ * @param {String} weapon - weapon needing icon
+ */
 function getWeaponIcon(weapon) {
   switch (weapon) {
     case "grenade_frag":
@@ -193,6 +226,10 @@ function getWeaponIcon(weapon) {
   }
 }
 
+/**
+ * convers 0's to < 1
+ * @param {Number} p - %
+ */
 function isLessThenOne(p) {
   if (p === 0) {
     return '< 1';
@@ -200,6 +237,12 @@ function isLessThenOne(p) {
   return p;
 }
 
+/**
+ * displays weapon stats
+ * @param {Array} wrappers - list of elements to send output to
+ * @param {Array} weapons - list of weapons
+ * @param {Number} kills - total number of kills
+ */
 function displayWeaponData(wrappers, weapons, kills) {
   for (let i = 0; i < weapons.length; i++) {
     const weaponName = weapons[i][0];
@@ -242,6 +285,9 @@ function displayWeaponData(wrappers, weapons, kills) {
   }
 }
 
+/**
+ * removes loading screen overlay to show the main app body
+ */
 function showApp() {
   animations.fadeIn(qs('#stuff-below'));
   setTimeout(_ => {
@@ -252,6 +298,10 @@ function showApp() {
   }, 800);
 }
 
+/**
+ * displays data about who is connected to the game server
+ * @param {Number} playersOnline - Number of players connected to the server
+ */
 function displayPlayerOnline(playersOnline) {
   var el = qs('#reset');
   var loadtime = new Date();
@@ -322,10 +372,20 @@ function displayPlayerOnline(playersOnline) {
   loaded = true;
 }
 
+/**
+ * converts a number to a more readable form
+ * @param {Number} num - numberr to be made readable
+ */
 function formatNumber(num) {
-  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 }
 
+/**
+ * displays top player list in UI
+ * @param {Array} top - list containing all the player and server stats from API
+ * @param {String} page - name of the element the output will be pushed to
+ * @param {Function} cb - ip address of the client connected to the server
+ */
 function parseTopData(top, page, cb) {
   const killsIcon = "M7,5H23V9H22V10H16A1,1 0 0,0 15,11V12A2,2 0 0,1 13,14H9.62C9.24,14 8.89,14.22 8.72,14.56L6.27,19.45C6.1,19.79 5.76,20 5.38,20H2C2,20 -1,20 3,14C3,14 6,10 2,10V5H3L3.5,4H6.5L7,5M14,12V11A1,1 0 0,0 13,10H12C12,10 11,11 12,12A2,2 0 0,1 10,10A1,1 0 0,0 9,11V12A1,1 0 0,0 10,13H13A1,1 0 0,0 14,12Z";
   const deathsIcon = "M12,2A9,9 0 0,0 3,11C3,14.03 4.53,16.82 7,18.47V22H9V19H11V22H13V19H15V22H17V18.46C19.47,16.81 21,14 21,11A9,9 0 0,0 12,2M8,11A2,2 0 0,1 10,13A2,2 0 0,1 8,15A2,2 0 0,1 6,13A2,2 0 0,1 8,11M16,11A2,2 0 0,1 18,13A2,2 0 0,1 16,15A2,2 0 0,1 14,13A2,2 0 0,1 16,11M12,14L13.5,17H10.5L12,14Z";
@@ -445,6 +505,10 @@ function parseTopData(top, page, cb) {
   showApp();
 }
 
+/**
+ * displays the list of demos from server api
+ * @param {Array} demos - list of demos from this month
+ */
 function parseDemos(demos) {
   demos.forEach(demo => {
     const a = document.createElement('a');
@@ -472,6 +536,10 @@ function parseDemos(demos) {
   showApp();
 }
 
+/**
+ * lparse and display server statistics
+ * @param {Object} status - status object from GameDig node js module
+ */
 function parseServerStatus(status) {
   const pContainer = qs('#players');
   pContainer.innerHTML = '';
@@ -533,11 +601,19 @@ function parseServerStatus(status) {
   }
 }
 
+/**
+ * check if ip is LAN ip address
+ * @param {String} ip - ip address of the client connected to the server
+ */
 function isLocalIP(ip) {
   const rx = /(^127\.)|(^192\.168\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^::1$)|(^[fF][cCdD])/;
   return rx.test(ip);
 }
 
+/**
+ * lookup id address and get thje country initals
+ * @param {String} ip - ip address of the client connected to the server
+ */
 function ipLookup(ip) {
   return new Promise((resolve, reject) => {
     if (isLocalIP(ip)) {
@@ -559,6 +635,9 @@ function ipLookup(ip) {
   });
 }
 
+/**
+ * grabs list of demos from server
+ */
 function fetchDemos() {
   qs('#page3').innerHTML = '';
   fetch('/api/demos').then(response => {
@@ -584,6 +663,12 @@ function makeOption(option, value, parent) {
  parent.appendChild(el);
 }
 
+/**
+ * create a option element and append to the parent element
+ *
+ * @param {Number} month - # month
+ * @param {Function} cb - the decimal identifier for the keystroke
+ */
 function fetchOldMonths(month, cb) {
   if (!month) {
     qs('#months').innerHTML = '';
@@ -616,6 +701,9 @@ function fetchOldMonths(month, cb) {
   });
 }
 
+/**
+ * grabs server stats from the server and send it to parse t he response
+ */
 function fetchServerStatus() {
   fetch('/api/status').then(response => {
     if (response.status !== 200) {
@@ -626,6 +714,9 @@ function fetchServerStatus() {
   });
 }
 
+/**
+ * grabs the player stats from the server
+ */
 function fetchTop() {
   qs('#page1').innerHTML = '';
   fetch('/api/stats').then(response => {
@@ -639,6 +730,9 @@ function fetchTop() {
   });
 }
 
+/**
+ * registers the service worker
+ */
 function registerServiceWorker() {
   return new Promise((resolve, reject) => {
     if ('serviceWorker' in navigator && 'PushManager' in window) {
@@ -649,6 +743,10 @@ function registerServiceWorker() {
   });
 }
 
+/**
+ * greturns the stats of the weapon the player has the most kills
+ * @param {Array} weapons - array of weapons player has kills with
+ */
 function favWeapon(weapons) {
   let highest = 0;
   let weapon = "";
@@ -667,6 +765,9 @@ function favWeapon(weapons) {
   ];
 }
 
+/**
+ * connecs to the api backend over WebSocket
+ */
 function connectWSS() {
   const socket = new WebSocket('wss://hl2dm.dough10.me/api');
   socket.onopen = console.log(`${new Date()} WebSocket connected`);
@@ -687,6 +788,9 @@ function connectWSS() {
   };
 }
 
+/**
+ * homepage or current stats view mode
+ */
 function homePage() {
   fetchTop();
   window.history.pushState({}, null, '/');
@@ -720,6 +824,9 @@ function homePage() {
     }
 }
 
+/**
+ * game demos view mode
+ */
 function demosPage() {
   fetchDemos();
   window.history.pushState({}, null, '/demos');
@@ -753,6 +860,9 @@ function demosPage() {
   }
 }
 
+/**
+ * prevoius months stats view mode
+ */
 function oldStatsPage() {
   fetchOldMonths();
   window.history.pushState({}, null, '/old-stats');
@@ -787,6 +897,9 @@ function oldStatsPage() {
   }
 }
 
+/**
+ * page scroll listener
+ */
 qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
   const infoHeight = qs('#info').offsetHeight / 2;
   var wrapper;
