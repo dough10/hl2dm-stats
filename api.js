@@ -291,6 +291,10 @@ function lineIsConsole(line) {
   return false;
 }
 
+/**
+ * scans the line for landmarks in order to get usable strings of data
+ * @param {String} line - one line of the log file being parsed
+ */
 function scanLine(line) {
   var word  = line.split(' ');
   var isKill = lineIsKill(word);
@@ -539,6 +543,10 @@ function scanLine(line) {
   }
 }
 
+/**
+ * removes weapon specific data from user object and places it in it's own array
+ * @param {Object} user - a user object we need to reconstruct a weapn data array fro
+ */
 function sortWeapons(user) {
   var sortArr = [];
   for (var weapon in user) {
@@ -566,6 +574,9 @@ function sortWeapons(user) {
   return sortArr;
 }
 
+/**
+ * sort users highest to lowest KDR
+ */
 function sortUsersByKDR() {
   var arr = [];
   totalPlayers = Object.size(users);
@@ -582,6 +593,9 @@ function sortUsersByKDR() {
   return arr;
 }
 
+/**
+ * returns array of demo files from game server dir
+ */
 function getDemos() {
   return new Promise((resolve, reject) => {
     var demos = [];
@@ -596,17 +610,29 @@ function getDemos() {
   });
 }
 
+/**
+ * returns created date of a file
+ * @param {String} file - path to the file
+ */
 function createdDate(file) {
   const stats = fs.statSync(file)
   return stats.mtime
 }
 
+/**
+ * returns file size in bytes
+ * @param {String} filename - file path
+ */
 function getFilesizeInBytes(filename) {
   var stats = fs.statSync(filename)
   var fileSizeInBytes = stats["size"]
   return fileSizeInBytes
 }
 
+/**
+ * makes bytes readable
+ * @param {Number} bytes - file size yay
+ */
 function bytesToSize(bytes) {
    var sizes = [
      'Bytes',
