@@ -202,7 +202,6 @@ function isLessThenOne(p) {
 
 function displayWeaponData(wrappers, weapons, kills) {
   for (let i = 0; i < weapons.length; i++) {
-    // console.log(weapons[i]);
     const weaponName = weapons[i][0];
     const count = weapons[i][1];
     var shots;
@@ -360,7 +359,7 @@ function parseTopData(top, page, cb) {
     const deaths = createSVG(deathsIcon, player.deaths, "Deaths");
     const kdr = createSVG(kdrIcon, player.kdr, "KDR");
     wrapper.appendChild(name);
-    const fav = HL2Weapons(player.weapons)
+    const fav = favWeapon(player.weapons)
     const favWrapper = createWrapper();
     favWrapper.classList.add('tooltip');
     if (window.innerWidth <= 500) {
@@ -371,6 +370,9 @@ function parseTopData(top, page, cb) {
     const text = document.createElement('div');
     tooltip.classList.add('tooltiptext');
     tooltip.textContent = `${fav[0]}: ${Math.round((fav[1] / player.kills) * 100)}% of all kills`;
+    if (fav[2] && fav[2][0] && fav[2][1] && fav[2][2]) {
+      tooltip.textContent = `${tooltip.textContent}, ${fav[2][0]} fired shots, ${fav[2][1]}% hit, ${fav[2][2]}% headshots`;
+    }
     text.style.marginRight = '8px';
     icon.style.marginRight = '4px';
     icon.classList.add('HL2Weapons');
@@ -647,18 +649,21 @@ function registerServiceWorker() {
   });
 }
 
-function HL2Weapons(weapons) {
+function FavWeapon(weapons) {
   let highest = 0;
   let weapon = "";
+  let stats;
   for (let i = 0; i < weapons.length; i++) {
     if (weapons[i][1] > highest) {
       highest = weapons[i][1];
       weapon = weapons[i][0];
+      stats = weapons[i][2];
     }
   }
   return [
     weapon,
-    highest
+    highest,
+    stats
   ];
 }
 
