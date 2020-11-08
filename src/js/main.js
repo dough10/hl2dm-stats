@@ -205,9 +205,14 @@ function displayWeaponData(wrappers, weapons, kills) {
     // console.log(weapons[i]);
     const weaponName = weapons[i][0];
     const count = weapons[i][1];
-    const shots = weapons[i][2][0];
-    const hitPrecent = isLessThenOne(weapons[i][2][1]);
-    const hsPrecent = isLessThenOne(weapons[i][2][2]);
+    var shots;
+    var hitPrecent;
+    var hsPrecent;
+    if (weapons[i][2]) {
+      shots = weapons[i][2][0];
+      hitPrecent = isLessThenOne(weapons[i][2][1]);
+      hsPrecent = isLessThenOne(weapons[i][2][2]);
+    }
     console.log(shots, hitPrecent, hsPrecent)
     let precent = isLessThenOne(Math.round((count / kills) * 100));
     const weapContainer = document.createElement('div');
@@ -225,7 +230,7 @@ function displayWeaponData(wrappers, weapons, kills) {
     text.textContent = count;
     tooltip.classList.add('tooltiptext');
     tooltip.textContent = `${weaponName}: ${precent}% of all kills`;
-    if (shots && hitPrecent && hsPrecent && weaponName !== 'headshots') {
+    if (shots && hitPrecent && hsPrecent) {
       tooltip.textContent = `${tooltip.textContent}, ${shots} fired, ${hitPrecent}% hits, ${hsPrecent}% headshots`;
     }
     weapContainer.appendChild(tooltip);
