@@ -649,7 +649,7 @@ function registerServiceWorker() {
   });
 }
 
-function FavWeapon(weapons) {
+function favWeapon(weapons) {
   let highest = 0;
   let weapon = "";
   let stats;
