@@ -193,15 +193,23 @@ function getWeaponIcon(weapon) {
   }
 }
 
+function isLessThenOne(p) {
+  if (precent === 0) {
+    return '< 1';
+  }
+  return p;
+}
+
 function displayWeaponData(wrappers, weapons, kills) {
   for (let i = 0; i < weapons.length; i++) {
-    console.log(weapons[i]);
+    // console.log(weapons[i]);
     const weaponName = weapons[i][0];
     const count = weapons[i][1];
-    let precent = Math.round((count / kills) * 100);
-    if (precent === 0) {
-      precent = '< 1';
-    }
+    const shots = weapons[i][2][0];
+    const hitPrecent = isLessThenOne(weapons[i][2][1]);
+    const hsPrecent = isLessThenOne(weapons[i][2][2]);
+    console.log(shots, hitPrecent, hsPrecent)
+    let precent = isLessThenOne(Math.round((count / kills) * 100));
     const weapContainer = document.createElement('div');
     weapContainer.classList.add('tooltip');
     const icon = document.createElement('div');
