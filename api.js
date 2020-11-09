@@ -40,6 +40,7 @@ Object.size = obj => {
 
 /**
  * checks if weapon selection is a valid weapon name
+ *
  * @param {String} weapon - name of a weapon
  */
 function isWeapon(weapon) {
@@ -67,6 +68,7 @@ function isWeapon(weapon) {
 
 /**
  * check if ip  address is valid
+ *
  * @param {String} ip - ip address
  */
 function validateIPaddress(ip) {
@@ -245,6 +247,7 @@ function buildKilledNameString(line, start) {
 
 /**
  * scans the line for landmarks in order to get usable strings of data
+ *
  * @param {String} line - one line of the log file being parsed
  */
 function lineIsKill(line) {
@@ -258,6 +261,7 @@ function lineIsKill(line) {
 
 /**
  * scans the line for landmarks in order to get usable strings of data
+ *
  * @param {String} line - one line of the log file being parsed
  */
 function lineIsConnect(line) {
@@ -271,6 +275,7 @@ function lineIsConnect(line) {
 
 /**
  * scans the line for landmarks in order to get usable strings of data
+ *
  * @param {String} line - one line of the log file being parsed
  */
 function lineIsSuicide(line) {
@@ -284,6 +289,7 @@ function lineIsSuicide(line) {
 
 /**
  * scans the line for landmarks in order to get usable strings of data
+ *
  * @param {String} line - one line of the log file being parsed
  */
 function lineIsChat(line) {
@@ -297,6 +303,7 @@ function lineIsChat(line) {
 
 /**
  * scans the line for landmarks in order to get usable strings of data
+ *
  * @param {String} line - one line of the log file being parsed
  */
 function lineIsHeadshot(line) {
@@ -310,6 +317,7 @@ function lineIsHeadshot(line) {
 
 /**
  * scans the line for landmarks in order to get usable strings of data
+ *
  * @param {String} line - one line of the log file being parsed
  */
 function lineIsStats(line) {
@@ -323,6 +331,7 @@ function lineIsStats(line) {
 
 /**
  * scans the line for landmarks in order to get usable strings of data
+ *
  * @param {String} line - one line of the log file being parsed
  */
 function lineIsConsole(line) {
@@ -337,6 +346,7 @@ function lineIsConsole(line) {
 
 /**
  * scans the line for landmarks in order to get usable strings of data
+ *
  * @param {String} line - one line of the log file being parsed
  */
 function scanLine(line) {
@@ -589,6 +599,7 @@ function scanLine(line) {
 
 /**
  * removes weapon specific data from user object and places it in it's own array
+ *
  * @param {Object} user - a user object we need to reconstruct a weapn data array fro
  */
 function sortWeapons(user) {
@@ -656,6 +667,7 @@ function getDemos() {
 
 /**
  * returns created date of a file
+ *
  * @param {String} file - path to the file
  */
 function createdDate(file) {
@@ -665,6 +677,7 @@ function createdDate(file) {
 
 /**
  * returns file size in bytes
+ *
  * @param {String} filename - file path
  */
 function getFilesizeInBytes(filename) {
@@ -675,6 +688,7 @@ function getFilesizeInBytes(filename) {
 
 /**
  * makes bytes readable
+ *
  * @param {Number} bytes - file size yay
  */
 function bytesToSize(bytes) {
@@ -779,6 +793,7 @@ function cleanUp() {
 
 /**
  * grabs stats object from json file for a given month
+ *
  * @param {Number} month - number of the month 0 - 11
  */
 function getOldStatsList(month) {
@@ -808,6 +823,7 @@ function getOldStatsList(month) {
 
 /**
  * saves top data before log clear
+ *
  * @param {Number} lastMonth - new Date() output for the time cleanup() was run
  */
 function saveTop(lastMonth) {
@@ -836,6 +852,7 @@ function saveTop(lastMonth) {
 
 /**
  * zips up log files before clear
+ *S
  * @param {Number} lastMonth - new Date() output for the time cleanup() was run
  */
 function zipLogs(lastMonth) {
@@ -854,6 +871,7 @@ function zipLogs(lastMonth) {
 
 /**
  * zip up demo files before clear
+ *
  * @param {Number} lastMonth - new Date() output for the time cleanup() was run
  */
 function zipDemos(lastMonth) {

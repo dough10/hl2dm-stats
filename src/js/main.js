@@ -43,6 +43,7 @@ function loadRipples() {
 
 /**
  * animate cards in from right side of screen
+ *
  * @param {Element} container - element cards are in side of
  */
 function cascadeCards(container) {
@@ -99,6 +100,7 @@ function createNoCard() {
 
 /**
  * returns svg element
+ *
  * @param {String} d - svg string value
  * @param {Number} count - number of kills or deaths
  * @param {String} title - thing needing icon
@@ -129,6 +131,7 @@ function createSVG(d, count, title) {
 
 /**
  * returns month name in string form
+ *
  * @param {Number} month - month number 0 - 11
  */
 function monthName(month) {
@@ -175,6 +178,7 @@ function monthName(month) {
 
 /**
  * returns the text valuse to represent the weapon used
+ *
  * @param {String} weapon - weapon needing icon
  */
 function getWeaponIcon(weapon) {
@@ -232,6 +236,7 @@ function getWeaponIcon(weapon) {
 
 /**
  * convers 0's to < 1
+ *
  * @param {Number} p - %
  */
 function isLessThenOne(p) {
@@ -243,6 +248,7 @@ function isLessThenOne(p) {
 
 /**
  * displays weapon stats
+ *
  * @param {Array} wrappers - list of elements to send output to
  * @param {Array} weapons - list of weapons
  * @param {Number} kills - total number of kills
@@ -304,6 +310,7 @@ function showApp() {
 
 /**
  * displays data about who is connected to the game server
+ *
  * @param {Number} playersOnline - Number of players connected to the server
  */
 function displayPlayerOnline(playersOnline) {
@@ -380,6 +387,7 @@ function displayPlayerOnline(playersOnline) {
 
 /**
  * converts a number to a more readable form
+ *
  * @param {Number} num - numberr to be made readable
  */
 function formatNumber(num) {
@@ -388,6 +396,7 @@ function formatNumber(num) {
 
 /**
  * displays top player list in UI
+ *
  * @param {Array} top - list containing all the player and server stats from API
  * @param {String} page - name of the element the output will be pushed to
  * @param {Function} cb - ip address of the client connected to the server
@@ -513,6 +522,7 @@ function parseTopData(top, page, cb) {
 
 /**
  * displays the list of demos from server api
+ *
  * @param {Array} demos - list of demos from this month
  */
 function parseDemos(demos) {
@@ -544,6 +554,7 @@ function parseDemos(demos) {
 
 /**
  * lparse and display server statistics
+ *
  * @param {Object} status - status object from GameDig node js module
  */
 function parseServerStatus(status) {
@@ -609,6 +620,7 @@ function parseServerStatus(status) {
 
 /**
  * check if ip is LAN ip address
+ *
  * @param {String} ip - ip address of the client connected to the server
  */
 function isLocalIP(ip) {
@@ -618,6 +630,7 @@ function isLocalIP(ip) {
 
 /**
  * lookup id address and get thje country initals
+ *
  * @param {String} ip - ip address of the client connected to the server
  */
 function ipLookup(ip) {
@@ -751,6 +764,7 @@ function registerServiceWorker() {
 
 /**
  * greturns the stats of the weapon the player has the most kills
+ *
  * @param {Array} weapons - array of weapons player has kills with
  */
 function favWeapon(weapons) {
