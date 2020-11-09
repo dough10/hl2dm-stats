@@ -105,13 +105,16 @@ function createNoCard() {
  * @param {Number} count - number of kills or deaths
  * @param {String} title - thing needing icon
  */
-function createSVG(d, count, title) {
+function createSVG(d, count, title, suicides) {
   const wrapper = createWrapper();
   const tooltip = document.createElement('div');
   wrapper.style.margin = '0 0.2em';
   wrapper.classList.add('tooltip');
   tooltip.classList.add('tooltiptext');
   tooltip.textContent = `${title}: ${count}`;
+  if (suicides) {
+    tooltip.textContent = `${tooltip.textContent}, by suicide ${suicides}`
+  }
   wrapper.appendChild(tooltip);
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.classList.add('svg');
@@ -431,7 +434,7 @@ function parseTopData(top, page, cb) {
     const stats = document.createElement('div');
     stats.style.display = "inline-flex";
     const kills = createSVG(killsIcon, player.kills, "Kills");
-    const deaths = createSVG(deathsIcon, player.deaths, "Deaths");
+    const deaths = createSVG(deathsIcon, player.deaths, "Deaths", player.suicide);
     const kdr = createSVG(kdrIcon, player.kdr, "KDR");
     wrapper.appendChild(name);
     const fav = favWeapon(player.weapons)

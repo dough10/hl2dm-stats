@@ -523,9 +523,9 @@ function scanLine(line) {
       users[id].updated = lineTime;
       users[id].name = name;
     }
-    users[id].suicide++
     users[id].kills--;
     users[id].deaths++;
+    users[id].suicide++
     users[id].kdr = Number((users[id].kills / users[id].deaths).toFixed(2));
     var weapon = word[word.length - 1].replace('"', '');
     weapon = weapon.replace('"', '');
