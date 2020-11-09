@@ -1,5 +1,9 @@
 import {qs} from './helpers.js';
 
+/**
+ * push csS file to DOM
+ * @param {String} src - url
+ */
 function loadCSSFile(src) {
   return new Promise((resolve, reject) => {
     const css = document.createElement( "link" );
@@ -12,6 +16,10 @@ function loadCSSFile(src) {
   });
 }
 
+/**
+ * push JS file to DOM
+ * @param {String} src - url
+ */
 function loadJSFile(src) {
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');

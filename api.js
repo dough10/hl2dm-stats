@@ -39,7 +39,7 @@ Object.size = obj => {
 };
 
 /**
- * checks of weapon selection is a valid weapon name
+ * checks if weapon selection is a valid weapon name
  * @param {String} weapon - name of a weapon
  */
 function isWeapon(weapon) {
@@ -66,7 +66,7 @@ function isWeapon(weapon) {
 }
 
 /**
- * scheck if ip  address is valid
+ * check if ip  address is valid
  * @param {String} ip - ip address
  */
 function validateIPaddress(ip) {
@@ -76,6 +76,7 @@ function validateIPaddress(ip) {
 /**
  * stores top data in memory for fast response times
  * cleans up un nessacery entrys and merges physics kills
+ * sorts weapons into array and out of the main object
  */
 function cacheTopResponse() {
   return new Promise((resolve, reject) => {

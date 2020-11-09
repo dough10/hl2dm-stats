@@ -27,7 +27,7 @@ function applyRipples() {
 }
 
 /**
- * loads paper ripples effec to DOM
+ * loads paper ripples effect to DOM
  */
 function loadRipples() {
   return new Promise((resolve, reject) => {
