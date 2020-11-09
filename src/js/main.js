@@ -305,7 +305,9 @@ function showApp() {
 function displayPlayerOnline(playersOnline) {
   var el = qs('#reset');
   var loadtime = new Date();
+  // lastDay = last day of the month
   var lastDay = new Date(loadtime.getFullYear(), loadtime.getMonth() + 1, 0);
+  // set resetTime  to 5am on 1st of the month
   var resetTime = new Date();
   resetTime.setHours(5);
   resetTime.setMinutes(0);
