@@ -372,6 +372,7 @@ function scanLine(line) {
         kills: 0,
         deaths: 0,
         kdr: 0,
+        suicide: 0,
         updated: lineTime,
         chat: []
       };
@@ -402,6 +403,7 @@ function scanLine(line) {
           kills: 0,
           deaths: 0,
           kdr: 0,
+          suicide: 0,
           updated: lineTime,
           chat: []
         };
@@ -450,6 +452,7 @@ function scanLine(line) {
         kills: 0,
         deaths: 0,
         kdr: 0,
+        suicide: 0,
         updated: lineTime,
         chat: []
       };
@@ -512,6 +515,7 @@ function scanLine(line) {
         kills: 0,
         deaths: 0,
         kdr: 0,
+        suicide: 0,
         chat: []
       };
     }
@@ -519,6 +523,7 @@ function scanLine(line) {
       users[id].updated = lineTime;
       users[id].name = name;
     }
+    users[id].suicide++
     users[id].kills--;
     users[id].deaths++;
     users[id].kdr = Number((users[id].kills / users[id].deaths).toFixed(2));
@@ -555,6 +560,7 @@ function scanLine(line) {
         deaths: 0,
         updated: lineTime,
         kdr: 0,
+        suicide: 0,
         chat: []
       };
     }
