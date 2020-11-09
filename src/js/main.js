@@ -667,7 +667,7 @@ function makeOption(option, value, parent) {
  * create a option element and append to the parent element
  *
  * @param {Number} month - # month
- * @param {Function} cb - the decimal identifier for the keystroke
+ * @param {Function} cb - callback function
  */
 function fetchOldMonths(month, cb) {
   if (!month) {

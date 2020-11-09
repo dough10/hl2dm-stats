@@ -31,8 +31,10 @@ setInterval(_ => {
 /**
  * display a toast message
  *
- * @param {String} message
- * @param {Number} timeout in seconds  || defualt 5 seconds  ** optional
+ * @param {String} message - text to be displayed in the toast
+ * @param {Number} _timeout - in seconds  || defualt 5 seconds  ** optional
+ * @param {String} link - url to go to when toast is clicked
+ * @param {String} linkText - yellow text
  */
 class Toast {
   constructor(message, _timeout, link, linkText) {
