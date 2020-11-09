@@ -65,15 +65,15 @@ image/gif;
         add_header 'Access-Control-Allow-Origin' '*';
     }
     location ~* \.(webp|jpg|jpeg|png|gif|ico|woff2|woff|ttf|svg|eot)$ {
-       expires 30d;
-       allow all;
-       add_header Pragma public;
-       add_header Cache-Control "public";
+        expires 30d;
+        allow all;
+        add_header Pragma public;
+        add_header Cache-Control "public";
     }
     location ~* \.(css|js|json)$ {
-       expires 7d;
-       allow all;
-       add_header Pragma public;
-       add_header Cache-Control "public";
+        expires 7d;
+        allow all;
+        add_header Pragma public;
+        add_header Cache-Control "public";
     }
  }

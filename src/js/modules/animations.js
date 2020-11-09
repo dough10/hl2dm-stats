@@ -45,6 +45,7 @@ function animateElement(el, transform, time, opacity, delay) {
  * fade in opacity of a given element
  *
  * @param {HTMLElement} el
+ * @param {Number} time
  */
 function fadeIn(el, time) {
   return new Promise(resolve => {
@@ -75,6 +76,7 @@ function fadeIn(el, time) {
  * fade out opacity of a given element
  *
  * @param {HTMLElement} el
+ * @param {Number} time
  */
 function fadeOut(el, time) {
   return new Promise(resolve => {
@@ -102,6 +104,7 @@ function fadeOut(el, time) {
 
 /**
  * animate scroll to top of the page
+ * by moving content down the page and when content reachest top position page snaps back into original position
  */
 function animateScroll() {
   return new Promise(resolve => {
