@@ -358,6 +358,7 @@ function scanLine(line) {
   var isHeadshot  = lineIsHeadshot(word);
   var isStats = lineIsStats(word);
   var isConsole = lineIsConsole(word);
+  console.log(word[3])
   if (isConsole) {
      return;
   } else if (isChat) {
