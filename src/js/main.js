@@ -1017,7 +1017,10 @@ alert.onClick(_ => {
 qs('#fab').onClick(animations.animateScroll);
 
 window.onload = registerServiceWorker().then(reg => {
-  // console.log(reg);
+  if (!('PushManager' in window)) {
+    return;
+  }
+  console.log(reg);
 }).then(loadRipples).then(_ => {
   if ("WebSocket" in window) {
     connectWSS();
