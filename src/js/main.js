@@ -17,11 +17,11 @@ HTMLElement.prototype.onClick = function (cb) {
  */
 function applyRipples() {
   return new Promise(resolve => {
-    // ripples.attachButtonRipple(qs('#fab'));
-    // qsa('.button').forEach(ripples.attachButtonRipple);
-    // qsa('.icon-button').forEach(ripples.attachRoundButtonRipple);
-    // qsa('.link').forEach(ripples.attachButtonRipple);
-    // ripples.attachButtonRipple(qs('#reset'));
+    ripples.attachButtonRipple(qs('#fab'));
+    qsa('.button').forEach(ripples.attachButtonRipple);
+    qsa('.icon-button').forEach(ripples.attachRoundButtonRipple);
+    qsa('.link').forEach(ripples.attachButtonRipple);
+    ripples.attachButtonRipple(qs('#reset'));
     resolve()
   });
 }
@@ -33,7 +33,7 @@ function loadRipples() {
   return new Promise((resolve, reject) => {
     loadCSSFile("../css/paper-ripple.min.css").then(_ => {
       loadJSFile('../js/paper-ripple.min.js').then(_ => {
-        applyRipples(_ => {
+        applyRipples().then(_ => {
           console.log('fuck')
           resolve();
         });
