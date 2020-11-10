@@ -19,7 +19,7 @@ image/gif;
     server_tokens off;
     charset UTF-8;
     root /var/www/hl2dm/html/;
-    location /index.html {
+    location / {
         try_files $uri $uri/ /index.html?$args;
         http2_push /manifest.json;
         http2_push /sw.js;
@@ -38,9 +38,6 @@ image/gif;
         http2_push /fonts/hl2mp.ttf;
         http2_push /fonts/csd.ttf;
         http2_push /fonts/roboto-v15-latin-regular.woff2;
-    }
-    location / {
-        try_files $uri $uri/ /index.html?$args;
     }
     location /api {
         proxy_set_header X-Real-IP $remote_addr;
