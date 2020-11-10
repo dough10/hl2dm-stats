@@ -12,6 +12,7 @@ const files = [
   'images/logo.webp',
   'images/logo192.png',
   'images/logo152.png',
+  'images/maskable_icon.png',
   'css/paper-ripple.min.css',
   'js/paper-ripple.min.js',
   'js/analytics.js',
