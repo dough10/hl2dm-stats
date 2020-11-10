@@ -910,11 +910,11 @@ var chokidar = require('chokidar');
 
 var watcher = chokidar.watch(logFolder, {ignored: /^\./, persistent: true});
 
-watcher
-  .on('add', function(path) {console.log('File', path, 'has been added');})
-  .on('change', function(path) {console.log('File', path, 'has been changed');})
-  .on('unlink', function(path) {console.log('File', path, 'has been removed');})
-  .on('error', function(error) {console.error('Error happened', error);})
+
+watcher.on('add', function(path) {console.log('File', path, 'has been added');})
+watcher.on('change', function(path) {console.log('File', path, 'has been changed');})
+watcher.on('unlink', function(path) {console.log('File', path, 'has been removed');})
+watcher.on('error', function(error) {console.error('Error happened', error);})
 
 app.get('/stats', (req, res) => {
   res.send(JSON.stringify([
