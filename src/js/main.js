@@ -34,6 +34,7 @@ function loadRipples() {
     loadCSSFile("../css/paper-ripple.min.css").then(_ => {
       loadJSFile('../js/paper-ripple.min.js').then(_ => {
         applyRipples(_ => {
+          console.log('fuck')
           resolve();
         });
       }).catch(reject);
