@@ -906,6 +906,16 @@ var j = schedule.scheduleJob('0 5 1 * *', cleanUp);
 
 console.log(`${new Date()} - Loading API backend calls`);
 
+var chokidar = require('chokidar');
+
+var watcher = chokidar.watch('file or dir', {ignored: /^\./, persistent: true});
+
+watcher
+  .on('add', function(path) {console.log('File', path, 'has been added');})
+  .on('change', function(path) {console.log('File', path, 'has been changed');})
+  .on('unlink', function(path) {console.log('File', path, 'has been removed');})
+  .on('error', function(error) {console.error('Error happened', error);})
+
 app.get('/stats', (req, res) => {
   res.send(JSON.stringify([
     top,
