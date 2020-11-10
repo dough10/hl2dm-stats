@@ -1018,6 +1018,7 @@ qs('#fab').onClick(animations.animateScroll);
 
 window.onload = registerServiceWorker().then(reg => {
   // console.log(reg);
+}).then(loadRipples).then(_ => {
   if ("WebSocket" in window) {
     connectWSS();
   } else {
@@ -1032,6 +1033,4 @@ window.onload = registerServiceWorker().then(reg => {
   page('/old-stats', oldStatsPage);
   page('/demos', demosPage);
   page();
-}).then(loadRipples).then(_ => {
-  console.log('?')
 });
