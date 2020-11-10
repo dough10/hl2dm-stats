@@ -20,6 +20,7 @@ image/gif;
     charset UTF-8;
     root /var/www/hl2dm/html/;
     location /index.html {
+        try_files $uri $uri/ /index.html?$args;
         http2_push /manifest.json;
         http2_push /sw.js;
         http2_push /favicon.ico;
