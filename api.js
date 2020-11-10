@@ -908,7 +908,7 @@ console.log(`${new Date()} - Loading API backend calls`);
 
 var chokidar = require('chokidar');
 
-var watcher = chokidar.watch('file or dir', {ignored: /^\./, persistent: true});
+var watcher = chokidar.watch(logFolder, {ignored: /^\./, persistent: true});
 
 watcher
   .on('add', function(path) {console.log('File', path, 'has been added');})
