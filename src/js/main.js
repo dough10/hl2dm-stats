@@ -33,10 +33,7 @@ function loadRipples() {
   return new Promise((resolve, reject) => {
     loadCSSFile("../css/paper-ripple.min.css").then(_ => {
       loadJSFile('../js/paper-ripple.min.js').then(_ => {
-        applyRipples().then(_ => {
-          console.log('fuck')
-          resolve();
-        });
+        applyRipples().then(resolve);
       }).catch(reject);
     });
   });
