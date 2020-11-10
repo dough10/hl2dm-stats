@@ -351,7 +351,6 @@ function lineIsConsole(line) {
  */
 function scanLine(line) {
   var word  = line.split(' ');
-  const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
   var isKill = lineIsKill(word);
   var isConnect = lineIsConnect(word);
   var isSuicide = lineIsSuicide(word);
@@ -359,6 +358,7 @@ function scanLine(line) {
   var isHeadshot  = lineIsHeadshot(word);
   var isStats = lineIsStats(word);
   var isConsole = lineIsConsole(word);
+  const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
   if (isConsole) {
      return;
   } else if (isChat) {
