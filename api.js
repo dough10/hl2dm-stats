@@ -358,10 +358,10 @@ function scanLine(line) {
   var isHeadshot  = lineIsHeadshot(word);
   var isStats = lineIsStats(word);
   var isConsole = lineIsConsole(word);
-  const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
   if (isConsole) {
      return;
   } else if (isChat) {
+    const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
     const nameString = buildKillerNameString(word, isChat);
     const id = getID3(nameString);
     const name = getName(nameString);
@@ -389,6 +389,7 @@ function scanLine(line) {
     said.replace('"', '');
     users[id].chat.push(said);
   } else if (isConnect) {
+    const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
     const connectedNameString = buildKillerNameString(word, isConnect);
     const connectedUser = getID3(connectedNameString);
     const connectedUserName = getName(connectedNameString);
@@ -415,6 +416,7 @@ function scanLine(line) {
       }
     }
   } else if (isKill) {
+    const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
     const killerNameString = buildKillerNameString(word, isKill);
     const killerID = getID3(killerNameString);
     const killerName = getName(killerNameString);
@@ -498,6 +500,7 @@ function scanLine(line) {
     // add server wide weapon kill
     weapons[weapon]++;
   } else if (isSuicide) {
+    const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
     const nameString = buildKillerNameString(word, isSuicide);
     const id = getID3(nameString);
     const name = getName(nameString);
@@ -539,6 +542,7 @@ function scanLine(line) {
       weapons.headshots = 0;
     }
     weapons.headshots++;
+    const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
     const killerNameString = buildKillerNameString(word, isHeadshot - 1);
     const id = getID2(killerNameString);
     const name = getName(killerNameString);
@@ -569,6 +573,7 @@ function scanLine(line) {
       users[id3].name = name;
     }
   } else if (isStats) {
+    const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
     const killedNameString = buildKillerNameString(word, isStats - 1);
     const id = getID2(killedNameString);
     const name = getName(killedNameString);
