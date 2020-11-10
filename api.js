@@ -350,8 +350,8 @@ function lineIsConsole(line) {
  * @param {String} line - one line of the log file being parsed
  */
 function scanLine(line) {
-  const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
   var word  = line.split(' ');
+  const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
   var isKill = lineIsKill(word);
   var isConnect = lineIsConnect(word);
   var isSuicide = lineIsSuicide(word);
