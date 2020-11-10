@@ -111,7 +111,7 @@ function createSVG(d, count, title, suicides) {
   tooltip.classList.add('tooltiptext');
   tooltip.textContent = `${title}: ${count}`;
   if (suicides) {
-    tooltip.textContent = `${tooltip.textContent}, by suicide ${suicides}`
+    tooltip.textContent = `${tooltip.textContent}, ${suicides} by suicide`
   }
   wrapper.appendChild(tooltip);
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
