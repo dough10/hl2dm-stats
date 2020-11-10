@@ -8,6 +8,7 @@ const files = [
   'favicon.ico',
   'manifest.json',
   'sw.js',
+  'robots.txt',
   'images/avatar.webp',
   'images/logo.webp',
   'images/maskable_icon.png',
