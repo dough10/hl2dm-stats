@@ -18,8 +18,8 @@ image/gif;
     gunzip on;
     server_tokens off;
     charset UTF-8;
-    root /var/www/hl2dm/html/;
     location / {
+        root /var/www/hl2dm/html/;
         try_files $uri $uri/ /index.html?$args;
         http2_push /manifest.json;
         http2_push /sw.js;
@@ -41,6 +41,7 @@ image/gif;
         http2_push /fonts/roboto-v15-latin-regular.woff2;
     }
     location /api {
+        root /var/www/hl2dm/html/;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header Host $http_host;
