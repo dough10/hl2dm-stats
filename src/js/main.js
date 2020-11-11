@@ -586,11 +586,11 @@ function displayPlayer(player) {
   var playerName = player.name;
   const wrapper = document.createElement('div');
   wrapper.classList.add('playeronline');
-  const player = document.createElement('div');
-  player.textContent = playerName;
+  const playerDiv = document.createElement('div');
+  playerDiv.textContent = playerName;
   const score = document.createElement('div');
   score.textContent = player.score;
-  wrapper.appendChild(player);
+  wrapper.appendChild(playerDiv);
   wrapper.appendChild(score);
   // for toasts
   if (playerName && !playersOnline.includes(playerName)) {
