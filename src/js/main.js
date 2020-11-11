@@ -580,16 +580,16 @@ function parseDemos(demos) {
 /**
  * display statistics about a player
  *
- * @param {Object} status - status object from GameDig node js module
+ * @param {Object} player - player object from GameDig node js module
  */
-function displayPlayer(status) {
-  var playerName = status.players[i].name;
+function displayPlayer(player) {
+  var playerName = player.name;
   const wrapper = document.createElement('div');
   wrapper.classList.add('playeronline');
   const player = document.createElement('div');
   player.textContent = playerName;
   const score = document.createElement('div');
-  score.textContent = status.players[i].score;
+  score.textContent = player.score;
   wrapper.appendChild(player);
   wrapper.appendChild(score);
   // for toasts
@@ -620,7 +620,7 @@ function parseServerStatus(status) {
       pContainer.appendChild(emptyServer());
     } else {
       for (let i = 0; i < numPlayersOnline; i++) {
-        pContainer.appendChild(displayPlayer(status));
+        pContainer.appendChild(displayPlayer(status.players[i]));
         pContainer.appendChild(lineSpacer());
       }
     }
