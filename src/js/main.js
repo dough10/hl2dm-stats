@@ -33,7 +33,7 @@ function loadRipples() {
   return new Promise((resolve, reject) => {
     loadCSSFile("../css/paper-ripple.min.css").then(_ => {
       loadJSFile('../js/paper-ripple.min.js').then(applyRipples).then(resolve).catch(reject);
-    });
+    }).catch(reject);
   });
 }
 
@@ -50,7 +50,6 @@ function cascadeCards(container) {
       animations.animateElement(cards[i], 'translateX(0)', 200, 1, i * 50);
     }
     const nocard = qs('.nocard', container);
-    // console.log(nocard, container)
     if (!nocard) return;
     nocard.style.display = 'block';
     animations.animateElement(nocard, 'translateX(0)', 200, 1, i * 50);
@@ -126,6 +125,33 @@ function createSVG(d, count, title, suicides) {
   text.textContent = count;
   wrapper.appendChild(text);
   return wrapper;
+}
+
+/**
+ * returns a element with "server offline" text
+ */
+function offlineServer() {
+  const div = document.createElement('div');
+  div.textContent = "Server offline";
+  return div;
+}
+
+/**
+ * returns a element with "no players online" text
+ */
+function emptyServer() {
+  const div = document.createElement('div');
+  div.textContent = "No Players Online";
+  return div;
+}
+
+/**
+ * returns a line seperator element
+ */
+function lineSpacer() {
+  const spacer = document.createElement('div');
+  spacer.classList.add('spacer');
+  return spacer;
 }
 
 /**
@@ -552,6 +578,31 @@ function parseDemos(demos) {
 }
 
 /**
+ * display statistics about a player
+ *
+ * @param {Object} status - status object from GameDig node js module
+ */
+function displayPlayer(status) {
+  var playerName = status.players[i].name;
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('playeronline');
+  const player = document.createElement('div');
+  player.textContent = playerName;
+  const score = document.createElement('div');
+  score.textContent = status.players[i].score;
+  wrapper.appendChild(player);
+  wrapper.appendChild(score);
+  // for toasts
+  if (playerName && !playersOnline.includes(playerName)) {
+    playersOnline.push(playerName);
+    if (loaded) {
+      new Toast(`${playerName} has joined the game`, 3, 'steam://connect/hl2dm.dough10.me:27015', 'Join');
+    }
+  }
+  return wrapper;
+}
+
+/**
  * lparse and display server statistics
  *
  * @param {Object} status - status object from GameDig node js module
@@ -561,38 +612,16 @@ function parseServerStatus(status) {
   pContainer.innerHTML = '';
   if (status !== "offline") {
     document.title = status.name;
-    qsa('.hostname').forEach(el => {
-      el.textContent = status.name;
-    });
+    qs('.hostname').textContent = status.name;
     qs('#numPlayers').textContent = status.maxplayers;
     qs('#map').textContent = status.map;
     numPlayersOnline = status.players.length;
     if (numPlayersOnline === 0) {
-      const div = document.createElement('div');
-      div.textContent = "No Players Online";
-      pContainer.appendChild(div);
+      pContainer.appendChild(emptyServer());
     } else {
       for (let i = 0; i < numPlayersOnline; i++) {
-        var playerName = status.players[i].name;
-        const wrapper = document.createElement('div');
-        wrapper.classList.add('playeronline');
-        const player = document.createElement('div');
-        player.textContent = playerName;
-        const score = document.createElement('div');
-        score.textContent = status.players[i].score;
-        wrapper.appendChild(player);
-        wrapper.appendChild(score);
-        pContainer.appendChild(wrapper);
-        const spacer = document.createElement('div');
-        spacer.classList.add('spacer');
-        pContainer.appendChild(spacer);
-        // for toasts
-        if (playerName && !playersOnline.includes(playerName)) {
-          playersOnline.push(playerName);
-          if (loaded) {
-            new Toast(`${playerName} has joined the game`, 3, 'steam://connect/hl2dm.dough10.me:27015', 'Join');
-          }
-        }
+        pContainer.appendChild(displayPlayer(status));
+        pContainer.appendChild(lineSpacer());
       }
     }
     // copy players online
@@ -611,9 +640,7 @@ function parseServerStatus(status) {
       playersOnline.splice(playersOnline.indexOf(player), 1);
     });
   } else {
-    const div = document.createElement('div');
-    div.textContent = "Server offline";
-    pContainer.appendChild(div);
+    pContainer.appendChild(offlineServer());
   }
 }
 
