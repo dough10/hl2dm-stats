@@ -603,6 +603,27 @@ function displayPlayer(player) {
 }
 
 /**
+ * handles notifications for players leaving the server
+ */
+function removeOfflinePlayers() {
+  // copy players online
+  var notOnline = [...playersOnline];
+  for (var ndx = 0; ndx < playersOnline.length; ndx++) {
+    for (var ndx2 = 0; ndx2 < status.players.length; ndx2++) {
+      if (notOnline[ndx] === status.players[ndx2].name) {
+        // remove players if still online. notOnline should only contain player who are no longer online
+        notOnline.splice(notOnline.indexOf(notOnline[ndx]), 1);
+      }
+    }
+  }
+  // remove player from online array and notify UI
+  notOnline.forEach(player => {
+    new Toast(`${player} has left the server`, 3);
+    playersOnline.splice(playersOnline.indexOf(player), 1);
+  });
+}
+
+/**
  * lparse and display server statistics
  *
  * @param {Object} status - status object from GameDig node js module
@@ -624,21 +645,7 @@ function parseServerStatus(status) {
         pContainer.appendChild(lineSpacer());
       }
     }
-    // copy players online
-    var notOnline = [...playersOnline];
-    for (var ndx = 0; ndx < playersOnline.length; ndx++) {
-      for (var ndx2 = 0; ndx2 < status.players.length; ndx2++) {
-        if (notOnline[ndx] === status.players[ndx2].name) {
-          // remove players if still online. notOnline should only contain player who are no longer online
-          notOnline.splice(notOnline.indexOf(notOnline[ndx]), 1);
-        }
-      }
-    }
-    // remove player from online array and notify UI
-    notOnline.forEach(player => {
-      new Toast(`${player} has left the server`, 3);
-      playersOnline.splice(playersOnline.indexOf(player), 1);
-    });
+    removeOfflinePlayers();
   } else {
     pContainer.appendChild(offlineServer());
   }
