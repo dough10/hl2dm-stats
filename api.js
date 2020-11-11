@@ -496,9 +496,6 @@ function scanLine(line) {
     if (!weapons[weapon]) {
       weapons[weapon] = 0;
     }
-    if (weapon === 'physcannon') {
-      console.log(line);
-    }
     // add killer kill with weapon
     users[killerID][weapon]++;
     // add server wide weapon kill
@@ -536,9 +533,6 @@ function scanLine(line) {
     if (!isWeapon(weapon)) {
       console.log(`${line} weapon error`);
       return;
-    }
-    if (weapon === 'physcannon') {
-      console.log(line);
     }
     if (!weapons[weapon]) {
       weapons[weapon] = 0;
