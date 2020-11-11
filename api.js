@@ -39,6 +39,29 @@ Object.size = obj => {
 };
 
 /**
+ *
+ */
+class Timer {
+  constructor() {
+    this.startTime = new Date().getTime();
+  }
+  end() {
+    var end = new Date().getTime();
+    var ms = end - this.startTime;
+    var seconds = ms / 1000;
+    var hours = parseInt( seconds / 3600 );
+    seconds = seconds % 3600;
+    var minutes = parseInt( seconds / 60 );
+    seconds = seconds % 60;
+    return [
+      hours,
+      minutes,
+      seconds
+    ];
+  }
+}
+
+/**
  * checks if weapon selection is a valid weapon name
  *
  * @param {String} weapon - name of a weapon

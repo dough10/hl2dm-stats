@@ -605,12 +605,12 @@ function displayPlayer(player) {
 /**
  * handles notifications for players leaving the server
  */
-function removeOfflinePlayers() {
+function removeOfflinePlayers(players) {
   // copy players online
   var notOnline = [...playersOnline];
   for (var ndx = 0; ndx < playersOnline.length; ndx++) {
-    for (var ndx2 = 0; ndx2 < status.players.length; ndx2++) {
-      if (notOnline[ndx] === status.players[ndx2].name) {
+    for (var ndx2 = 0; ndx2 < players.length; ndx2++) {
+      if (notOnline[ndx] === players[ndx2].name) {
         // remove players if still online. notOnline should only contain player who are no longer online
         notOnline.splice(notOnline.indexOf(notOnline[ndx]), 1);
       }
@@ -645,7 +645,7 @@ function parseServerStatus(status) {
         pContainer.appendChild(lineSpacer());
       }
     }
-    removeOfflinePlayers();
+    removeOfflinePlayers(status.players);
   } else {
     pContainer.appendChild(offlineServer());
   }
