@@ -30,8 +30,6 @@ image/gif;
         http2_push /js/analytics.js;
         http2_push /images/avatar.webp;
         http2_push /images/logo.webp;
-        http2_push /images/logo152.png;
-        http2_push /images/logo192.png;
         http2_push /images/maskable_icon.png;
         http2_push /css/paper-ripple.min.css;
         http2_push /js/paper-ripple.min.js;
