@@ -49,7 +49,10 @@ function animateElement(el, transform, time, opacity, delay) {
  */
 function fadeIn(el, time) {
   return new Promise(resolve => {
-    console.log(el.style.opacity);
+    if (!el) {
+      return resolve();
+    }
+    console.log(el, el.style.opacity)
     if (el.style.opacity === 1) {
       return resolve();
     }
@@ -80,6 +83,9 @@ function fadeIn(el, time) {
  */
 function fadeOut(el, time) {
   return new Promise(resolve => {
+    if (!el) {
+      return resolve();
+    }
     if (el.style.opacity === 0) {
       return resolve();
     }
