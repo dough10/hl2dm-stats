@@ -52,7 +52,7 @@ function fadeIn(el, time) {
     if (!el) {
       return resolve();
     }
-    console.log(el, el.style.opacity)
+    console.log(el.id, el.style.opacity)
     if (el.style.opacity === 1) {
       return resolve();
     }
