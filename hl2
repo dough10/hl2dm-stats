@@ -4,6 +4,7 @@ server {
     server_name hl2dm.dough10.me;
     ssl_certificate /etc/letsencrypt/live/hl2dm.dough10.me/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/hl2dm.dough10.me/privkey.pem;
+    ssl_ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5;
     add_header Strict-Transport-Security "max-age=31536000";
     access_log /home/crumb/hl2dm.log;
     error_log /home/crumb/hl2dm_errors.log;
