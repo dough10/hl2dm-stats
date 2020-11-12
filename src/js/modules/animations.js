@@ -55,7 +55,7 @@ function fadeIn(el, time) {
     if (!el) {
       return resolve();
     }
-    if (el.id === 'stuff-below' && el.style.opacity === 1) {
+    if (el.id === 'stuff-below') {
       console.log(el.style.opacity)
     }
     if (el.style.opacity === 1) {
