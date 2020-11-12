@@ -43,6 +43,7 @@ sudo chmod +x ./monitor.sh
 sudo chmod +x ./update.sh
 sudo chmod +x ./start.sh
 sudo chmod +x ./install.sh
+sudo chmod +x ./logs.sh
 
 
 echo "\e[39m---------------\e[33mresume monitor\e[39m---------------"
