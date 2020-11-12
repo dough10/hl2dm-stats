@@ -49,6 +49,7 @@ function animateElement(el, transform, time, opacity, delay) {
  */
 function fadeIn(el, time) {
   return new Promise(resolve => {
+    console.log(el.style.opacity);
     if (el.style.opacity === 1) {
       return resolve();
     }
