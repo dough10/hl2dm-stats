@@ -8,5 +8,6 @@ echo '   \ \_______\ \_______\ \_______\ \_______\ \__\ \__\   \ \__\ \_______\'
 echo '    \|_______|\|_______|\|_______|\|_______|\|__|\|__|    \|__|\|_______|'
 echo '\e[33m'
 echo 'https://github.com/dough10/hl2dm-stats'
+cd /appdata/hl2dm/hl2mp/logs
 log=$(ls -t *.log | head -1)
 tail -f $log
