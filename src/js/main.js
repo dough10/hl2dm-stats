@@ -954,7 +954,7 @@ function oldStatsPage() {
  * page scroll listener
  */
 qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
-  const infoHeight = qs('#info').offsetHeight / 2;
+  const infoHeight = Math.round(qs('#info').offsetHeight / 2);
   var wrapper;
   var page1 = qs('#page1');
   var page2 = qs('#page2');
@@ -973,7 +973,7 @@ qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
   if (top <= 65) {
     top = 65;
   }
-  if (scrollTop > infoHeight) {
+  if (scrollTop === infoHeight) {
     animations.fadeIn(qs('#dl-buttons'));
     cascadeCards(wrapper);
     animations.fadeOut(qs('#stuff-below'));
