@@ -13,6 +13,9 @@ export {animateElement, animateScroll, fadeIn, fadeOut, animateHeight};
  */
 function animateElement(el, transform, time, opacity, delay) {
   return new Promise(resolve => {
+    if (!el) {
+      return resolve();
+    }
     if (el.style.transform === transform) {
       resolve();
       return;
@@ -52,7 +55,6 @@ function fadeIn(el, time) {
     if (!el) {
       return resolve();
     }
-    console.log(el.id, el.style.opacity)
     if (el.style.opacity === 1) {
       return resolve();
     }
@@ -132,6 +134,9 @@ function animateScroll() {
  */
 function animateHeight(el, height, time) {
   return new Promise(resolve => {
+    if (!el) {
+      return resolve();
+    }
     var timer = 0;
     const animationEnd = _ => {
       el.removeEventListener(transitionEvent, animationEnd);
