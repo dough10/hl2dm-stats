@@ -50,8 +50,7 @@ function animateElement(el, transform, time, opacity, delay) {
 function fadeIn(el, time) {
   return new Promise(resolve => {
     if (el.style.opacity === 1) {
-      resolve();
-      return;
+      return resolve();
     }
     if (!time) {
       time = 200;
@@ -81,8 +80,7 @@ function fadeIn(el, time) {
 function fadeOut(el, time) {
   return new Promise(resolve => {
     if (el.style.opacity === 0) {
-      resolve();
-      return;
+      return resolve();
     }
     if (!time) {
       time = 200;
