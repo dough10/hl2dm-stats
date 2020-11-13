@@ -20,8 +20,7 @@ image/gif;
     server_tokens off;
     charset UTF-8;
     root /var/www/hl2dm/html/;
-    location / {
-        try_files $uri $uri/ /index.html?$args;
+    location /index.html {
         http2_push /manifest.json;
         http2_push /sw.js;
         http2_push /favicon.ico;
@@ -38,6 +37,9 @@ image/gif;
         http2_push /fonts/hl2mp.ttf;
         http2_push /fonts/csd.ttf;
         http2_push /fonts/roboto-v15-latin-regular.woff2;
+    }
+    location / {
+        try_files $uri $uri/ /index.html?$args;
     }
     location /api {
         proxy_set_header X-Real-IP $remote_addr;
@@ -64,6 +66,10 @@ image/gif;
     }
     location /stat {
         rtmp_stat all;
+        rtmp_stat_stylesheet stat.xsl;
+    }
+    location /stat.xsl {
+        root /home/crumb/nginx-rtmp-monitoring;
     }
     location ~* \.(webp|jpg|jpeg|png|gif|ico|woff2|woff|ttf|svg|eot)$ {
         expires 30d;
