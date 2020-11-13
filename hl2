@@ -64,6 +64,13 @@ image/gif;
     }
     location /rtmp_stat {
         rtmp_stat all;
+        rtmp_stat_stylesheet stat.xsl;
+    }
+    location /stat.xsl {
+        root /usr/build/nginx-rtmp-module;
+    }
+    location /rtmp_control {
+        rtmp_control all;
     }
     location ~* \.(webp|jpg|jpeg|png|gif|ico|woff2|woff|ttf|svg|eot)$ {
         expires 30d;
