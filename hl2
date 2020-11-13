@@ -51,6 +51,8 @@ image/gif;
         proxy_set_header Host $host;
         proxy_redirect off;
         proxy_set_header Accept-Encoding "";
+        allow 127.0.0.0/24;
+        deny all;
     }
     location /hls/ {
         types {
@@ -60,17 +62,12 @@ image/gif;
         root /tmp;
         add_header Cache-Control no-cache;
         add_header 'Access-Control-Allow-Origin' '*';
+        allow 192.168.86.0/24;
+        deny all;
     }
     location /stat {
         rtmp_stat all;
         rtmp_stat_stylesheet stat.xsl;
-        allow 192.168.2.0/24;
-        allow 192.168.86.0/24;
-        deny all;
-    }
-    location /control {
-        rtmp_control all;
-        allow 192.168.2.0/24;
         allow 192.168.86.0/24;
         deny all;
     }
