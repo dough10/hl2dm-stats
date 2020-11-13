@@ -51,8 +51,6 @@ image/gif;
         proxy_set_header Host $host;
         proxy_redirect off;
         proxy_set_header Accept-Encoding "";
-        allow 127.0.0.0/24;
-        deny all;
     }
     location /hls/ {
         types {
