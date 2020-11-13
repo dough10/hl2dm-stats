@@ -64,12 +64,21 @@ image/gif;
     location /stat {
         rtmp_stat all;
         rtmp_stat_stylesheet stat.xsl;
+        allow 192.168.2.0/24;
+        allow 192.168.86.0/24;
+        deny all;
     }
     location /stat.xsl {
         root /home/crumb/nginx-rtmp-monitoring;
+        allow 192.168.2.0/24;
+        allow 192.168.86.0/24;
+        deny all;
     }
     location /control {
         rtmp_control all;
+        allow 192.168.2.0/24;
+        allow 192.168.86.0/24;
+        deny all;
     }
     location / {
         try_files $uri $uri/ /index.html?$args;
