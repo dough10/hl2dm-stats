@@ -62,14 +62,10 @@ image/gif;
         add_header Cache-Control no-cache;
         add_header 'Access-Control-Allow-Origin' '*';
     }
-    location /rtmp_stat {
+    location /stat {
         rtmp_stat all;
-        rtmp_stat_stylesheet stat.xsl;
     }
-    location /stat.xsl {
-        root /usr/build/nginx-rtmp-module;
-    }
-    location /rtmp_control {
+    location /control {
         rtmp_control all;
     }
     location ~* \.(webp|jpg|jpeg|png|gif|ico|woff2|woff|ttf|svg|eot)$ {
