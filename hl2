@@ -38,9 +38,6 @@ image/gif;
         http2_push /fonts/csd.ttf;
         http2_push /fonts/roboto-v15-latin-regular.woff2;
     }
-    location / {
-        try_files $uri $uri/ /index.html?$args;
-    }
     location /api {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -73,6 +70,9 @@ image/gif;
     }
     location /control {
         rtmp_control all;
+    }
+    location / {
+        try_files $uri $uri/ /index.html?$args;
     }
     location ~* \.(webp|jpg|jpeg|png|gif|ico|woff2|woff|ttf|svg|eot)$ {
         expires 30d;
