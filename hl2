@@ -65,9 +65,6 @@ image/gif;
     location /stat {
         rtmp_stat all;
     }
-    location /control {
-        rtmp_control all;
-    }
     location ~* \.(webp|jpg|jpeg|png|gif|ico|woff2|woff|ttf|svg|eot)$ {
         expires 30d;
         allow all;
