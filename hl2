@@ -62,6 +62,9 @@ image/gif;
         add_header Cache-Control no-cache;
         add_header 'Access-Control-Allow-Origin' '*';
     }
+    location /rtmp_stat {
+        rtmp_stat all;
+    }
     location ~* \.(webp|jpg|jpeg|png|gif|ico|woff2|woff|ttf|svg|eot)$ {
         expires 30d;
         allow all;
