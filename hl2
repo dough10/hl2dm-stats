@@ -63,7 +63,7 @@ image/gif;
         allow 192.168.86.0/24;
         deny all;
     }
-    location /stat {
+    location /rtmp_stat {
         rtmp_stat all;
         rtmp_stat_stylesheet stat.xsl;
         add_header Refresh "3; $request_uri";
