@@ -32,6 +32,7 @@ image/gif;
         proxy_set_header Host $host;
         proxy_redirect off;
         proxy_set_header Accept-Encoding "";
+        add_header 'Access-Control-Allow-Origin' '*';
         allow 192.168.86.0/24;
         deny all;
     }

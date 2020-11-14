@@ -59,7 +59,6 @@ image/gif;
         }
         root /tmp;
         add_header Cache-Control no-cache;
-        add_header 'Access-Control-Allow-Origin' '*';
         allow 192.168.86.0/24;
         deny all;
     }
