@@ -11,6 +11,7 @@ const files = [
   'robots.txt',
   'images/avatar.webp',
   'images/logo.webp',
+  'images/yeeeeeehawwwwwwmf.webp',
   'images/maskable_icon.png',
   'css/paper-ripple.min.css',
   'js/paper-ripple.min.js',
@@ -23,7 +24,8 @@ const files = [
   'fonts/roboto-v15-latin-regular.eot',
   'fonts/halflife2.ttf',
   'fonts/hl2mp.ttf',
-  'fonts/csd.ttf'
+  'fonts/csd.ttf',
+  'hoedowntv.html'
 ];
 
 

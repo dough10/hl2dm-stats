@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style media="screen">
+      body {
+        display: flex;
+        align-items: center;
+      }
+      #video {
+        height: 420px;
+        margin: auto;
+      }
+    </style>
+    <title>Hoedown TV</title>
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <video id="video" controls poster="images/yeeeeeehawwwwwwmf.webp"></video>
+    <script>
+      if(Hls.isSupported()) {
+        var video = document.getElementById('video');
+        var hls = new Hls();
+        hls.loadSource('https://hl2dm.dough10.me/hls/hl2mp.m3u8');
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, video.play);
+      }
+    </script>
+  </body>
+</html>

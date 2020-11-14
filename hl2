@@ -52,7 +52,7 @@ image/gif;
         proxy_redirect off;
         proxy_set_header Accept-Encoding "";
     }
-    location /hls/ {
+    location /hls {
         types {
             application/vnd.apple.mpegurl m3u8;
             video/mp2t ts;
@@ -67,6 +67,11 @@ image/gif;
         rtmp_stat all;
         rtmp_stat_stylesheet stat.xsl;
         add_header Refresh "3; $request_uri";
+        allow 192.168.86.0/24;
+        deny all;
+    }
+    location /rtmp_control {
+        rtmp_control all;
         allow 192.168.86.0/24;
         deny all;
     }
