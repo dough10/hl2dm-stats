@@ -1011,9 +1011,7 @@ app.ws('/', (ws, req) => {
 });
 
 app.get('*', (req, res) => {
-  res.status(404).sendFile('404.html', {
-    root: path.join(__dirname, 'html')
-  });
+  res.status(404).sendFile(`${__dirname}/html/404.html`);
 });
 
 app.listen(3000);
