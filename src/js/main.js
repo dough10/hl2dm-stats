@@ -574,7 +574,6 @@ function parseTopData(top, page, cb) {
  * @param {Array} demos - list of demos from this month
  */
 function parseDemos(demos) {
-  var ti = new Timer();
   demos.forEach(demo => {
     const a = document.createElement('a');
     a.href = `https://hl2dm.dough10.me/api/download/${demo[0]}`;
@@ -598,7 +597,6 @@ function parseDemos(demos) {
     qs('#page3').appendChild(a);
     ripples.attachButtonRipple(card);
   });
-  console.log(ti.end());
   showApp();
 }
 
