@@ -101,6 +101,14 @@
         hls.on(Hls.Events.MANIFEST_PARSED, video.play);
       }
 
+      function qs(selector, scope) {
+        return (scope || document).querySelector(selector)
+      }
+
+      function qsa(selector, scope) {
+        return (scope || document).querySelectorAll(selector)
+      }
+
       /**
        * display statistics about a player
        *
