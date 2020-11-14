@@ -53,7 +53,13 @@
         pointer-events: none;
         z-index: 1;
       }
+      .control_wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
       #video {
+        pointer-events: none;
         width: 40%;
         margin: auto;
         margin-top: 70px;
@@ -73,7 +79,12 @@
   <body>
     <header></header>
     <div class="header-shadow"></div>
-    <video id="video" controls poster="images/yeeeeeehawwwwwwmf.webp"></video>
+    <video id="video" poster="images/yeeeeeehawwwwwwmf.webp"></video>
+    <div class="control_wrapper">
+      <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
+      </svg>
+    </div>
     <script>
       if(Hls.isSupported()) {
         var video = document.getElementById('video');
