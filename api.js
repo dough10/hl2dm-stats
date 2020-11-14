@@ -1010,6 +1010,10 @@ app.ws('/', (ws, req) => {
   socket.send(JSON.stringify(serverStatus));
 });
 
+app.get('*', (req, res) => {
+  res.status(404).sendFile(path.join(__dirname, 'html', '404.html'));
+});
+
 app.listen(3000);
 
 console.log(`${new Date()} - API is now active on port 3000`);
