@@ -32,6 +32,7 @@ forever start api.js -l -o -e
 
 echo "\e[39m---------------\e[33mupdate nginx site file\e[39m---------------"
 sudo cp -u -p /var/www/hl2dm/hl2 /etc/nginx/sites-enabled/hl2
+sudo cp -u -p /var/www/hl2dm/director /etc/nginx/sites-enabled/director
 
 
 echo "\e[39m---------------\e[33mrestart nginx\e[39m---------------"
