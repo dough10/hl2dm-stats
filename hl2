@@ -39,7 +39,6 @@ image/gif;
         http2_push /fonts/roboto-v15-latin-regular.woff2;
     }
     location /api/ {
-        alias /var/www/html/;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header Host $http_host;
@@ -87,7 +86,7 @@ image/gif;
         deny all;
     }
     location /rtmp_control/ {
-        alias /var/www/html/;  
+        alias /var/www/html/;
         rtmp_control all;
         allow 192.168.86.0/24;
         deny all;
