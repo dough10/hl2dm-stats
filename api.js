@@ -1011,7 +1011,7 @@ app.ws('/', (ws, req) => {
 });
 
 app.use((req, res) => {
-  res.status(404).sendFile(`${__dirname}/html/404.html`);
+  res.status(404).sendFile(`404.html`, {root:`${__dirname}/html/`});
 });
 
 app.listen(3000);
