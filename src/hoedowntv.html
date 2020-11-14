@@ -124,13 +124,6 @@
         score.textContent = player.score;
         wrapper.appendChild(playerDiv);
         wrapper.appendChild(score);
-        // for toasts
-        if (playerName && !playersOnline.includes(playerName)) {
-          playersOnline.push(playerName);
-          if (loaded) {
-            new Toast(`${playerName} has joined the game`, 3, 'steam://connect/hl2dm.dough10.me:27015', 'Join');
-          }
-        }
         return wrapper;
       }
 
