@@ -194,7 +194,11 @@
           response.json().then(parseServerStatus);
         })
       }
+
       getPlayers();
+      setInterval(_ => {
+        getPlayers();
+      }, 10000);
     </script>
   </body>
 </html>
