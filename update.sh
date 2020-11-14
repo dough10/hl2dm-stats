@@ -9,7 +9,7 @@ echo '    \|_______|\|_______|\|_______|\|_______|\|__|\|__|    \|__|\|_______|'
 echo '\e[33m'
 echo 'https://github.com/dough10/hl2dm-stats'
 echo '\e[39mUpdating...'
-
+sudo mount -a
 echo "\e[39m---------------\e[33mstopping API\e[39m---------------"
 foreverOutput=$(forever list)
 uid=$(echo $foreverOutput | cut -d ' ' -f18)
