@@ -101,7 +101,7 @@
         hls.on(Hls.Events.MANIFEST_PARSED, video.play);
       }
       function getPlayers() {
-        fetch('https://director.dough10.me').then(response => {
+        fetch('https://hl2dm.dough10.me/director').then(response => {
           if (response.status !== 200) {
             console.error(response.status);
             return;
