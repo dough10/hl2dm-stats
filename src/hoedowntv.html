@@ -26,7 +26,7 @@
       }
       body {
         display: flex;
-        align-items: center;
+        justify-content: center;
         background: var(--background-color);
         font-family: 'Roboto', 'Noto', sans-serif;
       }
@@ -90,6 +90,9 @@
     <div class="header-shadow"></div>
     <div class="container">
       <video id="video" controls poster="images/yeeeeeehawwwwwwmf.webp"></video>
+      <div id="shit">
+
+      </div>
     </div>
     <script>
       if(Hls.isSupported()) {
@@ -98,6 +101,9 @@
         hls.loadSource('https://hl2dm.dough10.me/hls/hl2mp.m3u8');
         hls.attachMedia(video);
         hls.on(Hls.Events.MANIFEST_PARSED, video.play);
+      }
+      function getPlayers() {
+        fetch('http://192.168.86.31:3000').then(console.log)
       }
     </script>
   </body>
