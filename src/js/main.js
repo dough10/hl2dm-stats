@@ -13,6 +13,29 @@ HTMLElement.prototype.onClick = function (cb) {
 };
 
 /**
+ * time things
+ */
+class Timer {
+  constructor() {
+    this.startTime = new Date().getTime();
+  }
+  end() {
+    var end = new Date().getTime();
+    var ms = end - this.startTime;
+    var seconds = ms / 1000;
+    var hours = parseInt( seconds / 3600 );
+    seconds = seconds % 3600;
+    var minutes = parseInt( seconds / 60 );
+    seconds = seconds % 60;
+    return [
+      hours,
+      minutes,
+      seconds
+    ];
+  }
+}
+
+/**
  * apply paper-ripples effect to UI elements
  */
 function applyRipples() {
@@ -551,6 +574,7 @@ function parseTopData(top, page, cb) {
  * @param {Array} demos - list of demos from this month
  */
 function parseDemos(demos) {
+  var ti = new Timer();
   demos.forEach(demo => {
     const a = document.createElement('a');
     a.href = `https://hl2dm.dough10.me/api/download/${demo[0]}`;
@@ -574,6 +598,7 @@ function parseDemos(demos) {
     qs('#page3').appendChild(a);
     ripples.attachButtonRipple(card);
   });
+  console.log(ti.end());
   showApp();
 }
 
