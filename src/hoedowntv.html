@@ -31,13 +31,16 @@
         font-family: 'Roboto', 'Noto', sans-serif;
       }
       header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         height: var(--header-height);
         background: var(--main-color);
-        color: #333333;
+        color: #ffffff;
       }
       .header-shadow {
         height: 6px;
@@ -68,7 +71,7 @@
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   </head>
   <body>
-    <header></header>
+    <header>Hoedown TV</header>
     <div class="header-shadow"></div>
     <video id="video" controls poster="images/yeeeeeehawwwwwwmf.webp"></video>
     <script>
