@@ -59,7 +59,7 @@
         box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
       }
       .container {
-        width: 40%;
+        width: 60%;
         position: fixed;
         will-change: auto;
         top: var(--header-height);
@@ -90,7 +90,7 @@
     <div class="header-shadow"></div>
     <div class="container">
       <video id="video" controls poster="images/yeeeeeehawwwwwwmf.webp"></video>
-      <div id="shit"></div>
+      <div id="players"></div>
     </div>
     <script>
       if(Hls.isSupported()) {
@@ -100,13 +100,90 @@
         hls.attachMedia(video);
         hls.on(Hls.Events.MANIFEST_PARSED, video.play);
       }
+
+      /**
+       * display statistics about a player
+       *
+       * @param {Object} player - player object from GameDig node js module
+       */
+      function displayPlayer(player) {
+        var playerName = player.name;
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('playeronline');
+        const playerDiv = document.createElement('div');
+        playerDiv.textContent = playerName;
+        const score = document.createElement('div');
+        score.textContent = player.score;
+        wrapper.appendChild(playerDiv);
+        wrapper.appendChild(score);
+        // for toasts
+        if (playerName && !playersOnline.includes(playerName)) {
+          playersOnline.push(playerName);
+          if (loaded) {
+            new Toast(`${playerName} has joined the game`, 3, 'steam://connect/hl2dm.dough10.me:27015', 'Join');
+          }
+        }
+        return wrapper;
+      }
+
+      /**
+       * returns a element with "server offline" text
+       */
+      function offlineServer() {
+        const div = document.createElement('div');
+        div.textContent = "Server offline";
+        return div;
+      }
+
+      /**
+       * returns a element with "no players online" text
+       */
+      function emptyServer() {
+        const div = document.createElement('div');
+        div.textContent = "No Players Online";
+        return div;
+      }
+
+      /**
+       * returns a line seperator element
+       */
+      function lineSpacer() {
+        const spacer = document.createElement('div');
+        spacer.classList.add('spacer');
+        return spacer;
+      }
+
+      /**
+       * lparse and display server statistics
+       *
+       * @param {Object} status - status object from GameDig node js module
+       */
+      function parseServerStatus(status) {
+        const pContainer = qs('#players');
+        pContainer.innerHTML = '';
+        if (status !== "offline") {
+          numPlayersOnline = status.players.length;
+          if (numPlayersOnline === 0) {
+            pContainer.appendChild(emptyServer());
+          } else {
+            for (let i = 0; i < numPlayersOnline; i++) {
+              pContainer.appendChild(displayPlayer(status.players[i]));
+              pContainer.appendChild(lineSpacer());
+            }
+          }
+          removeOfflinePlayers(status.players);
+        } else {
+          pContainer.appendChild(offlineServer());
+        }
+      }
+
       function getPlayers() {
         fetch('https://hl2dm.dough10.me/director').then(response => {
           if (response.status !== 200) {
             console.error(response.status);
             return;
           }
-          response.json().then(console.log);
+          response.json().then(parseServerStatus);
         })
       }
       getPlayers();
