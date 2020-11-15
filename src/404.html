@@ -65,6 +65,10 @@
         margin-bottom: 8px;
         box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
         text-align: center;
+        background-image: url('../images/logo.webp');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 270px;
       }
       .container {
         position: fixed;
@@ -88,8 +92,59 @@
         background-size: 150px;
         height:150px;
       }
-      @media only screen and (max-width: 800px) {
-
+      .button {
+        display: inline-flex;
+        min-width: 5.14em;
+        margin: 0.29em 0.29em;
+        text-align: center;
+        text-transform: uppercase;
+        outline-width: 0;
+        border-radius: 3px;
+        padding: 0.7em 0.57em;
+        cursor: pointer;
+        position: relative;
+        box-sizing:border-box;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
+        -webkit-user-select: none;
+        user-select: none;
+        pointer-events: all;
+        justify-content: center;
+        align-items: center;
+      }
+      .button:after {
+        display: inline-block;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        border-radius: 3px;
+        opacity: 0;
+        transition: opacity 150ms cubic-bezier(.33,.17,.85,1.1);
+        box-shadow: 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12), 0 5px 5px -3px rgba(0,0,0,.4);
+        content:' ';
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .button:hover:after {
+        opacity: 1;
+      }
+      .button:hover:active:after {
+        opacity: 0;
+      }
+      .button[disabled] {
+        background: rgba(84, 84, 84, 0.4);
+        box-shadow: none;
+        cursor: none;
+        pointer-events: none;
+      }
+      .button[disabled]:active, .button[disabled]:hover, .button[disabled]:active:hover {
+        box-shadow: none;
+      }
+      .button[noshadow], .button[noshadow]:hover, .button[noshadow]:hover:after, .button[noshadow]:after {
+        box-shadow: none;
+      }
+      .button[noshadow]:active {
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
       }
     </style>
     <title>Error 404 Not Found</title>
@@ -100,8 +155,11 @@
     <div class="header-shadow"></div>
     <div class="container">
       <div class="card">
-        <h1>It isn't here</h1>
+        <h1>404</h1>
         <div class="flushed"></div>
+        <div class="button">
+          home
+        </div>
       </div>
     </div>
 
