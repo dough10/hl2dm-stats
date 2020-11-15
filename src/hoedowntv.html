@@ -101,14 +101,6 @@
       <div id="players"></div>
     </div>
     <script>
-      if(Hls.isSupported()) {
-        var video = document.getElementById('video');
-        var hls = new Hls();
-        hls.loadSource('https://hl2dm.dough10.me/hls/hl2mp.m3u8');
-        hls.attachMedia(video);
-        hls.on(Hls.Events.MANIFEST_PARSED, video.play);
-      }
-
       function qs(selector, scope) {
         return (scope || document).querySelector(selector)
       }
@@ -185,10 +177,19 @@
         })
       }
 
-      getPlayers();
-      setInterval(_ => {
+      window.onload = _ => {
+        if(Hls.isSupported()) {
+          var video = qs('video');
+          var hls = new Hls();
+          hls.loadSource('https://hl2dm.dough10.me/hls/hl2mp.m3u8');
+          hls.attachMedia(video);
+          hls.on(Hls.Events.MANIFEST_PARSED, video.play);
+        }
         getPlayers();
-      }, 10000);
+        setInterval(_ => {
+          getPlayers();
+        }, 10000);
+      };
     </script>
   </body>
 </html>
