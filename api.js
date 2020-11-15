@@ -1010,8 +1010,9 @@ app.ws('/', (ws, req) => {
   socket.send(JSON.stringify(serverStatus));
 });
 
-app.use((req, res) => {
-  res.status(404).sendFile(`404.html`, {root:`${__dirname}/html/`});
+app.get('*', (req, res) => {
+  console.log(`${__dirname}/html/404.html`)
+  res.status(404).sendFile(`${__dirname}/html/404.html`);
 });
 
 app.listen(3000);
