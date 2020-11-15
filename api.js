@@ -1,4 +1,4 @@
-console.log(`${new Date()} - Loading imports`);
+print(`Loading imports`);
 const path = require('path');
 const fs = require('fs');
 const readline = require('readline');
@@ -28,7 +28,7 @@ var weaponStats =  {};
 
 var socket;
 
-console.log(`${new Date()} - Load Functions`);
+print(`Load Functions`);
 
 Object.size = obj => {
   var size = 0, key;
@@ -37,6 +37,10 @@ Object.size = obj => {
   }
   return size;
 };
+
+function print(message) {
+  print(`${message}`)
+}
 
 /**
  *
@@ -105,7 +109,7 @@ function validateIPaddress(ip) {
  */
 function cacheTopResponse() {
   return new Promise((resolve, reject) => {
-    console.log(`${new Date()} - Clearing cache & parsing logs`);
+    print(`Clearing cache & parsing logs`);
     parseLogs().then(stats => {
       top = stats;
       // merge physics kills
@@ -150,7 +154,7 @@ function cacheTopResponse() {
       setTimeout(_ => {
         updated = false;
       }, 60000);
-      console.log(`${new Date()} - Logs parsed & cached`);
+      print(`Logs parsed & cached`);
       resolve();
     });
   });
@@ -166,7 +170,7 @@ function parseLogs() {
     fs.readdir(logFolder, (err, files) => {
       var remaining = '';
       if (err) {
-        return console.log(`${new Date()} - Unable to scan directory: ` + err);
+        return print(`Unable to scan directory: ` + err);
       }
       totalFiles = files.length;
       files.forEach(function (file) {
@@ -754,7 +758,7 @@ function getServerStatus() {
         }
       }
       if (serverStatus.players[0].name) {
-        console.log(`${new Date()} - Players Online`);
+        print(`Players Online`);
       }
       for (var i = 0; i < serverStatus.players.length; i++) {
         if (serverStatus.players[i].name) {
@@ -785,13 +789,13 @@ function cleanUp() {
   zipDemos(lastMonth).then(zipLogs).then(saveTop).then(_ => {
     var numFiles = 0;
     fs.readdir(logFolder, (err, files) => {
-      console.log(`${new Date()} - Running log file clean up`);
+      print(`Running log file clean up`);
       numFiles = numFiles + files.length;
       files.forEach(file => {
         fs.unlinkSync(path.join(logFolder, file));
       });
       fs.readdir(config.gameServerDir, (err, filess) => {
-        console.log(`${new Date()} - Running demo file clean up`);
+        print(`Running demo file clean up`);
         var howMany = filess.length;
         numFiles = numFiles + filess.length;
         filess.forEach(file => {
@@ -806,8 +810,8 @@ function cleanUp() {
               seconds = seconds % 3600;
               var minutes = parseInt( seconds / 60 );
               seconds = seconds % 60;
-              console.log(`${new Date()} - Clean up complete. ${numFiles} files processed and backed up.`);
-              console.log(`${new Date()} - Complete process took ${hours} hours ${minutes} minutes  ${seconds.toFixed(3)} seconds`)
+              print(`Clean up complete. ${numFiles} files processed and backed up.`);
+              print(`Complete process took ${hours} hours ${minutes} minutes  ${seconds.toFixed(3)} seconds`)
               top = [];
               users = {};
               cacheTopResponse();
@@ -874,7 +878,7 @@ function saveTop(lastMonth) {
       if (!fs.existsSync(filename)){
         reject();
       }
-      console.log(`${new Date()} - top player data saved to ${__dirname}/old-top/${lastMonth}.json`);
+      print(`top player data saved to ${__dirname}/old-top/${lastMonth}.json`);
       resolve();
     });
   });
@@ -894,7 +898,7 @@ function zipLogs(lastMonth) {
     child_process.execSync(`zip -r ${config.bulkStorage}/logs/${lastMonth}.zip *`, {
       cwd: logFolder
     });
-    console.log(`${new Date()} - Logs saved to ${config.bulkStorage}/logs/${lastMonth}.zip`);
+    print(`Logs saved to ${config.bulkStorage}/logs/${lastMonth}.zip`);
     resolve(lastMonth);
   });
 }
@@ -913,12 +917,12 @@ function zipDemos(lastMonth) {
     child_process.execSync(`zip -r ${config.bulkStorage}/demos/${lastMonth}.zip *.dem`, {
       cwd: config.gameServerDir
     });
-    console.log(`${new Date()} - Demos saved to ${config.bulkStorage}/demos/${lastMonth}.zip`);
+    print(`Demos saved to ${config.bulkStorage}/demos/${lastMonth}.zip`);
     resolve(lastMonth);
   })
 }
 
-console.log(`${new Date()} - Getting data`);
+print(`Getting data`);
 cacheTopResponse();
 setInterval(cacheTopResponse, 3600000);
 
@@ -927,7 +931,7 @@ setInterval(getServerStatus, 5000);
 
 var j = schedule.scheduleJob('0 5 1 * *', cleanUp);
 
-console.log(`${new Date()} - Loading API backend calls`);
+print(`Loading API backend calls`);
 
 app.get('/stats', (req, res) => {
   res.send(JSON.stringify([
@@ -947,7 +951,7 @@ app.get('/download/:file', (reg, res) => {
     res.status(404).send('File does not exist');
     return;
   }
-  console.log(`${new Date()} - File downloaded ${dl}`);
+  print(`File downloaded ${dl}`);
   res.download(dl, reg.params.file);
 });
 
@@ -957,7 +961,7 @@ app.get('/download/logs-zip/:file', (reg, res) => {
     res.status(404).send('File does not exist');
     return;
   }
-  console.log(`${new Date()} - File downloaded ${dl}`);
+  print(`File downloaded ${dl}`);
   res.download(dl, reg.params.file);
 });
 
@@ -967,7 +971,7 @@ app.get('/download/demos-zip/:file', (reg, res) => {
     res.status(404).send('File does not exist');
     return;
   }
-  console.log(`${new Date()} - File downloaded ${dl}`);
+  print(`File downloaded ${dl}`);
   res.download(dl, reg.params.file);
 });
 
@@ -1016,5 +1020,5 @@ app.get('*', (req, res) => {
 
 app.listen(3000);
 
-console.log(`${new Date()} - API is now active on port 3000`);
-console.log(`${new Date()} - log folder = ${logFolder}`);
+print(`API is now active on port 3000`);
+print(`log folder = ${logFolder}`);
