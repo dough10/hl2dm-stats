@@ -76,16 +76,14 @@ image/gif;
         allow 192.168.86.0/24;
         deny all;
     }
-    location /rtmp_stat/ {
-        alias /var/www/html/;
+    location /rtmp_stat/{
         rtmp_stat all;
         rtmp_stat_stylesheet stat.xsl;
         add_header Refresh "3; $request_uri";
         allow 192.168.86.0/24;
         deny all;
     }
-    location /rtmp_control/ {
-        alias /var/www/html/;
+    location /rtmp_control {
         rtmp_control all;
         allow 192.168.86.0/24;
         deny all;
