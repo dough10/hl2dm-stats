@@ -59,6 +59,7 @@
         width: 100%;
       }
       .card {
+        width: 60%;
         background: #fff;
         z-index: 1;
         position: relative;
@@ -70,12 +71,13 @@
         overflow: hidden;
       }
       .container {
-        width: 60%;
         position: fixed;
         will-change: auto;
         top: var(--header-height);
         margin: auto;
         bottom: 0;
+        left:0;
+        right:0;
         overflow: auto;
         overflow-x: hidden;
         padding:8px;
@@ -93,7 +95,7 @@
         border-bottom: 1px solid #333;
       }
       @media only screen and (max-width: 800px) {
-        .container {
+        .card {
           width: 90%;
         }
       }
