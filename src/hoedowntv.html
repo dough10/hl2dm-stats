@@ -58,6 +58,16 @@
         border-radius: 5px;
         box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
       }
+      .card {
+        background: #fff;
+        z-index: 1;
+        position: relative;
+        margin: auto;
+        border-radius: 3px;
+        margin-bottom: 8px;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
+        text-align: center;
+      }
       .container {
         width: 60%;
         position: fixed;
@@ -94,8 +104,10 @@
     <header></header>
     <div class="header-shadow"></div>
     <div class="container">
-      <video id="video" controls poster="images/yeeeeeehawwwwwwmf.webp"></video>
-      <div id="players"></div>
+      <div class="card">        
+        <video id="video" controls poster="images/yeeeeeehawwwwwwmf.webp"></video>
+        <div id="players"></div>
+      </div>
     </div>
     <script>
       function qs(selector, scope) {
