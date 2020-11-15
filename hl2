@@ -8,6 +8,7 @@ server {
     add_header Strict-Transport-Security "max-age=31536000";
     access_log /home/crumb/hl2dm.log;
     error_log /home/crumb/hl2dm_errors.log;
+    error_page 404 404.html;
     index index.html;
     add_header X-Content-Type-Options nosniff;
     add_header X-Frame-Options SAMEORIGIN always;
