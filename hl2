@@ -65,6 +65,9 @@ image/gif;
         proxy_redirect off;
         proxy_set_header Accept-Encoding "";
         proxy_pass http://192.168.86.31:3000;
+        allow 192.168.86.0/24;
+        deny all;
+        access_log off;
     }
     location /hls/ {
         types {
@@ -75,6 +78,7 @@ image/gif;
         add_header Cache-Control no-cache;
         allow 192.168.86.0/24;
         deny all;
+        access_log off;
     }
     location /rtmp_stat {
         rtmp_stat all;
@@ -82,11 +86,13 @@ image/gif;
         add_header Refresh "3; $request_uri";
         allow 192.168.86.0/24;
         deny all;
+        access_log off;
     }
     location /rtmp_control {
         rtmp_control all;
         allow 192.168.86.0/24;
         deny all;
+        access_log off;
     }
     location / {
         try_files $uri $uri/ /index.html?$args;
@@ -104,7 +110,7 @@ image/gif;
         add_header Cache-Control "public";
     }
     error_page 404 /404.html;
-    location = /404.html {
+    location /404.html {
         root /var/www/hl2dm/html/;
         internal;
     }
