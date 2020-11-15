@@ -1011,7 +1011,6 @@ app.ws('/', (ws, req) => {
 });
 
 app.get('*', (req, res) => {
-  console.log(`${__dirname}/html/404.html`)
   res.status(404).sendFile(`${__dirname}/html/404.html`);
 });
 
