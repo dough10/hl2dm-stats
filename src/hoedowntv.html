@@ -184,14 +184,20 @@
         }
       }
 
+      function lagCompensate(cb) {
+        setTimeout(cb, 50 * 1000);
+      }
+
       function getPlayers() {
         fetch('https://hl2dm.dough10.me/director').then(response => {
           if (response.status !== 200) {
             console.error(response.status);
             return;
           }
-          response.json().then(parseServerStatus);
-        })
+          response.json().then(_ =>  {
+            lagCompensate(parseServerStatus);
+          });
+        });
       }
 
       window.onload = _ => {
