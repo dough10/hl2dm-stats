@@ -39,7 +39,7 @@ Object.size = obj => {
 };
 
 function print(message) {
-  print(`${message}`)
+  console.log(`${new Date()} - ${message}`)
 }
 
 /**
