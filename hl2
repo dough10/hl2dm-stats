@@ -77,9 +77,6 @@ image/gif;
         }
         root /tmp;
         add_header Cache-Control no-cache;
-        allow 192.168.86.0/24;
-        deny all;
-        access_log off;
     }
     location /rtmp_stat {
         rtmp_stat all;
