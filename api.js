@@ -399,7 +399,15 @@ function scanLine(line) {
   if (isConsole) {
      return;
   } else if (isBanned) {
-    console.log(line)
+    const nameString = buildKillerNameString(word, isBanned - 1);
+    const id = getID3(nameString);
+    if (!users[id]) {
+      users[id] = {
+        id: id,
+        banned: true
+      };
+    }
+    users[id].banned = true;
   } else if (isChat) {
     const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
     const nameString = buildKillerNameString(word, isChat);
