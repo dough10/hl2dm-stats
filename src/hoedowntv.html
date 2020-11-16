@@ -299,7 +299,7 @@
           hls.on(Hls.Events.MANIFEST_PARSED, video.play);
           // video.addEventListener('timeupdate', updateProgressBar, false);
           qs('#play').addEventListener('click', _ => {
-            console.log(qs('#playIcon').d)
+            console.log(qs('#playIcon'))
             if (video.paused) {
               qs('#playIcon').d = `M14,19H18V5H14M6,19H10V5H6V19Z`;
               return video.play();
