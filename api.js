@@ -412,6 +412,7 @@ function scanLine(line) {
   if (isConsole) {
      return;
   } else if (isBanned) {
+    console.log(line)
     const nameString = buildKillerNameString(word, isBanned - 1);
     const name = getName(nameString);
     const id = getID3(nameString);
