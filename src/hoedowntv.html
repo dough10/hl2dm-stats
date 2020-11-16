@@ -100,7 +100,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin: 0 16px;
+        margin: -4px 0;
+        background: #f1f1f1;
       }
       .rb {
         position: relative;
@@ -288,10 +289,6 @@
         });
       }
 
-      function updatePlayButton() {
-        console.log(qs('#playIcon'));
-      }
-
       window.onload = loadRipples().then(_ => {
         qsa('.rb').forEach(attachRoundButtonRipple);
         if(Hls.isSupported()) {
@@ -300,7 +297,13 @@
           hls.loadSource('https://hl2dm.dough10.me/hls/hl2mp.m3u8');
           hls.attachMedia(video);
           hls.on(Hls.Events.MANIFEST_PARSED, video.play);
-          video.addEventListener('playing', updatePlayButton, false);
+          video.addEventListener('playing', _ => {
+            if (video.paused) {
+              qs('#playIcon').d = `M8,5.14V19.14L19,12.14L8,5.14Z`;
+              return;
+            }
+            qs('#playIcon').d = `M14,19H18V5H14M6,19H10V5H6V19Z`;
+          }, false);
           // video.addEventListener('timeupdate', updateProgressBar, false);
           qs('#play').addEventListener('click', _ => {
             if (video.paused) {
