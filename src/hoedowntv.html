@@ -194,9 +194,7 @@
             console.error(response.status);
             return;
           }
-          response.json().then(_ =>  {
-            lagCompensate(parseServerStatus);
-          });
+          response.json().then(parseServerStatus);
         });
       }
 
