@@ -170,15 +170,15 @@
       function parseServerStatus(status) {
         const pContainer = qs('#players');
         pContainer.innerHTML = '';
+        pContainer.appendChild(displayPlayer({
+          name: "Player Name",
+          score: "Score"
+        }));
         if (status !== "offline") {
           numPlayersOnline = status.players.length;
           if (numPlayersOnline === 0) {
             pContainer.appendChild(emptyServer());
           } else {
-            pContainer.appendChild(displayPlayer({
-              name: "Player Name",
-              score: "Score"
-            }));
             for (let i = 0; i < numPlayersOnline; i++) {
               pContainer.appendChild(displayPlayer(status.players[i]));
             }
