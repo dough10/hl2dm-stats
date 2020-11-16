@@ -325,7 +325,9 @@
             }
             video.pause();
           });
-          qs('#fullscreen').addEventListener('click', _ => {});
+          qs('#fullscreen').addEventListener('click', _ => {
+            video.requestFullscreen();
+          });
         }
         getPlayers(true);
         setInterval(_ => {
