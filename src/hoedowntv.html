@@ -113,6 +113,7 @@
     <div class="container">
       <div class="card">
         <video id="video" controls poster="images/yeeeeeehawwwwwwmf.webp"></video>
+        <progress id='progress-bar' min='0' max='100' value='0'></progress>
         <div id="players"></div>
       </div>
     </div>
@@ -209,6 +210,12 @@
         });
       }
 
+      function updateProgressBar() {
+         var progressBar = qs('#progress-bar');
+         var percentage = Math.floor((100 / mediaPlayer.duration) * mediaPlayer.currentTime);
+         progressBar.value = percentage;
+      }
+
       window.onload = _ => {
         if(Hls.isSupported()) {
           var video = qs('video');
@@ -216,6 +223,7 @@
           hls.loadSource('https://hl2dm.dough10.me/hls/hl2mp.m3u8');
           hls.attachMedia(video);
           hls.on(Hls.Events.MANIFEST_PARSED, video.play);
+          video.addEventListener('timeupdate', updateProgressBar, false);
         }
         getPlayers(true);
         setInterval(_ => {
