@@ -398,7 +398,7 @@ function scanLine(line) {
   var isStats = lineIsStats(word);
   var isConsole = lineIsConsole(word);
   var isBanned = playerIsBanned(word);
-  // console.log(word[3])
+  console.log(word[3])
   if (isConsole) {
      return;
   } else if (isBanned) {
