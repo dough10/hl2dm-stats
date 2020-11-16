@@ -188,13 +188,20 @@
         setTimeout(cb, 50 * 1000);
       }
 
-      function getPlayers() {
+      function getPlayers(firstCall) {
         fetch('https://hl2dm.dough10.me/director').then(response => {
           if (response.status !== 200) {
             console.error(response.status);
             return;
           }
-          response.json().then(parseServerStatus);
+          response.json().then(data => {
+            if (!firstCall) {
+              return lagCompensate(_ => {
+                parseServerStatus(data);
+              });
+            }
+            parseServerStatus(data);
+          });
         });
       }
 
@@ -206,9 +213,9 @@
           hls.attachMedia(video);
           hls.on(Hls.Events.MANIFEST_PARSED, video.play);
         }
-        getPlayers();
+        getPlayers(true);
         setInterval(_ => {
-          getPlayers();
+          getPlayers(false);
         }, 10000);
       };
     </script>
