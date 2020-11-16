@@ -288,6 +288,10 @@
         });
       }
 
+      function updatePlayButton() {
+        console.log(qs('#play').firstChild.firstChild);
+      }
+
       window.onload = loadRipples().then(_ => {
         qsa('.rb').forEach(attachRoundButtonRipple);
         if(Hls.isSupported()) {
@@ -296,6 +300,7 @@
           hls.loadSource('https://hl2dm.dough10.me/hls/hl2mp.m3u8');
           hls.attachMedia(video);
           hls.on(Hls.Events.MANIFEST_PARSED, video.play);
+          video.addEventListener('playing', updatePlayButton, false);
           // video.addEventListener('timeupdate', updateProgressBar, false);
           qs('#play').addEventListener('click', _ => {
             if (video.paused) {
