@@ -111,6 +111,9 @@
         border-bottom: 1px solid #d2d2d2;
         margin: 0 16px;
       }
+      svg {
+        cursor: pointer;
+      }
       @media only screen and (max-width: 800px) {
         .card {
           width: 90%;
@@ -145,6 +148,59 @@
 
       function qsa(selector, scope) {
         return (scope || document).querySelectorAll(selector)
+      }
+
+      function attachRoundButtonRipple(button) {
+        button.PaperRipple = new PaperRipple();
+        button.appendChild(button.PaperRipple.$);
+        button.PaperRipple.$.classList.add('paper-ripple--round');
+        button.PaperRipple.recenters = true;
+        button.PaperRipple.center = true;
+        button.addEventListener('mousedown', ev => button.PaperRipple.downAction(ev));
+        button.addEventListener('mouseup', ev => button.PaperRipple.upAction());
+      }
+
+      /**
+       * push csS file to DOM
+       * @param {String} src - url
+       */
+      function loadCSSFile(src) {
+        return new Promise((resolve, reject) => {
+          const css = document.createElement( "link" );
+          css.href = src;
+          css.type = "text/css";
+          css.rel = "stylesheet";
+          css.onload = resolve;
+          css.onerror = reject;
+          qs('head').appendChild(css);
+        });
+      }
+
+      /**
+       * push JS file to DOM
+       * @param {String} src - url
+       */
+      function loadJSFile(src) {
+        return new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.async = true;
+          script.defer = true;
+          script.src = src;
+          script.onload = setTimeout(resolve, 50);
+          script.onerror = reject;
+          qs('body').appendChild(script);
+        });
+      }
+
+      /**
+       * loads paper ripples effect to DOM
+       */
+      function loadRipples() {
+        return new Promise((resolve, reject) => {
+          loadCSSFile("../css/paper-ripple.min.css").then(_ => {
+            loadJSFile('../js/paper-ripple.min.js').then(applyRipples).then(resolve).catch(reject);
+          }).catch(reject);
+        });
       }
 
       /**
@@ -237,7 +293,8 @@
          progressBar.value = percentage;
       }
 
-      window.onload = _ => {
+      window.onload = loadRipples().then(_ => {
+        qsa('svg').forEach(attachRoundButtonRipple);
         if(Hls.isSupported()) {
           var video = qs('video');
           var hls = new Hls();
@@ -250,7 +307,7 @@
         setInterval(_ => {
           getPlayers(false);
         }, 10000);
-      };
+      });
     </script>
   </body>
 </html>
