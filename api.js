@@ -422,6 +422,7 @@ function scanLine(line) {
         kdr: 0,
         suicide: 0,
         updated: lineTime,
+        banned: true,
         chat: []
       };
     }
@@ -453,6 +454,7 @@ function scanLine(line) {
           kdr: 0,
           suicide: 0,
           updated: lineTime,
+          banned: true,
           chat: []
         };
       } else {
@@ -502,6 +504,7 @@ function scanLine(line) {
         kdr: 0,
         suicide: 0,
         updated: lineTime,
+        banned: true,
         chat: []
       };
     }
@@ -514,6 +517,7 @@ function scanLine(line) {
         deaths: 0,
         kdr: 0,
         updated: lineTime,
+        banned: true,
         chat: []
       };
     }
@@ -564,6 +568,7 @@ function scanLine(line) {
         deaths: 0,
         kdr: 0,
         suicide: 0,
+        banned: true,
         chat: []
       };
     }
@@ -609,6 +614,7 @@ function scanLine(line) {
         updated: lineTime,
         kdr: 0,
         suicide: 0,
+        banned: true,
         chat: []
       };
     }
@@ -690,7 +696,7 @@ function sortUsersByKDR() {
   var arr = [];
   totalPlayers = Object.size(users);
   for (var user in users) {
-    if (users[user].kills >= 100) {
+    if (users[user].kills >= 100 && users[user].banned !== true) {
       arr.push(users[user]);
     }
   }
