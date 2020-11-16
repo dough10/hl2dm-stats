@@ -297,12 +297,12 @@
           hls.loadSource('https://hl2dm.dough10.me/hls/hl2mp.m3u8');
           hls.attachMedia(video);
           hls.on(Hls.Events.MANIFEST_PARSED, video.play);
-          video.addEventListener('pause', _ => {
+          video.onpause = _ => {
             qs('#playIcon').d = `M14,19H18V5H14M6,19H10V5H6V19Z`;
-          });
-          video.addEventListener('playing', _ => {
+          };
+          video.onplaying = _ => {
             qs('#playIcon').d = `M8,5.14V19.14L19,12.14L8,5.14Z`;
-          }, false);
+          };
           // video.addEventListener('timeupdate', updateProgressBar, false);
           qs('#play').addEventListener('click', _ => {
             if (video.paused) {
