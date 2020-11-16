@@ -21,7 +21,7 @@ image/gif;
     server_tokens off;
     charset UTF-8;
     root /var/www/hl2dm/html/;
-    
+
     location /index.html {
         http2_push /manifest.json;
         http2_push /sw.js;
@@ -85,6 +85,7 @@ image/gif;
         deny all;
         access_log off;
     }
+
     location /rtmp_stat {
         rtmp_stat all;
         rtmp_stat_stylesheet stat.xsl;
