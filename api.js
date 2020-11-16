@@ -696,7 +696,7 @@ function sortUsersByKDR() {
   var arr = [];
   totalPlayers = Object.size(users);
   for (var user in users) {
-    if (users[user].kills >= 100 && users[user].banned !== true) {
+    if (users[user].kills >= 100 && !users[user].banned) {
       arr.push(users[user]);
     }
   }
