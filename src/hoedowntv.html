@@ -134,9 +134,11 @@
         <video id="video" poster="images/yeeeeeehawwwwwwmf.webp"></video>
         <progress id='progress-bar' min='0' max='100' value='0'></progress>
         <div class='playeronline'>
-          <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-            <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
-          </svg>
+          <div class="rb">
+            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
+            </svg>
+          </div>
         </div>
         <div id="players"></div>
       </div>
@@ -294,7 +296,7 @@
       }
 
       window.onload = loadRipples().then(_ => {
-        qsa('svg').forEach(attachRoundButtonRipple);
+        qsa('.rb').forEach(attachRoundButtonRipple);
         if(Hls.isSupported()) {
           var video = qs('video');
           var hls = new Hls();
