@@ -25,7 +25,7 @@ var totalPlayers = 0;        // count of total players to have joined the server
 var updated = false;         // if stats have been updated when a player reaches end of game kill count
 
 var weaponStats =  {};
-
+var bannedPlayers = {};
 var socket;
 
 print(`Load Functions`);
@@ -400,14 +400,22 @@ function scanLine(line) {
      return;
   } else if (isBanned) {
     const nameString = buildKillerNameString(word, isBanned - 1);
+    const name = getName(nameString);
     const id = getID3(nameString);
     if (!users[id]) {
       users[id] = {
         id: id,
-        banned: true
+        banned: true,
+        name: name
+      };
+      bannedPlayers[id] = {
+        id: id,
+        banned: true,
+        name: name
       };
     }
     users[id].banned = true;
+    bannedPlayers[id] = users[id];
   } else if (isChat) {
     const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
     const nameString = buildKillerNameString(word, isChat);
@@ -704,7 +712,9 @@ function sortUsersByKDR() {
     return a.kdr - b.kdr;
   });
   arr.reverse();
+  console.log(bannedPlayers);
   users = {};
+  bannedPlayers = {};
   return arr;
 }
 
