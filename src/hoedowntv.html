@@ -212,7 +212,7 @@
 
       function updateProgressBar() {
          var progressBar = qs('#progress-bar');
-         var percentage = Math.floor((100 / mediaPlayer.duration) * mediaPlayer.currentTime);
+         var percentage = Math.floor((100 / video.duration) * video.currentTime);
          progressBar.value = percentage;
       }
 
