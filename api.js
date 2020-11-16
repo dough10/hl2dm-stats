@@ -422,7 +422,7 @@ function scanLine(line) {
         kdr: 0,
         suicide: 0,
         updated: lineTime,
-        banned: true,
+        banned: false,
         chat: []
       };
     }
@@ -454,7 +454,7 @@ function scanLine(line) {
           kdr: 0,
           suicide: 0,
           updated: lineTime,
-          banned: true,
+          banned: false,
           chat: []
         };
       } else {
@@ -504,7 +504,7 @@ function scanLine(line) {
         kdr: 0,
         suicide: 0,
         updated: lineTime,
-        banned: true,
+        banned: false,
         chat: []
       };
     }
@@ -517,7 +517,7 @@ function scanLine(line) {
         deaths: 0,
         kdr: 0,
         updated: lineTime,
-        banned: true,
+        banned: false,
         chat: []
       };
     }
@@ -568,7 +568,7 @@ function scanLine(line) {
         deaths: 0,
         kdr: 0,
         suicide: 0,
-        banned: true,
+        banned: false,
         chat: []
       };
     }
@@ -614,7 +614,7 @@ function scanLine(line) {
         updated: lineTime,
         kdr: 0,
         suicide: 0,
-        banned: true,
+        banned: false,
         chat: []
       };
     }
