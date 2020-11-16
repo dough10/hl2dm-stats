@@ -58,6 +58,7 @@
       #video {
         width: 100%;
       }
+
       .card {
         width: 60%;
         background: #fff;
@@ -95,13 +96,6 @@
         border-bottom: 1px solid #d2d2d2;
         margin: 0 16px;
       }
-      .prog-box {
-        width: 100%;
-      }
-      .prog-bar {
-        height: 8px;
-        background: var(--main-color);
-      }
       @media only screen and (max-width: 800px) {
         .card {
           width: 90%;
@@ -120,9 +114,7 @@
     <div class="container">
       <div class="card">
         <video id="video" controls poster="images/yeeeeeehawwwwwwmf.webp"></video>
-        <div class="prog-box">
-          <div class="prog-bar"></div>
-        </div>
+        <progress id='progress-bar' min='0' max='100' value='0'></progress>
         <div id="players"></div>
       </div>
     </div>
@@ -220,9 +212,9 @@
       }
 
       function updateProgressBar() {
-         var progressBar = qs('#prog-bar');
+         var progressBar = qs('#progress-bar');
          var percentage = Math.floor((100 / video.duration) * video.currentTime);
-         progressBar.style.width = `${percentage}%`;
+         progressBar.value = percentage;
       }
 
       window.onload = _ => {
