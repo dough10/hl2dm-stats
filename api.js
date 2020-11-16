@@ -252,6 +252,9 @@ function buildKillerNameString(line, end)  {
       start = i + 1;
     }
   }
+  if (line[4] === 'Banid:') {
+    start = 5;
+  }
   for (var i = start; i < end; i++) {
     name = `${name}${line[i]} `;
   }
@@ -402,6 +405,9 @@ function scanLine(line) {
     const nameString = buildKillerNameString(word, isBanned - 1);
     const name = getName(nameString);
     const id = getID3(nameString);
+    if (!id) {
+      return;
+    }
     if (!users[id]) {
       users[id] = {
         id: id,
