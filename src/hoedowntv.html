@@ -295,6 +295,10 @@
       }
 
       window.onload = loadRipples().then(_ => {
+        getPlayers(true);
+        setInterval(_ => {
+          getPlayers(false);
+        }, 10000);
         qsa('.rb').forEach(attachRoundButtonRipple);
         if(Hls.isSupported()) {
           var video = qs('video');
@@ -323,10 +327,6 @@
             video.requestFullscreen();
           });
         }
-        getPlayers(true);
-        setInterval(_ => {
-          getPlayers(false);
-        }, 10000);
       });
     </script>
   </body>
