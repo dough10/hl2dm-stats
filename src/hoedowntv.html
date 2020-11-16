@@ -301,10 +301,10 @@
           qs('#play').addEventListener('click', _ => {
             console.log(qs('#playIcon'))
             if (video.paused) {
-              qs('#playIcon').d = `M14,19H18V5H14M6,19H10V5H6V19Z`;
+              qs('#playIcon').setAttribute('d', `M14,19H18V5H14M6,19H10V5H6V19Z`);
               return video.play();
             }
-            qs('#playIcon').d = `M8,5.14V19.14L19,12.14L8,5.14Z`;
+            qs('#playIcon').setAttribute('d', `M8,5.14V19.14L19,12.14L8,5.14Z`);
             video.pause();
           });
           qs('#fullscreen').addEventListener('click', _ => {
