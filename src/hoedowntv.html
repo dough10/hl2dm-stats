@@ -175,6 +175,10 @@
           if (numPlayersOnline === 0) {
             pContainer.appendChild(emptyServer());
           } else {
+            pContainer.appendChild(displayPlayer({
+              name: "player",
+              score: "score"
+            }));
             for (let i = 0; i < numPlayersOnline; i++) {
               pContainer.appendChild(displayPlayer(status.players[i]));
             }
