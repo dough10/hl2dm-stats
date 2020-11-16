@@ -342,7 +342,7 @@ function lineIsChat(line) {
 function lineIsHeadshot(line) {
   for (var i = 0; i < line.length; i++) {
     if (line[i] === '"headshot"') {
-      return i;
+      return i - 1;
     }
   }
   return false;
@@ -385,7 +385,7 @@ function lineIsConsole(line) {
 function playerIsBanned(line) {
   for (var i = 0; i < line.length; i++) {
     if (line[i] === 'banned') {
-      return i;
+      return i - 1;
     }
   }
   return false;
@@ -413,7 +413,7 @@ function scanLine(line) {
      return;
   } else if (isBanned) {
     console.log(line)
-    const nameString = buildKillerNameString(word, isBanned - 1);
+    const nameString = buildKillerNameString(word, isBanned);
     const name = getName(nameString);
     const id = getID3(nameString);
     if (!id) {
@@ -616,7 +616,7 @@ function scanLine(line) {
       weapons.headshots = 0;
     }
     weapons.headshots++;
-    const killerNameString = buildKillerNameString(word, isHeadshot - 1);
+    const killerNameString = buildKillerNameString(word, isHeadshot);
     const id = getID2(killerNameString);
     const name = getName(killerNameString);
     const sid = new SteamID(id);
