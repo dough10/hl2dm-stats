@@ -371,6 +371,15 @@ function lineIsConsole(line) {
   return false;
 }
 
+function playerIsBanned(line) {
+  for (var i = 0; i < line.length; i++) {
+    if (line[i] === 'banned') {
+      return i;
+    }
+  }
+  return false;
+}
+
 /**
  * scans the line for landmarks in order to get usable strings of data
  *
@@ -385,9 +394,12 @@ function scanLine(line) {
   var isHeadshot  = lineIsHeadshot(word);
   var isStats = lineIsStats(word);
   var isConsole = lineIsConsole(word);
+  var isBanned = playerIsBanned(word);
   // console.log(word[3])
   if (isConsole) {
      return;
+  } else if (isBanned) {
+    console.log(line)
   } else if (isChat) {
     const lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
     const nameString = buildKillerNameString(word, isChat);
