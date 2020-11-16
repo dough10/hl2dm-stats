@@ -58,6 +58,21 @@
       #video {
         width: 100%;
       }
+      progress[value] {
+        -webkit-appearance: none;
+         appearance: none;
+        width: 100%;
+        height: 10px;
+      }
+      progress[value]::-webkit-progress-bar {
+        background-color: #eee;
+        border-radius: 2px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+      }
+      progress[value]::-webkit-progress-value {
+        background: var(--main-color);
+        border-radius: 2px;
+      }
       .card {
         width: 60%;
         background: #fff;
