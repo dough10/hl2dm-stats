@@ -111,8 +111,15 @@
         border-bottom: 1px solid #d2d2d2;
         margin: 0 16px;
       }
+      .media-keys {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 16px;
+      }
       .rb {
         position: relative;
+        padding: 8px;
       }
       svg {
         cursor: pointer;
@@ -136,7 +143,7 @@
       <div class="card">
         <video id="video" poster="images/yeeeeeehawwwwwwmf.webp"></video>
         <progress id='progress-bar' min='0' max='100' value='0'></progress>
-        <div class='playeronline'>
+        <div class='media-keys'>
           <div class="rb" id="play">
             <svg style="width:24px;height:24px" viewBox="0 0 24 24">
               <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
@@ -312,7 +319,12 @@
           hls.attachMedia(video);
           hls.on(Hls.Events.MANIFEST_PARSED, video.play);
           video.addEventListener('timeupdate', updateProgressBar, false);
-          qs('#play').addEventListener('click', _ => {});
+          qs('#play').addEventListener('click', _ => {
+            if (video.paused) {
+              return video.play();
+            }
+            video.pause();
+          });
           qs('#fullscreen').addEventListener('click', _ => {});
         }
         getPlayers(true);
