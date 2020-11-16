@@ -401,7 +401,9 @@ function scanLine(line) {
   var isStats = lineIsStats(word);
   var isConsole = lineIsConsole(word);
   var isBanned = playerIsBanned(word);
-  var lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
+  if (word[3] && isTime(word[3])) {
+    var lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
+  }
   if (isConsole) {
      return;
   } else if (isBanned) {
