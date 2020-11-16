@@ -130,7 +130,7 @@
         <div class='media-keys'>
           <div class="rb" id="play">
             <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-              <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
+              <path id="playIcon" fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
             </svg>
           </div>
           <div class="rb" id="fullscreen">
@@ -289,7 +289,7 @@
       }
 
       function updatePlayButton() {
-        console.log(qs('#play').firstChild);
+        console.log(qs('#playIcon'));
       }
 
       window.onload = loadRipples().then(_ => {
