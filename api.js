@@ -377,6 +377,11 @@ function lineIsConsole(line) {
   return false;
 }
 
+/**
+ * scans the line for landmarks in order to get usable strings of data
+ *
+ * @param {String} line - one line of the log file being parsed
+ */
 function playerIsBanned(line) {
   for (var i = 0; i < line.length; i++) {
     if (line[i] === 'banned') {
@@ -826,7 +831,7 @@ function cleanUp() {
   var now = new Date();
   console.log(`${now} - Clean up started`);
   var lastMonth = now.setMonth(now.getMonth() - 1);
-  var start = new Date().getTime();
+  var times = new Timer();
   zipDemos(lastMonth).then(zipLogs).then(saveTop).then(_ => {
     var numFiles = 0;
     fs.readdir(logFolder, (err, files) => {
@@ -844,15 +849,9 @@ function cleanUp() {
           if (path.extname(file) === '.dem') {
             fs.unlinkSync(path.join(config.gameServerDir, file));
             if (howMany <= 0) {
-              var end = new Date().getTime();
-              var ms = end - start;
-              var seconds = ms / 1000;
-              var hours = parseInt( seconds / 3600 );
-              seconds = seconds % 3600;
-              var minutes = parseInt( seconds / 60 );
-              seconds = seconds % 60;
+              var ended = times.end();
               print(`Clean up complete. ${numFiles} files processed and backed up.`);
-              print(`Complete process took ${hours} hours ${minutes} minutes  ${seconds.toFixed(3)} seconds`)
+              print(`Complete process took ${ended[0]} hours ${ended[1]} minutes  ${ended[2].toFixed(3)} seconds`)
               top = [];
               users = {};
               cacheTopResponse();
