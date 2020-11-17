@@ -30,14 +30,6 @@ echo "\e[39m---------------\e[33mrestart API\e[39m---------------"
 forever start api.js -l -o -e
 
 
-echo "\e[39m---------------\e[33mupdate nginx site file\e[39m---------------"
-sudo cp -u -p /var/www/hl2dm/hl2 /etc/nginx/sites-enabled/hl2
-
-
-echo "\e[39m---------------\e[33mrestart nginx\e[39m---------------"
-sudo systemctl restart nginx
-
-
 echo "\e[39m---------------\e[33mchmod sh files executable\e[39m---------------"
 sudo chmod +x ./monitor.sh
 sudo chmod +x ./update.sh
