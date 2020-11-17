@@ -56,24 +56,6 @@ image/gif;
         proxy_pass http://LOCALHOST:3000;
     }
 
-    location /director {
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Host $http_host;
-        proxy_set_header X-NginX-Proxy true;
-        rewrite ^/director/?(.*) /$1 break;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "Upgrade";
-        proxy_set_header Host $host;
-        proxy_redirect off;
-        proxy_set_header Accept-Encoding "";
-        proxy_pass http://192.168.86.31:3000;
-        allow 192.168.86.0/24;
-        deny all;
-        access_log off;
-    }
-
     location /hls/ {
         types {
             application/vnd.apple.mpegurl m3u8;
