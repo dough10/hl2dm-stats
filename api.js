@@ -1049,10 +1049,10 @@ app.get('/demos', (reg, res) => {
   });
 });
 
-app.get('/auth', (reg, res) => {
-  console.log(reg)
-  res.send('8979')
-});
+// app.get('/auth', (reg, res) => {
+//   console.log(reg)
+//   res.send('8979')
+// });
 
 app.ws('/', (ws, req) => {
   socket = ws;
