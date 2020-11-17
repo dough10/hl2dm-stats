@@ -290,9 +290,10 @@
           }
           response.json().then(data => {
             if (!firstCall) {
-              return lagCompensate(_ => {
+              lagCompensate(_ => {
                 parseServerStatus(data);
               });
+              return;
             }
             parseServerStatus(data);
           });
