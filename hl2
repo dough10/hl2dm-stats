@@ -54,8 +54,6 @@ image/gif;
         proxy_redirect off;
         proxy_set_header Accept-Encoding "";
         proxy_pass http://LOCALHOST:3000;
-        allow 127.0.0.1;
-        deny all;
     }
 
     location /hls/ {
