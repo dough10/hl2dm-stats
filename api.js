@@ -1049,6 +1049,9 @@ app.get('/demos', (reg, res) => {
   });
 });
 
+app.get('/auth', (reg, res) => {
+  console.log(reg)
+});
 
 app.ws('/', (ws, req) => {
   socket = ws;
