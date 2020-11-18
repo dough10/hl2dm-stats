@@ -1048,10 +1048,11 @@ app.get('/demos', (reg, res) => {
   });
 });
 
-// app.get('/auth', (reg, res) => {
-//   console.log(reg)
-//   res.send('8979')
-// });
+app.get('/auth', (reg, res) => {
+  var name = req.query.name;
+  var pass = req.query.pass;
+  res.send('8979')
+});
 
 app.ws('/', (ws, req) => {
   socket = ws;
