@@ -725,7 +725,6 @@ function sortUsersByKDR() {
   });
   arr.reverse();
   users = {};
-  bannedPlayers = {};
   return arr;
 }
 
