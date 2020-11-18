@@ -1055,8 +1055,8 @@ app.get('/auth', (req, res) => {
   if (!config.streamKey[name]) {
     return res.status(404).send('');
   }
-  console.log(config.streamKey[name])
-  res.send(config.streamKey[name])
+  console.log(config.streamKeys[name])
+  res.send(config.streamKeys[name])
 });
 
 app.ws('/', (ws, req) => {
