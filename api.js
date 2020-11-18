@@ -1055,8 +1055,8 @@ app.get('/auth', (req, res) => {
   if (!config.streamKeys[name]) {
     return res.status(404).send('fail');
   }
-  bcrypt.compare(pass, config.streamKeys[name], (err, res) => {
-    if (!res) {
+  bcrypt.compare(pass, config.streamKeys[name], (err, r) => {
+    if (!r) {
       return res.status(404).send('fail');
     }
     return res.send('ok');
