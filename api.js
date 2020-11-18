@@ -413,7 +413,7 @@ function scanLine(line) {
   if (isConsole) {
      return;
   } else if (isBanned) {
-    // console.log(line)
+    // console.log(line);
     const nameString = buildKillerNameString(word, isBanned);
     const name = getName(nameString);
     const id = getID3(nameString);
@@ -978,7 +978,8 @@ app.get('/stats', (req, res) => {
   res.send(JSON.stringify([
     top,
     weapons,
-    totalPlayers
+    totalPlayers,
+    bannedPlayers
   ]));
 });
 
@@ -1056,6 +1057,9 @@ app.get('/auth', (req, res) => {
     return res.status(404).send('fail');
   }
   bcrypt.compare(pass, config.streamKeys[name], (err, match) => {
+    if (err) {
+      return console.error(err);
+    }
     if (!match) {
       return res.status(404).send('fail');
     }
