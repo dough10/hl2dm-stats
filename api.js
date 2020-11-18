@@ -1052,6 +1052,7 @@ app.get('/demos', (reg, res) => {
 app.get('/auth', (req, res) => {
   var name = req.query.name;
   var pass = req.query.pass;
+  console.log(config.streamKeys, config.streamKeys[name])
   if (!config.streamKeys[name]) {
     return res.status(404).send('');
   }
