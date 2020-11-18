@@ -723,7 +723,6 @@ function sortUsersByKDR() {
     return a.kdr - b.kdr;
   });
   arr.reverse();
-  console.log(bannedPlayers);
   users = {};
   bannedPlayers = {};
   return arr;
