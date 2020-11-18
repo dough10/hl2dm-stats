@@ -1051,6 +1051,7 @@ app.get('/demos', (reg, res) => {
 app.get('/auth', (req, res) => {
   var name = req.query.name;
   var pass = req.query.pass;
+  console.log([name, pass])
   res.send([name, pass])
 });
 
