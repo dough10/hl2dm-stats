@@ -8,6 +8,7 @@ const schedule = require('node-schedule');
 const child_process = require("child_process");
 const express = require('express');
 const compression = require('compression');
+const bcrypt = require('bcrypt');
 const app = express();
 app.use(compression());
 app.disable('x-powered-by');
