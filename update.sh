@@ -34,7 +34,6 @@ echo "\e[39m---------------\e[33mchmod sh files executable\e[39m---------------"
 sudo chmod +x ./monitor.sh
 sudo chmod +x ./update.sh
 sudo chmod +x ./start.sh
-sudo chmod +x ./install.sh
 
 
 echo "\e[39m---------------\e[33mresume monitor\e[39m---------------"
