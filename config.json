@@ -4,6 +4,6 @@
   "logRefreshTime": 60,
   "bulkStorage": "/media/nas/old-stats",
   "streamKeys": {
-    "hl2dm": ""
+    "hl2dm": "$2b$10$mh1XDBuOgSI3aTPuw7qfrOOc3eoKMC4q76QdQ5Gd0M4sgYorQ5Qhe"
   }
 }
