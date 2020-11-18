@@ -1052,11 +1052,15 @@ app.get('/demos', (reg, res) => {
 app.get('/auth', (req, res) => {
   var name = req.query.name;
   var pass = req.query.pass;
-  console.log(config.streamKeys, config.streamKeys[name])
   if (!config.streamKeys[name]) {
-    return res.status(404).send('');
+    return res.status(404).send('fail');
   }
-  res.send(config.streamKeys[name])
+  bcrypt.compare(pass, config.streamKeys[name], (err, res) => {
+    if (!res) {
+      return res.status(404).send('fail');
+    }
+    return res.send('ok');
+  });
 });
 
 app.ws('/', (ws, req) => {
