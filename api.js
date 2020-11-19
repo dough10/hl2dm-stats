@@ -39,8 +39,11 @@ Object.size = obj => {
   return size;
 };
 
+/**
+ * print strings to log with cuttent time
+ */
 function print(message) {
-  console.log(`${new Date()} - ${message}`)
+  console.log(`${new Date().toLocaleString()} - ${message}`)
 }
 
 /**
@@ -874,12 +877,10 @@ function getOldStatsList(month) {
   return new Promise((resolve, reject) => {
     fs.readdir(`${__dirname}/old-top`, (err, files) => {
       if (err) {
-        console.log(err);
-        return;
+        return console.log(err);
       }
       if (!month) {
-        resolve(files);
-        return;
+        return resolve(files);
       }
       month = Number(month);
       for (var i = 0; i < files.length; i++) {
@@ -973,6 +974,9 @@ var j = schedule.scheduleJob('0 5 1 * *', cleanUp);
 
 print(`Loading API backend calls`);
 
+/**
+ * route for gettings player stats
+ */
 app.get('/stats', (req, res) => {
   res.send(JSON.stringify([
     top,
@@ -982,40 +986,54 @@ app.get('/stats', (req, res) => {
   ]));
 });
 
+/**
+ * route for gettings the status of the game server
+ */
 app.get('/status', (reg, res) => {
   res.send(serverStatus);
 });
 
+/**
+ * route for downloading current months demo file
+ */
 app.get('/download/:file', (reg, res) => {
   var dl = `${config.gameServerDir}/${reg.params.file}`;
   if (!fs.existsSync(dl)){
-    res.status(404).send('File does not exist');
-    return;
+    return res.status(404).send('File does not exist');
   }
   print(`File downloaded ${dl}`);
   res.download(dl, reg.params.file);
 });
 
+/**
+ * route for downloading a previous months logs zip files
+ */
 app.get('/download/logs-zip/:file', (reg, res) => {
   var dl = `/media/nas/old-stats/logs/${reg.params.file}`;
   if (!fs.existsSync(dl)){
-    res.status(404).send('File does not exist');
-    return;
+    return res.status(404).send('File does not exist');
+
   }
   print(`File downloaded ${dl}`);
   res.download(dl, reg.params.file);
 });
 
+/**
+ * route for downloading a previous months demo zip files
+ */
 app.get('/download/demos-zip/:file', (reg, res) => {
   var dl = `/media/nas/old-stats/demos/${reg.params.file}`;
   if (!fs.existsSync(dl)){
-    res.status(404).send('File does not exist');
-    return;
+    return res.status(404).send('File does not exist');
+
   }
   print(`File downloaded ${dl}`);
   res.download(dl, reg.params.file);
 });
 
+/**
+ * route for getting a list of svaliable old months data
+ */
 app.get('/old-months', (reg, res) => {
   getOldStatsList().then(stats => {
     res.send(stats);
@@ -1024,6 +1042,9 @@ app.get('/old-months', (reg, res) => {
   });
 });
 
+/**
+ * route for getting a old months stats data
+ */
 app.get('/old-stats/:month', (reg, res) => {
   getOldStatsList(reg.params.month).then(stats => {
     res.send(stats);
@@ -1032,6 +1053,9 @@ app.get('/old-stats/:month', (reg, res) => {
   });
 });
 
+/**
+ * route to get list of demo recording on the server
+ */
 app.get('/demos', (reg, res) => {
   var arr = [];
   getDemos().then(demos => {
@@ -1052,8 +1076,8 @@ app.get('/demos', (reg, res) => {
 /**
  * authorize stream upload
  *
- * @param {String} name - name of the stream
- * @param {String} k - streams auth key
+ * @param {String} req.query.name - the name of the stream
+ * @param {String} req.query.k - the streams auth key
  */
 app.get('/auth', (req, res) => {
   var name = req.query.name;
@@ -1072,11 +1096,17 @@ app.get('/auth', (req, res) => {
   });
 });
 
+/**
+ * route for WebSocket
+ */
 app.ws('/', (ws, req) => {
   socket = ws;
   socket.send(JSON.stringify(serverStatus));
 });
 
+/**
+ * route for 404
+ */
 app.get('*', (req, res) => {
   res.status(404).sendFile(`${__dirname}/html/404.html`);
 });
