@@ -1049,9 +1049,15 @@ app.get('/demos', (reg, res) => {
   });
 });
 
+/**
+ * authorize stream upload
+ *
+ * @param {String} name - name of the stream
+ * @param {String} k - streams auth key
+ */
 app.get('/auth', (req, res) => {
   var name = req.query.name;
-  var pass = req.query.pass;
+  var pass = req.query.k;
   if (!config.streamKeys[name]) {
     return res.status(404).send('fail');
   }
