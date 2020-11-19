@@ -687,6 +687,9 @@ function scanLine(line) {
  */
 function sortWeapons(user) {
   var sortArr = [];
+  if (!user.id) {
+    console.log(user)
+  }
   for (var weapon in user) {
     var acc = 0;
     var hs = 0;
@@ -696,9 +699,6 @@ function sortWeapons(user) {
         shots = weaponStats[user.id][weapon].shots;
         acc = Math.round((weaponStats[user.id][weapon].hits / weaponStats[user.id][weapon].shots) * 100);
         hs = Math.round((weaponStats[user.id][weapon].headshots / weaponStats[user.id][weapon].shots) * 100);
-      }
-      if (!user.id) {
-        console.log(user)
       }
       sortArr.push([
         weapon,
