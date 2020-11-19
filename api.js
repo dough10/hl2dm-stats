@@ -132,7 +132,7 @@ function cacheTopResponse() {
       if (weapons.physics === 0) {
         delete weapons.physics;
       }
-      // convert weapons object into sorted by kill count array
+      // convert weapons object into sorted array by kill count array
       weapons = sortWeapons(weapons);
       for (var i = 0; i < top.length; i++) {
         // merge player physics kills
@@ -696,6 +696,9 @@ function sortWeapons(user) {
         shots = weaponStats[user.id][weapon].shots;
         acc = Math.round((weaponStats[user.id][weapon].hits / weaponStats[user.id][weapon].shots) * 100);
         hs = Math.round((weaponStats[user.id][weapon].headshots / weaponStats[user.id][weapon].shots) * 100);
+      }
+      if (!user.id) {
+        console.log(user)
       }
       sortArr.push([
         weapon,
