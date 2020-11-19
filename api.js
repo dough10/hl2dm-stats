@@ -710,8 +710,8 @@ function calculatePrecent(small, big) {
  */
 function sortWeapons(user) {
   var sortArr = [];
-  var allWeaponStats = totalWeaponStats();
   if (!user.id) {
+    var allWeaponStats = totalWeaponStats();
     for (weapon in user) {
       var acc = 0;
       var hs = 0;

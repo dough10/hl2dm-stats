@@ -294,6 +294,30 @@ function isLessThenOne(p) {
   return p;
 }
 
+function tooltipHTML(weaponName, precent, shots, hitPrecent, hsPrecent) {
+  var container = docuemnt.createElement('div');
+  var header = docuemnt.createElement('div');
+  header.style.color = 'yellow';
+  header.style.fontSize = '20px';
+  header.textContent = weaponName;
+  var kills = docuemnt.createElement('div');
+  kills.textContent = `${precent}% of all kills`;
+  container.appendChild(header);
+  container.appendChild(kills);
+  if (shots && hitPrecent && hsPrecent) {
+    var s = docuemnt.createElement('div');
+    s.textContent = `${shots} fired shots`;
+    var hi = docuemnt.createElement('div');
+    hi.textContent = `${hitPrecent}% hit`;
+    var hs = docuemnt.createElement('div');
+    hs.textContent = `${hsPrecent}% headshots`;
+    container.appendChild(s);
+    container.appendChild(hi);
+    container.appendChild(hs);
+  }
+  return container;
+}
+
 /**
  * displays weapon stats
  *
@@ -328,10 +352,7 @@ function displayWeaponData(wrappers, weapons, kills) {
     icon.textContent = getWeaponIcon(weaponName);
     text.textContent = count;
     tooltip.classList.add('tooltiptext');
-    tooltip.textContent = `${weaponName}: ${precent}% of all kills`;
-    if (shots && hitPrecent && hsPrecent) {
-      tooltip.textContent = `${tooltip.textContent}, ${shots} fired shots, ${hitPrecent}% hit, ${hsPrecent}% headshots`;
-    }
+    tooltip.innerHTML = tooltipHTML(weaponName, precent, shots, hitPrecent, hsPrecent);
     weapContainer.appendChild(tooltip);
     weapContainer.appendChild(icon);
     weapContainer.appendChild(text);
@@ -1042,9 +1063,9 @@ qs('#demoZip').onClick(_ => {
   a.href = `https://hl2dm.dough10.me/api/download/demos-zip/${qs('#months').value}.zip`;
   a.type = 'application/zip';
   a.download = true;
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 });
 
 qs('#logZip').onClick(_ => {
@@ -1052,9 +1073,9 @@ qs('#logZip').onClick(_ => {
   a.href = `https://hl2dm.dough10.me/api/download/logs-zip/${qs('#months').value}.zip`;
   a.type = 'application/zip';
   a.download = true;
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 });
 
 qs('#months').addEventListener('change', e => {
