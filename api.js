@@ -716,10 +716,10 @@ function sortWeapons(user) {
       var acc = 0;
       var hs = 0;
       var shots = 0;
-      if (isWeapon(weapon) && weaponStats[weapon]) {
-         shots = weaponStats[weapon].shots;
-         acc = calculatePrecent(weaponStats[weapon].hits, weaponStats[weapon].shots);
-         hs = calculatePrecent(weaponStats[weapon].headshots, weaponStats[weapon].shots);
+      if (isWeapon(weapon) && allWeaponStats[weapon]) {
+         shots = allWeaponStats[weapon].shots;
+         acc = calculatePrecent(allWeaponStats[weapon].hits, allWeaponStats[weapon].shots);
+         hs = calculatePrecent(allWeaponStats[weapon].headshots, allWeaponStats[weapon].shots);
       }
       sortArr.push([
         weapon,
