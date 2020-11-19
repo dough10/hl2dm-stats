@@ -680,6 +680,29 @@ function scanLine(line) {
   }
 }
 
+function totalWeaponStats() {
+  var obj = {};
+  for (var id in weaponStats) {
+    for (var weapon in weaponStats[id]) {
+      if (!obj[weapon]) {
+        obj[weapon] = {
+          shots: 0,
+          hits:0,
+          headshots:0
+        };
+      }
+      obj[weapon].shots = obj[weapon].shots + weaponStats[id][weapon].shots;
+      obj[weapon].hits = obj[weapon].hits + weaponStats[id][weapon].hits;
+      obj[weapon].headshots = obj[weapon].headshots + weaponStats[id][weapon].headshots;
+    }
+  }
+  return obj;
+}
+
+function calculatePrecent(small, big) {
+  return Math.round((small / big) * 100);
+}
+
 /**
  * removes weapon specific data from user object and places it in it's own array
  *
@@ -688,7 +711,7 @@ function scanLine(line) {
 function sortWeapons(user) {
   var sortArr = [];
   if (!user.id) {
-    console.log(user)
+    console.log(user, totalWeaponStats())
   }
   for (var weapon in user) {
     var acc = 0;
@@ -697,8 +720,8 @@ function sortWeapons(user) {
     if (isWeapon(weapon)) {
       if (weaponStats[user.id] && weaponStats[user.id][weapon]) {
         shots = weaponStats[user.id][weapon].shots;
-        acc = Math.round((weaponStats[user.id][weapon].hits / weaponStats[user.id][weapon].shots) * 100);
-        hs = Math.round((weaponStats[user.id][weapon].headshots / weaponStats[user.id][weapon].shots) * 100);
+        acc = calculatePrecent(weaponStats[user.id][weapon].hits, weaponStats[user.id][weapon].shots);
+        hs = calculatePrecent(weaponStats[user.id][weapon].headshots, weaponStats[user.id][weapon].shots);
       }
       sortArr.push([
         weapon,
