@@ -734,19 +734,22 @@ function ipLookup(ip, id) {
   return new Promise((resolve, reject) => {
     console.log(localStorage[id]);
     if (localStorage[id]) {
-      return JSON.parse(localStorage[id]);
+      JSON.parse(localStorage[id]);
+      return;
     }
     if (isLocalIP(ip)) {
-      return resolve({
+      resolve({
         country: "US",
         country_3: "USA",
         ip: ip,
         name: "United States"
       });
+      return;
     }
     fetch(`https://get.geojs.io/v1/ip/country/${ip}.json`).then(response => {
       if (response.status !== 200) {
-        return reject(response.status);
+        reject(response.status);
+        return;
       }
       response.json().then(resolve);
     });
