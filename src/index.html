@@ -597,16 +597,7 @@
         .button:focus:after {
           opacity: 1;
         }
-        .tooltip:hover .tooltiptext {
-          opacity: 0;
-        }
-        .tooltip:active .tooltiptext {
-          opacity: 0;
-        }
-        .tooltip:focus .tooltiptext {
-          opacity: 0;
-        }
-        .tooltip:hover:active .tooltiptext {
+        .tooltip:hover .tooltiptext ~ .tooltip:active .tooltiptext ~ .tooltip:focus .tooltiptext ~ .tooltip:hover:active .tooltiptext {
           opacity: 0;
         }
       }
