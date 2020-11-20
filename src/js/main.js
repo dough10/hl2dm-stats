@@ -298,7 +298,8 @@ function tooltipHTML(weaponName, precent, shots, hitPrecent, hsPrecent) {
   var container = document.createElement('div');
   var header = document.createElement('div');
   header.style.color = 'yellow';
-  header.style.fontSize = '20px';
+  header.style.fontSize = '17px';
+  header.style.margin = '8px 0';
   header.textContent = weaponName;
   var kills = document.createElement('div');
   kills.textContent = `${precent}% of all kills`;
