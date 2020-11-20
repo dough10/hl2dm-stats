@@ -732,9 +732,8 @@ function isLocalIP(ip) {
  */
 function ipLookup(ip, id) {
   return new Promise((resolve, reject) => {
-    console.log(localStorage[id]);
     if (localStorage[id]) {
-      JSON.parse(localStorage[id]);
+      resolve(JSON.parse(localStorage[id]));
       return;
     }
     if (isLocalIP(ip)) {
