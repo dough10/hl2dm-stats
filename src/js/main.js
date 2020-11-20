@@ -352,7 +352,7 @@ function displayWeaponData(wrappers, weapons, kills) {
     icon.textContent = getWeaponIcon(weaponName);
     text.textContent = count;
     tooltip.classList.add('tooltiptext');
-    tooltip.innerHTML = tooltipHTML(weaponName, precent, shots, hitPrecent, hsPrecent);
+    tooltip.appendChild(tooltipHTML(weaponName, precent, shots, hitPrecent, hsPrecent));
     weapContainer.appendChild(tooltip);
     weapContainer.appendChild(icon);
     weapContainer.appendChild(text);
