@@ -729,21 +729,22 @@ function isLocalIP(ip) {
  *
  * @param {String} ip - ip address of the client connected to the server
  */
-function ipLookup(ip) {
+function ipLookup(ip, id) {
   return new Promise((resolve, reject) => {
+    if (localStorage[id]) {
+      return JSON.parse(localStorage[id]);
+    }
     if (isLocalIP(ip)) {
-      resolve({
+      return resolve({
         country: "US",
         country_3: "USA",
         ip: ip,
         name: "United States"
       });
-      return;
     }
     fetch(`https://get.geojs.io/v1/ip/country/${ip}.json`).then(response => {
       if (response.status !== 200) {
-        reject(response.status);
-        return;
+        return reject(response.status);
       }
       response.json().then(resolve);
     });
