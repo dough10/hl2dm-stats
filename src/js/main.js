@@ -482,7 +482,6 @@ function parseTopData(top, page, cb) {
     card.classList.add('stat');
     card.style.zIndex = z;
     z--;
-    console.log(z, card.style.zIndex)
     const name = document.createElement('div');
     name.textContent = player.name;
     name.title = player.name;
