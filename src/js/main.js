@@ -504,9 +504,9 @@ function parseTopData(top, page, cb) {
     weaponWrapper2.style.marginTop = '24px'
     weaponWrapper2.style.display = 'none';
     weaponWrapper2.style.opacity = 0;
-    ipLookup(player.ip, player.name).then(res => {
+    ipLookup(player.ip, player.id).then(res => {
       if ('localStorage' in window) {
-        localStorage[player.name] = JSON.stringify(res);
+        localStorage[player.id] = JSON.stringify(res);
       }
       name.textContent = name.textContent + ` (${res.country})`;
       name.title = name.title + ` (${res.country})`;
