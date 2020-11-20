@@ -294,6 +294,15 @@ function isLessThenOne(p) {
   return p;
 }
 
+/**
+ * creates HTML for weapon info tooltips
+ *
+ * @param {String} weaponName - name of the weapon
+ * @param {Number} precent - precentage of kills withs the weapon
+ * @param {Number} shots - Number of shots fired
+ * @param {Number} hitPrecent - precentage of shots fired that hit the target
+ * @param {Number} hsPrecent - precentage of shots fired that hit in the head
+ */
 function tooltipHTML(weaponName, precent, shots, hitPrecent, hsPrecent) {
   var container = document.createElement('div');
   container.classList.add('tt-container');
@@ -495,7 +504,10 @@ function parseTopData(top, page, cb) {
     weaponWrapper2.style.marginTop = '24px'
     weaponWrapper2.style.display = 'none';
     weaponWrapper2.style.opacity = 0;
-    ipLookup(player.ip).then(res => {
+    ipLookup(player.ip, player.name).then(res => {
+      if ('localStorage' in window) {
+        localStorage[player.name] = JSON.stringify(res);
+      }
       name.textContent = name.textContent + ` (${res.country})`;
       name.title = name.title + ` (${res.country})`;
     });
@@ -525,10 +537,6 @@ function parseTopData(top, page, cb) {
       hs = fav[2][2];
     }
     tooltip.appendChild(tooltipHTML(fav[0], Math.round((fav[1] / player.kills) * 100), shots, hits, hs));
-    // tooltip.textContent = `${fav[0]}: ${Math.round((fav[1] / player.kills) * 100)}% of all kills`;
-    // if (fav[2] && fav[2][0] && fav[2][1] && fav[2][2]) {
-    //   tooltip.textContent = `${tooltip.textContent}, ${fav[2][0]} fired shots, ${fav[2][1]}% hit, ${fav[2][2]}% headshots`;
-    // }
     text.style.marginRight = '8px';
     icon.style.marginRight = '4px';
     icon.classList.add('HL2Weapons');
@@ -713,8 +721,7 @@ function parseServerStatus(status) {
  * @param {String} ip - ip address of the client connected to the server
  */
 function isLocalIP(ip) {
-  const rx = /(^127\.)|(^192\.168\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^::1$)|(^[fF][cCdD])/;
-  return rx.test(ip);
+  return /(^127\.)|(^192\.168\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^::1$)|(^[fF][cCdD])/.test(ip);
 }
 
 /**
