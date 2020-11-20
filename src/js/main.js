@@ -300,9 +300,9 @@ function tooltipHTML(weaponName, precent, shots, hitPrecent, hsPrecent) {
   var header = document.createElement('div');
   header.classList.add('tt-header');
   header.textContent = weaponName;
+  container.appendChild(header);
   var kills = document.createElement('div');
   kills.textContent = `${precent}% of all kills`;
-  container.appendChild(header);
   container.appendChild(kills);
   if (shots && hitPrecent && hsPrecent) {
     var s = document.createElement('div');
