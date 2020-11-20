@@ -516,7 +516,15 @@ function parseTopData(top, page, cb) {
     const icon = document.createElement('div');
     const text = document.createElement('div');
     tooltip.classList.add('tooltiptext');
-    tooltip.appendChild(tooltipHTML(fav[0], Math.round((fav[1] / player.kills) * 100), fav[2][0], fav[2][1], fav[2][2]));
+    var shots;
+    var hits;
+    var hs;
+    if (fav[2] && fav[2][0] && fav[2][1] && fav[2][2]) {
+      shots = fav[2][0];
+      hits = fav[2][1];
+      hs = fav[2][2];
+    }
+    tooltip.appendChild(tooltipHTML(fav[0], Math.round((fav[1] / player.kills) * 100), shots, hits, hs));
     // tooltip.textContent = `${fav[0]}: ${Math.round((fav[1] / player.kills) * 100)}% of all kills`;
     // if (fav[2] && fav[2][0] && fav[2][1] && fav[2][2]) {
     //   tooltip.textContent = `${tooltip.textContent}, ${fav[2][0]} fired shots, ${fav[2][1]}% hit, ${fav[2][2]}% headshots`;
