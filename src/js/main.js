@@ -505,10 +505,6 @@ function parseTopData(top, page, cb) {
     weaponWrapper2.style.display = 'none';
     weaponWrapper2.style.opacity = 0;
     ipLookup(player.ip, player.id).then(res => {
-      console.log(res);
-      if ('localStorage' in window) {
-        localStorage[player.id] = JSON.stringify(res);
-      }
       name.textContent = name.textContent + ` (${res.country})`;
       name.title = name.title + ` (${res.country})`;
     });
@@ -732,7 +728,7 @@ function isLocalIP(ip) {
  */
 function ipLookup(ip, id) {
   return new Promise((resolve, reject) => {
-    if (localStorage[id]) {
+    if ('localStorage' in window && localStorage[id]) {
       resolve(JSON.parse(localStorage[id]));
       return;
     }
@@ -750,7 +746,12 @@ function ipLookup(ip, id) {
         reject(response.status);
         return;
       }
-      response.json().then(resolve);
+      response.json().then(json => {
+        if ('localStorage' in window) {
+          localStorage[id] = JSON.stringify(json);
+        }
+        resolve(json);
+      });
     });
   });
 }
