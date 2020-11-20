@@ -420,9 +420,6 @@
         font-size: 17px;
         margin-bottom: 8px;
       }
-      .tooltip:hover {
-        position: relative;
-      }
       .tooltip:hover .tooltiptext {
         opacity: 1;
       }
@@ -599,6 +596,9 @@
         }
         .button:focus:after {
           opacity: 1;
+        }
+        .tooltip:hover .tooltiptext ~ .tooltip:active .tooltiptext {
+          opacity: 0;
         }
       }
     </style>
