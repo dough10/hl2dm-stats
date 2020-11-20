@@ -295,21 +295,21 @@ function isLessThenOne(p) {
 }
 
 function tooltipHTML(weaponName, precent, shots, hitPrecent, hsPrecent) {
-  var container = docuemnt.createElement('div');
-  var header = docuemnt.createElement('div');
+  var container = document.createElement('div');
+  var header = document.createElement('div');
   header.style.color = 'yellow';
   header.style.fontSize = '20px';
   header.textContent = weaponName;
-  var kills = docuemnt.createElement('div');
+  var kills = document.createElement('div');
   kills.textContent = `${precent}% of all kills`;
   container.appendChild(header);
   container.appendChild(kills);
   if (shots && hitPrecent && hsPrecent) {
-    var s = docuemnt.createElement('div');
+    var s = document.createElement('div');
     s.textContent = `${shots} fired shots`;
-    var hi = docuemnt.createElement('div');
+    var hi = document.createElement('div');
     hi.textContent = `${hitPrecent}% hit`;
-    var hs = docuemnt.createElement('div');
+    var hs = document.createElement('div');
     hs.textContent = `${hsPrecent}% headshots`;
     container.appendChild(s);
     container.appendChild(hi);
