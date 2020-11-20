@@ -505,6 +505,7 @@ function parseTopData(top, page, cb) {
     weaponWrapper2.style.display = 'none';
     weaponWrapper2.style.opacity = 0;
     ipLookup(player.ip, player.id).then(res => {
+      console.log(res);
       if ('localStorage' in window) {
         localStorage[player.id] = JSON.stringify(res);
       }
@@ -731,6 +732,7 @@ function isLocalIP(ip) {
  */
 function ipLookup(ip, id) {
   return new Promise((resolve, reject) => {
+    console.log(localStorage[id]);
     if (localStorage[id]) {
       return JSON.parse(localStorage[id]);
     }
