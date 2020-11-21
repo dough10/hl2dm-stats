@@ -739,11 +739,12 @@ function ipLookup(ip, id) {
   return new Promise((resolve, reject) => {
     if ('localStorage' in window && localStorage[id]) {
       var savedData = JSON.parse(localStorage[id])
-      if (ip !== savedData.ip && validIPaddress(ip)) {
+      if (ip !== savedData.ip) {
+        if (!validIPaddress(ip)) {
+          console.error(`error updating IP. IP address invalid ${ip}`);
+          return;
+        }
         savedData.ip = ip;
-      } else {
-        console.error(`error updating IP. IP address invalid ${ip}`);
-        return;
       }
       resolve(savedData);
       return;
