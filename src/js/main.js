@@ -713,7 +713,16 @@ function parseServerStatus(status) {
 }
 
 /**
- * check if ip is LAN ip address
+ * check if ip  address is valid
+ *
+ * @param {String} ip - ip address
+ */
+function validIPaddress(ip) {
+  return /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ip);
+}
+
+/**
+ * check if ip is LAN address
  *
  * @param {String} ip - ip address of the client connected to the server
  */
@@ -722,14 +731,21 @@ function isLocalIP(ip) {
 }
 
 /**
- * lookup id address and get thje country initals
+ * lookup and caches ip address to get the origin country
  *
  * @param {String} ip - ip address of the client connected to the server
  */
 function ipLookup(ip, id) {
   return new Promise((resolve, reject) => {
     if ('localStorage' in window && localStorage[id]) {
-      resolve(JSON.parse(localStorage[id]));
+      var savedData = JSON.parse(localStorage[id])
+      if (ip !== savedData.ip && validIPaddress(ip)) {
+        savedData.ip = ip;
+      } else {
+        console.error(`error updating IP. IP address invalid ${ip}`);
+        return;
+      }
+      resolve(savedData);
       return;
     }
     if (isLocalIP(ip)) {
@@ -785,7 +801,7 @@ function makeOption(option, value, parent) {
 }
 
 /**
- * create a option element and append to the parent element
+ * get list of months from server and creates a option element
  *
  * @param {Number} month - # month
  * @param {Function} cb - callback function
