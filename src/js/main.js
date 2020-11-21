@@ -315,7 +315,7 @@ function tooltipHTML(weaponName, precent, shots, hitPrecent, hsPrecent) {
   span.classList.add('hl2');
   span.textContent = getWeaponIcon(weaponName);
   header.appendChild(span);
-  header.textContent = weaponName;
+  header.innerHTML = `${header.innerHTML} ${weaponName}`;
   container.appendChild(header);
   var kills = document.createElement('div');
   kills.textContent = `${precent}% of all kills`;
