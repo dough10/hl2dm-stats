@@ -1068,10 +1068,7 @@ qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
   }
   if (scrollTop > infoHeight) {
     animations.fadeIn(qs('#dl-buttons'));
-    var time = new Timer();
-    cascadeCards(wrapper).then(_ => {
-      console.log(`time to cascadeCards ${time.endStrinmg()}`);
-    });
+    cascadeCards(wrapper);
     animations.fadeOut(qs('#stuff-below'));
     animations.animateElement(fab, "translateY(0px)");
   } else {
