@@ -639,7 +639,7 @@ function parseDemos(demos) {
     qs('#page3').appendChild(a);
     ripples.attachButtonRipple(card);
     if (idx === array.length - 1){
-      console.log(timer.endString());
+      console.log(`time to process demos ${timer.endString()}`);
     }
   });
   showApp();
@@ -1068,7 +1068,10 @@ qs('.wrapper').onscroll = (e) => requestAnimationFrame(_ => {
   }
   if (scrollTop > infoHeight) {
     animations.fadeIn(qs('#dl-buttons'));
-    cascadeCards(wrapper);
+    var timer = new Timer();
+    cascadeCards(wrapper).then(_ => {
+      console.log(`time to cascadeCards ${timer.endStrinmg()}`);
+    });
     animations.fadeOut(qs('#stuff-below'));
     animations.animateElement(fab, "translateY(0px)");
   } else {
