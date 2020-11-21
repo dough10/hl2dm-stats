@@ -774,49 +774,49 @@ function scanLine(line) {
     var leftleg = word[isStats2 + 14];
     var rightleg = word[isStats2 + 16];
     if (!head) {
-      console.log(name, id3);
+      console.log(line);
       for (var i = isStats2 + 1; i < word.length; i++) {
         console.log(i, word[i])
       }
       return;
     }
     if (!chest) {
-      console.log(name, id3);
+      console.log(line);
       for (var i = isStats2 + 1; i < word.length; i++) {
         console.log(i, word[i])
       }
       return;
     }
     if (!stomach) {
-      console.log(name, id3);
+      console.log(line);
       for (var i = isStats2 + 1; i < word.length; i++) {
         console.log(i, word[i])
       }
       return;
     }
     if (!leftarm) {
-      console.log(name, id3);
+      console.log(line);
       for (var i = isStats2 + 1; i < word.length; i++) {
         console.log(i, word[i])
       }
       return;
     }
     if (!rightarm) {
-      console.log(name, id3);
+      console.log(line);
       for (var i = isStats2 + 1; i < word.length; i++) {
         console.log(i, word[i])
       }
       return;
     }
     if (!leftleg) {
-      console.log(name, id3);
+      console.log(line);
       for (var i = isStats2 + 1; i < word.length; i++) {
         console.log(i, word[i])
       }
       return;
     }
     if (!rightleg) {
-      console.log(name, id3);
+      console.log(line);
       for (var i = isStats2 + 1; i < word.length; i++) {
         console.log(i, word[i])
       }
