@@ -67,6 +67,10 @@ class Timer {
       seconds
     ];
   }
+  endString() {
+    var arr = this.end();
+    return `${arr[0]} hours ${arr[1]} minutes ${arr[2]} seconds`
+  }
 }
 
 /**
@@ -159,8 +163,8 @@ function cacheTopResponse() {
       setTimeout(_ => {
         updated = false;
       }, 60000);
-      var end = time.end();
-      print(`Logs parsed & cached. ${end[2]} seconds to process`);
+      var end = time.endString();
+      print(`Logs parsed & cached. ${end}`);
       resolve();
     });
   });
@@ -718,6 +722,10 @@ function scanLine(line) {
       word[i] = word[i].replace('"', '').replace('(', '').replace(')', '').replace('"', '');
     }
     var weaponName = word[isStats + 2];
+    if (!isWeapon(weaponName)) {
+      console.log(`${line} weapon error`);
+      return;
+    }
     if (!weaponStats[id3][weaponName]) {
       weaponStats[id3][weaponName] = {
         shots: 0,
@@ -752,6 +760,10 @@ function scanLine(line) {
       word[i] = word[i].replace('"', '').replace('(', '').replace(')', '').replace('"', '');
     }
     var weaponName = word[isStats2 + 2];
+    if (!isWeapon(weaponName)) {
+      console.log(`${line} weapon error`);
+      return;
+    }
     if (!weaponStats[id3][weaponName]) {
       weaponStats[id3][weaponName] = {
         shots: 0,
