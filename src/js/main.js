@@ -13,15 +13,14 @@ HTMLElement.prototype.onClick = function (cb) {
 };
 
 /**
- * time things
+ * A class for timing duration of things
  */
 class Timer {
   constructor() {
     this.startTime = new Date().getTime();
   }
   end() {
-    var end = new Date().getTime();
-    var ms = end - this.startTime;
+    var ms = new Date().getTime() - this.startTime;
     var seconds = ms / 1000;
     var hours = parseInt( seconds / 3600 );
     seconds = seconds % 3600;
@@ -32,6 +31,10 @@ class Timer {
       minutes,
       seconds
     ];
+  }
+  endString() {
+    var arr = this.end();
+    return `${arr[0]} hours ${arr[1]} minutes ${arr[2]} seconds`;
   }
 }
 
@@ -612,7 +615,8 @@ function parseTopData(top, page, cb) {
  * @param {Array} demos - list of demos from this month
  */
 function parseDemos(demos) {
-  demos.forEach(demo => {
+  var time = new Timer()
+  demos.forEach((demo, idx, array) => {
     const a = document.createElement('a');
     a.href = `https://hl2dm.dough10.me/api/download/${demo[0]}`;
     a.download = true;
@@ -634,6 +638,9 @@ function parseDemos(demos) {
     a.appendChild(card);
     qs('#page3').appendChild(a);
     ripples.attachButtonRipple(card);
+    if (idx === array.length - 1){
+      console.log(time.endString());
+    }
   });
   showApp();
 }
