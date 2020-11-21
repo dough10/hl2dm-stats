@@ -767,8 +767,8 @@ function scanLine(line) {
       };
     }
     console.log(weaponName)
-    for (var i = 0; i < word.length; i++) {
-      // console.log(i, word[i])
+    for (var i = isStats2 + 2; i < word.length; i++) {
+      console.log(i, word[i])
     }
   }
 }
