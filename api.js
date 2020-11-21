@@ -450,10 +450,10 @@ function scanLine(line) {
   if (isConsole) {
      return;
   } else if (isBanned) {
-    console.log(line);
     const nameString = buildKillerNameString(word, isBanned);
     const name = getName(nameString);
     const id = getID3(nameString);
+    console.log(name, id);
     if (!id) {
       return;
     }
