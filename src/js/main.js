@@ -315,11 +315,12 @@ function tooltipHTML(weaponName, precent, shots, hitPrecent, hsPrecent) {
   } else {
     weaponIcon.classList.add('HL2Weapons');
   }
+  weaponIcon.style.color = 'yellow';
   weaponIcon.textContent = getWeaponIcon(weaponName);
   container.appendChild(weaponIcon);
   var header = document.createElement('div');
   header.classList.add('tt-header');
-  header.innerHTML = `${header.innerHTML} ${weaponName}`;
+  header.textContent = weaponName;
   container.appendChild(header);
   var kills = document.createElement('div');
   kills.textContent = `${precent}% of all kills`;
