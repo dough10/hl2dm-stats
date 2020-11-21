@@ -766,7 +766,56 @@ function scanLine(line) {
         rightleg:0
       };
     }
-    console.log(id3, weaponName, word[isStats2 + 4], word[isStats2 + 6], word[isStats2 + 8], word[isStats2 + 10], word[isStats2 + 12], word[isStats2 + 14], word[isStats2 + 16])
+    var head = word[isStats2 + 4];
+    var chest = word[isStats2 + 6];
+    var stomach = word[isStats2 + 8];
+    var leftarm = word[isStats2 + 10];
+    var rightarm = word[isStats2 + 12];
+    var leftleg = word[isStats2 + 14];
+    var rightleg = word[isStats2 + 16];
+    if (!head) {
+      for (var i = isStats2 + 1; i < word.length; i++) {
+        console.log(i, word[i])
+      }
+      return;
+    }
+    if (!chest) {
+      for (var i = isStats2 + 1; i < word.length; i++) {
+        console.log(i, word[i])
+      }
+      return;
+    }
+    if (!stomach) {
+      for (var i = isStats2 + 1; i < word.length; i++) {
+        console.log(i, word[i])
+      }
+      return;
+    }
+    if (!leftarm) {
+      for (var i = isStats2 + 1; i < word.length; i++) {
+        console.log(i, word[i])
+      }
+      return;
+    }
+    if (!rightarm) {
+      for (var i = isStats2 + 1; i < word.length; i++) {
+        console.log(i, word[i])
+      }
+      return;
+    }
+    if (!leftleg) {
+      for (var i = isStats2 + 1; i < word.length; i++) {
+        console.log(i, word[i])
+      }
+      return;
+    }
+    if (!rightleg) {
+      for (var i = isStats2 + 1; i < word.length; i++) {
+        console.log(i, word[i])
+      }
+      return;
+    }
+    console.log(id3, weaponName, head, chest, stomach, leftarm, rightarm, leftleg, rightleg);
     weaponStats[id3][weaponName].head = weaponStats[id3][weaponName].head + Number(word[isStats2 + 4]);
     weaponStats[id3][weaponName].chest = weaponStats[id3][weaponName].chest + Number(word[isStats2 + 6]);
     weaponStats[id3][weaponName].stomach = weaponStats[id3][weaponName].stomach + Number(word[isStats2 + 8]);
