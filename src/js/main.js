@@ -309,12 +309,12 @@ function isLessThenOne(p) {
 function tooltipHTML(weaponName, precent, shots, hitPrecent, hsPrecent) {
   var container = document.createElement('div');
   container.classList.add('tt-container');
+  var weaponIcon = document.createElement('div');
+  weaponIcon.classList.add('HL2Weapons');
+  weaponIcon.textContent = getWeaponIcon(weaponName);
+  container.appendChild(weaponIcon);
   var header = document.createElement('div');
   header.classList.add('tt-header');
-  var span = document.createElement('span');
-  span.classList.add('HL2Weapons');
-  span.textContent = getWeaponIcon(weaponName);
-  header.appendChild(span);
   header.innerHTML = `${header.innerHTML} ${weaponName}`;
   container.appendChild(header);
   var kills = document.createElement('div');
