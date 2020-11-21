@@ -315,7 +315,7 @@ function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent) {
   } else {
     weaponIcon.classList.add('HL2Weapons');
   }
-  weaponIcon.style.color = 'yellow';
+  weaponIcon.style.color = '#ff0';
   weaponIcon.textContent = getWeaponIcon(weaponName);
   container.appendChild(weaponIcon);
   var header = document.createElement('div');
