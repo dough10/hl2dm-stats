@@ -722,7 +722,14 @@ function scanLine(line) {
       weaponStats[id3][weaponName] = {
         shots: 0,
         hits: 0,
-        headshots:0
+        headshots:0,
+        head:0,
+        chest:0,
+        stomach:0,
+        leftarm:0,
+        rightarm:0,
+        leftleg:0,
+        rightleg:0
       };
     }
     weaponStats[id3][weaponName].shots = weaponStats[id3][weaponName].shots + Number(word[isStats + 4]);
@@ -740,16 +747,28 @@ function scanLine(line) {
     if (!weaponStats[id3]) {
       weaponStats[id3] = {};
     }
+    // clean up extra chars
+    for (var i = 0; i < word.length; i++) {
+      word[i] = word[i].replace('"', '').replace('(', '').replace(')', '').replace('"', '');
+    }
+    var weaponName = word[isStats + 2];
     if (!weaponStats[id3][weaponName]) {
       weaponStats[id3][weaponName] = {
         shots: 0,
         hits: 0,
-        headshots:0
+        headshots:0,
+        head:0,
+        chest:0,
+        stomach:0,
+        leftarm:0,
+        rightarm:0,
+        leftleg:0,
+        rightleg:0
       };
     }
-    // console.log(word[isStats2])
+    console.log(weaponName)
     for (var i = 0; i < word.length; i++) {
-      console.log(i, word[i])
+      // console.log(i, word[i])
     }
   }
 }
