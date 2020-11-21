@@ -310,7 +310,11 @@ function tooltipHTML(weaponName, precent, shots, hitPrecent, hsPrecent) {
   var container = document.createElement('div');
   container.classList.add('tt-container');
   var weaponIcon = document.createElement('div');
-  weaponIcon.classList.add('HL2Weapons');
+  if (weaponName === 'headshots') {
+    weaponIcon.classList.add('CS');
+  } else {
+    weaponIcon.classList.add('HL2Weapons');
+  }
   weaponIcon.textContent = getWeaponIcon(weaponName);
   container.appendChild(weaponIcon);
   var header = document.createElement('div');
