@@ -114,6 +114,7 @@ function validateIPaddress(ip) {
 function cacheTopResponse() {
   return new Promise((resolve, reject) => {
     print(`Clearing cache & parsing logs`);
+    var time = new Timer();
     parseLogs().then(stats => {
       top = stats;
       // merge physics kills
@@ -158,7 +159,8 @@ function cacheTopResponse() {
       setTimeout(_ => {
         updated = false;
       }, 60000);
-      print(`Logs parsed & cached`);
+      var end = time.end();
+      print(`Logs parsed & cached. ${end[0]} hours ${end[1]} minutes ${end[2]} seconds`);
       resolve();
     });
   });
