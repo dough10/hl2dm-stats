@@ -748,7 +748,7 @@ function scanLine(line) {
       };
     }
     for (var i = 0; i < word.length; i++) {
-      console.log( i word[i])
+      console.log(i, word[i])
     }
   }
 }
