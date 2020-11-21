@@ -47,15 +47,14 @@ function print(message) {
 }
 
 /**
- *
+ * A class for timing duration of things
  */
 class Timer {
   constructor() {
     this.startTime = new Date().getTime();
   }
   end() {
-    var end = new Date().getTime();
-    var ms = end - this.startTime;
+    var ms = new Date().getTime() - this.startTime;
     var seconds = ms / 1000;
     var hours = parseInt( seconds / 3600 );
     seconds = seconds % 3600;
@@ -69,7 +68,7 @@ class Timer {
   }
   endString() {
     var arr = this.end();
-    return `${arr[0]} hours ${arr[1]} minutes ${arr[2]} seconds`
+    return `${arr[0]} hours ${arr[1]} minutes ${arr[2]} seconds`;
   }
 }
 
@@ -163,8 +162,7 @@ function cacheTopResponse() {
       setTimeout(_ => {
         updated = false;
       }, 60000);
-      var end = time.endString();
-      print(`Logs parsed & cached. ${end}`);
+      print(`Logs parsed & cached. ${time.endString()} to process`);
       resolve();
     });
   });
