@@ -774,48 +774,55 @@ function scanLine(line) {
     var leftleg = word[isStats2 + 14];
     var rightleg = word[isStats2 + 16];
     if (!head) {
+      console.log(name, id3);
       for (var i = isStats2 + 1; i < word.length; i++) {
         console.log(i, word[i])
       }
       return;
     }
     if (!chest) {
+      console.log(name, id3);
       for (var i = isStats2 + 1; i < word.length; i++) {
         console.log(i, word[i])
       }
       return;
     }
     if (!stomach) {
+      console.log(name, id3);
       for (var i = isStats2 + 1; i < word.length; i++) {
         console.log(i, word[i])
       }
       return;
     }
     if (!leftarm) {
+      console.log(name, id3);
       for (var i = isStats2 + 1; i < word.length; i++) {
         console.log(i, word[i])
       }
       return;
     }
     if (!rightarm) {
+      console.log(name, id3);
       for (var i = isStats2 + 1; i < word.length; i++) {
         console.log(i, word[i])
       }
       return;
     }
     if (!leftleg) {
+      console.log(name, id3);
       for (var i = isStats2 + 1; i < word.length; i++) {
         console.log(i, word[i])
       }
       return;
     }
     if (!rightleg) {
+      console.log(name, id3);
       for (var i = isStats2 + 1; i < word.length; i++) {
         console.log(i, word[i])
       }
       return;
     }
-    console.log(id3, weaponName, head, chest, stomach, leftarm, rightarm, leftleg, rightleg);
+    // console.log(id3, weaponName, head, chest, stomach, leftarm, rightarm, leftleg, rightleg);
     weaponStats[id3][weaponName].head = weaponStats[id3][weaponName].head + Number(word[isStats2 + 4]);
     weaponStats[id3][weaponName].chest = weaponStats[id3][weaponName].chest + Number(word[isStats2 + 6]);
     weaponStats[id3][weaponName].stomach = weaponStats[id3][weaponName].stomach + Number(word[isStats2 + 8]);
