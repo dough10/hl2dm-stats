@@ -747,8 +747,9 @@ function scanLine(line) {
         headshots:0
       };
     }
+    console.log(word[isStats2])
     for (var i = 0; i < word.length; i++) {
-      console.log(i, word[i])
+      // console.log(i, word[i])
     }
   }
 }
