@@ -750,6 +750,7 @@ function scanLine(line) {
     // clean up extra chars
     for (var i = 0; i < word.length; i++) {
       word[i] = word[i].replace('"', '').replace('(', '').replace(')', '').replace('"', '');
+      console.log(word[i]);
     }
     var weaponName = word[isStats2 + 2];
     if (!weaponStats[id3][weaponName]) {
