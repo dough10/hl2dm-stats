@@ -486,7 +486,7 @@ function scanLine(line) {
      users[id].updated = lineTime;
      users[id].name = name;
     }
-    var said = '';
+    var said = `${new Date(lineTime).toLocaleString()}, `;
     for (var i = (isChat + 1); i < word.length; i++) {
      said = `${said}${word[i]} `;
     }
