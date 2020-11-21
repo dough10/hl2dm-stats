@@ -160,7 +160,7 @@ function cacheTopResponse() {
         updated = false;
       }, 60000);
       var end = time.end();
-      print(`Logs parsed & cached. ${end[0]} hours ${end[1]} minutes ${end[2]} seconds`);
+      print(`Logs parsed & cached. ${end[1]} minutes ${end[2]} seconds`);
       resolve();
     });
   });
