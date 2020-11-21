@@ -734,7 +734,6 @@ function scanLine(line) {
     const name = getName(killedNameString);
     const sid = new SteamID(id);
     const id3 = getID3(sid.getSteam3RenderedID());
-    console.log(line);
     if (!id3) {
       return;
     }
@@ -747,6 +746,9 @@ function scanLine(line) {
         hits: 0,
         headshots:0
       };
+    }
+    for (var i = 0; i < word.length; i++) {
+      console.log( i word[i])
     }
   }
 }
