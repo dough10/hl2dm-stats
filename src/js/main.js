@@ -306,7 +306,7 @@ function isLessThenOne(p) {
  * @param {Number} hitPrecent - precentage of shots fired that hit the target
  * @param {Number} hsPrecent - precentage of shots fired that hit in the head
  */
-function tooltipHTML(weaponName, precent, shots, hitPrecent, hsPrecent) {
+function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent) {
   var container = document.createElement('div');
   container.classList.add('tt-container');
   var weaponIcon = document.createElement('div');
@@ -323,8 +323,11 @@ function tooltipHTML(weaponName, precent, shots, hitPrecent, hsPrecent) {
   header.textContent = weaponName;
   container.appendChild(header);
   var kills = document.createElement('div');
-  kills.textContent = `${precent}% of all kills`;
+  kills.textContent = `${count} total kills`;
   container.appendChild(kills);
+  var precentage = document.createElement('div');
+  precentage.textContent = `${precent}% of all kills`;
+  container.appendChild(precentage);
   if (shots && hitPrecent && hsPrecent) {
     var s = document.createElement('div');
     s.textContent = `${shots} fired shots`;
@@ -373,7 +376,7 @@ function displayWeaponData(wrappers, weapons, kills) {
     icon.textContent = getWeaponIcon(weaponName);
     text.textContent = count;
     tooltip.classList.add('tooltiptext');
-    tooltip.appendChild(tooltipHTML(weaponName, precent, shots, hitPrecent, hsPrecent));
+    tooltip.appendChild(tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent));
     weapContainer.appendChild(tooltip);
     weapContainer.appendChild(icon);
     weapContainer.appendChild(text);
