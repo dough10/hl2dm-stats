@@ -160,7 +160,7 @@ function cacheTopResponse() {
         updated = false;
       }, 60000);
       var end = time.end();
-      print(`Logs parsed & cached. ${end[1]} minutes ${end[2]} seconds`);
+      print(`Logs parsed & cached. ${end[2]} seconds to process`);
       resolve();
     });
   });
@@ -200,6 +200,11 @@ function parseLogs() {
   });
 }
 
+/**
+ * returns the player name string
+ *
+ * @param {String} word - player name string
+ */
 function getName(word) {
   if (!word) {
     return false;
@@ -213,6 +218,11 @@ function getName(word) {
   return str;
 }
 
+/**
+ * returns the player steamID in format 2
+ *
+ * @param {String} word - player name string
+ */
 function getID2(word) {
   if (!word) {
     return false;
@@ -231,6 +241,11 @@ function getID2(word) {
   return str;
 }
 
+/**
+ * returns the player steamID in format 3
+ *
+ * @param {String} word - player name string
+ */
 function getID3(word) {
   if (!word) {
     return false;
@@ -249,10 +264,21 @@ function getID3(word) {
   return str;
 }
 
+/**
+ * if a string of text a time string
+ *
+ * @param {String} str - player name string
+ */
 function isTime(str) {
   return /^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d):$/.test(str);
 }
 
+/**
+ * builds a name string if name was broken by .split()
+ *
+ * @param {Array} line - one line from a log file broken @ spaces
+ * @param {Number} end - index point of the end of the name string
+ */
 function buildKillerNameString(line, end)  {
   let name = '';
   let start = 4;
@@ -270,6 +296,12 @@ function buildKillerNameString(line, end)  {
   return name
 }
 
+/**
+ * builds a name string if name was broken by .split()
+ *
+ * @param {Array} line - one line from a log file broken @ spaces
+ * @param {Number} start - index point of the start of the name string
+ */
 function buildKilledNameString(line, start) {
   var end = 7;
   for (var i = start; i < line.length; i++) {
@@ -418,7 +450,7 @@ function scanLine(line) {
   if (isConsole) {
      return;
   } else if (isBanned) {
-    // console.log(line);
+    console.log(line);
     const nameString = buildKillerNameString(word, isBanned);
     const name = getName(nameString);
     const id = getID3(nameString);
