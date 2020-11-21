@@ -774,62 +774,34 @@ function scanLine(line) {
     var leftleg = word[isStats2 + 14];
     var rightleg = word[isStats2 + 16];
     if (!head) {
-      console.log(line);
-      for (var i = isStats2 + 1; i < word.length; i++) {
-        console.log(i, word[i])
-      }
       return;
     }
     if (!chest) {
-      console.log(line);
-      for (var i = isStats2 + 1; i < word.length; i++) {
-        console.log(i, word[i])
-      }
       return;
     }
     if (!stomach) {
-      console.log(line);
-      for (var i = isStats2 + 1; i < word.length; i++) {
-        console.log(i, word[i])
-      }
       return;
     }
     if (!leftarm) {
-      console.log(line);
-      for (var i = isStats2 + 1; i < word.length; i++) {
-        console.log(i, word[i])
-      }
       return;
     }
     if (!rightarm) {
-      console.log(line);
-      for (var i = isStats2 + 1; i < word.length; i++) {
-        console.log(i, word[i])
-      }
       return;
     }
     if (!leftleg) {
-      console.log(line);
-      for (var i = isStats2 + 1; i < word.length; i++) {
-        console.log(i, word[i])
-      }
       return;
     }
     if (!rightleg) {
-      console.log(line);
-      for (var i = isStats2 + 1; i < word.length; i++) {
-        console.log(i, word[i])
-      }
       return;
     }
     // console.log(id3, weaponName, head, chest, stomach, leftarm, rightarm, leftleg, rightleg);
-    weaponStats[id3][weaponName].head = weaponStats[id3][weaponName].head + Number(word[isStats2 + 4]);
-    weaponStats[id3][weaponName].chest = weaponStats[id3][weaponName].chest + Number(word[isStats2 + 6]);
-    weaponStats[id3][weaponName].stomach = weaponStats[id3][weaponName].stomach + Number(word[isStats2 + 8]);
-    weaponStats[id3][weaponName].leftarm = weaponStats[id3][weaponName].leftarm + Number(word[isStats2 + 10]);
-    weaponStats[id3][weaponName].rightarm = weaponStats[id3][weaponName].rightarm + Number(word[isStats2 + 12]);
-    weaponStats[id3][weaponName].leftleg = weaponStats[id3][weaponName].leftleg + Number(word[isStats2 + 14]);
-    weaponStats[id3][weaponName].rightleg = weaponStats[id3][weaponName].rightleg + Number(word[isStats2 + 16]);
+    weaponStats[id3][weaponName].head = weaponStats[id3][weaponName].head + Number(head);
+    weaponStats[id3][weaponName].chest = weaponStats[id3][weaponName].chest + Number(chest);
+    weaponStats[id3][weaponName].stomach = weaponStats[id3][weaponName].stomach + Number(stomach);
+    weaponStats[id3][weaponName].leftarm = weaponStats[id3][weaponName].leftarm + Number(leftarm);
+    weaponStats[id3][weaponName].rightarm = weaponStats[id3][weaponName].rightarm + Number(rightarm);
+    weaponStats[id3][weaponName].leftleg = weaponStats[id3][weaponName].leftleg + Number(leftleg);
+    weaponStats[id3][weaponName].rightleg = weaponStats[id3][weaponName].rightleg + Number(rightleg);
   }
 }
 
