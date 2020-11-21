@@ -729,7 +729,12 @@ function scanLine(line) {
     weaponStats[id3][weaponName].hits = weaponStats[id3][weaponName].hits + Number(word[isStats + 6]);
     weaponStats[id3][weaponName].headshots = weaponStats[id3][weaponName].headshots + Number(word[isStats + 8]);
   } else if (isStats2) {
-    console.log(line);
+    const killedNameString = buildKillerNameString(word, isStats2 - 1);
+    const id = getID2(killedNameString);
+    const name = getName(killedNameString);
+    const sid = new SteamID(id);
+    const id3 = getID3(sid.getSteam3RenderedID());
+    console.log(name, id3);
   }
 }
 
