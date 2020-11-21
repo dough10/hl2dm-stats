@@ -766,6 +766,7 @@ function scanLine(line) {
         rightleg:0
       };
     }
+    console.log(id3, weaponName, word[isStats2 + 4], word[isStats2 + 6], word[isStats2 + 8], word[isStats2 + 10], word[isStats2 + 12], word[isStats2 + 14], word[isStats2 + 16])
     weaponStats[id3][weaponName].head = weaponStats[id3][weaponName].head + Number(word[isStats2 + 4]);
     weaponStats[id3][weaponName].chest = weaponStats[id3][weaponName].chest + Number(word[isStats2 + 6]);
     weaponStats[id3][weaponName].stomach = weaponStats[id3][weaponName].stomach + Number(word[isStats2 + 8]);
@@ -805,7 +806,7 @@ function calculatePrecent(small, big) {
  * @param {Object} user - a user object we need to reconstruct a weapn data array fro
  */
 function sortWeapons(user) {
-  console.log(weaponStats);
+  // console.log(weaponStats);
   var sortArr = [];
   if (!user.id) {
     var allWeaponStats = totalWeaponStats();
