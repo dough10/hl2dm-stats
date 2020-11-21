@@ -333,7 +333,7 @@ function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent) {
     s.textContent = `${shots} fired shots`;
     container.appendChild(s);
     var hi = document.createElement('div');
-    hi.textContent = `${hitPrecent}% of all shots hit`;
+    hi.textContent = `${hitPrecent}% of shots hit`;
     container.appendChild(hi);
     var hs = document.createElement('div');
     hs.textContent = `${hsPrecent}% headshots`;
