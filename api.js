@@ -766,10 +766,13 @@ function scanLine(line) {
         rightleg:0
       };
     }
-    console.log(weaponName)
-    for (var i = isStats2 + 2; i < word.length; i++) {
-      console.log(i, word[i])
-    }
+    weaponStats[id3][weaponName].head = weaponStats[id3][weaponName].head + Number(word[isStats2 + 4]);
+    weaponStats[id3][weaponName].chest = weaponStats[id3][weaponName].chest + Number(word[isStats2 + 6]);
+    weaponStats[id3][weaponName].stomach = weaponStats[id3][weaponName].stomach + Number(word[isStats2 + 8]);
+    weaponStats[id3][weaponName].leftarm = weaponStats[id3][weaponName].leftarm + Number(word[isStats2 + 10]);
+    weaponStats[id3][weaponName].rightarm = weaponStats[id3][weaponName].rightarm + Number(word[isStats2 + 12]);
+    weaponStats[id3][weaponName].leftleg = weaponStats[id3][weaponName].leftleg + Number(word[isStats2 + 14]);
+    weaponStats[id3][weaponName].rightleg = weaponStats[id3][weaponName].rightleg + Number(word[isStats2 + 16]);
   }
 }
 
@@ -802,6 +805,7 @@ function calculatePrecent(small, big) {
  * @param {Object} user - a user object we need to reconstruct a weapn data array fro
  */
 function sortWeapons(user) {
+  console.log(weaponStats);
   var sortArr = [];
   if (!user.id) {
     var allWeaponStats = totalWeaponStats();
