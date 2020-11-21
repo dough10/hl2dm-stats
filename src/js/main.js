@@ -323,10 +323,10 @@ function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent) {
   header.textContent = weaponName;
   container.appendChild(header);
   var kills = document.createElement('div');
-  kills.textContent = `${count} total kills`;
+  kills.textContent = `${count} kills`;
   container.appendChild(kills);
   var precentage = document.createElement('div');
-  precentage.textContent = `${precent}% of all kills`;
+  precentage.textContent = `${precent}% of players total kills`;
   container.appendChild(precentage);
   if (shots && hitPrecent && hsPrecent) {
     var s = document.createElement('div');
