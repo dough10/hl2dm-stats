@@ -405,6 +405,21 @@ function lineIsStats(line) {
  *
  * @param {String} line - one line of the log file being parsed
  */
+function lineIsStats2(line) {
+  for (var i = 0; i < line.length; i++) {
+    if (line[i] === '"weaponstats2"') {
+      return i;
+    }
+  }
+  return false;
+}
+
+
+/**
+ * scans the line for landmarks in order to get usable strings of data
+ *
+ * @param {String} line - one line of the log file being parsed
+ */
 function lineIsConsole(line) {
   var ipstring = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):\d{4,5}$/
   for (var i = 0; i < line.length; i++) {
@@ -442,6 +457,7 @@ function scanLine(line) {
   var isChat = lineIsChat(word);
   var isHeadshot  = lineIsHeadshot(word);
   var isStats = lineIsStats(word);
+  var isStats2 = lineIsStats2(word);
   var isConsole = lineIsConsole(word);
   var isBanned = playerIsBanned(word);
   if (word[3] && isTime(word[3])) {
@@ -449,11 +465,39 @@ function scanLine(line) {
   }
   if (isConsole) {
      return;
+  } else if (isChat) {
+    const nameString = buildKillerNameString(word, isChat);
+    const id = getID3(nameString);
+    const name = getName(nameString);
+    if (!users[id]) {
+     users[id] = {
+       name: name,
+       id: id,
+       kills: 0,
+       deaths: 0,
+       kdr: 0,
+       suicide: 0,
+       updated: lineTime,
+       banned: false,
+       chat: []
+     };
+    }
+    if (lineTime >= users[id].updated) {
+     users[id].updated = lineTime;
+     users[id].name = name;
+    }
+    var said = '';
+    for (var i = (isChat + 1); i < word.length; i++) {
+     said = `${said}${word[i]} `;
+    }
+    said.replace('"', '');
+    said.replace('"', '');
+    users[id].chat.push(said);
   } else if (isBanned) {
     const nameString = buildKillerNameString(word, isBanned);
     const name = getName(nameString);
     const id = getID3(nameString);
-    console.log(name, id);
+    // console.log(name, id);
     if (!id) {
       return;
     }
@@ -468,37 +512,10 @@ function scanLine(line) {
         banned: true,
         name: name
       };
+      return;
     }
     users[id].banned = true;
     bannedPlayers[id] = users[id];
-  } else if (isChat) {
-    const nameString = buildKillerNameString(word, isChat);
-    const id = getID3(nameString);
-    const name = getName(nameString);
-    if (!users[id]) {
-      users[id] = {
-        name: name,
-        id: id,
-        kills: 0,
-        deaths: 0,
-        kdr: 0,
-        suicide: 0,
-        updated: lineTime,
-        banned: false,
-        chat: []
-      };
-    }
-    if (lineTime >= users[id].updated) {
-      users[id].updated = lineTime;
-      users[id].name = name;
-    }
-    var said = '';
-    for (var i = (isChat + 1); i < word.length; i++) {
-      said = `${said}${word[i]} `;
-    }
-    said.replace('"', '');
-    said.replace('"', '');
-    users[id].chat.push(said);
   } else if (isConnect) {
     const connectedNameString = buildKillerNameString(word, isConnect);
     const connectedUser = getID3(connectedNameString);
@@ -711,6 +728,8 @@ function scanLine(line) {
     weaponStats[id3][weaponName].shots = weaponStats[id3][weaponName].shots + Number(word[isStats + 4]);
     weaponStats[id3][weaponName].hits = weaponStats[id3][weaponName].hits + Number(word[isStats + 6]);
     weaponStats[id3][weaponName].headshots = weaponStats[id3][weaponName].headshots + Number(word[isStats + 8]);
+  } else if (isStats2) {
+    console.log(line);
   }
 }
 
