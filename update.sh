@@ -10,11 +10,6 @@ echo '\e[33m'
 echo 'https://github.com/dough10/hl2dm-stats'
 echo '\e[39mUpdating...'
 sudo mount -a
-echo "\e[39m---------------\e[33mstopping API\e[39m---------------"
-foreverOutput=$(forever list)
-uid=$(echo $foreverOutput | cut -d ' ' -f18)
-forever stop $uid
-
 
 echo "\e[39m---------------\e[33mpull from github\e[39m---------------"
 cd /var/www/hl2dm
@@ -27,14 +22,13 @@ node build.js
 
 
 echo "\e[39m---------------\e[33mrestart API\e[39m---------------"
-forever start api.js -l -o -e
+pm2 reload /var/www/hl2dm/api.js
 
 
 echo "\e[39m---------------\e[33mchmod sh files executable\e[39m---------------"
 sudo chmod +x ./monitor.sh
 sudo chmod +x ./update.sh
 sudo chmod +x ./start.sh
-
 
 echo "\e[39m---------------\e[33mresume monitor\e[39m---------------"
 ./monitor.sh
