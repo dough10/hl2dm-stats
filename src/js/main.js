@@ -235,52 +235,52 @@ function monthName(month) {
 function getWeaponIcon(weapon) {
   switch (weapon) {
     case "grenade_frag":
-      return '4';
+      return ['4', 'HL2Weapons'];
       break;
     case "357":
-      return '.';
+      return ['.', 'HL2Weapons'];
       break;
     case "shotgun":
-      return '0';
+      return ['0', 'HL2Weapons'];
       break;
     case "pistol":
-      return '-';
+      return ['-', 'HL2Weapons'];
       break;
     case "smg1":
-      return '/';
+      return ['/', 'HL2Weapons'];
       break;
     case "smg1_grenade":
-      return '7';
+      return ['7', 'HL2Weapons'];
       break;
     case "crowbar":
-      return '6';
+      return ['6', 'HL2Weapons'];
       break;
     case "crossbow_bolt":
-      return '1';
+      return ['1', 'HL2Weapons'];
       break;
     case "combine_ball":
-      return '8';
+      return ['8', 'HL2Weapons'];
       break;
     case "ar2":
-      return '2';
+      return ['2', 'HL2Weapons'];
       break;
     case "rpg_missile":
-      return '3';
+      return ['3', 'HL2Weapons'];
       break;
     case "physbox":
-      return '9';
+      return ['9', 'HL2Weapons'];
       break;
     case "stunstick":
-      return '!';
+      return ['!', 'HL2Weapons'];
       break;
     case "physics":
-      return '9';
+      return ['9', 'HL2Weapons'];
       break;
     case "headshots":
-      return "D";
+      return ['D', 'CS'];
       break;
     case "physcannon":
-      return ",";
+      return [',', 'HL2Weapons'];
       break;
   }
 }
@@ -310,13 +310,10 @@ function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent) {
   var container = document.createElement('div');
   container.classList.add('tt-container');
   var weaponIcon = document.createElement('div');
-  if (weaponName === 'headshots') {
-    weaponIcon.classList.add('CS');
-  } else {
-    weaponIcon.classList.add('HL2Weapons');
-  }
   weaponIcon.style.color = '#ff0';
-  weaponIcon.textContent = getWeaponIcon(weaponName);
+  var icon = getWeaponIcon(weaponName);
+  weaponIcon.classList.add(icon[1]);
+  weaponIcon.textContent = icon[0];
   container.appendChild(weaponIcon);
   var header = document.createElement('div');
   header.classList.add('tt-header');
@@ -364,21 +361,18 @@ function displayWeaponData(wrappers, weapons, kills) {
     let precent = isLessThenOne(Math.round((count / kills) * 100));
     const weapContainer = document.createElement('div');
     weapContainer.classList.add('tooltip');
-    const icon = document.createElement('div');
+    const weaponIcon = document.createElement('div');
     const text = document.createElement('div');
     const tooltip = document.createElement('div');
-    if (weaponName === 'headshots') {
-      icon.classList.add('CS');
-    } else {
-      icon.classList.add('HL2Weapons');
-    }
     text.classList.add('weapon-count');
-    icon.textContent = getWeaponIcon(weaponName);
+    var icon = getWeaponIcon(weaponName);
+    weaponIcon.classList.add(icon[1]);
+    weaponIcon.textContent = icon[0];
     text.textContent = count;
     tooltip.classList.add('tooltiptext');
     tooltip.appendChild(tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent));
     weapContainer.appendChild(tooltip);
-    weapContainer.appendChild(icon);
+    weapContainer.appendChild(weaponIcon);
     weapContainer.appendChild(text);
     if (i < weapons.length / 2) {
       wrappers[0].appendChild(weapContainer);
@@ -551,8 +545,9 @@ function parseTopData(top, page, cb) {
     tooltip.appendChild(tooltipHTML(fav[0], Math.round((fav[1] / player.kills) * 100), shots, hits, hs));
     text.style.marginRight = '8px';
     icon.style.marginRight = '4px';
-    icon.classList.add('HL2Weapons');
-    icon.textContent = getWeaponIcon(fav[0]);
+    var wIcon = getWeaponIcon(fav[0])
+    icon.classList.add(wIcon[1]);
+    icon.textContent = wIcon[0];
     text.textContent = fav[1];
     favWrapper.appendChild(tooltip);
     favWrapper.appendChild(icon);
