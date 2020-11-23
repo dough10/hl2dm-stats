@@ -26,7 +26,6 @@ var serverStatus;            // placeholder for gamedig state
 var totalPlayers = 0;        // count of total players to have joined the server
 var updated = false;         // if stats have been updated when a player reaches end of game kill count
 
-var weaponStats =  {};
 var bannedPlayers = {};
 var socket;
 
@@ -183,7 +182,6 @@ function cacheTopResponse() {
 function parseLogs() {
   return new Promise((resolve, reject) => {
     weapons = {};
-    weaponStats = {};
     fs.readdir(logFolder, (err, files) => {
       var remaining = '';
       if (err) {
@@ -659,16 +657,40 @@ function scanLine(line) {
     users[killedID].kdr = Number((users[killedID].kills / users[killedID].deaths).toFixed(2));
     // add weapon for killer
     if (!users[killerID][weapon]) {
-      users[killerID][weapon] = 0;
+      users[killerID][weapon] = {
+        kills:0,
+        shots: 0,
+        hits: 0,
+        headshots:0,
+        head:0,
+        chest:0,
+        stomach:0,
+        leftarm:0,
+        rightarm:0,
+        leftleg:0,
+        rightleg:0
+      };
     }
     // add weapon for server
     if (!weapons[weapon]) {
-      weapons[weapon] = 0;
+      weapons[weapon] = {
+        kills:0,
+        shots: 0,
+        hits: 0,
+        headshots:0,
+        head:0,
+        chest:0,
+        stomach:0,
+        leftarm:0,
+        rightarm:0,
+        leftleg:0,
+        rightleg:0
+      };
     }
     // add killer kill with weapon
-    users[killerID][weapon]++;
+    users[killerID][weapon].kills++;
     // add server wide weapon kill
-    weapons[weapon]++;
+    weapons[weapon].kills++;
   } else if (isSuicide) {
     const nameString = buildKillerNameString(word, isSuicide);
     const id = getID3(nameString);
@@ -708,9 +730,21 @@ function scanLine(line) {
       return;
     }
     if (!weapons[weapon]) {
-      weapons[weapon] = 0;
+      weapons[weapon] = {
+        kills:0,
+        shots: 0,
+        hits: 0,
+        headshots:0,
+        head:0,
+        chest:0,
+        stomach:0,
+        leftarm:0,
+        rightarm:0,
+        leftleg:0,
+        rightleg:0
+      };
     }
-    weapons[weapon]++;
+    weapons[weapon].++;
   } else if (isHeadshot) {
     if (!weapons.headshots) {
       weapons.headshots = 0;
@@ -764,8 +798,17 @@ function scanLine(line) {
       });
       return;
     }
-    if (!weaponStats[id3]) {
-      weaponStats[id3] = {};
+    if (!users[id3]) {
+      users[id3] = {
+        name: name,
+        id: id3,
+        kills: 0,
+        deaths: 0,
+        kdr: 0,
+        suicide: 0,
+        banned: false,
+        chat: []
+      };
     }
     // clean up extra chars
     for (var i = 0; i < word.length; i++) {
@@ -773,11 +816,15 @@ function scanLine(line) {
     }
     var weaponName = word[isStats + 2];
     if (!isWeapon(weaponName)) {
-      console.log(`${line} weapon error`);
+      io.notifyError(new Error(`Forming weapon name: ${line}`), {
+        custom: {
+          error: 'Forming weapon name'
+        }
+      });
       return;
     }
-    if (!weaponStats[id3][weaponName]) {
-      weaponStats[id3][weaponName] = {
+    if (!users[id3][weaponName]) {
+      users[id3][weaponName] = {
         shots: 0,
         hits: 0,
         headshots:0,
@@ -790,9 +837,9 @@ function scanLine(line) {
         rightleg:0
       };
     }
-    weaponStats[id3][weaponName].shots = weaponStats[id3][weaponName].shots + Number(word[isStats + 4]);
-    weaponStats[id3][weaponName].hits = weaponStats[id3][weaponName].hits + Number(word[isStats + 6]);
-    weaponStats[id3][weaponName].headshots = weaponStats[id3][weaponName].headshots + Number(word[isStats + 8]);
+    users[id3][weaponName].shots = users[id3][weaponName].shots + Number(word[isStats + 4]);
+    users[id3][weaponName].hits = users[id3][weaponName].hits + Number(word[isStats + 6]);
+    users[id3][weaponName].headshots = users[id3][weaponName].headshots + Number(word[isStats + 8]);
   } else if (isStats2) {
     const killedNameString = buildKillerNameString(word, isStats2 - 1);
     const id = getID2(killedNameString);
@@ -802,8 +849,17 @@ function scanLine(line) {
     if (!id3) {
       return;
     }
-    if (!weaponStats[id3]) {
-      weaponStats[id3] = {};
+    if (!users[id3]) {
+      users[id3] = {
+        name: name,
+        id: id3,
+        kills: 0,
+        deaths: 0,
+        kdr: 0,
+        suicide: 0,
+        banned: false,
+        chat: []
+      };
     }
     // clean up extra chars
     for (var i = 0; i < word.length; i++) {
@@ -818,8 +874,8 @@ function scanLine(line) {
       });
       return;
     }
-    if (!weaponStats[id3][weaponName]) {
-      weaponStats[id3][weaponName] = {
+    if (!users[id3][weaponName]) {
+      users[id3][weaponName] = {
         shots: 0,
         hits: 0,
         headshots:0,
@@ -861,30 +917,32 @@ function scanLine(line) {
       return;
     }
     // console.log(id3, weaponName, head, chest, stomach, leftarm, rightarm, leftleg, rightleg);
-    weaponStats[id3][weaponName].head = weaponStats[id3][weaponName].head + Number(head);
-    weaponStats[id3][weaponName].chest = weaponStats[id3][weaponName].chest + Number(chest);
-    weaponStats[id3][weaponName].stomach = weaponStats[id3][weaponName].stomach + Number(stomach);
-    weaponStats[id3][weaponName].leftarm = weaponStats[id3][weaponName].leftarm + Number(leftarm);
-    weaponStats[id3][weaponName].rightarm = weaponStats[id3][weaponName].rightarm + Number(rightarm);
-    weaponStats[id3][weaponName].leftleg = weaponStats[id3][weaponName].leftleg + Number(leftleg);
-    weaponStats[id3][weaponName].rightleg = weaponStats[id3][weaponName].rightleg + Number(rightleg);
+    users[id3][weaponName].head = users[id3][weaponName].head + Number(head);
+    users[id3][weaponName].chest = users[id3][weaponName].chest + Number(chest);
+    users[id3][weaponName].stomach = users[id3][weaponName].stomach + Number(stomach);
+    users[id3][weaponName].leftarm = users[id3][weaponName].leftarm + Number(leftarm);
+    users[id3][weaponName].rightarm = users[id3][weaponName].rightarm + Number(rightarm);
+    users[id3][weaponName].leftleg = users[id3][weaponName].leftleg + Number(leftleg);
+    users[id3][weaponName].rightleg = users[id3][weaponName].rightleg + Number(rightleg);
   }
 }
 
 function totalWeaponStats() {
   var obj = {};
-  for (var id in weaponStats) {
-    for (var weapon in weaponStats[id]) {
-      if (!obj[weapon]) {
-        obj[weapon] = {
-          shots: 0,
-          hits:0,
-          headshots:0
-        };
+  for (var id in users) {
+    for (var weapon in users[id]) {
+      if (isWeapon(weapon)) {
+        if (!obj[weapon]) {
+          obj[weapon] = {
+            shots: 0,
+            hits:0,
+            headshots:0
+          };
+        }
+        obj[weapon].shots = obj[weapon].shots + users[id][weapon].shots;
+        obj[weapon].hits = obj[weapon].hits + users[id][weapon].hits;
+        obj[weapon].headshots = obj[weapon].headshots + users[id][weapon].headshots;
       }
-      obj[weapon].shots = obj[weapon].shots + weaponStats[id][weapon].shots;
-      obj[weapon].hits = obj[weapon].hits + weaponStats[id][weapon].hits;
-      obj[weapon].headshots = obj[weapon].headshots + weaponStats[id][weapon].headshots;
     }
   }
   return obj;
@@ -900,7 +958,6 @@ function calculatePrecent(small, big) {
  * @param {Object} user - a user object we need to reconstruct a weapn data array fro
  */
 function sortWeapons(user) {
-  // console.log(weaponStats);
   var sortArr = [];
   if (!user.id) {
     var allWeaponStats = totalWeaponStats();
@@ -929,12 +986,11 @@ function sortWeapons(user) {
       var shots = 0;
       var shotsToKill = 0;
       if (isWeapon(weapon)) {
-        if (weaponStats[user.id] && weaponStats[user.id][weapon]) {
-          shots = weaponStats[user.id][weapon].shots;
-          acc = calculatePrecent(weaponStats[user.id][weapon].hits, weaponStats[user.id][weapon].shots);
-          hs = calculatePrecent(weaponStats[user.id][weapon].headshots, weaponStats[user.id][weapon].shots);
-          shotsToKill = Number((weaponStats[user.id][weapon].shots / user.kills).toFixed(2));
-          console.log(user.id, users)
+        if (users[user.id] && users[user.id][weapon]) {
+          shots = users[user.id][weapon].shots;
+          acc = calculatePrecent(users[user.id][weapon].hits, users[user.id][weapon].shots);
+          hs = calculatePrecent(users[user.id][weapon].headshots, users[user.id][weapon].shots);
+          shotsToKill = Number((users[user.id][weapon].shots / users[user.id][weapon].kills).toFixed(2));
         }
         sortArr.push([
           weapon,
