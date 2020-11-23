@@ -141,9 +141,14 @@ function cacheTopResponse() {
       weapons.physics.kills = (weapons.physics.kills + weapons.physbox.kills) + weapons.world.kills;
       delete weapons.physbox;
       delete weapons.world;
-      if (weapons.physics.kills === 0) {
-        delete weapons.physics;
+      for (var weapon in weapons) {
+        if (isWeapon(weapon) && weapons[weapon].kills === 0) {
+          delete weapons[weapon];
+        }
       }
+      // if (weapons.physics.kills === 0) {
+      //   delete weapons.physics;
+      // }
       // convert weapons object into sorted array by kill count array
       weapons = sortWeapons(weapons);
       for (var i = 0; i < top.length; i++) {
@@ -671,6 +676,8 @@ function scanLine(line) {
         rightleg: 0
       };
     }
+    // add killer kill with weapon
+    users[killerID][weapon].kills++;
     // add weapon for server
     if (!weapons[weapon]) {
       weapons[weapon] = {
@@ -687,8 +694,6 @@ function scanLine(line) {
         rightleg: 0
       };
     }
-    // add killer kill with weapon
-    users[killerID][weapon].kills++;
     // add server wide weapon kill
     weapons[weapon].kills++;
   } else if (isSuicide) {
@@ -932,12 +937,9 @@ function scanLine(line) {
 
 function totalWeaponStats() {
   var obj = {};
-  console.log(users);
   for (var id in users) {
-    console.log(id)
     for (var weapon in users[id]) {
       if (isWeapon(weapon)) {
-        console.log(weapon)
         if (!obj[weapon]) {
           obj[weapon] = {
             kills: 0,
@@ -968,9 +970,9 @@ function calculatePrecent(small, big) {
 function sortWeapons(user) {
   var sortArr = [];
   if (!user.id) {
-    // console.log(user);
+    console.log(user);
     var allWeaponStats = totalWeaponStats();
-    console.log(allWeaponStats)
+    // console.log(allWeaponStats)
     for (weapon in user) {
       var acc = 0;
       var hs = 0;
