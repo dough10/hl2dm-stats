@@ -847,6 +847,24 @@ function scanLine(line) {
     users[id3][weaponName].shots = users[id3][weaponName].shots + Number(word[isStats + 4]);
     users[id3][weaponName].hits = users[id3][weaponName].hits + Number(word[isStats + 6]);
     users[id3][weaponName].headshots = users[id3][weaponName].headshots + Number(word[isStats + 8]);
+    if (!weapons[weaponName]) {
+      weapons[weaponName] = {
+        kills: 0,
+        shots: 0,
+        hits: 0,
+        headshots: 0,
+        head: 0,
+        chest: 0,
+        stomach: 0,
+        leftarm: 0,
+        rightarm: 0,
+        leftleg: 0,
+        rightleg: 0
+      };
+    }
+    weapons[weaponName].shots = weapons[weaponName].shots + Number(word[isStats + 4]);
+    weapons[weaponName].hits = weapons[weaponName].hits + Number(word[isStats + 6]);
+    weapons[weaponName].headshots = weapons[weaponName].headshots + Number(word[isStats + 8]);
   } else if (isStats2) {
     const killedNameString = buildKillerNameString(word, isStats2 - 1);
     const id = getID2(killedNameString);
@@ -932,6 +950,28 @@ function scanLine(line) {
     users[id3][weaponName].rightarm = users[id3][weaponName].rightarm + Number(rightarm);
     users[id3][weaponName].leftleg = users[id3][weaponName].leftleg + Number(leftleg);
     users[id3][weaponName].rightleg = users[id3][weaponName].rightleg + Number(rightleg);
+    if (!weapons[weaponName]) {
+      weapons[weaponName] = {
+        kills: 0,
+        shots: 0,
+        hits: 0,
+        headshots: 0,
+        head: 0,
+        chest: 0,
+        stomach: 0,
+        leftarm: 0,
+        rightarm: 0,
+        leftleg: 0,
+        rightleg: 0
+      };
+    }
+    weapons[weaponName].head = weapons[weaponName].head + Number(head);
+    weapons[weaponName].chest = weapons[weaponName].chest + Number(chest);
+    weapons[weaponName].stomach = weapons[weaponName].stomach + Number(stomach);
+    weapons[weaponName].leftarm = weapons[weaponName].leftarm + Number(leftarm);
+    weapons[weaponName].rightarm = weapons[weaponName].rightarm + Number(rightarm);
+    weapons[weaponName].leftleg = weapons[weaponName].leftleg + Number(leftleg);
+    weapons[weaponName].rightleg = weapons[weaponName].rightleg + Number(rightleg);
   }
 }
 
@@ -970,9 +1010,8 @@ function calculatePrecent(small, big) {
 function sortWeapons(user) {
   var sortArr = [];
   if (!user.id) {
-    console.log(users)
     var allWeaponStats = totalWeaponStats();
-    // console.log(allWeaponStats)
+    console.log(allWeaponStats)
     for (weapon in user) {
       var acc = 0;
       var hs = 0;
