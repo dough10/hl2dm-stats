@@ -933,15 +933,19 @@ function scanLine(line) {
 function totalWeaponStats() {
   var obj = {};
   for (var id in users) {
+    console.log(id)
     for (var weapon in users[id]) {
       if (isWeapon(weapon)) {
+        console.log(weapon)
         if (!obj[weapon]) {
           obj[weapon] = {
+            kills: 0,
             shots: 0,
             hits: 0,
             headshots:0
           };
         }
+        obj[weapon].kills = obj[weapon].kills + users[id][weapon].kills;
         obj[weapon].shots = obj[weapon].shots + users[id][weapon].shots;
         obj[weapon].hits = obj[weapon].hits + users[id][weapon].hits;
         obj[weapon].headshots = obj[weapon].headshots + users[id][weapon].headshots;
