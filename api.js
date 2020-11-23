@@ -13,12 +13,6 @@ const app = express();
 app.use(compression());
 app.disable('x-powered-by');
 var expressWs = require('express-ws')(app);
-const io = require('@pm2/io')
-
-io.init({
-  transactions: true // will enable the transaction tracing
-  http: true // will enable metrics about the http server (optional)
-})
 
 const config = require(`${__dirname}/config.json`);
 const logFolder = path.join(config.gameServerDir, 'logs');
