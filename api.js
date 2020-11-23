@@ -983,8 +983,8 @@ function sortWeapons(user) {
     }
   } else {
     for (var weapon in user) {
-      console.log(weapon)
       if (isWeapon(weapon)) {
+        console.log(weapon)
         var acc = 0;
         var hs = 0;
         var shots = 0;
