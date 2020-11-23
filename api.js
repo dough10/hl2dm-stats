@@ -1157,6 +1157,11 @@ var j = schedule.scheduleJob('0 5 1 * *', cleanUp);
 
 print(`Loading API backend calls`);
 
+
+fs.watch(logFolder, (event, filename) => {
+  console.log(event, filename);
+});
+
 /**
  * route for gettings player stats
  */
