@@ -994,7 +994,7 @@ function sortWeapons(user) {
           hs = calculatePrecent(users[user.id][weapon].headshots, users[user.id][weapon].shots);
           shotsToKill = Number((users[user.id][weapon].shots / users[user.id][weapon].kills).toFixed(2));
         }
-        if (user[weapon].kills === null) {
+        if (user[weapon].kills === 'null') {
           console.log(user)
         }
         sortArr.push([
