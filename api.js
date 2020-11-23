@@ -982,11 +982,11 @@ function sortWeapons(user) {
   } else {
     console.log(user)
     for (var weapon in user) {
-      var acc = 0;
-      var hs = 0;
-      var shots = 0;
-      var shotsToKill = 0;
       if (isWeapon(weapon)) {
+        var acc = 0;
+        var hs = 0;
+        var shots = 0;
+        var shotsToKill = 0;
         if (users[user.id] && users[user.id][weapon]) {
           shots = users[user.id][weapon].shots;
           acc = calculatePrecent(users[user.id][weapon].hits, users[user.id][weapon].shots);
@@ -995,7 +995,7 @@ function sortWeapons(user) {
         }
         sortArr.push([
           weapon,
-          user[weapon],
+          user[weapon].kills,
           [shots, acc, hs, shotsToKill]
         ]);
         delete user[weapon];
@@ -1003,7 +1003,8 @@ function sortWeapons(user) {
     }
   }
   sortArr.sort((a, b) => {
-    return a[1].kills - b[1].kills;
+    console.log(a[1], b[1])
+    return a[1] - b[1];
   });
   sortArr.reverse();
   return sortArr;
