@@ -191,7 +191,7 @@ function parseLogs() {
           custom: {
             folder: logFolder
           }
-        })
+        });
         return print(`Unable to scan directory: ` + err);
       }
       totalFiles = files.length;
@@ -213,7 +213,7 @@ function parseLogs() {
             custom: {
               file: file
             }
-          })
+          });
           console.error(e);
         }
       });
@@ -573,23 +573,43 @@ function scanLine(line) {
     const killedName = getName(killedNameString);
     const weapon = word[word.length - 1].replace('"', '').replace('"', '');
     if (!killerID) {
-      console.log(`${line} killer error`);
+      io.notifyError(new Error(`Forming killer ID: ${line}`), {
+        custom: {
+          error: 'Forming killer ID'
+        }
+      });
       return;
     }
     if (!killerName) {
-      console.log(`${line} killerName error`);
+      io.notifyError(new Error(`Forming killer name: ${line}`), {
+        custom: {
+          error: 'Forming killer name'
+        }
+      });
       return;
     }
     if (!killedID) {
-      console.log(`${line} killed error`);
+      io.notifyError(new Error(`Forming killed ID: ${line}`), {
+        custom: {
+          error: 'Forming killed ID'
+        }
+      });
       return;
     }
     if (!killedName) {
-      console.log(`${line} killedName error`);
+      io.notifyError(new Error(`Forming killed name: ${line}`), {
+        custom: {
+          error: 'Forming killed name'
+        }
+      });
       return;
     }
     if (!isWeapon(weapon)) {
-      console.log(`${line} weapon error`);
+      io.notifyError(new Error(`Forming weapon name: ${line}`), {
+        custom: {
+          error: 'Forming weapon name'
+        }
+      });
       return;
     }
     // killer
@@ -654,7 +674,11 @@ function scanLine(line) {
     const id = getID3(nameString);
     const name = getName(nameString);
     if (!id) {
-      console.log(new Date() + line +  ' id error');
+      io.notifyError(new Error(`Forming player ID: ${line}`), {
+        custom: {
+          error: 'Forming player ID'
+        }
+      });
       return;
     }
     if (!users[id]) {
@@ -698,7 +722,11 @@ function scanLine(line) {
     const sid = new SteamID(id);
     const id3 = getID3(sid.getSteam3RenderedID());
     if (!id3) {
-      console.log(line);
+      io.notifyError(new Error(`Forming player ID: ${line}`), {
+        custom: {
+          error: 'Forming player ID'
+        }
+      });
       return;
     }
     if (!users[id3]) {
@@ -729,6 +757,11 @@ function scanLine(line) {
     const sid = new SteamID(id);
     const id3 = getID3(sid.getSteam3RenderedID());
     if (!id3) {
+      io.notifyError(new Error(`Forming player ID: ${line}`), {
+        custom: {
+          error: 'Forming player ID'
+        }
+      });
       return;
     }
     if (!weaponStats[id3]) {
@@ -778,7 +811,11 @@ function scanLine(line) {
     }
     var weaponName = word[isStats2 + 2];
     if (!isWeapon(weaponName)) {
-      console.log(`${line} weapon error`);
+      io.notifyError(new Error(`Forming weapon name: ${line}`), {
+        custom: {
+          error: 'Forming weapon name'
+        }
+      });
       return;
     }
     if (!weaponStats[id3][weaponName]) {
