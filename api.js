@@ -980,7 +980,6 @@ function sortWeapons(user) {
       delete user[weapon];
     }
   } else {
-    console.log(user)
     for (var weapon in user) {
       if (isWeapon(weapon)) {
         var acc = 0;
