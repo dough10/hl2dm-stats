@@ -16,7 +16,7 @@ var expressWs = require('express-ws')(app);
 const io = require('@pm2/io');
 
 const config = require(`${__dirname}/config.json`);
-const logFolder = path.join(config.gameServerDir, 'logs');
+const logFolder = '/media/nas/old-stats/logs/1601546400137' //path.join(config.gameServerDir, 'logs');
 
 var users = {};              // all users go in this object ie. {steamid: {name:playername, kills: 1934, deaths: 1689, kdr: 1.14, .....}, steamid: {..}, ..}
 var totalFiles = 0;          // total # of log files in "logs" folder
@@ -1101,6 +1101,7 @@ function getOldStatsList(month) {
             folder: `${__dirname}/old-top`
           }
         });
+        return;
       }
       if (!month) {
         return resolve(files);
