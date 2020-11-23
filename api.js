@@ -964,6 +964,7 @@ function sortWeapons(user) {
   var sortArr = [];
   if (!user.id) {
     var allWeaponStats = totalWeaponStats();
+    console.log(allWeaponStats)
     for (weapon in user) {
       var acc = 0;
       var hs = 0;
