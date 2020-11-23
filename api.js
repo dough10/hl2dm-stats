@@ -871,15 +871,17 @@ function sortWeapons(user) {
       var acc = 0;
       var hs = 0;
       var shots = 0;
+      var shotsToKill = 0;
       if (isWeapon(weapon) && allWeaponStats[weapon]) {
          shots = allWeaponStats[weapon].shots;
          acc = calculatePrecent(allWeaponStats[weapon].hits, allWeaponStats[weapon].shots);
          hs = calculatePrecent(allWeaponStats[weapon].headshots, allWeaponStats[weapon].shots);
+         shotsToKill = Number((allWeaponStats[weapon].shots / allWeaponStats[weapon].kills).toFixed(2));
       }
       sortArr.push([
         weapon,
         user[weapon],
-        [shots, acc, hs]
+        [shots, acc, hs, shotsToKill]
       ]);
       delete user[weapon];
     }
@@ -888,16 +890,18 @@ function sortWeapons(user) {
       var acc = 0;
       var hs = 0;
       var shots = 0;
+      var shotsToKill = 0;
       if (isWeapon(weapon)) {
         if (weaponStats[user.id] && weaponStats[user.id][weapon]) {
           shots = weaponStats[user.id][weapon].shots;
           acc = calculatePrecent(weaponStats[user.id][weapon].hits, weaponStats[user.id][weapon].shots);
           hs = calculatePrecent(weaponStats[user.id][weapon].headshots, weaponStats[user.id][weapon].shots);
+          shotsToKill = Number((weaponStats[user.id][weapon].shots / weaponStats[user.id][weapon].kills).toFixed(2));
         }
         sortArr.push([
           weapon,
           user[weapon],
-          [shots, acc, hs]
+          [shots, acc, hs, shotsToKill]
         ]);
         delete user[weapon];
       }
