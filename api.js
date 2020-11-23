@@ -932,7 +932,7 @@ function scanLine(line) {
 
 function totalWeaponStats() {
   var obj = {};
-  // console.log(users);
+  console.log(users);
   for (var id in users) {
     console.log(id)
     for (var weapon in users[id]) {
