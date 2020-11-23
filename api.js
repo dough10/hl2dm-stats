@@ -1002,7 +1002,7 @@ function sortWeapons(user) {
     }
   }
   sortArr.sort((a, b) => {
-    return a[1] - b[1];
+    return a[1].kills - b[1].kills;
   });
   sortArr.reverse();
   return sortArr;
