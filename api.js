@@ -655,36 +655,36 @@ function scanLine(line) {
       users[killerID].kdr = users[killerID].kills;
     }
     users[killedID].kdr = Number((users[killedID].kills / users[killedID].deaths).toFixed(2));
-    // add weapon for killer
+    // add weapon for killer if doesn't exist
     if (!users[killerID][weapon]) {
       users[killerID][weapon] = {
-        kills:0,
+        kills: 0,
         shots: 0,
         hits: 0,
-        headshots:0,
-        head:0,
-        chest:0,
-        stomach:0,
-        leftarm:0,
-        rightarm:0,
-        leftleg:0,
-        rightleg:0
+        headshots: 0,
+        head: 0,
+        chest: 0,
+        stomach: 0,
+        leftarm: 0,
+        rightarm: 0,
+        leftleg: 0,
+        rightleg: 0
       };
     }
     // add weapon for server
     if (!weapons[weapon]) {
       weapons[weapon] = {
-        kills:0,
+        kills: 0,
         shots: 0,
         hits: 0,
-        headshots:0,
-        head:0,
-        chest:0,
-        stomach:0,
-        leftarm:0,
-        rightarm:0,
-        leftleg:0,
-        rightleg:0
+        headshots: 0,
+        head: 0,
+        chest: 0,
+        stomach: 0,
+        leftarm: 0,
+        rightarm: 0,
+        leftleg: 0,
+        rightleg: 0
       };
     }
     // add killer kill with weapon
@@ -732,16 +732,16 @@ function scanLine(line) {
     }
     if (!weapons[weapon]) {
       weapons[weapon] = {
-        kills:0,
+        kills: 0,
         shots: 0,
         hits: 0,
-        headshots:0,
-        head:0,
-        chest:0,
-        stomach:0,
-        leftarm:0,
-        rightarm:0,
-        leftleg:0,
+        headshots: 0,
+        head: 0,
+        chest: 0,
+        stomach: 0,
+        leftarm: 0,
+        rightarm: 0,
+        leftleg: 0,
         rightleg:0
       };
     }
@@ -826,16 +826,17 @@ function scanLine(line) {
     }
     if (!users[id3][weaponName]) {
       users[id3][weaponName] = {
+        kills: 0,
         shots: 0,
         hits: 0,
-        headshots:0,
-        head:0,
-        chest:0,
-        stomach:0,
-        leftarm:0,
-        rightarm:0,
-        leftleg:0,
-        rightleg:0
+        headshots: 0,
+        head: 0,
+        chest: 0,
+        stomach: 0,
+        leftarm: 0,
+        rightarm: 0,
+        leftleg: 0,
+        rightleg: 0
       };
     }
     users[id3][weaponName].shots = users[id3][weaponName].shots + Number(word[isStats + 4]);
@@ -877,16 +878,16 @@ function scanLine(line) {
     }
     if (!users[id3][weaponName]) {
       users[id3][weaponName] = {
-        kills:0,
+        kills: 0,
         shots: 0,
         hits: 0,
-        headshots:0,
-        head:0,
-        chest:0,
-        stomach:0,
-        leftarm:0,
-        rightarm:0,
-        leftleg:0,
+        headshots: 0,
+        head: 0,
+        chest: 0,
+        stomach: 0,
+        leftarm: 0,
+        rightarm: 0,
+        leftleg: 0,
         rightleg:0
       };
     }
@@ -937,7 +938,7 @@ function totalWeaponStats() {
         if (!obj[weapon]) {
           obj[weapon] = {
             shots: 0,
-            hits:0,
+            hits: 0,
             headshots:0
           };
         }
