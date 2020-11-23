@@ -15,10 +15,6 @@ app.disable('x-powered-by');
 var expressWs = require('express-ws')(app);
 const io = require('@pm2/io');
 
-io.init({
-  transactions: true,
-  http: true
-});
 const config = require(`${__dirname}/config.json`);
 const logFolder = path.join(config.gameServerDir, 'logs');
 
@@ -33,6 +29,14 @@ var updated = false;         // if stats have been updated when a player reaches
 var weaponStats =  {};
 var bannedPlayers = {};
 var socket;
+
+print(`Configure PM2 metrics`);
+
+io.init({
+  transactions: true,
+  http: true
+});
+
 
 print(`Load Functions`);
 
@@ -183,10 +187,15 @@ function parseLogs() {
     fs.readdir(logFolder, (err, files) => {
       var remaining = '';
       if (err) {
+        io.notifyError(new Error(`Unable to scan directory: ` + err), {
+          custom: {
+            folder: logFolder
+          }
+        })
         return print(`Unable to scan directory: ` + err);
       }
       totalFiles = files.length;
-      files.forEach(function (file) {
+      files.forEach(file => {
         try {
           const rl = readline.createInterface({
             input: fs.createReadStream(path.join(logFolder, file)),
@@ -200,6 +209,11 @@ function parseLogs() {
             }
           });
         } catch (e) {
+          io.notifyError(new Error(`Unable to scan directory: ` + e), {
+            custom: {
+              file: file
+            }
+          })
           console.error(e);
         }
       });
@@ -922,6 +936,13 @@ function getDemos() {
   return new Promise((resolve, reject) => {
     var demos = [];
     fs.readdir(config.gameServerDir, (err, files) => {
+      if (err) {
+        io.notifyError(new Error(`Unable to scan directory: ` + err), {
+          custom: {
+            folder: config.gameServerDir
+          }
+        });
+      }
       for (var i = 0; i < files.length; i++) {
         if (path.extname(files[i]) === '.dem') {
           demos.push(files[i]);
@@ -1022,12 +1043,26 @@ function cleanUp() {
   zipDemos(lastMonth).then(zipLogs).then(saveTop).then(_ => {
     var numFiles = 0;
     fs.readdir(logFolder, (err, files) => {
+      if (err) {
+        io.notifyError(new Error(`Unable to scan directory: ` + err), {
+          custom: {
+            folder: logFolder
+          }
+        });
+      }
       print(`Running log file clean up`);
       numFiles = numFiles + files.length;
       files.forEach(file => {
         fs.unlinkSync(path.join(logFolder, file));
       });
       fs.readdir(config.gameServerDir, (err, filess) => {
+        if (err) {
+          io.notifyError(new Error(`Unable to scan directory: ` + err), {
+            custom: {
+              folder: config.gameServerDir
+            }
+          });
+        }
         print(`Running demo file clean up`);
         var howMany = filess.length;
         numFiles = numFiles + filess.length;
@@ -1061,7 +1096,11 @@ function getOldStatsList(month) {
   return new Promise((resolve, reject) => {
     fs.readdir(`${__dirname}/old-top`, (err, files) => {
       if (err) {
-        return console.log(err);
+        io.notifyError(new Error(`Unable to scan directory: ` + err), {
+          custom: {
+            folder: `${__dirname}/old-top`
+          }
+        });
       }
       if (!month) {
         return resolve(files);
@@ -1280,6 +1319,11 @@ app.get('/auth', (req, res) => {
   }
   bcrypt.compare(pass, config.streamKeys[name], (err, match) => {
     if (err) {
+      io.notifyError(new Error(`Error hashing password: ` + err), {
+        custom: {
+          user: name
+        }
+      });
       return console.error(err);
     }
     if (!match) {
