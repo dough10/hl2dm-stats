@@ -744,7 +744,7 @@ function scanLine(line) {
         rightleg:0
       };
     }
-    weapons[weapon].++;
+    weapons[weapon].kills++;
   } else if (isHeadshot) {
     if (!weapons.headshots) {
       weapons.headshots = 0;
