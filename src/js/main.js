@@ -659,6 +659,9 @@ function parseDemos(demos) {
  */
 function displayPlayer(player) {
   var playerName = player.name;
+  if (!playerName) {
+    return;
+  }
   const wrapper = document.createElement('div');
   wrapper.classList.add('playeronline');
   const playerDiv = document.createElement('div');
