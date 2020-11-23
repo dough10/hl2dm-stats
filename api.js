@@ -1010,22 +1010,20 @@ function calculatePrecent(small, big) {
 function sortWeapons(user) {
   var sortArr = [];
   if (!user.id) {
-    var allWeaponStats = totalWeaponStats();
-    console.log(allWeaponStats)
     for (weapon in user) {
       var acc = 0;
       var hs = 0;
       var shots = 0;
       var shotsToKill = 0;
-      if (isWeapon(weapon) && allWeaponStats[weapon]) {
-         shots = allWeaponStats[weapon].shots;
-         acc = calculatePrecent(allWeaponStats[weapon].hits, allWeaponStats[weapon].shots);
-         hs = calculatePrecent(allWeaponStats[weapon].headshots, allWeaponStats[weapon].shots);
-         shotsToKill = Number((allWeaponStats[weapon].shots / allWeaponStats[weapon].kills).toFixed(2));
+      if (isWeapon(weapon)) {
+         shots = weapons[weapon].shots;
+         acc = calculatePrecent(weapons[weapon].hits, weapons[weapon].shots);
+         hs = calculatePrecent(weapons[weapon].headshots, weapons[weapon].shots);
+         shotsToKill = Number((weapons[weapon].shots / weapons[weapon].kills).toFixed(2));
       }
       sortArr.push([
         weapon,
-        user[weapon],
+        user[weapon].kills,
         [shots, acc, hs, shotsToKill]
       ]);
       delete user[weapon];
