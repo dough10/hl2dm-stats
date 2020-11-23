@@ -1296,8 +1296,8 @@ print(`Getting data`);
 cacheTopResponse();
 setInterval(cacheTopResponse, 3600000);
 
-getServerStatus();
-setInterval(getServerStatus, 5000);
+// getServerStatus();
+// setInterval(getServerStatus, 5000);
 
 var j = schedule.scheduleJob('0 5 1 * *', cleanUp);
 
