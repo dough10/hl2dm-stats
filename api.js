@@ -876,6 +876,7 @@ function scanLine(line) {
     }
     if (!users[id3][weaponName]) {
       users[id3][weaponName] = {
+        kills:0,
         shots: 0,
         hits: 0,
         headshots:0,
@@ -992,7 +993,7 @@ function sortWeapons(user) {
           hs = calculatePrecent(users[user.id][weapon].headshots, users[user.id][weapon].shots);
           shotsToKill = Number((users[user.id][weapon].shots / users[user.id][weapon].kills).toFixed(2));
         }
-        console.log(user[weapon].kills)
+        console.log(user[weapon])
         sortArr.push([
           weapon,
           user[weapon].kills,
