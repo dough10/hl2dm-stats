@@ -992,12 +992,12 @@ function getServerStatus() {
         if (serverStatus.players[i].name) {
           var name = serverStatus.players[i].name;
           var score = serverStatus.players[i].score.toString();
-          var l = ((80 - name.length) - score.length) - 13;
+          var l = ((80 - name.length) - score.length) - 9;
           var space = '';
-          for (var n = 0; n < l; n++) {
+          for (var n = 1; n < l; n++) {
             space = space + '-';
           }
-          console.log(`<${name}> |${space}| score: ${score}`)
+          console.log(`${name} ${space} score: ${score}`)
         }
       }
     }
@@ -1115,10 +1115,12 @@ function zipLogs(lastMonth) {
     if (!fs.existsSync(folder)){
       fs.mkdirSync(folder);
     }
+    var t = new Timer();
     child_process.execSync(`zip -r ${config.bulkStorage}/logs/${lastMonth}.zip *`, {
       cwd: logFolder
     });
-    print(`Logs saved to ${config.bulkStorage}/logs/${lastMonth}.zip`);
+    print(`Zippin logs complete: ${t.endString()} time to complete`);
+    print(`Logs saved as ${config.bulkStorage}/logs/${lastMonth}.zip`);
     resolve(lastMonth);
   });
 }
@@ -1134,10 +1136,12 @@ function zipDemos(lastMonth) {
     if (!fs.existsSync(folder)){
       fs.mkdirSync(folder);
     }
+    var t = new Timer();
     child_process.execSync(`zip -r ${config.bulkStorage}/demos/${lastMonth}.zip *.dem`, {
       cwd: config.gameServerDir
     });
-    print(`Demos saved to ${config.bulkStorage}/demos/${lastMonth}.zip`);
+    print(`Zippin demos complete: ${t.endString()} time to complete`);
+    print(`Demos saved as ${config.bulkStorage}/demos/${lastMonth}.zip`);
     resolve(lastMonth);
   })
 }
