@@ -721,11 +721,12 @@ function scanLine(line) {
     }
     users[id].kills--;
     users[id].deaths++;
-    users[id].suicide++
+    users[id].suicide++;
     users[id].kdr = Number((users[id].kills / users[id].deaths).toFixed(2));
     var weapon = word[word.length - 1].replace('"', '');
     weapon = weapon.replace('"', '');
     if (!isWeapon(weapon)) {
+      // fix
       console.log(`${line} weapon error`);
       return;
     }
@@ -993,7 +994,9 @@ function sortWeapons(user) {
           hs = calculatePrecent(users[user.id][weapon].headshots, users[user.id][weapon].shots);
           shotsToKill = Number((users[user.id][weapon].shots / users[user.id][weapon].kills).toFixed(2));
         }
-        console.log(user)
+        if (user[weapon].kill === null) {
+          console.log(user)
+        }
         sortArr.push([
           weapon,
           user[weapon].kills,
