@@ -717,7 +717,6 @@ function parseServerStatus(status) {
     } else {
       for (let i = 0; i < numPlayersOnline; i++) {
         pContainer.appendChild(displayPlayer(status.players[i]));
-        pContainer.appendChild(lineSpacer());
       }
     }
     removeOfflinePlayers(status.players);

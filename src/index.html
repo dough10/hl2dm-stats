@@ -315,12 +315,16 @@
         border-top: 1px solid #cccccc61;
         min-height: 16px;
       }
+      #players {
+        border-top: 1px solid #cccccc61;
+      }
       .playeronline {
         display: flex;
         justify-content: space-between;
         align-items: center;
         max-width: 675px;
-        margin: 16px auto;
+        padding: 16px;
+        border-bottom: 1px solid #cccccc61;
       }
       .or0 {
         background-color: #ecdc8b;
@@ -675,7 +679,6 @@
           <div class="bio-text">
             A US based, <span id="numPlayers"></span> player, Low gravity & Infinite run deathmatch server. Players spawn ready to fight with 357, Crossbow and Shotgun in addition to the default weapons. Current map is <span id="map"></span>. Join in for fast action and a lot of explosions.
             <div class="pContainer">
-              <div class="spacer"></div>
               <div id="players"></div>
             </div>
             <p class="statinfo">Players with 100 or more kills in the server will have their stats tracked on this page. Scroll down to see more.</p>
