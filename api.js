@@ -970,7 +970,7 @@ function calculatePrecent(small, big) {
 function sortWeapons(user) {
   var sortArr = [];
   if (!user.id) {
-    console.log(top);
+    console.log(users)
     var allWeaponStats = totalWeaponStats();
     // console.log(allWeaponStats)
     for (weapon in user) {
@@ -991,6 +991,7 @@ function sortWeapons(user) {
       ]);
       delete user[weapon];
     }
+    users = {};
   } else {
     for (var weapon in user) {
       if (isWeapon(weapon)) {
@@ -1034,7 +1035,6 @@ function sortUsersByKDR() {
     return a.kdr - b.kdr;
   });
   arr.reverse();
-  users = {};
   return arr;
 }
 
