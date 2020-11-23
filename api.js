@@ -748,9 +748,9 @@ function scanLine(line) {
     weapons[weapon].kills++;
   } else if (isHeadshot) {
     if (!weapons.headshots) {
-      weapons.headshots = 0;
+      weapons.headshots = {kills:0};
     }
-    weapons.headshots++;
+    weapons.headshots.kills++;
     const killerNameString = buildKillerNameString(word, isHeadshot);
     const id = getID2(killerNameString);
     const name = getName(killerNameString);
@@ -932,6 +932,7 @@ function scanLine(line) {
 
 function totalWeaponStats() {
   var obj = {};
+  // console.log(users);
   for (var id in users) {
     console.log(id)
     for (var weapon in users[id]) {
@@ -967,7 +968,7 @@ function calculatePrecent(small, big) {
 function sortWeapons(user) {
   var sortArr = [];
   if (!user.id) {
-    console.log(user);
+    // console.log(user);
     var allWeaponStats = totalWeaponStats();
     console.log(allWeaponStats)
     for (weapon in user) {
