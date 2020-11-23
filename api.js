@@ -130,18 +130,18 @@ function cacheTopResponse() {
       top = stats;
       // merge physics kills
       if (!weapons.physics) {
-        weapons.physics = 0;
+        weapons.physics.kills = 0;
       }
       if (!weapons.physbox) {
-        weapons.physbox = 0;
+        weapons.physbox.kills = 0;
       }
       if (!weapons.world) {
-        weapons.world = 0;
+        weapons.world.kills = 0;
       }
-      weapons.physics = (weapons.physics + weapons.physbox) + weapons.world;
+      weapons.physics.kills = (weapons.physics.kills + weapons.physbox.kills) + weapons.world.kills;
       delete weapons.physbox;
       delete weapons.world;
-      if (weapons.physics === 0) {
+      if (weapons.physics.kills === 0) {
         delete weapons.physics;
       }
       // convert weapons object into sorted array by kill count array
@@ -149,19 +149,19 @@ function cacheTopResponse() {
       for (var i = 0; i < top.length; i++) {
         // merge player physics kills
         if (!top[i].physics) {
-          top[i].physics = 0;
+          top[i].physics.kills = 0;
         }
         if (!top[i].physbox) {
-          top[i].physbox = 0;
+          top[i].physbox.kills = 0;
         }
         if (!top[i].world) {
-          top[i].world = 0;
+          top[i].world.kills = 0;
         }
-        top[i].physics = (top[i].physics + top[i].physbox) + top[i].world;
+        top[i].physics.kills = (top[i].physics.kills + top[i].physbox.kills) + top[i].world.kills;
         delete top[i].physbox;
         delete top[i].world;
         delete top[i].updated;
-        if (top[i].physics === 0) {
+        if (top[i].physics.kills === 0) {
           delete top[i].physics;
         }
         // extract weapons from player object and place in sorted by kill count array
