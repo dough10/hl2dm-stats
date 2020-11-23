@@ -753,7 +753,7 @@ function scanLine(line) {
     weapons[weapon].kills++;
   } else if (isHeadshot) {
     if (!weapons.headshots) {
-      weapons.headshots = {kills:0};
+      weapons.headshots = {kills:0, shots:0, hits:0, headshots:0};
     }
     weapons.headshots.kills++;
     const killerNameString = buildKillerNameString(word, isHeadshot);
@@ -783,7 +783,7 @@ function scanLine(line) {
       };
     }
     if (!users[id3].headshots) {
-      users[id3].headshots = {kills:0};
+      users[id3].headshots = {kills:0, shots:0, hits:0, headshots:0};
     }
     users[id3].headshots.kills++;
     if (lineTime >= users[id3].updated) {
