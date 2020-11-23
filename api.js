@@ -778,9 +778,9 @@ function scanLine(line) {
       };
     }
     if (!users[id3].headshots) {
-      users[id3].headshots = 0;
+      users[id3].headshots = {kills:0};
     }
-    users[id3].headshots++;
+    users[id3].headshots.kills++;
     if (lineTime >= users[id3].updated) {
       users[id3].updated = lineTime;
       users[id3].name = name;
