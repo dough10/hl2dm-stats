@@ -308,7 +308,7 @@ function isLessThenOne(p) {
  * @param {Number} hitPrecent - precentage of shots fired that hit the target
  * @param {Number} hsPrecent - precentage of shots fired that hit in the head
  */
-function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent) {
+function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, shotsToKill) {
   var container = document.createElement('div');
   container.classList.add('tt-container');
   var weaponIcon = document.createElement('div');
@@ -337,6 +337,9 @@ function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent) {
     var hs = document.createElement('div');
     hs.textContent = `${hsPrecent}% headshots`;
     container.appendChild(hs);
+    var stk = document.createElement('div');
+    stk.textContent = `${shotsToKill} shots pre kill`;
+    container.appendChild(stk);
   }
   return container;
 }
@@ -359,6 +362,7 @@ function displayWeaponData(wrappers, weapons, kills) {
       shots = weapons[i][2][0];
       hitPrecent = isLessThenOne(weapons[i][2][1]);
       hsPrecent = isLessThenOne(weapons[i][2][2]);
+      shotsToKill = weapons[i][2][3];
     }
     let precent = isLessThenOne(Math.round((count / kills) * 100));
     const weapContainer = document.createElement('div');
@@ -372,7 +376,7 @@ function displayWeaponData(wrappers, weapons, kills) {
     weaponIcon.textContent = icon[0];
     text.textContent = count;
     tooltip.classList.add('tooltiptext');
-    tooltip.appendChild(tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent));
+    tooltip.appendChild(tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, shotsToKill));
     weapContainer.appendChild(tooltip);
     weapContainer.appendChild(weaponIcon);
     weapContainer.appendChild(text);
@@ -543,8 +547,9 @@ function parseTopData(top, page, cb) {
       shots = fav[2][0];
       hits = fav[2][1];
       hs = fav[2][2];
+      stk = fav[2][3];
     }
-    tooltip.appendChild(tooltipHTML(fav[0], Math.round((fav[1] / player.kills) * 100), shots, hits, hs));
+    tooltip.appendChild(tooltipHTML(fav[0], Math.round((fav[1] / player.kills) * 100), shots, hits, hs, stk));
     text.style.marginRight = '8px';
     icon.style.marginRight = '4px';
     var wIcon = getWeaponIcon(fav[0])
