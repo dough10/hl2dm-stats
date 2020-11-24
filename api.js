@@ -487,7 +487,7 @@ function playerIsBanned(line) {
 }
 
 
-function playerObj(name, id, ip) {
+function playerObj(name, id, time) {
   return {
     name: name,
     id: id,
@@ -496,6 +496,7 @@ function playerObj(name, id, ip) {
     kdr: 0,
     banned: false,
     suicide: {count:0},
+    updated: time,
     chat: []
   };
 }
@@ -543,7 +544,7 @@ function scanLine(line) {
       return;
     }
     if (!users[id]) {
-     users[id] = playerObj(name, id);
+     users[id] = playerObj(name, id, lineTime);
     }
     if (lineTime >= users[id].updated) {
      users[id].updated = lineTime;
@@ -640,11 +641,11 @@ function scanLine(line) {
     }
     // killer object
     if (!users[killerID]) {
-      users[killerID] = playerObj(killerName, killerID);
+      users[killerID] = playerObj(killerName, killerID, lineTime);
     }
     // killed object
     if (!users[killedID]) {
-      users[killedID] = playerObj(killedName, killedID);
+      users[killedID] = playerObj(killedName, killedID, lineTime);
     }
     // update killer name if changed
     if (lineTime >= users[killerID].updated) {
@@ -697,7 +698,7 @@ function scanLine(line) {
       return;
     }
     if (!users[id]) {
-      users[id] = playerObj(name, id);
+      users[id] = playerObj(name, id, lineTime);
     }
     if (lineTime >= users[id].updated) {
       users[id].updated = lineTime;
@@ -742,7 +743,7 @@ function scanLine(line) {
       return;
     }
     if (!users[id3]) {
-      users[id3] = playerObj(name, id3);
+      users[id3] = playerObj(name, id3, lineTime);
     }
     if (!users[id3].headshots) {
       users[id3].headshots = {kills:0, shots:0, hits:0, headshots:0};
@@ -775,7 +776,7 @@ function scanLine(line) {
       return;
     }
     if (!users[id3]) {
-      users[id3] = playerObj(name, id3);
+      users[id3] = playerObj(name, id3, lineTime);
     }
     // clean up extra chars
     for (var i = 0; i < word.length; i++) {
@@ -817,7 +818,7 @@ function scanLine(line) {
       return;
     }
     if (!users[id3]) {
-      users[id3] = playerObj(name, id3);
+      users[id3] = playerObj(name, id3, lineTime);
     }
     // clean up extra chars
     for (var i = 0; i < word.length; i++) {
