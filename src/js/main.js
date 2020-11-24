@@ -138,7 +138,7 @@ function createSVG(d, count, title, suicides) {
   titleEl.style.color = 'yellow';
   titleEl.textContent = `${title}: `;
   var countEl = document.createElement('span');
-  countEl.textContent = count;
+  countEl.textContent = `  ${count}`;
   div.appendChild(titleEl);
   div.appendChild(countEl);
   if (suicides) {
