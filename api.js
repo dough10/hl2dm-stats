@@ -518,7 +518,7 @@ function scanLine(line) {
        kills: 0,
        deaths: 0,
        kdr: 0,
-       suicide: 0,
+       suicide: {count:0},
        updated: lineTime,
        banned: false,
        chat: []
@@ -572,7 +572,7 @@ function scanLine(line) {
           kills: 0,
           deaths: 0,
           kdr: 0,
-          suicide: 0,
+          suicide: {count:0},
           updated: lineTime,
           banned: false,
           chat: []
@@ -641,7 +641,7 @@ function scanLine(line) {
         kills: 0,
         deaths: 0,
         kdr: 0,
-        suicide: 0,
+        suicide: {count:0},
         updated: lineTime,
         banned: false,
         chat: []
@@ -709,7 +709,7 @@ function scanLine(line) {
         kills: 0,
         deaths: 0,
         kdr: 0,
-        suicide: 0,
+        suicide: {count:0},
         banned: false,
         chat: []
       };
@@ -720,7 +720,7 @@ function scanLine(line) {
     }
     users[id].kills--;
     users[id].deaths++;
-    users[id].suicide++;
+    users[id].suicide.count++;
     users[id].kdr = Number((users[id].kills / users[id].deaths).toFixed(2));
     var weapon = word[word.length - 1].replace('"', '');
     weapon = weapon.replace('"', '');
@@ -732,6 +732,10 @@ function scanLine(line) {
       });
       return;
     }
+    if (!users[id].suicide[weapon]) {
+      users[id].suicide[weapon] = 0;
+    }
+    users[id].suicide[weapon]++;
     if (!weapons[weapon]) {
       weapons[weapon] = { ...defaultWeaponObject };
     }
@@ -762,7 +766,7 @@ function scanLine(line) {
         deaths: 0,
         updated: lineTime,
         kdr: 0,
-        suicide: 0,
+        suicide: {count:0},
         banned: false,
         chat: []
       };
@@ -796,7 +800,7 @@ function scanLine(line) {
         kills: 0,
         deaths: 0,
         kdr: 0,
-        suicide: 0,
+        suicide: {count:0},
         banned: false,
         chat: []
       };
@@ -866,7 +870,7 @@ function scanLine(line) {
         kills: 0,
         deaths: 0,
         kdr: 0,
-        suicide: 0,
+        suicide: {count:0},
         banned: false,
         chat: []
       };
