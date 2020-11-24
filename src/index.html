@@ -410,11 +410,12 @@
         padding: 16px 8px;
         position: absolute;
         z-index: 2;
-        transition: opacity 100ms cubic-bezier(.33,.17,.85,1.1);
+        transition: all 100ms cubic-bezier(.33,.17,.85,1.1);
         min-width: 123px;
         max-width: 123px;
         box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
         pointer-events: none;
+        transform: scale(0);
       }
       .tt-container div:not(:first-child) {
         margin: 4px auto;
@@ -429,6 +430,7 @@
       }
       .tooltip:hover .tooltiptext {
         opacity: 1;
+        transform: scale(1);
       }
       .tooltip:hover + .card {
         z-index: -1;
