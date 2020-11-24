@@ -132,6 +132,7 @@ function createSVG(d, count, title, suicides) {
   wrapper.style.margin = '0 0.2em';
   wrapper.classList.add('tooltip');
   tooltip.classList.add('tooltiptext');
+  tooltip.style.transformOrigin = 'center';
   tooltip.textContent = `${title}: ${count}`;
   if (suicides) {
     tooltip.textContent = `${tooltip.textContent}, ${suicides} by suicide`
@@ -540,6 +541,7 @@ function parseTopData(top, page, cb) {
     const icon = document.createElement('div');
     const text = document.createElement('div');
     tooltip.classList.add('tooltiptext');
+    tooltip.style.transformOrigin = 'center';
     var shots;
     var hits;
     var hs;
