@@ -528,7 +528,7 @@ function parseTopData(top, page, cb) {
     const stats = document.createElement('div');
     stats.style.display = "inline-flex";
     const kills = createSVG(killsIcon, player.kills, "Kills");
-    const deaths = createSVG(deathsIcon, player.deaths, "Deaths", player.suicide);
+    const deaths = createSVG(deathsIcon, player.deaths, "Deaths", player.suicide.count);
     const kdr = createSVG(kdrIcon, player.kdr, "KDR");
     wrapper.appendChild(name);
     const fav = favWeapon(player.weapons)
@@ -546,6 +546,7 @@ function parseTopData(top, page, cb) {
     var hs;
     var stk;
     if (fav[2] && fav[2][0] && fav[2][1] && fav[2][2]) {
+      console.log(fav[2])
       shots = fav[2][0];
       hits = fav[2][1];
       hs = fav[2][2];
