@@ -561,11 +561,11 @@ function scanLine(line) {
     const name = getName(nameString);
     const id = getID3(nameString);
     if (!id) {
-      ioError('Forming player ID', 'line);
+      ioError('Forming player ID', line);
       return;
     }
     if (!name) {
-      ioError('Forming player name', 'line);
+      ioError('Forming player name', line);
       return;
     }
     if (!users[id]) {
