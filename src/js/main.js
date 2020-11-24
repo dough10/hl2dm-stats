@@ -187,7 +187,7 @@ function createSVG(d, count, title, suicides) {
 function offlineServer() {
   const div = document.createElement('div');
   div.classList.add('playeronline');
-  div.style.textAlign = 'center';
+  div.style.justifyContent = 'center';
   div.textContent = "Server offline";
   return div;
 }
@@ -198,7 +198,7 @@ function offlineServer() {
 function emptyServer() {
   const div = document.createElement('div');
   div.classList.add('playeronline');
-  div.style.textAlign = 'center';
+  div.style.justifyContent = 'center';
   div.textContent = "No Players Online";
   return div;
 }
