@@ -501,6 +501,14 @@ function playerObj(name, id, time) {
   };
 }
 
+function ioError(err, line) {
+  io.notifyError(new Error(`${err}: ${line}`), {
+    custom: {
+      error: err
+    }
+  });
+}
+
 /**
  * scans the line for landmarks in order to get usable strings of data
  *
@@ -526,18 +534,24 @@ function scanLine(line) {
     const nameString = buildKillerNameString(word, isChat);
     const id = getID3(nameString);
     const name = getName(nameString);
+    if (!id) {
+      io.notifyError(new Error(`Forming player ID: ${line}`), {
+        custom: {
+          error: 'Forming player ID'
+        }
+      });
+      return;
+    }
+    if (!name) {
+      io.notifyError(new Error(`Forming player name: ${line}`), {
+        custom: {
+          error: 'Forming player name'
+        }
+      });
+      return;
+    }
     if (!users[id]) {
-     users[id] = {
-       name: name,
-       id: id,
-       kills: 0,
-       deaths: 0,
-       kdr: 0,
-       suicide: {count:0},
-       updated: lineTime,
-       banned: false,
-       chat: []
-     };
+     users[id] = playerObj(name, id, lineTime)
     }
     if (lineTime >= users[id].updated) {
      users[id].updated = lineTime;
@@ -556,6 +570,11 @@ function scanLine(line) {
     const id = getID3(nameString);
     // console.log(name, id);
     if (!id) {
+      io.notifyError(new Error(`Forming player ID: ${line}`), {
+        custom: {
+          error: 'Forming player ID'
+        }
+      });
       return;
     }
     if (!users[id]) {
@@ -578,20 +597,25 @@ function scanLine(line) {
     const connectedUser = getID3(connectedNameString);
     const connectedUserName = getName(connectedNameString);
     const ip = word[isConnect  + 2].replace('"', '').replace('"', '').replace(/:\d{4,5}$/, '');
+    if (!connectedUserName) {
+      io.notifyError(new Error(`Forming player name: ${line}`), {
+        custom: {
+          error: 'Forming player name'
+        }
+      });
+      return;
+    }
+    if (!connectedUser) {
+      io.notifyError(new Error(`Forming player ID: ${line}`), {
+        custom: {
+          error: 'Forming player ID'
+        }
+      });
+      return;
+    }
     if (validateIPaddress(ip)) {
       if (!users[connectedUser]) {
-        users[connectedUser] = {
-          name: connectedUserName,
-          id:connectedUser,
-          ip: ip,
-          kills: 0,
-          deaths: 0,
-          kdr: 0,
-          suicide: {count:0},
-          updated: lineTime,
-          banned: false,
-          chat: []
-        };
+        users[connectedUser] = playerObj(connectedUserName, connectedUser, lineTime);
       } else {
         users[connectedUser].ip = ip;
       }
@@ -609,11 +633,7 @@ function scanLine(line) {
     const killedName = getName(killedNameString);
     const weapon = word[word.length - 1].replace('"', '').replace('"', '');
     if (!killerID) {
-      io.notifyError(new Error(`Forming killer ID: ${line}`), {
-        custom: {
-          error: 'Forming killer ID'
-        }
-      });
+      ioError('Forming killer ID', line);
       return;
     }
     if (!killerName) {
@@ -745,6 +765,14 @@ function scanLine(line) {
       });
       return;
     }
+    if (!name) {
+      io.notifyError(new Error(`Forming player name: ${line}`), {
+        custom: {
+          error: 'Forming player name'
+        }
+      });
+      return;
+    }
     if (!users[id3]) {
       users[id3] = playerObj(name, id3, lineTime);
     }
@@ -766,6 +794,14 @@ function scanLine(line) {
       io.notifyError(new Error(`Forming player ID: ${line}`), {
         custom: {
           error: 'Forming player ID'
+        }
+      });
+      return;
+    }
+    if (!name) {
+      io.notifyError(new Error(`Forming player name: ${line}`), {
+        custom: {
+          error: 'Forming player name'
         }
       });
       return;
@@ -805,6 +841,11 @@ function scanLine(line) {
     const sid = new SteamID(id);
     const id3 = getID3(sid.getSteam3RenderedID());
     if (!id3) {
+      ioError('Forming player id', line);
+      return;
+    }
+    if (!name) {
+      ioError('Forming player name', line);
       return;
     }
     if (!users[id3]) {
