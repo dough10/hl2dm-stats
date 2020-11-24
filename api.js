@@ -29,6 +29,22 @@ var updated = false;         // if stats have been updated when a player reaches
 var bannedPlayers = {};
 var socket;
 
+
+const defaultWeaponObject = {
+  kills: 0,
+  shots: 0,
+  hits: 0,
+  headshots: 0,
+  head: 0,
+  chest: 0,
+  stomach: 0,
+  leftarm: 0,
+  rightarm: 0,
+  leftleg: 0,
+  rightleg:0
+};
+
+
 print(`Configure PM2 metrics`);
 
 io.init({
@@ -662,37 +678,13 @@ function scanLine(line) {
     users[killedID].kdr = Number((users[killedID].kills / users[killedID].deaths).toFixed(2));
     // add weapon for killer if doesn't exist
     if (!users[killerID][weapon]) {
-      users[killerID][weapon] = {
-        kills: 0,
-        shots: 0,
-        hits: 0,
-        headshots: 0,
-        head: 0,
-        chest: 0,
-        stomach: 0,
-        leftarm: 0,
-        rightarm: 0,
-        leftleg: 0,
-        rightleg: 0
-      };
+      users[killerID][weapon] = { ...defaultWeaponObject };
     }
     // add killer kill with weapon
     users[killerID][weapon].kills++;
     // add weapon for server
     if (!weapons[weapon]) {
-      weapons[weapon] = {
-        kills: 0,
-        shots: 0,
-        hits: 0,
-        headshots: 0,
-        head: 0,
-        chest: 0,
-        stomach: 0,
-        leftarm: 0,
-        rightarm: 0,
-        leftleg: 0,
-        rightleg: 0
-      };
+      weapons[weapon] = { ...defaultWeaponObject };
     }
     // add server wide weapon kill
     weapons[weapon].kills++;
@@ -736,19 +728,7 @@ function scanLine(line) {
       return;
     }
     if (!weapons[weapon]) {
-      weapons[weapon] = {
-        kills: 0,
-        shots: 0,
-        hits: 0,
-        headshots: 0,
-        head: 0,
-        chest: 0,
-        stomach: 0,
-        leftarm: 0,
-        rightarm: 0,
-        leftleg: 0,
-        rightleg:0
-      };
+      weapons[weapon] = { ...defaultWeaponObject };
     }
     weapons[weapon].kills++;
   } else if (isHeadshot) {
@@ -900,19 +880,7 @@ function scanLine(line) {
       return;
     }
     if (!users[id3][weaponName]) {
-      users[id3][weaponName] = {
-        kills: 0,
-        shots: 0,
-        hits: 0,
-        headshots: 0,
-        head: 0,
-        chest: 0,
-        stomach: 0,
-        leftarm: 0,
-        rightarm: 0,
-        leftleg: 0,
-        rightleg:0
-      };
+      users[id3][weaponName] = { ...defaultWeaponObject };
     }
     var head = word[isStats2 + 4];
     var chest = word[isStats2 + 6];
@@ -951,19 +919,7 @@ function scanLine(line) {
     users[id3][weaponName].leftleg = users[id3][weaponName].leftleg + Number(leftleg);
     users[id3][weaponName].rightleg = users[id3][weaponName].rightleg + Number(rightleg);
     if (!weapons[weaponName]) {
-      weapons[weaponName] = {
-        kills: 0,
-        shots: 0,
-        hits: 0,
-        headshots: 0,
-        head: 0,
-        chest: 0,
-        stomach: 0,
-        leftarm: 0,
-        rightarm: 0,
-        leftleg: 0,
-        rightleg: 0
-      };
+      weapons[weaponName] = { ...defaultWeaponObject };
     }
     weapons[weaponName].head = weapons[weaponName].head + Number(head);
     weapons[weaponName].chest = weapons[weaponName].chest + Number(chest);
