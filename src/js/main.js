@@ -543,6 +543,7 @@ function parseTopData(top, page, cb) {
     var shots;
     var hits;
     var hs;
+    var stk;
     if (fav[2] && fav[2][0] && fav[2][1] && fav[2][2]) {
       shots = fav[2][0];
       hits = fav[2][1];
