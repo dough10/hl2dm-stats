@@ -687,12 +687,18 @@ function scanLine(line) {
     const nameString = buildKillerNameString(word, isSuicide);
     const id = getID3(nameString);
     const name = getName(nameString);
+    var weapon = word[word.length - 1].replace('"', '');
+    weapon = weapon.replace('"', '');
     if (!id) {
-      io.notifyError(new Error(`Forming player ID: ${line}`), {
-        custom: {
-          error: 'Forming player ID'
-        }
-      });
+      ioError('Forming player ID', line);
+      return;
+    }
+    if (!name) {
+      ioError('Forming player name', line);
+      return;
+    }
+    if (!isWeapon(weapon)) {
+      ioError('Forming weapon name', line);
       return;
     }
     if (!users[id]) {
@@ -706,16 +712,6 @@ function scanLine(line) {
     users[id].deaths++;
     users[id].suicide.count++;
     users[id].kdr = Number((users[id].kills / users[id].deaths).toFixed(2));
-    var weapon = word[word.length - 1].replace('"', '');
-    weapon = weapon.replace('"', '');
-    if (!isWeapon(weapon)) {
-      io.notifyError(new Error(`Forming weapon name: ${line}`), {
-        custom: {
-          error: 'Forming weapon name'
-        }
-      });
-      return;
-    }
     if (!users[id].suicide[weapon]) {
       users[id].suicide[weapon] = 0;
     }
