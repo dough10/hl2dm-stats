@@ -19,12 +19,12 @@ const config = require(`${__dirname}/config.json`);
 const logFolder = path.join(config.gameServerDir, 'logs');
 
 var users = {};              // all users go in this object ie. {steamid: {name:playername, kills: 1934, deaths: 1689, kdr: 1.14, .....}, steamid: {..}, ..}
-var totalFiles = 0;          // total # of log files in "logs" folder
 var top = [];                // players with over 100 kills sorted by KDR
 var weapons = {};            // server wide kill count sorted by weapons
 var serverStatus;            // placeholder for gamedig state
 var totalPlayers = 0;        // count of total players to have joined the server
 var updated = false;         // if stats have been updated when a player reaches end of game kill count
+var totalFiles = 0;          // total # of log files in "logs" folder
 
 var bannedPlayers = {};
 var socket;
@@ -192,6 +192,9 @@ function cacheTopResponse() {
         updated = false;
       }, 60000);
       print(`Logs parsed & cached. ${time.endString()} to process`);
+      // reset objects for next run
+      users = {};
+      weapons = {};
       resolve();
     });
   });
@@ -202,7 +205,6 @@ function cacheTopResponse() {
  */
 function parseLogs() {
   return new Promise((resolve, reject) => {
-    weapons = {};
     fs.readdir(logFolder, (err, files) => {
       var remaining = '';
       if (err) {
@@ -998,7 +1000,6 @@ function sortWeapons(user) {
     return a[1] - b[1];
   });
   sortArr.reverse();
-  users = {};
   return sortArr;
 }
 
@@ -1099,7 +1100,7 @@ function getServerStatus() {
       for (var i = 0; i < serverStatus.players.length; i++) {
         if (serverStatus.players[i].score === Number(serverStatus.raw.rules.mp_fraglimit) && !updated) {
           updated = true;
-          setTimeout(cacheTopResponse, 10000);
+          setTimeout(cacheTopResponse, 5000);
         }
       }
       if (serverStatus.players[0].name) {
