@@ -947,7 +947,7 @@ function scanLine(line) {
  * @param {Number} big
  */
 function calculatePrecent(small, big) {
-  return Math.round((small / big) * 100);
+  return Math.round((small / big) * 100) || 0;
 }
 
 /**
