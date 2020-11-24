@@ -604,7 +604,6 @@ function scanLine(line) {
     // set address
     users[connectedUser].ip = ip;
     // update user name if changed
-    console.log(lineTime, users[connectedUser].updated, users[connectedUser].name, connectedUserName)
     if (lineTime >= users[connectedUser].updated) {
       users[connectedUser].updated = lineTime;
       users[connectedUser].name = connectedUserName;
@@ -727,26 +726,18 @@ function scanLine(line) {
     const sid = new SteamID(id);
     const id3 = getID3(sid.getSteam3RenderedID());
     if (!id3) {
-      io.notifyError(new Error(`Forming player ID: ${line}`), {
-        custom: {
-          error: 'Forming player ID'
-        }
-      });
+      ioError('Forming player ID', line);
       return;
     }
     if (!name) {
-      io.notifyError(new Error(`Forming player name: ${line}`), {
-        custom: {
-          error: 'Forming player name'
-        }
-      });
+      ioError('Forming player name', line);
       return;
     }
     if (!users[id3]) {
       users[id3] = playerObj(name, id3, lineTime);
     }
     if (!users[id3].headshots) {
-      users[id3].headshots = {kills:0, shots:0, hits:0, headshots:0};
+      users[id3].headshots = {kills:0};
     }
     users[id3].headshots.kills++;
     if (lineTime >= users[id3].updated) {
@@ -760,19 +751,11 @@ function scanLine(line) {
     const sid = new SteamID(id);
     const id3 = getID3(sid.getSteam3RenderedID());
     if (!id3) {
-      io.notifyError(new Error(`Forming player ID: ${line}`), {
-        custom: {
-          error: 'Forming player ID'
-        }
-      });
+      ioError('Forming player ID', line);
       return;
     }
     if (!name) {
-      io.notifyError(new Error(`Forming player name: ${line}`), {
-        custom: {
-          error: 'Forming player name'
-        }
-      });
+      ioError('Forming player name', line);
       return;
     }
     if (!users[id3]) {
@@ -784,11 +767,7 @@ function scanLine(line) {
     }
     var weaponName = word[isStats + 2];
     if (!isWeapon(weaponName)) {
-      io.notifyError(new Error(`Forming weapon name: ${line}`), {
-        custom: {
-          error: 'Forming weapon name'
-        }
-      });
+      ioError('Forming weapon name', line);
       return;
     }
     if (!users[id3][weaponName]) {
@@ -826,11 +805,7 @@ function scanLine(line) {
     }
     var weaponName = word[isStats2 + 2];
     if (!isWeapon(weaponName)) {
-      io.notifyError(new Error(`Forming weapon name: ${line}`), {
-        custom: {
-          error: 'Forming weapon name'
-        }
-      });
+      ioError('Forming weapon name', line);
       return;
     }
     if (!users[id3][weaponName]) {
