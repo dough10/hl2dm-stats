@@ -133,6 +133,7 @@ function createSVG(d, count, title, suicides) {
   wrapper.classList.add('tooltip');
   tooltip.classList.add('tooltiptext');
   tooltip.style.transformOrigin = 'center';
+  console.log(tooltip)
   tooltip.textContent = `${title}: ${count}`;
   if (suicides) {
     tooltip.textContent = `${tooltip.textContent}, ${suicides} by suicide`
