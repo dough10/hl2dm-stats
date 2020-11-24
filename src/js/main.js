@@ -144,6 +144,7 @@ function createSVG(d, count, title, suicides) {
   tooltip.appendChild(div);
   if (suicides) {
     var suic = document.createElement('div');
+    suic.style.color = 'yellow';
     suic.textContent = 'Deaths by suicide';
     tooltip.appendChild(suic);
     for (var stat in suicides) {
@@ -152,8 +153,8 @@ function createSVG(d, count, title, suicides) {
       statTitleDiv.style.color = 'yellow';
       var statDiv = document.createElement('span');
       if (stat === 'count') {
-        statTitleDiv.textContent = 'Total: ';
-        statDiv.textContent = `  ${suicides[stat]}`
+        // statTitleDiv.textContent = 'Total: ';
+        // statDiv.textContent = `  ${suicides[stat]}`;
       } else {
         statTitleDiv.textContent = `${stat}: `;
         statDiv.textContent = `  ${suicides[stat]}`
