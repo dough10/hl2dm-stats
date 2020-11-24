@@ -551,8 +551,7 @@ function parseTopData(top, page, cb) {
       hs = fav[2][2];
       stk = fav[2][3];
     }
-    console.log(stk)
-    tooltip.appendChild(tooltipHTML(fav[0], Math.round((fav[1] / player.kills) * 100), shots, hits, hs, stk));
+    tooltip.appendChild(tooltipHTML(fav[0], player.kills, Math.round((fav[1] / player.kills) * 100), shots, hits, hs, stk));
     text.style.marginRight = '8px';
     icon.style.marginRight = '4px';
     var wIcon = getWeaponIcon(fav[0])
