@@ -535,19 +535,11 @@ function scanLine(line) {
     const id = getID3(nameString);
     const name = getName(nameString);
     if (!id) {
-      io.notifyError(new Error(`Forming player ID: ${line}`), {
-        custom: {
-          error: 'Forming player ID'
-        }
-      });
+      ioError('Forming player ID', line);
       return;
     }
     if (!name) {
-      io.notifyError(new Error(`Forming player name: ${line}`), {
-        custom: {
-          error: 'Forming player name'
-        }
-      });
+      ioError('Forming player name', line);
       return;
     }
     if (!users[id]) {
@@ -568,13 +560,12 @@ function scanLine(line) {
     const nameString = buildKillerNameString(word, isBanned);
     const name = getName(nameString);
     const id = getID3(nameString);
-    // console.log(name, id);
     if (!id) {
-      io.notifyError(new Error(`Forming player ID: ${line}`), {
-        custom: {
-          error: 'Forming player ID'
-        }
-      });
+      ioError('Forming player ID', 'line);
+      return;
+    }
+    if (!name) {
+      ioError('Forming player name', 'line);
       return;
     }
     if (!users[id]) {
@@ -606,11 +597,7 @@ function scanLine(line) {
       return;
     }
     if (!connectedUser) {
-      io.notifyError(new Error(`Forming player ID: ${line}`), {
-        custom: {
-          error: 'Forming player ID'
-        }
-      });
+      ioError('Forming player ID', line);
       return;
     }
     if (validateIPaddress(ip)) {
