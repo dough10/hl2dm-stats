@@ -487,7 +487,7 @@ function playerIsBanned(line) {
 }
 
 
-function playerObj(name, id, time) {
+function playerObj(name, id, ip, time) {
   return {
     name: name,
     id: id,
@@ -584,34 +584,37 @@ function scanLine(line) {
     users[id].banned = true;
     bannedPlayers[id] = users[id];
   } else if (isConnect) {
+    // get user details
     const connectedNameString = buildKillerNameString(word, isConnect);
     const connectedUser = getID3(connectedNameString);
     const connectedUserName = getName(connectedNameString);
     const ip = word[isConnect  + 2].replace('"', '').replace('"', '').replace(/:\d{4,5}$/, '');
+    // check for important data
     if (!connectedUserName) {
-      io.notifyError(new Error(`Forming player name: ${line}`), {
-        custom: {
-          error: 'Forming player name'
-        }
-      });
+      ioError('Forming player name', line);
       return;
     }
     if (!connectedUser) {
       ioError('Forming player ID', line);
       return;
     }
-    if (validateIPaddress(ip)) {
-      if (!users[connectedUser]) {
-        users[connectedUser] = playerObj(connectedUserName, connectedUser, lineTime);
-      } else {
-        users[connectedUser].ip = ip;
-      }
-      if (lineTime >= users[connectedUser].updated) {
-        users[connectedUser].updated = lineTime;
-        users[connectedUser].name = connectedUserName;
-      }
+    if (!validateIPaddress(ip)) {
+      ioError('Forming player ip address', line);
+      return;
+    }
+    // create users object if doesn't exist
+    if (!users[connectedUser]) {
+      users[connectedUser] = playerObj(connectedUserName, connectedUser, lineTime);
+    }
+    // set address
+    users[connectedUser].ip = ip;
+    // update user name if changed
+    if (lineTime >= users[connectedUser].updated) {
+      users[connectedUser].updated = lineTime;
+      users[connectedUser].name = connectedUserName;
     }
   } else if (isKill) {
+    // get players details
     const killerNameString = buildKillerNameString(word, isKill);
     const killerID = getID3(killerNameString);
     const killerName = getName(killerNameString);
@@ -619,63 +622,50 @@ function scanLine(line) {
     const killedID = getID3(killedNameString);
     const killedName = getName(killedNameString);
     const weapon = word[word.length - 1].replace('"', '').replace('"', '');
+    // check important data exists
     if (!killerID) {
       ioError('Forming killer ID', line);
       return;
     }
     if (!killerName) {
-      io.notifyError(new Error(`Forming killer name: ${line}`), {
-        custom: {
-          error: 'Forming killer name'
-        }
-      });
+      ioError('Forming killer name', line);
       return;
     }
     if (!killedID) {
-      io.notifyError(new Error(`Forming killed ID: ${line}`), {
-        custom: {
-          error: 'Forming killed ID'
-        }
-      });
+      ioError('Forming killed ID', line);
       return;
     }
     if (!killedName) {
-      io.notifyError(new Error(`Forming killed name: ${line}`), {
-        custom: {
-          error: 'Forming killed name'
-        }
-      });
+      ioError('Forming killed name', line);
       return;
     }
     if (!isWeapon(weapon)) {
-      io.notifyError(new Error(`Forming weapon name: ${line}`), {
-        custom: {
-          error: 'Forming weapon name'
-        }
-      });
+      ioError('Forming weapon name', line);
       return;
     }
-    // killer
+    // killer object
     if (!users[killerID]) {
       users[killerID] = playerObj(killerName, killerID, lineTime);
     }
-    // killed
+    // killed object
     if (!users[killedID]) {
       users[killedID] = playerObj(killedName, killedID, lineTime);
     }
+    // update killer name if changed
     if (lineTime >= users[killerID].updated) {
       users[killerID].updated = lineTime;
       users[killerID].name = killerName;
     }
+    // update killed name if changed
     if (lineTime > users[killedID].updated) {
       users[killedID].updated = lineTime;
       users[killedID].name = killedName;
     }
-    // add kill
+    // add killers kill
     users[killerID].kills++;
-    // add death
+    // add killed player death
     users[killedID].deaths++;
-    // calculate KDR
+    // calculate everyones involveds KDR
     users[killerID].kdr = Number((users[killerID].kills / users[killerID].deaths).toFixed(2));
     if (users[killerID].kdr === Infinity) {
       users[killerID].kdr = users[killerID].kills;
