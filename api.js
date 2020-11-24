@@ -486,6 +486,20 @@ function playerIsBanned(line) {
   return false;
 }
 
+
+function playerObj(name, id, time) {
+  return {
+    name: name,
+    id: id,
+    kills: 0,
+    deaths: 0,
+    kdr: 0,
+    updated: time,
+    banned: false,
+    chat: []
+  };
+}
+
 /**
  * scans the line for landmarks in order to get usable strings of data
  *
@@ -635,30 +649,11 @@ function scanLine(line) {
     }
     // killer
     if (!users[killerID]) {
-      users[killerID] = {
-        name: killerName,
-        id:killerID,
-        kills: 0,
-        deaths: 0,
-        kdr: 0,
-        suicide: {count:0},
-        updated: lineTime,
-        banned: false,
-        chat: []
-      };
+      users[killerID] = playerObj(killerName, killerID, lineTime);
     }
     // killed
     if (!users[killedID]) {
-      users[killedID] = {
-        name: killedName,
-        id: killedID,
-        kills: 0,
-        deaths: 0,
-        kdr: 0,
-        updated: lineTime,
-        banned: false,
-        chat: []
-      };
+      users[killedID] = playerObj(killedName, killedID, lineTime);
     }
     if (lineTime >= users[killerID].updated) {
       users[killerID].updated = lineTime;
