@@ -496,6 +496,7 @@ function playerObj(name, id, time) {
     kdr: 0,
     updated: time,
     banned: false,
+    suicide: {count:0},
     chat: []
   };
 }
@@ -698,16 +699,7 @@ function scanLine(line) {
       return;
     }
     if (!users[id]) {
-      users[id] = {
-        name: name,
-        id: id,
-        kills: 0,
-        deaths: 0,
-        kdr: 0,
-        suicide: {count:0},
-        banned: false,
-        chat: []
-      };
+      users[id] = playerObj(name, id, lineTime);
     }
     if (lineTime >= users[id].updated) {
       users[id].updated = lineTime;
@@ -754,17 +746,7 @@ function scanLine(line) {
       return;
     }
     if (!users[id3]) {
-      users[id3] = {
-        name: name,
-        id: id3,
-        kills: 0,
-        deaths: 0,
-        updated: lineTime,
-        kdr: 0,
-        suicide: {count:0},
-        banned: false,
-        chat: []
-      };
+      users[id3] = playerObj(name, id3, lineTime);
     }
     if (!users[id3].headshots) {
       users[id3].headshots = {kills:0, shots:0, hits:0, headshots:0};
@@ -789,16 +771,7 @@ function scanLine(line) {
       return;
     }
     if (!users[id3]) {
-      users[id3] = {
-        name: name,
-        id: id3,
-        kills: 0,
-        deaths: 0,
-        kdr: 0,
-        suicide: {count:0},
-        banned: false,
-        chat: []
-      };
+      users[id3] = playerObj(name, id3, lineTime);
     }
     // clean up extra chars
     for (var i = 0; i < word.length; i++) {
@@ -814,37 +787,13 @@ function scanLine(line) {
       return;
     }
     if (!users[id3][weaponName]) {
-      users[id3][weaponName] = {
-        kills: 0,
-        shots: 0,
-        hits: 0,
-        headshots: 0,
-        head: 0,
-        chest: 0,
-        stomach: 0,
-        leftarm: 0,
-        rightarm: 0,
-        leftleg: 0,
-        rightleg: 0
-      };
+      users[id3][weaponName] = { ...defaultWeaponObject };
     }
     users[id3][weaponName].shots = users[id3][weaponName].shots + Number(word[isStats + 4]);
     users[id3][weaponName].hits = users[id3][weaponName].hits + Number(word[isStats + 6]);
     users[id3][weaponName].headshots = users[id3][weaponName].headshots + Number(word[isStats + 8]);
     if (!weapons[weaponName]) {
-      weapons[weaponName] = {
-        kills: 0,
-        shots: 0,
-        hits: 0,
-        headshots: 0,
-        head: 0,
-        chest: 0,
-        stomach: 0,
-        leftarm: 0,
-        rightarm: 0,
-        leftleg: 0,
-        rightleg: 0
-      };
+      weapons[weaponName] = { ...defaultWeaponObject };
     }
     weapons[weaponName].shots = weapons[weaponName].shots + Number(word[isStats + 4]);
     weapons[weaponName].hits = weapons[weaponName].hits + Number(word[isStats + 6]);
@@ -859,16 +808,7 @@ function scanLine(line) {
       return;
     }
     if (!users[id3]) {
-      users[id3] = {
-        name: name,
-        id: id3,
-        kills: 0,
-        deaths: 0,
-        kdr: 0,
-        suicide: {count:0},
-        banned: false,
-        chat: []
-      };
+      users[id3] = playerObj(name, id3, lineTime);
     }
     // clean up extra chars
     for (var i = 0; i < word.length; i++) {
