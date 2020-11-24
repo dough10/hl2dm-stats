@@ -603,6 +603,7 @@ function scanLine(line) {
     // set address
     users[connectedUser].ip = ip;
     // update user name if changed
+    console.log(lineTime, users[connectedUser].updated, users[connectedUser].name, connectedUserName)
     if (lineTime >= users[connectedUser].updated) {
       users[connectedUser].updated = lineTime;
       users[connectedUser].name = connectedUserName;
