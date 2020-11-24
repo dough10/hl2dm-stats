@@ -723,8 +723,11 @@ function scanLine(line) {
     var weapon = word[word.length - 1].replace('"', '');
     weapon = weapon.replace('"', '');
     if (!isWeapon(weapon)) {
-      // fix
-      console.log(`${line} weapon error`);
+      io.notifyError(new Error(`Forming weapon name: ${line}`), {
+        custom: {
+          error: 'Forming weapon name'
+        }
+      });
       return;
     }
     if (!weapons[weapon]) {
@@ -954,11 +957,13 @@ function sortWeapons(user) {
          hs = calculatePrecent(weapons[weapon].headshots, weapons[weapon].shots);
          shotsToKill = Number((weapons[weapon].shots / weapons[weapon].kills).toFixed(2));
       }
-      sortArr.push([
-        weapon,
-        user[weapon].kills,
-        [shots, acc, hs, shotsToKill]
-      ]);
+      if (user[weapon].kills !== 0) {
+        sortArr.push([
+          weapon,
+          user[weapon].kills,
+          [shots, acc, hs, shotsToKill]
+        ]);
+      }
       delete user[weapon];
     }
   } else {
@@ -972,11 +977,13 @@ function sortWeapons(user) {
         acc = calculatePrecent(user[weapon].hits, user[weapon].shots);
         hs = calculatePrecent(user[weapon].headshots, user[weapon].shots);
         shotsToKill = Number((user[weapon].shots / user[weapon].kills).toFixed(2));
-        sortArr.push([
-          weapon,
-          user[weapon].kills,
-          [shots, acc, hs, shotsToKill]
-        ]);
+        if (user[weapon].kills !== 0) {          
+          sortArr.push([
+            weapon,
+            user[weapon].kills,
+            [shots, acc, hs, shotsToKill]
+          ]);
+        }
         delete user[weapon];
       }
     }
