@@ -487,14 +487,13 @@ function playerIsBanned(line) {
 }
 
 
-function playerObj(name, id, ip, time) {
+function playerObj(name, id, ip) {
   return {
     name: name,
     id: id,
     kills: 0,
     deaths: 0,
     kdr: 0,
-    updated: time,
     banned: false,
     suicide: {count:0},
     chat: []
@@ -525,8 +524,9 @@ function scanLine(line) {
   var isStats2 = lineIsStats2(word);
   var isConsole = lineIsConsole(word);
   var isBanned = playerIsBanned(word);
+  var lineTime;
   if (word[3] && isTime(word[3])) {
-    var lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
+    lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
   }
   if (isConsole) {
      return;
@@ -543,7 +543,7 @@ function scanLine(line) {
       return;
     }
     if (!users[id]) {
-     users[id] = playerObj(name, id, lineTime)
+     users[id] = playerObj(name, id);
     }
     if (lineTime >= users[id].updated) {
      users[id].updated = lineTime;
@@ -639,11 +639,11 @@ function scanLine(line) {
     }
     // killer object
     if (!users[killerID]) {
-      users[killerID] = playerObj(killerName, killerID, lineTime);
+      users[killerID] = playerObj(killerName, killerID);
     }
     // killed object
     if (!users[killedID]) {
-      users[killedID] = playerObj(killedName, killedID, lineTime);
+      users[killedID] = playerObj(killedName, killedID);
     }
     // update killer name if changed
     if (lineTime >= users[killerID].updated) {
@@ -696,7 +696,7 @@ function scanLine(line) {
       return;
     }
     if (!users[id]) {
-      users[id] = playerObj(name, id, lineTime);
+      users[id] = playerObj(name, id);
     }
     if (lineTime >= users[id].updated) {
       users[id].updated = lineTime;
@@ -741,7 +741,7 @@ function scanLine(line) {
       return;
     }
     if (!users[id3]) {
-      users[id3] = playerObj(name, id3, lineTime);
+      users[id3] = playerObj(name, id3);
     }
     if (!users[id3].headshots) {
       users[id3].headshots = {kills:0, shots:0, hits:0, headshots:0};
@@ -774,7 +774,7 @@ function scanLine(line) {
       return;
     }
     if (!users[id3]) {
-      users[id3] = playerObj(name, id3, lineTime);
+      users[id3] = playerObj(name, id3);
     }
     // clean up extra chars
     for (var i = 0; i < word.length; i++) {
@@ -816,7 +816,7 @@ function scanLine(line) {
       return;
     }
     if (!users[id3]) {
-      users[id3] = playerObj(name, id3, lineTime);
+      users[id3] = playerObj(name, id3);
     }
     // clean up extra chars
     for (var i = 0; i < word.length; i++) {
