@@ -546,12 +546,12 @@ function parseTopData(top, page, cb) {
     var hs;
     var stk;
     if (fav[2] && fav[2][0] && fav[2][1] && fav[2][2]) {
-      console.log(fav[2])
       shots = fav[2][0];
       hits = fav[2][1];
       hs = fav[2][2];
       stk = fav[2][3];
     }
+    console.log(stk)
     tooltip.appendChild(tooltipHTML(fav[0], Math.round((fav[1] / player.kills) * 100), shots, hits, hs, stk));
     text.style.marginRight = '8px';
     icon.style.marginRight = '4px';
