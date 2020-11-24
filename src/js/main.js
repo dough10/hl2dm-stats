@@ -358,6 +358,7 @@ function displayWeaponData(wrappers, weapons, kills) {
     var shots;
     var hitPrecent;
     var hsPrecent;
+    var shotsToKill;
     if (weapons[i][2]) {
       shots = weapons[i][2][0];
       hitPrecent = isLessThenOne(weapons[i][2][1]);
