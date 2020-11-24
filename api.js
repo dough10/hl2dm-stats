@@ -564,20 +564,14 @@ function scanLine(line) {
       ioError('Forming player ID', line);
       return;
     }
-    if (!name) {
-      ioError('Forming player name', line);
-      return;
-    }
     if (!users[id]) {
       users[id] = {
         id: id,
-        banned: true,
-        name: name
+        banned: true
       };
       bannedPlayers[id] = {
         id: id,
-        banned: true,
-        name: name
+        banned: true
       };
       return;
     }
