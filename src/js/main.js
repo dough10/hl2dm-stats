@@ -154,12 +154,9 @@ function createSVG(d, count, title, suicides) {
       var statTitleDiv = document.createElement('span');
       statTitleDiv.style.color = 'yellow';
       var statDiv = document.createElement('span');
-      if (stat === 'count') {
-        // statTitleDiv.textContent = 'Total: ';
-        // statDiv.textContent = `  ${suicides[stat]}`;
-      } else {
+      if (stat !== 'count') {
         statTitleDiv.textContent = `${stat}: `;
-        statDiv.textContent = `  ${suicides[stat]}`
+        statDiv.textContent = `  ${suicides[stat]}`;
       }
       statContainer.appendChild(statTitleDiv);
       statContainer.appendChild(statDiv);
