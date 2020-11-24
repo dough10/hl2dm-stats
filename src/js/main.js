@@ -133,9 +133,16 @@ function createSVG(d, count, title, suicides) {
   wrapper.classList.add('tooltip');
   tooltip.classList.add('tooltiptext');
   tooltip.style.transformOrigin = 'center';
-  tooltip.textContent = `${title}: ${count}`;
+  var div = document.createElement('div');
+  var title = document.createElement('span');
+  title.style.color = 'yellow';
+  title.textContent = `${title}:`;
+  var countEl = document.createElement('span');
+  countEl.textContent = count;
+  div.appendChild(title);
+  div.appendChild(countEl);
   if (suicides) {
-    tooltip.textContent = `${tooltip.textContent}, ${suicides} by suicide`
+    // tooltip.textContent = `${tooltip.textContent}, ${suicides.count} by suicide`
   }
   wrapper.appendChild(tooltip);
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -528,7 +535,7 @@ function parseTopData(top, page, cb) {
     const stats = document.createElement('div');
     stats.style.display = "inline-flex";
     const kills = createSVG(killsIcon, player.kills, "Kills");
-    const deaths = createSVG(deathsIcon, player.deaths, "Deaths", player.suicide.count);
+    const deaths = createSVG(deathsIcon, player.deaths, "Deaths", player.suicide);
     const kdr = createSVG(kdrIcon, player.kdr, "KDR");
     wrapper.appendChild(name);
     const fav = favWeapon(player.weapons)
