@@ -337,9 +337,9 @@ function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, s
     var hs = document.createElement('div');
     hs.textContent = `${hsPrecent}% headshots`;
     container.appendChild(hs);
-    if (shotsToKill) {      
+    if (shotsToKill) {
       var stk = document.createElement('div');
-      stk.textContent = `${shotsToKill} shots pre kill`;
+      stk.textContent = `${shotsToKill} adv shots pre kill`;
       container.appendChild(stk);
     }
   }
