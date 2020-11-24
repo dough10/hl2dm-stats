@@ -934,6 +934,12 @@ function scanLine(line) {
   }
 }
 
+/*
+ * returns % value
+ *
+ * @param {Number} small
+ * @param {Number} big
+ */
 function calculatePrecent(small, big) {
   return Math.round((small / big) * 100);
 }
@@ -955,7 +961,7 @@ function sortWeapons(user) {
          shots = weapons[weapon].shots;
          acc = calculatePrecent(weapons[weapon].hits, weapons[weapon].shots);
          hs = calculatePrecent(weapons[weapon].headshots, weapons[weapon].shots);
-         shotsToKill = Number((weapons[weapon].shots / weapons[weapon].kills).toFixed(2));
+         shotsToKill = Math.round(weapons[weapon].shots / weapons[weapon].kills);
       }
       if (user[weapon].kills !== 0) {
         sortArr.push([
@@ -976,8 +982,8 @@ function sortWeapons(user) {
         shots = user[weapon].shots;
         acc = calculatePrecent(user[weapon].hits, user[weapon].shots);
         hs = calculatePrecent(user[weapon].headshots, user[weapon].shots);
-        shotsToKill = Number((user[weapon].shots / user[weapon].kills).toFixed(2));
-        if (user[weapon].kills !== 0) {          
+        shotsToKill = Math.round(user[weapon].shots / user[weapon].kills);
+        if (user[weapon].kills !== 0) {
           sortArr.push([
             weapon,
             user[weapon].kills,
