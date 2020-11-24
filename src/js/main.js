@@ -133,6 +133,8 @@ function createSVG(d, count, title, suicides) {
   wrapper.classList.add('tooltip');
   tooltip.classList.add('tooltiptext');
   tooltip.style.transformOrigin = 'center';
+  var con = document.createElement('div');
+  con.classList.add('tt-container');
   var div = document.createElement('div');
   var titleEl = document.createElement('span');
   titleEl.style.color = 'yellow';
@@ -141,12 +143,12 @@ function createSVG(d, count, title, suicides) {
   countEl.textContent = `  ${count}`;
   div.appendChild(titleEl);
   div.appendChild(countEl);
-  tooltip.appendChild(div);
+  con.appendChild(div);
   if (suicides) {
     var suic = document.createElement('div');
     suic.style.color = 'yellow';
     suic.textContent = 'Deaths by suicide';
-    tooltip.appendChild(suic);
+    con.appendChild(suic);
     for (var stat in suicides) {
       var statContainer = document.createElement('div');
       var statTitleDiv = document.createElement('span');
@@ -161,9 +163,10 @@ function createSVG(d, count, title, suicides) {
       }
       statContainer.appendChild(statTitleDiv);
       statContainer.appendChild(statDiv);
-      tooltip.appendChild(statContainer);
+      con.appendChild(statContainer);
     }
   }
+  tooltip.appendChild(con);
   wrapper.appendChild(tooltip);
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.classList.add('svg');
