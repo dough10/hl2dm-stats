@@ -535,11 +535,11 @@ function scanLine(line) {
     const id = getID3(nameString);
     const name = getName(nameString);
     if (!id) {
-      ioError('Forming player ID', line);
+      // ioError('Forming player ID', line);
       return;
     }
     if (!name) {
-      ioError('Forming player name', line);
+      // ioError('Forming player name', line);
       return;
     }
     if (!users[id]) {
@@ -591,11 +591,11 @@ function scanLine(line) {
     const ip = word[isConnect  + 2].replace('"', '').replace('"', '').replace(/:\d{4,5}$/, '');
     // check for important data
     if (!connectedUserName) {
-      ioError('Forming player name', line);
+      // ioError('Forming player name', line);
       return;
     }
     if (!connectedUser) {
-      ioError('Forming player ID', line);
+      // ioError('Forming player ID', line);
       return;
     }
     if (!validateIPaddress(ip)) {
