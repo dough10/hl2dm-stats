@@ -507,7 +507,7 @@ function parseTopData(top, page, cb) {
     const wrapper = createWrapper();
     const card = createCard();
     card.classList.add('stat');
-    card.style.zIndex = z;
+    // card.style.zIndex = z;
     z--;
     const name = document.createElement('div');
     name.textContent = player.name;
