@@ -777,6 +777,9 @@ function scanLine(line) {
     var hits = Number(word[isStats + 6]);
     var hs = Number(word[isStats + 8]);
     var damage = Number(word[isStats + 14]);
+    if (weaponName === 'crossbow_bolt' && damage > 100) {
+      console.log(line)
+    }
     /*
      * single shot damage
      * this is not accurate in that if more then 1 shot hits it will be ignored
