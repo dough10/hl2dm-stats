@@ -772,10 +772,10 @@ function scanLine(line) {
     var hits = Number(word[isStats + 6]);
     var hs = Number(word[isStats + 8]);
     var damage = Number(word[isStats + 14]);
-    if (shots === 1 && damage > users[id3][weaponName].hss) {
+    if (hits === 1 && damage > users[id3][weaponName].hss) {
       users[id3][weaponName].hss = damage;
     }
-    if (shots === 1 && damage < users[id3][weaponName].lss) {
+    if (hits === 1 && damage < users[id3][weaponName].lss && damage !== 0) {
       users[id3][weaponName].lss = damage;
     }
     users[id3][weaponName].shots = users[id3][weaponName].shots + shots;
