@@ -42,7 +42,9 @@ const defaultWeaponObject = {
   rightarm: 0,
   leftleg: 0,
   rightleg:0,
-  damage:0
+  damage:0,
+  hss:0,
+  lss:999999999999999
 };
 
 
@@ -766,20 +768,27 @@ function scanLine(line) {
     if (!users[id3][weaponName]) {
       users[id3][weaponName] = { ...defaultWeaponObject };
     }
-    if (word[isStats + 6] === '1') {
-      console.log(`${name} single shot damage: ${word[isStats + 14]}`)
+    var shots = Number(word[isStats + 4]);
+    var hits = Number(word[isStats + 6]);
+    var hs = Number(word[isStats + 8]);
+    var damage = Number(word[isStats + 14]);
+    if (shots === 1 && damage > users[id3][weaponName].hss) {
+      users[id3][weaponName].hss = damage;
     }
-    users[id3][weaponName].shots = users[id3][weaponName].shots + Number(word[isStats + 4]);
-    users[id3][weaponName].hits = users[id3][weaponName].hits + Number(word[isStats + 6]);
-    users[id3][weaponName].headshots = users[id3][weaponName].headshots + Number(word[isStats + 8]);
-    users[id3][weaponName].damage = users[id3][weaponName].damage + Number(word[isStats + 14]);
+    if (shots === 1 && damage < users[id3][weaponName].lss) {
+      users[id3][weaponName].lss = damage;
+    }
+    users[id3][weaponName].shots = users[id3][weaponName].shots + shots;
+    users[id3][weaponName].hits = users[id3][weaponName].hits + hits;
+    users[id3][weaponName].headshots = users[id3][weaponName].headshots + hs;
+    users[id3][weaponName].damage = users[id3][weaponName].damage + damage;
     if (!weapons[weaponName]) {
       weapons[weaponName] = { ...defaultWeaponObject };
     }
-    weapons[weaponName].shots = weapons[weaponName].shots + Number(word[isStats + 4]);
-    weapons[weaponName].hits = weapons[weaponName].hits + Number(word[isStats + 6]);
-    weapons[weaponName].headshots = weapons[weaponName].headshots + Number(word[isStats + 8]);
-    weapons[weaponName].damage = weapons[weaponName].damage + Number(word[isStats + 14]);
+    weapons[weaponName].shots = weapons[weaponName].shots + shots;
+    weapons[weaponName].hits = weapons[weaponName].hits + hits;
+    weapons[weaponName].headshots = weapons[weaponName].headshots + hs;
+    weapons[weaponName].damage = weapons[weaponName].damage + damage;
   } else if (isStats2) {
     const killedNameString = buildKillerNameString(word, isStats2 - 1);
     const id = getID2(killedNameString);
