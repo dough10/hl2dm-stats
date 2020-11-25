@@ -777,7 +777,7 @@ function scanLine(line) {
     var hits = Number(word[isStats + 6]);
     var hs = Number(word[isStats + 8]);
     var damage = Number(word[isStats + 14]);
-    if (weaponName === 'crossbow_bolt' && damage > 100) {
+    if (weaponName === 'crossbow_bolt' && hits === 1 && damage > 100) {
       console.log(line)
     }
     /*
