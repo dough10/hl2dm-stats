@@ -881,10 +881,11 @@ function sortWeapons(user) {
           var shotsToKill = Math.floor(weapons[weapon].shots / weapons[weapon].kills);
           var damage = weapons[weapon].damage;
           var adpk = Math.floor(weapons[weapon].damage / weapons[weapon].kills);
+          var adps = Math.floor(weapons[weapon].damage / weapons[weapon].shots);
           sortArr.push([
             weapon,
             user[weapon].kills,
-            [shots, acc, hs, shotsToKill, damage, adpk]
+            [shots, acc, hs, shotsToKill, damage, adpk, adps]
           ]);
         }
          delete user[weapon];
@@ -899,11 +900,12 @@ function sortWeapons(user) {
         var shotsToKill = Math.floor(user[weapon].shots / user[weapon].kills);
         var damage = user[weapon].damage;
         var adpk = Math.floor(user[weapon].damage / user[weapon].kills);
+        var adps = Math.floor(user[weapon].damage / user[weapon].shots);
         if (user[weapon].kills !== 0) {
           sortArr.push([
             weapon,
             user[weapon].kills,
-            [shots, acc, hs, shotsToKill, damage, adpk]
+            [shots, acc, hs, shotsToKill, damage, adpk, adps]
           ]);
         }
         delete user[weapon];
