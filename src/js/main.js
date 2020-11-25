@@ -367,17 +367,17 @@ function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, s
     container.appendChild(textDiv(`${numberWithCommas(damage)} damage`));
   }
   if (adpk) {
-    container.appendChild(textDiv(`${adpk} adv dam per kill`));
+    container.appendChild(textDiv(`${adpk} avg dam per kill`));
   }
   if (shots && hitPrecent && hsPrecent) {
     container.appendChild(textDiv(`${numberWithCommas(shots)} fired shots`));
     if (adph) {
-      container.appendChild(textDiv(`${adph} adv dam per hit`));
+      container.appendChild(textDiv(`${adph} avg dam per hit`));
     }
     container.appendChild(textDiv(`${hitPrecent}% of shots hit`));
     container.appendChild(textDiv(`${hsPrecent}% headshots`));
     if (shotsToKill) {
-      container.appendChild(textDiv(`${shotsToKill} adv shots pre kill`));
+      container.appendChild(textDiv(`${shotsToKill} avg shots pre kill`));
     }
   }
   return container;
