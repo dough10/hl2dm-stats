@@ -682,8 +682,7 @@ function scanLine(line) {
     const nameString = buildKillerNameString(word, isSuicide);
     const id = getID3(nameString);
     const name = getName(nameString);
-    var weapon = word[word.length - 1].replace('"', '');
-    weapon = weapon.replace('"', '');
+    const weapon = word[word.length - 1].replace('"', '').replace('"', '');
     if (!id) {
       ioError('Forming player ID', line);
       return;
