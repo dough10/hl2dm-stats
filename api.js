@@ -873,25 +873,22 @@ function sortWeapons(user) {
   var sortArr = [];
   if (!user.id) {
     for (weapon in user) {
-      var acc = 0;
-      var hs = 0;
-      var shots = 0;
-      var shotsToKill = 0;
-      var damage = 0;
       if (isWeapon(weapon)) {
-         shots = weapons[weapon].shots;
-         acc = calculatePrecent(weapons[weapon].hits, weapons[weapon].shots);
-         hs = calculatePrecent(weapons[weapon].headshots, weapons[weapon].shots);
-         shotsToKill = Math.floor(weapons[weapon].shots / weapons[weapon].kills);
+        if (user[weapon].kills !== 0) {
+          var shots = weapons[weapon].shots;
+          var acc = calculatePrecent(weapons[weapon].hits, weapons[weapon].shots);
+          var hs = calculatePrecent(weapons[weapon].headshots, weapons[weapon].shots);
+          var shotsToKill = Math.floor(weapons[weapon].shots / weapons[weapon].kills);
+          var damage = weapons[weapon].damage;
+          var adpk = Math.floor(weapons[weapon].damage / weapons[weapon].kills);
+          sortArr.push([
+            weapon,
+            user[weapon].kills,
+            [shots, acc, hs, shotsToKill, damage, adpk]
+          ]);
+        }
+         delete user[weapon];
       }
-      if (user[weapon].kills !== 0) {
-        sortArr.push([
-          weapon,
-          user[weapon].kills,
-          [shots, acc, hs, shotsToKill]
-        ]);
-      }
-      delete user[weapon];
     }
   } else {
     for (var weapon in user) {
