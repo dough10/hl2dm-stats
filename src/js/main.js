@@ -358,10 +358,10 @@ function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, s
   header.textContent = weaponName;
   container.appendChild(header);
   container.appendChild(textDiv(`${count} kills`));
+  container.appendChild(textDiv(`${precent}% of total kills`));
   if (damage) {
     container.appendChild(textDiv(`${damage} damage`));
   }
-  container.appendChild(textDiv(`${precent}% of total kills`));
   if (adpk) {
     container.appendChild(textDiv(`${adpk} adv dam per kill`));
   }
