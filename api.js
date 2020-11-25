@@ -786,14 +786,12 @@ function scanLine(line) {
       weapons[weaponName] = { ...defaultWeaponObject };
     }
     if (hits === 1 && damage > weapons[weaponName].hss) {
-      // console.log(weaponName, damage);
       if (damage === 1) {
         console.log(line);
       }
       weapons[weaponName].hss = damage;
     }
     if (hits === 1 && damage < weapons[weaponName].lss && damage !== 0) {
-      // console.log(weaponName, damage);
       if (damage === 1) {
         console.log(line);
       }
