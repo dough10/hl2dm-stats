@@ -785,6 +785,12 @@ function scanLine(line) {
     if (!weapons[weaponName]) {
       weapons[weaponName] = { ...defaultWeaponObject };
     }
+    if (hits === 1 && damage > weapons[weaponName].hss) {
+      weapons[weaponName].hss = damage;
+    }
+    if (hits === 1 && damage < weapons[weaponName].lss && damage !== 0) {
+      weapons[weaponName].lss = damage;
+    }
     weapons[weaponName].shots = weapons[weaponName].shots + shots;
     weapons[weaponName].hits = weapons[weaponName].hits + hits;
     weapons[weaponName].headshots = weapons[weaponName].headshots + hs;
