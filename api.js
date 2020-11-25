@@ -208,12 +208,9 @@ function parseLogs() {
     fs.readdir(logFolder, (err, files) => {
       var remaining = '';
       if (err) {
-        io.notifyError(new Error(`Unable to scan directory: ` + err), {
-          custom: {
-            folder: logFolder
-          }
-        });
-        return print(`Unable to scan directory: ` + err);
+        ioError('Unable to scan directory', err);
+        print(`Unable to scan directory: ` + err);
+        return ;
       }
       totalFiles = files.length;
       files.forEach(file => {
@@ -230,11 +227,7 @@ function parseLogs() {
             }
           });
         } catch (e) {
-          io.notifyError(new Error(`Unable to scan directory: ` + e), {
-            custom: {
-              file: file
-            }
-          });
+          ioError('Unable to scan directory', e);
           console.error(e);
         }
       });
@@ -716,7 +709,7 @@ function scanLine(line) {
     weapons[weapon].kills++;
   } else if (isHeadshot) {
     if (!weapons.headshots) {
-      weapons.headshots = {kills:0, shots:0, hits:0, headshots:0};
+      weapons.headshots = {kills:0};
     }
     weapons.headshots.kills++;
     const killerNameString = buildKillerNameString(word, isHeadshot);
@@ -807,9 +800,6 @@ function scanLine(line) {
       ioError('Forming weapon name', line);
       return;
     }
-    if (!users[id3][weaponName]) {
-      users[id3][weaponName] = { ...defaultWeaponObject };
-    }
     var head = word[isStats2 + 4];
     var chest = word[isStats2 + 6];
     var stomach = word[isStats2 + 8];
@@ -838,7 +828,9 @@ function scanLine(line) {
     if (!rightleg) {
       return;
     }
-    // console.log(id3, weaponName, head, chest, stomach, leftarm, rightarm, leftleg, rightleg);
+    if (!users[id3][weaponName]) {
+      users[id3][weaponName] = { ...defaultWeaponObject };
+    }
     users[id3][weaponName].head = users[id3][weaponName].head + Number(head);
     users[id3][weaponName].chest = users[id3][weaponName].chest + Number(chest);
     users[id3][weaponName].stomach = users[id3][weaponName].stomach + Number(stomach);
@@ -952,11 +944,7 @@ function getDemos() {
     var demos = [];
     fs.readdir(config.gameServerDir, (err, files) => {
       if (err) {
-        io.notifyError(new Error(`Unable to scan directory: ` + err), {
-          custom: {
-            folder: config.gameServerDir
-          }
-        });
+        ioError('Unable to scan directory', err);
       }
       for (var i = 0; i < files.length; i++) {
         if (path.extname(files[i]) === '.dem') {
@@ -1059,11 +1047,8 @@ function cleanUp() {
     var numFiles = 0;
     fs.readdir(logFolder, (err, files) => {
       if (err) {
-        io.notifyError(new Error(`Unable to scan directory: ` + err), {
-          custom: {
-            folder: logFolder
-          }
-        });
+        ioError('Unable to scan directory', err);
+        return;
       }
       print(`Running log file clean up`);
       numFiles = numFiles + files.length;
@@ -1072,11 +1057,7 @@ function cleanUp() {
       });
       fs.readdir(config.gameServerDir, (err, filess) => {
         if (err) {
-          io.notifyError(new Error(`Unable to scan directory: ` + err), {
-            custom: {
-              folder: config.gameServerDir
-            }
-          });
+          ioError('Unable to scan directory', err);
         }
         print(`Running demo file clean up`);
         var howMany = filess.length;
@@ -1111,11 +1092,7 @@ function getOldStatsList(month) {
   return new Promise((resolve, reject) => {
     fs.readdir(`${__dirname}/old-top`, (err, files) => {
       if (err) {
-        io.notifyError(new Error(`Unable to scan directory: ` + err), {
-          custom: {
-            folder: `${__dirname}/old-top`
-          }
-        });
+        ioError('Unable to scan directory', err);
         return;
       }
       if (!month) {
@@ -1335,11 +1312,7 @@ app.get('/auth', (req, res) => {
   }
   bcrypt.compare(pass, config.streamKeys[name], (err, match) => {
     if (err) {
-      io.notifyError(new Error(`Error hashing password: ` + err), {
-        custom: {
-          user: name
-        }
-      });
+      ioError('Error hashing password', err);
       return console.error(err);
     }
     if (!match) {
