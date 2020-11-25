@@ -329,6 +329,12 @@ function isLessThenOne(p) {
   return p;
 }
 
+function textDiv(text) {
+  var div = document.createElement('div');
+  div.textContent = text;
+  return div;
+}
+
 /**
  * creates HTML for weapon info tooltips
  *
@@ -351,9 +357,10 @@ function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, s
   header.classList.add('tt-header');
   header.textContent = weaponName;
   container.appendChild(header);
-  var kills = document.createElement('div');
-  kills.textContent = `${count} kills`;
-  container.appendChild(kills);
+  container.appendChild(textDiv(`${count} kills`));
+  if (damage) {
+    container.appendChild(textDiv(`Damage: ${damage}`));
+  }
   var precentage = document.createElement('div');
   precentage.textContent = `${precent}% of total kills`;
   container.appendChild(precentage);
@@ -361,11 +368,6 @@ function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, s
     var s = document.createElement('div');
     s.textContent = `${shots} fired shots`;
     container.appendChild(s);
-    if (damage) {
-      var dam = document.createElement('div');
-      dam.textContent = `Total damage: ${damage}`;
-      container.appendChild(dam);
-    }
     var hi = document.createElement('div');
     hi.textContent = `${hitPrecent}% of shots hit`;
     container.appendChild(hi);
