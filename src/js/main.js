@@ -348,7 +348,7 @@ function numberWithCommas(x) {
  * @param {Number} hitPrecent - precentage of shots fired that hit the target
  * @param {Number} hsPrecent - precentage of shots fired that hit in the head
  */
-function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, shotsToKill, damage, adpk, adph) {
+function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, shotsToKill, damage, adpk, adph, hss, lss) {
   var container = document.createElement('div');
   container.classList.add('tt-container');
   var weaponIcon = document.createElement('div');
@@ -373,6 +373,12 @@ function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, s
     container.appendChild(textDiv(`${numberWithCommas(shots)} fired shots`));
     if (adph) {
       container.appendChild(textDiv(`${adph} avg dam per hit`));
+    }
+    if (hss) {
+      container.appendChild(textDiv(`${hss} highest 1 shot damage`));
+    }
+    if (lss) {
+      container.appendChild(textDiv(`${lss} lowest 1 shot damage`));
     }
     container.appendChild(textDiv(`${hitPrecent}% of shots hit`));
     container.appendChild(textDiv(`${hsPrecent}% headshots`));
@@ -401,6 +407,8 @@ function displayWeaponData(wrappers, weapons, kills) {
     var damage;
     var adpk;
     var adph;
+    var hss;
+    var lss;
     if (weapons[i][2]) {
       shots = weapons[i][2][0];
       hitPrecent = isLessThenOne(weapons[i][2][1]);
@@ -409,6 +417,8 @@ function displayWeaponData(wrappers, weapons, kills) {
       damage = weapons[i][2][4];
       adpk = weapons[i][2][5];
       adph = weapons[i][2][6];
+      hss = weapons[i][2][7];
+      lss = weapons[i][2][8];
     }
     let precent = isLessThenOne(Math.round((count / kills) * 100));
     const weapContainer = document.createElement('div');
@@ -422,7 +432,20 @@ function displayWeaponData(wrappers, weapons, kills) {
     weaponIcon.textContent = icon[0];
     text.textContent = count;
     tooltip.classList.add('tooltiptext');
-    tooltip.appendChild(tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, shotsToKill, damage, adpk, adph));
+    tooltip.appendChild(tooltipHTML(
+      weaponName,
+      count,
+      precent,
+      shots,
+      hitPrecent,
+      hsPrecent,
+      shotsToKill,
+      damage,
+      adpk,
+      adph,
+      hss,
+      lss
+    ));
     weapContainer.appendChild(tooltip);
     weapContainer.appendChild(weaponIcon);
     weapContainer.appendChild(text);
@@ -591,6 +614,8 @@ function parseTopData(top, page, cb) {
     var dam;
     var adpk;
     var adph;
+    var hss;
+    var lss;
     if (fav[2] && fav[2][0] && fav[2][1] && fav[2][2]) {
       shots = fav[2][0];
       hits = fav[2][1];
@@ -599,8 +624,23 @@ function parseTopData(top, page, cb) {
       dam = fav[2][4];
       adpk = fav[2][5];
       adph = fav[2][6];
+      hss = fav[2][7];
+      lss = fav[2][8];
     }
-    tooltip.appendChild(tooltipHTML(fav[0], fav[1], Math.round((fav[1] / player.kills) * 100), shots, hits, hs, stk, dam, adpk, adph));
+    tooltip.appendChild(tooltipHTML(
+      fav[0],
+      fav[1],
+      Math.round((fav[1] / player.kills) * 100),
+      shots,
+      hits,
+      hs,
+      stk,
+      dam,
+      adpk,
+      adph,
+      hss,
+      lss
+    ));
     text.style.marginRight = '8px';
     icon.style.marginRight = '4px';
     var wIcon = getWeaponIcon(fav[0])
