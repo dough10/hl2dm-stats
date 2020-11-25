@@ -379,8 +379,8 @@ function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, s
     if (shotsToKill) {
       container.appendChild(textDiv(`${shotsToKill} avg shots pre kill`));
     }
-    container.appendChild(textDiv(`Damage per Shot`, 'yellow'));
     if (adph) {
+      container.appendChild(textDiv(`Damage per Shot`, 'yellow'));
       container.appendChild(textDiv(`${adph} avg`));
     }
     if (hss) {
