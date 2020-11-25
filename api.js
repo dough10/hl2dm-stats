@@ -766,7 +766,9 @@ function scanLine(line) {
     if (!users[id3][weaponName]) {
       users[id3][weaponName] = { ...defaultWeaponObject };
     }
-    console.log(word[isStats + 12]);
+    for (var i = 2; i < word.length; i++) {
+      console.log(i, word[i]);
+    }
     users[id3][weaponName].shots = users[id3][weaponName].shots + Number(word[isStats + 4]);
     users[id3][weaponName].hits = users[id3][weaponName].hits + Number(word[isStats + 6]);
     users[id3][weaponName].headshots = users[id3][weaponName].headshots + Number(word[isStats + 8]);
