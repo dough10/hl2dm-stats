@@ -400,7 +400,7 @@ function displayWeaponData(wrappers, weapons, kills) {
     var shotsToKill;
     var damage;
     var adpk;
-    var adps;
+    var adph;
     if (weapons[i][2]) {
       shots = weapons[i][2][0];
       hitPrecent = isLessThenOne(weapons[i][2][1]);
@@ -590,7 +590,7 @@ function parseTopData(top, page, cb) {
     var stk;
     var dam;
     var adpk;
-    var adps;
+    var adph;
     if (fav[2] && fav[2][0] && fav[2][1] && fav[2][2]) {
       shots = fav[2][0];
       hits = fav[2][1];
