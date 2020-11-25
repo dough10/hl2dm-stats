@@ -768,12 +768,14 @@ function scanLine(line) {
     users[id3][weaponName].shots = users[id3][weaponName].shots + Number(word[isStats + 4]);
     users[id3][weaponName].hits = users[id3][weaponName].hits + Number(word[isStats + 6]);
     users[id3][weaponName].headshots = users[id3][weaponName].headshots + Number(word[isStats + 8]);
+    users[id3][weaponName].damage = users[id3][weaponName].damage + Number(word[isStats + 12]);
     if (!weapons[weaponName]) {
       weapons[weaponName] = { ...defaultWeaponObject };
     }
     weapons[weaponName].shots = weapons[weaponName].shots + Number(word[isStats + 4]);
     weapons[weaponName].hits = weapons[weaponName].hits + Number(word[isStats + 6]);
     weapons[weaponName].headshots = weapons[weaponName].headshots + Number(word[isStats + 8]);
+    weapons[weaponName].damage = weapons[weaponName].damage + Number(word[isStats + 12]);
   } else if (isStats2) {
     const killedNameString = buildKillerNameString(word, isStats2 - 1);
     const id = getID2(killedNameString);
