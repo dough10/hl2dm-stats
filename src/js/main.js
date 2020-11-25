@@ -329,8 +329,11 @@ function isLessThenOne(p) {
   return p;
 }
 
-function textDiv(text) {
+function textDiv(text, color) {
   var div = document.createElement('div');
+  if (color) {
+    div.style.color = color;
+  }
   div.textContent = text;
   return div;
 }
@@ -371,19 +374,20 @@ function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, s
   }
   if (shots && hitPrecent && hsPrecent) {
     container.appendChild(textDiv(`${numberWithCommas(shots)} fired shots`));
+    container.appendChild(textDiv(`${hitPrecent}% of shots hit`));
+    container.appendChild(textDiv(`${hsPrecent}% headshots`));
+    if (shotsToKill) {
+      container.appendChild(textDiv(`${shotsToKill} avg shots pre kill`));
+    }
+    container.appendChild(textDiv(`Damage per Shot`, 'yellow'));
     if (adph) {
-      container.appendChild(textDiv(`${adph} avg dam per hit`));
+      container.appendChild(textDiv(`${adph} avg`));
     }
     if (hss) {
       container.appendChild(textDiv(`${hss} highest`));
     }
     if (lss) {
       container.appendChild(textDiv(`${lss} lowest`));
-    }
-    container.appendChild(textDiv(`${hitPrecent}% of shots hit`));
-    container.appendChild(textDiv(`${hsPrecent}% headshots`));
-    if (shotsToKill) {
-      container.appendChild(textDiv(`${shotsToKill} avg shots pre kill`));
     }
   }
   return container;
