@@ -894,10 +894,12 @@ function sortWeapons(user) {
           var damage = weapons[weapon].damage;
           var adpk = Math.floor(weapons[weapon].damage / weapons[weapon].kills);
           var adph = Math.floor(weapons[weapon].damage / weapons[weapon].hits);
+          var hss = weapons[weapon].hss;
+          var lss = weapons[weapon].lss;
           sortArr.push([
             weapon,
             user[weapon].kills,
-            [shots, acc, hs, shotsToKill, damage, adpk, adph]
+            [shots, acc, hs, shotsToKill, damage, adpk, adph, hss, lss]
           ]);
         }
          delete user[weapon];
