@@ -415,7 +415,7 @@
         max-width: 123px;
         box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
         pointer-events: none;
-        transform: scale(0);
+        transform: scale3d(0, 0 ,0);
         transform-origin: 0 0;
       }
       .tt-container div:not(:first-child) {
@@ -431,7 +431,7 @@
       }
       .tooltip:hover .tooltiptext {
         opacity: 1;
-        transform: scale(1);
+        transform: scale3d(1, 1, 1);
       }
       .tooltip:hover + .card {
         z-index: -1;
