@@ -740,11 +740,14 @@ function scanLine(line) {
       users[id3].name = name;
     }
   } else if (isStats) {
+    // get important information
     const killedNameString = buildKillerNameString(word, isStats - 1);
     const id = getID2(killedNameString);
     const name = getName(killedNameString);
     const sid = new SteamID(id);
     const id3 = getID3(sid.getSteam3RenderedID());
+    var weaponName = word[isStats + 2];
+    // check values on the date
     if (!id3) {
       ioError('Forming player ID', line);
       return;
@@ -753,18 +756,19 @@ function scanLine(line) {
       ioError('Forming player name', line);
       return;
     }
-    if (!users[id3]) {
-      users[id3] = playerObj(name, id3, lineTime);
+    if (!isWeapon(weaponName)) {
+      ioError('Forming weapon name', line);
+      return;
     }
     // clean up extra chars
     for (var i = 0; i < word.length; i++) {
       word[i] = word[i].replace('"', '').replace('(', '').replace(')', '').replace('"', '');
     }
-    var weaponName = word[isStats + 2];
-    if (!isWeapon(weaponName)) {
-      ioError('Forming weapon name', line);
-      return;
+    // create user object if doesn't exist
+    if (!users[id3]) {
+      users[id3] = playerObj(name, id3, lineTime);
     }
+    // create weapon object if doesn't exist
     if (!users[id3][weaponName]) {
       users[id3][weaponName] = { ...defaultWeaponObject };
     }
@@ -786,15 +790,9 @@ function scanLine(line) {
       weapons[weaponName] = { ...defaultWeaponObject };
     }
     if (hits === 1 && damage > weapons[weaponName].hss) {
-      if (damage === 1) {
-        console.log(line);
-      }
       weapons[weaponName].hss = damage;
     }
     if (hits === 1 && damage < weapons[weaponName].lss && damage !== 0) {
-      if (damage === 1) {
-        console.log(line);
-      }
       weapons[weaponName].lss = damage;
     }
     weapons[weaponName].shots = weapons[weaponName].shots + shots;
