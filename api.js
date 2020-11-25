@@ -781,14 +781,14 @@ function scanLine(line) {
      * single shot damage
      * this accurate in that if more then 1 shot hits it will be ignored by this
      */
-    // highest damage single shot
-    if (hits === 1 && damage > users[id3][weaponName].hss) {
-      users[id3][weaponName].hss = damage;
-    }
-    // lowest damage single shot
-    if (hits === 1 && damage < users[id3][weaponName].lss && damage !== 0) {
-      users[id3][weaponName].lss = damage;
-    }
+    // // highest damage single shot
+    // if (hits === 1 && damage > users[id3][weaponName].hss) {
+    //   users[id3][weaponName].hss = damage;
+    // }
+    // // lowest damage single shot
+    // if (hits === 1 && damage < users[id3][weaponName].lss && damage !== 0) {
+    //   users[id3][weaponName].lss = damage;
+    // }
     // running total of values for player
     users[id3][weaponName].shots = users[id3][weaponName].shots + shots;
     users[id3][weaponName].hits = users[id3][weaponName].hits + hits;
@@ -798,14 +798,14 @@ function scanLine(line) {
     if (!weapons[weaponName]) {
       weapons[weaponName] = { ...defaultWeaponObject };
     }
-    // highest single shot damage
-    if (hits === 1 && damage > weapons[weaponName].hss) {
-      weapons[weaponName].hss = damage;
-    }
-    // lowest single shot damage
-    if (hits === 1 && damage < weapons[weaponName].lss && damage !== 0) {
-      weapons[weaponName].lss = damage;
-    }
+    // // highest single shot damage
+    // if (hits === 1 && damage > weapons[weaponName].hss) {
+    //   weapons[weaponName].hss = damage;
+    // }
+    // // lowest single shot damage
+    // if (hits === 1 && damage < weapons[weaponName].lss && damage !== 0) {
+    //   weapons[weaponName].lss = damage;
+    // }
     // running total of values for server
     weapons[weaponName].shots = weapons[weaponName].shots + shots;
     weapons[weaponName].hits = weapons[weaponName].hits + hits;
