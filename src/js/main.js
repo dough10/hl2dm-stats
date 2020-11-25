@@ -335,6 +335,10 @@ function textDiv(text) {
   return div;
 }
 
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 /**
  * creates HTML for weapon info tooltips
  *
@@ -357,16 +361,16 @@ function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, s
   header.classList.add('tt-header');
   header.textContent = weaponName;
   container.appendChild(header);
-  container.appendChild(textDiv(`${count} kills`));
+  container.appendChild(textDiv(`${numberWithCommas(count)} kills`));
   container.appendChild(textDiv(`${precent}% of total kills`));
   if (damage) {
-    container.appendChild(textDiv(`${damage} damage`));
+    container.appendChild(textDiv(`${numberWithCommas(damage)} damage`));
   }
   if (adpk) {
     container.appendChild(textDiv(`${adpk} adv dam per kill`));
   }
   if (shots && hitPrecent && hsPrecent) {
-    container.appendChild(textDiv(`${shots} fired shots`));
+    container.appendChild(textDiv(`${numberWithCommas(shots)} fired shots`));
     if (adps) {
       container.appendChild(textDiv(`${adps} adv dam per shot`));
     }
