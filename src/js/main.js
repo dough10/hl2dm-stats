@@ -375,10 +375,10 @@ function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, s
       container.appendChild(textDiv(`${adph} avg dam per hit`));
     }
     if (hss) {
-      container.appendChild(textDiv(`${hss} highest 1 shot damage`));
+      container.appendChild(textDiv(`${hss} highest`));
     }
     if (lss) {
-      container.appendChild(textDiv(`${lss} lowest 1 shot damage`));
+      container.appendChild(textDiv(`${lss} lowest`));
     }
     container.appendChild(textDiv(`${hitPrecent}% of shots hit`));
     container.appendChild(textDiv(`${hsPrecent}% headshots`));
