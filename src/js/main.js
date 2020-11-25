@@ -359,27 +359,22 @@ function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, s
   container.appendChild(header);
   container.appendChild(textDiv(`${count} kills`));
   if (damage) {
-    container.appendChild(textDiv(`Damage: ${damage}`));
+    container.appendChild(textDiv(`${damage} damage`));
   }
-  var precentage = document.createElement('div');
-  precentage.textContent = `${precent}% of total kills`;
-  container.appendChild(precentage);
+  container.appendChild(textDiv(`${precent}% of total kills`));
+  if (adpk) {
+    container.appendChild(textDiv(`${adpk} adv dam per kill`));
+  }
   if (shots && hitPrecent && hsPrecent) {
-    var s = document.createElement('div');
-    s.textContent = `${shots} fired shots`;
-    container.appendChild(s);
-    var hi = document.createElement('div');
-    hi.textContent = `${hitPrecent}% of shots hit`;
-    container.appendChild(hi);
-    var hs = document.createElement('div');
-    hs.textContent = `${hsPrecent}% headshots`;
-    container.appendChild(hs);
-    if (shotsToKill) {
-      var stk = document.createElement('div');
-      stk.textContent = `${shotsToKill} adv shots pre kill`;
-      container.appendChild(stk);
+    container.appendChild(textDiv(`${shots} fired shots`));
+    if (adps) {
+      container.appendChild(textDiv(`${adps} adv dam per shot`));
     }
-
+    container.appendChild(textDiv(`${hitPrecent}% of shots hit`));
+    container.appendChild(textDiv(`${hsPrecent}% headshots`));
+    if (shotsToKill) {
+      container.appendChild(textDiv(`${shotsToKill} adv shots pre kill`));
+    }
   }
   return container;
 }
