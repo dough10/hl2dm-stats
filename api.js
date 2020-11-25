@@ -740,11 +740,13 @@ function scanLine(line) {
       users[id3].name = name;
     }
   } else if (isStats) {
+     // get important information
     const killedNameString = buildKillerNameString(word, isStats - 1);
     const id = getID2(killedNameString);
     const name = getName(killedNameString);
     const sid = new SteamID(id);
     const id3 = getID3(sid.getSteam3RenderedID());
+    // check variables have data
     if (!id3) {
       ioError('Forming player ID', line);
       return;
@@ -753,10 +755,11 @@ function scanLine(line) {
       ioError('Forming player name', line);
       return;
     }
+    // create user object if doesn't exist
     if (!users[id3]) {
       users[id3] = playerObj(name, id3, lineTime);
     }
-    // clean up extra chars
+    // clean up extra chars from logs
     for (var i = 0; i < word.length; i++) {
       word[i] = word[i].replace('"', '').replace('(', '').replace(')', '').replace('"', '');
     }
@@ -765,32 +768,45 @@ function scanLine(line) {
       ioError('Forming weapon name', line);
       return;
     }
+    // create players weapon object if doesn't exist
     if (!users[id3][weaponName]) {
       users[id3][weaponName] = { ...defaultWeaponObject };
     }
+    // get weapon data values
     var shots = Number(word[isStats + 4]);
     var hits = Number(word[isStats + 6]);
     var hs = Number(word[isStats + 8]);
     var damage = Number(word[isStats + 14]);
+    /*
+     * single shot damage
+     * this is not accurate in that if more then 1 shot hits it will be ignored
+     */
+     // highest damage single shot
     if (hits === 1 && damage > users[id3][weaponName].hss) {
       users[id3][weaponName].hss = damage;
     }
+    // lowest damage single shot
     if (hits === 1 && damage < users[id3][weaponName].lss && damage !== 0) {
       users[id3][weaponName].lss = damage;
     }
+    // running total of values for player
     users[id3][weaponName].shots = users[id3][weaponName].shots + shots;
     users[id3][weaponName].hits = users[id3][weaponName].hits + hits;
     users[id3][weaponName].headshots = users[id3][weaponName].headshots + hs;
     users[id3][weaponName].damage = users[id3][weaponName].damage + damage;
+    // server wide weapon stats data object
     if (!weapons[weaponName]) {
       weapons[weaponName] = { ...defaultWeaponObject };
     }
+    // highest single shot damage
     if (hits === 1 && damage > weapons[weaponName].hss) {
       weapons[weaponName].hss = damage;
     }
+    // lowest single shot damage
     if (hits === 1 && damage < weapons[weaponName].lss && damage !== 0) {
       weapons[weaponName].lss = damage;
     }
+    // running total of values for server
     weapons[weaponName].shots = weapons[weaponName].shots + shots;
     weapons[weaponName].hits = weapons[weaponName].hits + hits;
     weapons[weaponName].headshots = weapons[weaponName].headshots + hs;
