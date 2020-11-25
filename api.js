@@ -777,9 +777,6 @@ function scanLine(line) {
     var hits = Number(word[isStats + 6]);
     var hs = Number(word[isStats + 8]);
     var damage = Number(word[isStats + 14]);
-    if (weaponName === 'crossbow_bolt' && hits === 1 && damage > 100) {
-      console.log(line)
-    }
     /*
      * single shot damage
      * this is not accurate in that if more then 1 shot hits it will be ignored
@@ -940,11 +937,13 @@ function sortWeapons(user) {
         var damage = user[weapon].damage;
         var adpk = Math.floor(user[weapon].damage / user[weapon].kills);
         var adph = Math.floor(user[weapon].damage / user[weapon].hits);
+        var hss = user[weapon].hss;
+        var lss = user[weapon].lss;
         if (user[weapon].kills !== 0) {
           sortArr.push([
             weapon,
             user[weapon].kills,
-            [shots, acc, hs, shotsToKill, damage, adpk, adph]
+            [shots, acc, hs, shotsToKill, damage, adpk, adph, hss, lss]
           ]);
         }
         delete user[weapon];
