@@ -384,7 +384,7 @@ function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, s
       container.appendChild(textDiv(`${adph} avg`));
     }
     if (hss) {
-      container.appendChild(textDiv(`${hss} highest`));
+      container.appendChild(textDiv(`${numberWithCommas(hss)} highest`));
     }
     if (lss) {
       container.appendChild(textDiv(`${lss} lowest`));
