@@ -371,7 +371,7 @@ function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, s
   }
   if (shots && hitPrecent && hsPrecent) {
     container.appendChild(textDiv(`${numberWithCommas(shots)} fired shots`));
-    if (adps) {
+    if (adph) {
       container.appendChild(textDiv(`${adph} adv dam per hit`));
     }
     container.appendChild(textDiv(`${hitPrecent}% of shots hit`));
