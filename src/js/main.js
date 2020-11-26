@@ -381,7 +381,7 @@ function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, s
     }
     if (adph) {
       container.appendChild(textDiv(`Damage per hit`, 'yellow'));
-      container.appendChild(textDiv(`${numberWithCommas(adph)} avg dam pre hit`));
+      container.appendChild(textDiv(`${numberWithCommas(adph)} average`));
     }
     if (hss) {
       container.appendChild(textDiv(`${numberWithCommas(hss)} highest`));
