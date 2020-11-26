@@ -165,9 +165,6 @@ function cacheTopResponse() {
           delete weapons[weapon];
         }
       }
-      // if (weapons.physics.kills === 0) {
-      //   delete weapons.physics;
-      // }
       // convert weapons object into sorted array by kill count array
       weapons = sortWeapons(weapons);
       for (var i = 0; i < top.length; i++) {
@@ -190,6 +187,10 @@ function cacheTopResponse() {
         }
         // extract weapons from player object and place in sorted by kill count array
         top[i].weapons = sortWeapons(top[i]);
+      }
+      // do weapon stats for banned players
+      for (var player in bannedPlayers) {
+        player.weapons = sortWeapons(player);
       }
       setTimeout(_ => {
         updated = false;
@@ -540,9 +541,11 @@ function scanLine(line) {
   if (isConsole) {
      return;
   } else if (isChat) {
+    // important data
     const nameString = buildKillerNameString(word, isChat);
     const id = getID3(nameString);
     const name = getName(nameString);
+    // check if variables have data
     if (!id) {
       // ioError('Forming player ID', line);
       return;
@@ -551,13 +554,16 @@ function scanLine(line) {
       // ioError('Forming player name', line);
       return;
     }
+    // create user object if it doesn't exist
     if (!users[id]) {
      users[id] = playerObj(name, id, lineTime);
     }
+    // update player name if it has changed
     if (lineTime >= users[id].updated) {
      users[id].updated = lineTime;
      users[id].name = name;
     }
+    // log chat
     var said = `${new Date(lineTime).toLocaleString()}, `;
     for (var i = (isChat + 1); i < word.length; i++) {
      said = `${said}${word[i]} `;
@@ -566,13 +572,17 @@ function scanLine(line) {
     said.replace('"', '');
     users[id].chat.push(said);
   } else if (isBanned) {
+    // important data
     const nameString = buildKillerNameString(word, isBanned);
     const name = getName(nameString);
     const id = getID3(nameString);
+    // check if variables have data
     if (!id) {
       // ioError('Forming player ID', line);
       return;
     }
+    // create user object if it doesn't exist
+
     if (!users[id]) {
       users[id] = {
         id: id,
@@ -584,6 +594,7 @@ function scanLine(line) {
       };
       return;
     }
+    // mark player as banned
     users[id].banned = true;
     bannedPlayers[id] = users[id];
   } else if (isConnect) {

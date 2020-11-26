@@ -84,7 +84,6 @@ class Toast {
       this.toast.style.opacity = 1;
       this.toast.style.transform = 'translateY(0px)';
     }), 50);
-
   }
 
   /**
