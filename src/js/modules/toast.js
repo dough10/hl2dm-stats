@@ -59,7 +59,7 @@ class Toast {
     this.linkText = linkText;
     this.toast = this._createToast();
     this.toast.addEventListener(transitionEvent, this._transitionEnd, true);
-    this.toast.addEventListener('click', this._clicked, true);
+    this.toast.addEventListener('click', this._cleanUp, true);
     if (this.link && this.linkText) {
       const wrapper = document.createElement('div');
       wrapper.style.display = 'flex';
@@ -68,11 +68,12 @@ class Toast {
       wrapper.style.overflow = 'none';
       var mText = document.createElement('div');
       mText.textContent = message;
+      wrapper.appendChild(mText);
       var lText = document.createElement('div');
       lText.textContent = linkText;
       lText.classList.add('yellow-text');
-      wrapper.appendChild(mText);
       wrapper.appendChild(lText);
+      lText.addEventListener('click', this._clicked. true);
       this.toast.appendChild(wrapper);
     } else {
       this.toast.textContent = message;

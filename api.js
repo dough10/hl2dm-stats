@@ -482,7 +482,13 @@ function playerIsBanned(line) {
   return false;
 }
 
-
+/**
+ * scans the line for landmarks in order to get usable strings of data
+ *
+ * @param {String} name - name mof the player
+ * @param {Number} id - player steamID
+ * @param {Number} time - new Date().getTime() output
+ */
 function playerObj(name, id, time) {
   return {
     name: name,
@@ -497,6 +503,12 @@ function playerObj(name, id, time) {
   };
 }
 
+/**
+ * sends error message to PM2 io.app
+ *
+ * @param {String} err - the error message
+ * @param {String} line - one line of the log file being parsed
+ */
 function ioError(err, line) {
   io.notifyError(new Error(`${err}: ${line}`), {
     custom: {
