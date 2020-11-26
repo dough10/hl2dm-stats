@@ -190,7 +190,7 @@ function cacheTopResponse() {
       }
       // do weapon stats for banned players
       for (var player in bannedPlayers) {
-        player.weapons = sortWeapons(bannedPlayers[player]);
+        bannedPlayers[player].weapons = sortWeapons(bannedPlayers[player]);
       }
       setTimeout(_ => {
         updated = false;
