@@ -935,12 +935,13 @@ function sortWeapons(user) {
           var shots = weapons[weapon].shots;
           var acc = calculatePrecent(weapons[weapon].hits, weapons[weapon].shots);
           var hs = calculatePrecent(weapons[weapon].headshots, weapons[weapon].shots);
-          var shotsToKill = Math.floor(weapons[weapon].shots / weapons[weapon].kills);
+          var shotsToKill = Math.floor(weapons[weapon].shots / weapons[weapon].kills) || 0;
           var damage = weapons[weapon].damage;
-          var adpk = Math.floor(weapons[weapon].damage / weapons[weapon].kills);
-          var adph = Math.floor(weapons[weapon].damage / weapons[weapon].hits);
+          var adpk = Math.floor(weapons[weapon].damage / weapons[weapon].kills) || 0;
+          var adph = Math.floor(weapons[weapon].damage / weapons[weapon].hits) || 0;
           var hss = weapons[weapon].hss;
           var lss = weapons[weapon].lss;
+          if (adhp > hss) adhp = hss;
           sortArr.push([
             weapon,
             user[weapon].kills,
@@ -956,12 +957,13 @@ function sortWeapons(user) {
         var acc = calculatePrecent(user[weapon].hits, user[weapon].shots);
         var hs = calculatePrecent(user[weapon].headshots, user[weapon].shots);
         var shots = user[weapon].shots;
-        var shotsToKill = Math.floor(user[weapon].shots / user[weapon].kills);
+        var shotsToKill = Math.floor(user[weapon].shots / user[weapon].kills) || 0;
         var damage = user[weapon].damage;
-        var adpk = Math.floor(user[weapon].damage / user[weapon].kills);
-        var adph = Math.floor(user[weapon].damage / user[weapon].hits);
+        var adpk = Math.floor(user[weapon].damage / user[weapon].kills) || 0;
+        var adph = Math.floor(user[weapon].damage / user[weapon].hits) || 0;
         var hss = user[weapon].hss;
         var lss = user[weapon].lss;
+        if (adhp > hss) adhp = hss;
         if (user[weapon].kills !== 0) {
           sortArr.push([
             weapon,
