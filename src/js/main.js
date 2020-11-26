@@ -386,7 +386,7 @@ function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, s
     if (hss) {
       container.appendChild(textDiv(`${numberWithCommas(hss)} highest`));
     }
-    if (lss) {
+    if (lss && lss !== 999999999999999) {
       container.appendChild(textDiv(`${numberWithCommas(lss)} lowest`));
     }
   }
