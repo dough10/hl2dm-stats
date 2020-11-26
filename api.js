@@ -1272,10 +1272,16 @@ app.get('/stats', (req, res) => {
   res.send(JSON.stringify([
     top,
     weapons,
-    totalPlayers,
+    totalPlayers
+  ]));
+});
+
+app.get('/banned', (req, res) => {
+  res.send(JSON.stringify([
     bannedPlayers
   ]));
 });
+
 
 /**
  * route for gettings the status of the game server
