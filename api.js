@@ -799,7 +799,7 @@ function scanLine(line) {
       weapons[weaponName] = { ...defaultWeaponObject };
     }
     // highest single shot damage
-    if (hits === 1 && damage > weapons[weaponName].hss) {
+    if (hits === 1 && damage > weapons[weaponName].hss && damage < 1000) {
       weapons[weaponName].hss = damage;
     }
     // lowest single shot damage
