@@ -927,6 +927,7 @@ function calculatePrecent(small, big) {
  * @param {Object} user - a user object we need to reconstruct a weapn data array fro
  */
 function sortWeapons(user) {
+  console.log(user)
   var sortArr = [];
   if (!user.id) {
     for (weapon in user) {
