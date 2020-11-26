@@ -1277,9 +1277,7 @@ app.get('/stats', (req, res) => {
 });
 
 app.get('/banned', (req, res) => {
-  res.send(JSON.stringify([
-    bannedPlayers
-  ]));
+  res.send(JSON.stringify(bannedPlayers));
 });
 
 
