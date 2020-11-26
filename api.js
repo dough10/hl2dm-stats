@@ -1272,7 +1272,8 @@ app.get('/stats', (req, res) => {
   res.send(JSON.stringify([
     top,
     weapons,
-    totalPlayers
+    totalPlayers,
+    bannedPlayers.length
   ]));
 });
 
