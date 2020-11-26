@@ -782,7 +782,7 @@ function scanLine(line) {
      * this is not accurate in that if more then 1 shot hits it will be ignored
      */
      // highest damage single shot
-    if (hits === 1 && damage > users[id3][weaponName].hss) {
+    if (hits === 1 && damage > users[id3][weaponName].hss && damage < 1000) {
       users[id3][weaponName].hss = damage;
     }
     // lowest damage single shot
