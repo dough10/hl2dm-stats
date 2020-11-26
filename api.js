@@ -189,9 +189,12 @@ function cacheTopResponse() {
         top[i].weapons = sortWeapons(top[i]);
       }
       // do weapon stats for banned players
+      var arr = [];
       for (var player in bannedPlayers) {
         bannedPlayers[player].weapons = sortWeapons(bannedPlayers[player]);
+        arr.push(bannedPlayers[player]);
       }
+      bannedPlayers = arr;
       setTimeout(_ => {
         updated = false;
       }, 60000);
@@ -208,6 +211,7 @@ function cacheTopResponse() {
  */
 function parseLogs() {
   weapons = {};
+  bannedPlayers = {};
   return new Promise((resolve, reject) => {
     fs.readdir(logFolder, (err, files) => {
       var remaining = '';
