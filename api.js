@@ -190,7 +190,7 @@ function cacheTopResponse() {
       }
       // do weapon stats for banned players
       for (var player in bannedPlayers) {
-        player.weapons = sortWeapons(player);
+        player.weapons = sortWeapons(bannedPlayers[player]);
       }
       setTimeout(_ => {
         updated = false;
@@ -927,7 +927,6 @@ function calculatePrecent(small, big) {
  * @param {Object} user - a user object we need to reconstruct a weapn data array fro
  */
 function sortWeapons(user) {
-  console.log(user)
   var sortArr = [];
   if (!user.id) {
     for (weapon in user) {
