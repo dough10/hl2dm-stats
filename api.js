@@ -70,7 +70,7 @@ Object.size = obj => {
  * print strings to log with cuttent time
  */
 function print(message) {
-  console.log(`${new Date().toLocaleString()} - ${message}`)
+  console.log(`${new Date().toLocaleString()} - ${message}`);
 }
 
 /**
