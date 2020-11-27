@@ -94,8 +94,8 @@ class Timer {
     ];
   }
   endString() {
-    var arr = this.end();
-    return `${arr[0]} hours ${arr[1]} minutes ${arr[2]} seconds`;
+    var endTime = this.end();
+    return `${endTime[0]} hours ${endTime[1]} minutes ${endTime[2]} seconds`;
   }
 }
 
