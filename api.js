@@ -44,7 +44,7 @@ const defaultWeaponObject = {
   rightleg:0,
   damage:0,
   hss:0,
-  lss:999999999999999
+  lss:9999
 };
 
 
