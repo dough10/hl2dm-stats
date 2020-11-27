@@ -144,6 +144,8 @@ function validateIPaddress(ip) {
 function cacheTopResponse() {
   return new Promise((resolve, reject) => {
     print(`Clearing cache & parsing logs`);
+    weapons = {};
+    bannedPlayers = {};
     var time = new Timer();
     parseLogs().then(stats => {
       top = stats;
@@ -160,11 +162,6 @@ function cacheTopResponse() {
       weapons.physics.kills = (weapons.physics.kills + weapons.physbox.kills) + weapons.world.kills;
       delete weapons.physbox;
       delete weapons.world;
-      for (var weapon in weapons) {
-        if (isWeapon(weapon) && weapons[weapon].kills === 0) {
-          delete weapons[weapon];
-        }
-      }
       // convert weapons object into sorted array by kill count array
       weapons = sortWeapons(weapons);
       for (var i = 0; i < top.length; i++) {
@@ -182,6 +179,7 @@ function cacheTopResponse() {
         delete top[i].physbox;
         delete top[i].world;
         delete top[i].updated;
+        // remove weapons with 0 kills from object
         if (top[i].physics.kills === 0) {
           delete top[i].physics;
         }
@@ -210,8 +208,6 @@ function cacheTopResponse() {
  * get list of log files and send to scanner line by line
  */
 function parseLogs() {
-  weapons = {};
-  bannedPlayers = {};
   return new Promise((resolve, reject) => {
     fs.readdir(logFolder, (err, files) => {
       var remaining = '';
@@ -932,31 +928,25 @@ function calculatePrecent(small, big) {
  */
 function sortWeapons(user) {
   var sortArr = [];
-  if (!user.id) {
-    for (weapon in user) {
-      if (isWeapon(weapon)) {
-        if (user[weapon].kills !== 0) {
-          var shots = weapons[weapon].shots;
-          var acc = calculatePrecent(weapons[weapon].hits, weapons[weapon].shots);
-          var hs = calculatePrecent(weapons[weapon].headshots, weapons[weapon].shots);
-          var shotsToKill = Math.floor(weapons[weapon].shots / weapons[weapon].kills) || 0;
-          var damage = weapons[weapon].damage;
-          var adpk = Math.floor(weapons[weapon].damage / weapons[weapon].kills) || 0;
-          var adph = Math.floor(weapons[weapon].damage / weapons[weapon].hits) || 0;
-          var hss = weapons[weapon].hss;
-          var lss = weapons[weapon].lss;
-          sortArr.push([
-            weapon,
-            user[weapon].kills,
-            [shots, acc, hs, shotsToKill, damage, adpk, adph, hss, lss]
-          ]);
-        }
-         delete user[weapon];
-      }
-    }
-  } else {
-    for (var weapon in user) {
-      if (isWeapon(weapon)) {
+  for (weapon in user) {
+    if (isWeapon(weapon)) {
+      if (!user.id && weapons[weapon].kill !== 0) {
+        var shots = weapons[weapon].shots;
+        var acc = calculatePrecent(weapons[weapon].hits, weapons[weapon].shots);
+        var hs = calculatePrecent(weapons[weapon].headshots, weapons[weapon].shots);
+        var shotsToKill = Math.floor(weapons[weapon].shots / weapons[weapon].kills) || 0;
+        var damage = weapons[weapon].damage;
+        var adpk = Math.floor(weapons[weapon].damage / weapons[weapon].kills) || 0;
+        var adph = Math.floor(weapons[weapon].damage / weapons[weapon].hits) || 0;
+        var hss = weapons[weapon].hss;
+        var lss = weapons[weapon].lss;
+        sortArr.push([
+          weapon,
+          user[weapon].kills,
+          [shots, acc, hs, shotsToKill, damage, adpk, adph, hss, lss]
+        ]);
+        delete user[weapon];
+      } else if (user[weapon].kills !== 0) {
         var acc = calculatePrecent(user[weapon].hits, user[weapon].shots);
         var hs = calculatePrecent(user[weapon].headshots, user[weapon].shots);
         var shots = user[weapon].shots;
@@ -977,6 +967,54 @@ function sortWeapons(user) {
       }
     }
   }
+  // if (!user.id) {
+  //   for (weapon in user) {
+  //     if (isWeapon(weapon)) {
+  //       if (weapons[weapon].kills !== 0) {
+  //         var shots = weapons[weapon].shots;
+  //         var acc = calculatePrecent(weapons[weapon].hits, weapons[weapon].shots);
+  //         var hs = calculatePrecent(weapons[weapon].headshots, weapons[weapon].shots);
+  //         var shotsToKill = Math.floor(weapons[weapon].shots / weapons[weapon].kills) || 0;
+  //         var damage = weapons[weapon].damage;
+  //         var adpk = Math.floor(weapons[weapon].damage / weapons[weapon].kills) || 0;
+  //         var adph = Math.floor(weapons[weapon].damage / weapons[weapon].hits) || 0;
+  //         var hss = weapons[weapon].hss;
+  //         var lss = weapons[weapon].lss;
+  //         sortArr.push([
+  //           weapon,
+  //           user[weapon].kills,
+  //           [shots, acc, hs, shotsToKill, damage, adpk, adph, hss, lss]
+  //         ]);
+  //       }
+  //        delete user[weapon];
+  //     }
+  //   }
+  // } else {
+  //   for (var weapon in user) {
+  //     if (isWeapon(weapon)) {
+  //       if (weapons[weapon].kills === 0) {
+  //         delete weapons[weapon];
+  //       }
+  //       var acc = calculatePrecent(user[weapon].hits, user[weapon].shots);
+  //       var hs = calculatePrecent(user[weapon].headshots, user[weapon].shots);
+  //       var shots = user[weapon].shots;
+  //       var shotsToKill = Math.floor(user[weapon].shots / user[weapon].kills) || 0;
+  //       var damage = user[weapon].damage;
+  //       var adpk = Math.floor(user[weapon].damage / user[weapon].kills) || 0;
+  //       var adph = Math.floor(user[weapon].damage / user[weapon].hits) || 0;
+  //       var hss = user[weapon].hss;
+  //       var lss = user[weapon].lss;
+  //       if (user[weapon].kills !== 0) {
+  //         sortArr.push([
+  //           weapon,
+  //           user[weapon].kills,
+  //           [shots, acc, hs, shotsToKill, damage, adpk, adph, hss, lss]
+  //         ]);
+  //       }
+  //       delete user[weapon];
+  //     }
+  //   }
+  // }
   sortArr.sort((a, b) => {
     return a[1] - b[1];
   });
@@ -1105,8 +1143,8 @@ function getServerStatus() {
  * end of month file cleanup process
  */
 function cleanUp() {
+  print('Clean up started');
   var now = new Date();
-  console.log(`${now} - Clean up started`);
   var lastMonth = now.setMonth(now.getMonth() - 1);
   var times = new Timer();
   zipDemos(lastMonth).then(zipLogs).then(saveTop).then(_ => {
