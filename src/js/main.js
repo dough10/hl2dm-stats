@@ -329,6 +329,12 @@ function isLessThenOne(p) {
   return p;
 }
 
+/**
+ * creates a element a add text content
+ *
+ * @param {String} text - the string of text to display in the element
+ * @param {String} color - color to display the text
+ */
 function textDiv(text, color) {
   var div = document.createElement('div');
   if (color) {
@@ -338,6 +344,11 @@ function textDiv(text, color) {
   return div;
 }
 
+/**
+ * seperate a number with commas
+ *
+ * @param {Number} x - number to be seperated
+ */
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 }
