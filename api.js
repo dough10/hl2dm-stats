@@ -943,9 +943,18 @@ function sortWeapons(user) {
         sortArr.push([
           weapon,
           user[weapon].kills,
-          [shots, acc, hs, shotsToKill, damage, adpk, adph, hss, lss]
+          [
+            shots,
+            acc,
+            hs,
+            shotsToKill,
+            damage,
+            adpk,
+            adph,
+            hss,
+            lss
+          ]
         ]);
-        delete user[weapon];
       } else if (user[weapon].kills !== 0) {
         var acc = calculatePrecent(user[weapon].hits, user[weapon].shots);
         var hs = calculatePrecent(user[weapon].headshots, user[weapon].shots);
@@ -960,61 +969,23 @@ function sortWeapons(user) {
           sortArr.push([
             weapon,
             user[weapon].kills,
-            [shots, acc, hs, shotsToKill, damage, adpk, adph, hss, lss]
+            [
+              shots,
+              acc,
+              hs,
+              shotsToKill,
+              damage,
+              adpk,
+              adph,
+              hss,
+              lss
+            ]
           ]);
         }
-        delete user[weapon];
       }
+      delete user[weapon];
     }
   }
-  // if (!user.id) {
-  //   for (weapon in user) {
-  //     if (isWeapon(weapon)) {
-  //       if (weapons[weapon].kills !== 0) {
-  //         var shots = weapons[weapon].shots;
-  //         var acc = calculatePrecent(weapons[weapon].hits, weapons[weapon].shots);
-  //         var hs = calculatePrecent(weapons[weapon].headshots, weapons[weapon].shots);
-  //         var shotsToKill = Math.floor(weapons[weapon].shots / weapons[weapon].kills) || 0;
-  //         var damage = weapons[weapon].damage;
-  //         var adpk = Math.floor(weapons[weapon].damage / weapons[weapon].kills) || 0;
-  //         var adph = Math.floor(weapons[weapon].damage / weapons[weapon].hits) || 0;
-  //         var hss = weapons[weapon].hss;
-  //         var lss = weapons[weapon].lss;
-  //         sortArr.push([
-  //           weapon,
-  //           user[weapon].kills,
-  //           [shots, acc, hs, shotsToKill, damage, adpk, adph, hss, lss]
-  //         ]);
-  //       }
-  //        delete user[weapon];
-  //     }
-  //   }
-  // } else {
-  //   for (var weapon in user) {
-  //     if (isWeapon(weapon)) {
-  //       if (weapons[weapon].kills === 0) {
-  //         delete weapons[weapon];
-  //       }
-  //       var acc = calculatePrecent(user[weapon].hits, user[weapon].shots);
-  //       var hs = calculatePrecent(user[weapon].headshots, user[weapon].shots);
-  //       var shots = user[weapon].shots;
-  //       var shotsToKill = Math.floor(user[weapon].shots / user[weapon].kills) || 0;
-  //       var damage = user[weapon].damage;
-  //       var adpk = Math.floor(user[weapon].damage / user[weapon].kills) || 0;
-  //       var adph = Math.floor(user[weapon].damage / user[weapon].hits) || 0;
-  //       var hss = user[weapon].hss;
-  //       var lss = user[weapon].lss;
-  //       if (user[weapon].kills !== 0) {
-  //         sortArr.push([
-  //           weapon,
-  //           user[weapon].kills,
-  //           [shots, acc, hs, shotsToKill, damage, adpk, adph, hss, lss]
-  //         ]);
-  //       }
-  //       delete user[weapon];
-  //     }
-  //   }
-  // }
   sortArr.sort((a, b) => {
     return a[1] - b[1];
   });
