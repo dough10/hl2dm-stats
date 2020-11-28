@@ -15,6 +15,7 @@ app.set('trust proxy', true);
 app.disable('x-powered-by');
 var expressWs = require('express-ws')(app);
 const io = require('@pm2/io');
+const colors = require('colors');
 
 const config = require(`${__dirname}/config.json`);
 const logFolder = path.join(config.gameServerDir, 'logs');
@@ -71,7 +72,8 @@ Object.size = obj => {
  * print strings to log with cuttent time
  */
 function print(message) {
-  console.log(`${new Date().toLocaleString()} - ${message}`);
+  var now = new Date().toLocaleString();
+  console.log(`${now.yellow} - ${message}`);
 }
 
 /**
