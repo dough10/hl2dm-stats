@@ -1330,7 +1330,7 @@ print(`Loading API backend calls`);
  * route for gettings player stats
  */
 app.get('/stats', (req, res) => {
-  print(`${req.ip.grey} is viewing data from /stats`);
+  print(`${req.ip.grey} is viewing data from ` + '/stats'.green);
   res.send(JSON.stringify([
     top,
     weapons,
@@ -1344,7 +1344,7 @@ app.get('/stats', (req, res) => {
  * route for gettings a list of banned players
  */
 app.get('/banned', (req, res) => {
-  print(`${req.ip} is viewing data from /banned`);
+  print(`${req.ip.grey} is viewing data from ` + '/banned'.green);
   res.send(JSON.stringify(bannedPlayers));
 });
 
@@ -1352,7 +1352,7 @@ app.get('/banned', (req, res) => {
  * route for gettings the status of the game server
  */
 app.get('/status', (req, res) => {
-  // print(`${req.ip} is viewing data from /status`);
+  // print(`${req.ip.grey} is viewing data from /status`);
   res.send(serverStatus);
 });
 
@@ -1364,7 +1364,7 @@ app.get('/download/:file', (req, res) => {
   if (!fs.existsSync(dl)){
     return res.status(404).send('File does not exist');
   }
-  print(`${req.ip} qued download for file ${dl}`);
+  print(`${req.ip.grey} qued download for file ${dl.green}`);
   res.download(dl, req.params.file);
 });
 
@@ -1377,7 +1377,7 @@ app.get('/download/logs-zip/:file', (req, res) => {
     return res.status(404).send('File does not exist');
 
   }
-  print(`${req.ip} qued download for file ${dl}`);
+  print(`${req.ip.grey} qued download for file ${dl.green}`);
   res.download(dl, req.params.file);
 });
 
@@ -1390,7 +1390,7 @@ app.get('/download/demos-zip/:file', (req, res) => {
     return res.status(404).send('File does not exist');
 
   }
-  print(`${req.ip} qued download for file ${dl}`);
+  print(`${req.ip.grey} qued download for file ${dl.green}`);
   res.download(dl, req.params.file);
 });
 
@@ -1410,7 +1410,7 @@ app.get('/old-months', (req, res) => {
  */
 app.get('/old-stats/:month', (req, res) => {
   getOldStatsList(req.params.month).then(stats => {
-    print(`${req.ip} is viewing old-stats data from ${monthName(req.params.month)}`);
+    print(`${req.ip.grey} is viewing old-stats data from ${monthName(req.params.month).cyan}`);
     res.send(stats);
   }).catch(e => {
     res.status(404).send('no stats exist for this month');
@@ -1421,7 +1421,7 @@ app.get('/old-stats/:month', (req, res) => {
  * route to get list of demo recording on the server
  */
 app.get('/demos', (req, res) => {
-  print(`${req.ip} is viewing data from /demos`);
+  print(`${req.ip.grey} is viewing data from ` + '/demos'.green);
   var arr = [];
   getDemos().then(demos => {
    for (var i = 0; i < demos.length; i++) {
@@ -1445,7 +1445,7 @@ app.get('/demos', (req, res) => {
  * @param {String} req.query.k - the streams auth key
  */
 app.get('/auth', (req, res) => {
-  print(`${req.ip} is requesting stream authorization`);
+  print(`${req.ip.grey} is requesting stream authorization`);
   var name = req.query.name;
   var pass = req.query.k;
   if (!config.streamKeys[name]) {
@@ -1480,5 +1480,5 @@ app.get('*', (req, res) => {
 
 app.listen(3000);
 
-print(`API is now active on port` + '3000'.red);
+print('API is now active on port ' + '3000'.red);
 print(`log folder = ${logFolder.green}`);
