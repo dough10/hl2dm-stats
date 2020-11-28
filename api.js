@@ -98,7 +98,7 @@ class Timer {
   }
   endString() {
     var endTime = this.end();
-    return `${endTime[0]} hours ${endTime[1]} minutes ${endTime[2]} seconds`;
+    return `${endTime[0].red} hours ${endTime[1].red} minutes ${endTime[2].red} seconds`;
   }
 }
 
@@ -1094,7 +1094,7 @@ function getServerStatus() {
         }
       }
       if (serverStatus.players[0].name) {
-        print(`Players Online`);
+        print(`Players Online`.blue);
       }
       for (var i = 0; i < serverStatus.players.length; i++) {
         if (serverStatus.players[i].name) {
@@ -1105,7 +1105,7 @@ function getServerStatus() {
           for (var n = 1; n < l; n++) {
             space = space + '-';
           }
-          console.log(`${name} ${space} score: ${score}`)
+          console.log(`${name} ${space} score: ${score}`.grey)
         }
       }
     }
