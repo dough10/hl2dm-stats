@@ -11,6 +11,7 @@ const compression = require('compression');
 const bcrypt = require('bcrypt');
 const app = express();
 app.use(compression());
+app.set('trust proxy', true);
 app.disable('x-powered-by');
 var expressWs = require('express-ws')(app);
 const io = require('@pm2/io');
@@ -1278,6 +1279,7 @@ fs.watch(logFolder, (event, filename) => {
  * route for gettings player stats
  */
 app.get('/stats', (req, res) => {
+  console.log(req.ip);
   res.send(JSON.stringify([
     top,
     weapons,
