@@ -512,6 +512,7 @@ function playerObj(name, id, time) {
  * @param {String} line - one line of the log file being parsed
  */
 function ioError(err, line) {
+  new Error(err, line);
   io.notifyError(new Error(`${err}: ${line}`), {
     custom: {
       error: err
