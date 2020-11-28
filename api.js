@@ -1330,7 +1330,7 @@ print(`Loading API backend calls`);
  * route for gettings player stats
  */
 app.get('/stats', (req, res) => {
-  print(`${req.ip} is viewing data from /stats`);
+  print(`${req.ip.grey} is viewing data from /stats`);
   res.send(JSON.stringify([
     top,
     weapons,
@@ -1480,5 +1480,5 @@ app.get('*', (req, res) => {
 
 app.listen(3000);
 
-print(`API is now active on port 3000`);
+print(`API is now active on port` + '3000'.red);
 print(`log folder = ${logFolder.green}`);
