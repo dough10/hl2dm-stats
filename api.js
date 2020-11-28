@@ -1294,7 +1294,7 @@ app.get('/banned', (req, res) => {
 /**
  * route for gettings the status of the game server
  */
-app.get('/status', (reg, res) => {
+app.get('/status', (req, res) => {
   // print(`${req.ip} is viewing data from /status`);
   res.send(serverStatus);
 });
@@ -1302,45 +1302,45 @@ app.get('/status', (reg, res) => {
 /**
  * route for downloading current months demo file
  */
-app.get('/download/:file', (reg, res) => {
-  var dl = `${config.gameServerDir}/${reg.params.file}`;
+app.get('/download/:file', (req, res) => {
+  var dl = `${config.gameServerDir}/${req.params.file}`;
   if (!fs.existsSync(dl)){
     return res.status(404).send('File does not exist');
   }
   print(`${req.ip} qued download for file ${dl}`);
-  res.download(dl, reg.params.file);
+  res.download(dl, req.params.file);
 });
 
 /**
  * route for downloading a previous months logs zip files
  */
-app.get('/download/logs-zip/:file', (reg, res) => {
-  var dl = `/media/nas/old-stats/logs/${reg.params.file}`;
+app.get('/download/logs-zip/:file', (req, res) => {
+  var dl = `/media/nas/old-stats/logs/${req.params.file}`;
   if (!fs.existsSync(dl)){
     return res.status(404).send('File does not exist');
 
   }
   print(`${req.ip} qued download for file ${dl}`);
-  res.download(dl, reg.params.file);
+  res.download(dl, req.params.file);
 });
 
 /**
  * route for downloading a previous months demo zip files
  */
-app.get('/download/demos-zip/:file', (reg, res) => {
-  var dl = `/media/nas/old-stats/demos/${reg.params.file}`;
+app.get('/download/demos-zip/:file', (req, res) => {
+  var dl = `/media/nas/old-stats/demos/${req.params.file}`;
   if (!fs.existsSync(dl)){
     return res.status(404).send('File does not exist');
 
   }
   print(`${req.ip} qued download for file ${dl}`);
-  res.download(dl, reg.params.file);
+  res.download(dl, req.params.file);
 });
 
 /**
  * route for getting a list of svaliable old months data
  */
-app.get('/old-months', (reg, res) => {
+app.get('/old-months', (req, res) => {
   getOldStatsList().then(stats => {
     res.send(stats);
   }).catch(e => {
@@ -1351,9 +1351,9 @@ app.get('/old-months', (reg, res) => {
 /**
  * route for getting a old months stats data
  */
-app.get('/old-stats/:month', (reg, res) => {
-  getOldStatsList(reg.params.month).then(stats => {
-    print(`${req.ip} is viewing data from ${new Date(reg.params.month).getMonth()}`);
+app.get('/old-stats/:month', (req, res) => {
+  getOldStatsList(req.params.month).then(stats => {
+    print(`${req.ip} is viewing data from ${new Date(req.params.month).getMonth()}`);
     res.send(stats);
   }).catch(e => {
     res.status(404).send('no stats exist for this month');
@@ -1363,7 +1363,7 @@ app.get('/old-stats/:month', (reg, res) => {
 /**
  * route to get list of demo recording on the server
  */
-app.get('/demos', (reg, res) => {
+app.get('/demos', (req, res) => {
   print(`${req.ip} is viewing data from /demos`);
   var arr = [];
   getDemos().then(demos => {
