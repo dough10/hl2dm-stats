@@ -1286,10 +1286,12 @@ app.get('/stats', (req, res) => {
   ]));
 });
 
+/**
+ * route for gettings a list of banned players
+ */
 app.get('/banned', (req, res) => {
   res.send(JSON.stringify(bannedPlayers));
 });
-
 
 /**
  * route for gettings the status of the game server
@@ -1411,7 +1413,7 @@ app.ws('/', (ws, req) => {
 });
 
 /**
- * route for 404
+ * 404
  */
 app.get('*', (req, res) => {
   res.status(404).sendFile(`${__dirname}/html/404.html`);
