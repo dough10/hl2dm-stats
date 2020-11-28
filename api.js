@@ -1273,8 +1273,8 @@ print(`Loading API backend calls`);
 const chokidar = require('chokidar');
 const watcher = chokidar.watch(logFolder, { persistent: true });
 watcher
-  .on('add', path => print(`File ${path} has been added`))
-  .on('change', path => print(`File ${path} has been changed`));
+  .on('all', (event, path) => print(`File ${path} has been ${event}`))
+  .on('ready', () => { print('Ready'); });
 
 /**
  * route for gettings player stats
