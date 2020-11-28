@@ -1270,16 +1270,18 @@ var j = schedule.scheduleJob('0 5 1 * *', cleanUp);
 
 print(`Loading API backend calls`);
 
-
-fs.watch(logFolder, (event, filename) => {
-  console.log(event, filename);
-});
+const chokidar = require('chokidar');
+const watcher = chokidar.watch(logFolder, { persistent: true });
+watcher
+  .on('add', path => log(`File ${path} has been added`))
+  .on('change', path => log(`File ${path} has been changed`))
+  .on('unlink', path => log(`File ${path} has been removed`));
 
 /**
  * route for gettings player stats
  */
 app.get('/stats', (req, res) => {
-  console.log(req.ip);
+  // console.log(req.ip);
   res.send(JSON.stringify([
     top,
     weapons,
