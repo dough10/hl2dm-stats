@@ -1265,6 +1265,9 @@ function zipDemos(lastMonth) {
  * @param {Number} month - month number 0 - 11
  */
 function monthName(month) {
+  if (typeof month !== 'number') {
+    month = Number(month)
+  }
   switch (month) {
     case 0:
       return 'January';
