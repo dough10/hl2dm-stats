@@ -1410,7 +1410,7 @@ app.get('/old-months', (req, res) => {
  */
 app.get('/old-stats/:month', (req, res) => {
   getOldStatsList(req.params.month).then(stats => {
-    print(`${req.ip.grey} is viewing old-stats data from ${monthName(req.params.month).cyan}`);
+    print(`${req.ip.grey} is viewing ` + '/old-stats'.green + ` data from ${monthName(req.params.month).cyan}`);
     res.send(stats);
   }).catch(e => {
     res.status(404).send('no stats exist for this month');
