@@ -27,6 +27,8 @@ var weapons = {};            // server wide kill count sorted by weapons
 var serverStatus;            // placeholder for gamedig state
 var totalPlayers = 0;        // count of total players to have joined the server
 var updated = false;         // if stats have been updated when a player reaches end of game kill count
+var lastUpdate;
+
 
 var bannedPlayers = {};
 var socket;
@@ -200,6 +202,7 @@ function cacheTopResponse() {
         updated = false;
       }, 60000);
       print(`Logs parsed & cached. ${time.endString()} to process`);
+      lastUpdate = new Date().getTime();
       // reset users object for next run
       users = {};
       resolve();
@@ -1332,7 +1335,8 @@ app.get('/stats', (req, res) => {
     top,
     weapons,
     totalPlayers,
-    bannedPlayers.length
+    bannedPlayers.length,
+    lastUpdate
   ]));
 });
 
