@@ -1274,7 +1274,7 @@ const chokidar = require('chokidar');
 const watcher = chokidar.watch(logFolder, { persistent: true });
 watcher
   .on('all', (event, path) => print(`File ${path} has been ${event}`))
-  .on('ready', _ => print('Ready');
+  .on('ready', _ => print('Ready'));
 
 /**
  * route for gettings player stats
