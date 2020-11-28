@@ -1295,6 +1295,7 @@ app.get('/stats', (req, res) => {
  * route for gettings a list of banned players
  */
 app.get('/banned', (req, res) => {
+  print(`${req.ip} is viewing data from /banned`);
   res.send(JSON.stringify(bannedPlayers));
 });
 
@@ -1302,6 +1303,7 @@ app.get('/banned', (req, res) => {
  * route for gettings the status of the game server
  */
 app.get('/status', (reg, res) => {
+  // print(`${req.ip} is viewing data from /status`);
   res.send(serverStatus);
 });
 
@@ -1313,7 +1315,7 @@ app.get('/download/:file', (reg, res) => {
   if (!fs.existsSync(dl)){
     return res.status(404).send('File does not exist');
   }
-  print(`File downloaded ${dl}`);
+  print(`${req.ip} qued download for file ${dl}`);
   res.download(dl, reg.params.file);
 });
 
@@ -1326,7 +1328,7 @@ app.get('/download/logs-zip/:file', (reg, res) => {
     return res.status(404).send('File does not exist');
 
   }
-  print(`File downloaded ${dl}`);
+  print(`${req.ip} qued download for file ${dl}`);
   res.download(dl, reg.params.file);
 });
 
@@ -1339,7 +1341,7 @@ app.get('/download/demos-zip/:file', (reg, res) => {
     return res.status(404).send('File does not exist');
 
   }
-  print(`File downloaded ${dl}`);
+  print(`${req.ip} qued download for file ${dl}`);
   res.download(dl, reg.params.file);
 });
 
@@ -1359,6 +1361,7 @@ app.get('/old-months', (reg, res) => {
  */
 app.get('/old-stats/:month', (reg, res) => {
   getOldStatsList(reg.params.month).then(stats => {
+    print(`${req.ip} is viewing data from ${new Date(reg.params.month).getMonth()}`);
     res.send(stats);
   }).catch(e => {
     res.status(404).send('no stats exist for this month');
@@ -1369,6 +1372,7 @@ app.get('/old-stats/:month', (reg, res) => {
  * route to get list of demo recording on the server
  */
 app.get('/demos', (reg, res) => {
+  print(`${req.ip} is viewing data from /demos`);
   var arr = [];
   getDemos().then(demos => {
    for (var i = 0; i < demos.length; i++) {
@@ -1392,6 +1396,7 @@ app.get('/demos', (reg, res) => {
  * @param {String} req.query.k - the streams auth key
  */
 app.get('/auth', (req, res) => {
+  print(`${req.ip} is requesting stream authorization`);
   var name = req.query.name;
   var pass = req.query.k;
   if (!config.streamKeys[name]) {
