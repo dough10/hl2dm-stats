@@ -1342,7 +1342,7 @@ app.get('/stats', (req, res) => {
     top,
     weapons,
     totalPlayers,
-    bannedPlayers.length,
+    bannedPlayers,
     lastUpdate
   ]));
 });
