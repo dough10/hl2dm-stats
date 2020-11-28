@@ -1259,6 +1259,53 @@ function zipDemos(lastMonth) {
   })
 }
 
+/**
+ * returns month name in string form
+ *
+ * @param {Number} month - month number 0 - 11
+ */
+function monthName(month) {
+  switch (month) {
+    case 0:
+      return 'January';
+      break;
+    case 1:
+      return 'Febuary';
+      break;
+    case 2:
+      return 'March';
+      break;
+    case 3:
+      return 'April';
+      break;
+    case 4:
+      return 'May';
+      break;
+    case 5:
+      return 'June';
+      break;
+    case 6:
+      return 'July';
+      break;
+    case 7:
+      return 'August';
+      break;
+    case 8:
+      return 'September';
+      break;
+    case 9:
+      return 'October';
+      break;
+    case 10:
+      return 'November';
+      break;
+    case 11:
+      return 'December';
+      break;
+
+  }
+}
+
 print(`Getting data`);
 cacheTopResponse();
 setInterval(cacheTopResponse, 3600000);
@@ -1353,7 +1400,7 @@ app.get('/old-months', (req, res) => {
  */
 app.get('/old-stats/:month', (req, res) => {
   getOldStatsList(req.params.month).then(stats => {
-    print(`${req.ip} is viewing data from ${new Date(req.params.month).getMonth()}`);
+    print(`${req.ip} is viewing old-stats data from ${monthName(req.params.month)}`);
     res.send(stats);
   }).catch(e => {
     res.status(404).send('no stats exist for this month');
