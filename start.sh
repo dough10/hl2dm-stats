@@ -12,7 +12,7 @@ echo '\e[39mStarting app...'
 sudo mount -a
 sudo chown crumb /appdata && sudo chown crumb /appdata/hl2dm && sudo chown crumb /appdata/hl2dm/hl2mp && sudo chown crumb /appdata/hl2dm/hl2mp/logs && sudo chmod -R 777 /appdata/hl2dm/hl2mp && sudo chmod 644 /var/log/nginx/access.log
 
-pm2 start /var/www/hl2dm/api.js
+pm2 start /var/www/hl2dm/api.js --watch
 
 echo "resume monitor"
 ./monitor.sh

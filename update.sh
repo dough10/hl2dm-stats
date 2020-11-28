@@ -22,7 +22,7 @@ node build.js
 
 
 echo "\e[39m---------------\e[33mrestart API\e[39m---------------"
-pm2 reload /var/www/hl2dm/api.js
+pm2 reload /var/www/hl2dm/api.js --watch
 
 
 echo "\e[39m---------------\e[33mchmod sh files executable\e[39m---------------"
