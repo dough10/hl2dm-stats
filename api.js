@@ -1108,7 +1108,7 @@ function getServerStatus() {
           for (var n = 1; n < l; n++) {
             space = space + '-';
           }
-          console.log(`${name} ${space} score: ${score}`.grey)
+          console.log(`${name.cyan} ${space.grey} score: ${score.green}`)
         }
       }
     }
@@ -1209,6 +1209,8 @@ function saveTop(lastMonth) {
       top,
       weapons,
       totalPlayers
+      bannedPlayers,
+      lastUpdate
     ]), e => {
       if (e) {
         reject(e);
@@ -1216,7 +1218,7 @@ function saveTop(lastMonth) {
       if (!fs.existsSync(filename)){
         reject();
       }
-      print(`top player data saved to ${__dirname}/old-top/${lastMonth}.json`);
+      print('top player data saved to ' + filename.green);
       resolve();
     });
   });
@@ -1238,7 +1240,7 @@ function zipLogs(lastMonth) {
       cwd: logFolder
     });
     print(`Zippin logs complete: ${t.endString()} time to complete`);
-    print(`Logs saved as ${config.bulkStorage}/logs/${lastMonth}.zip`);
+    print('Logs saved as ' + `${config.bulkStorage}/logs/${lastMonth}.zip`.green);
     resolve(lastMonth);
   });
 }
@@ -1259,7 +1261,7 @@ function zipDemos(lastMonth) {
       cwd: config.gameServerDir
     });
     print(`Zippin demos complete: ${t.endString()} time to complete`);
-    print(`Demos saved as ${config.bulkStorage}/demos/${lastMonth}.zip`);
+    print('Demos saved as ' + `${config.bulkStorage}/demos/${lastMonth}.zip`.green);
     resolve(lastMonth);
   })
 }
@@ -1329,7 +1331,13 @@ print(`Loading API backend calls`);
  * route for gettings player stats
  */
 app.get('/stats', (req, res) => {
-  print(`${req.ip.grey} is viewing data from ` + '/stats'.green);
+  var user = req.ip;
+  for (id in users)  {
+    if (users[id].ip === req.ip) {
+      user = users[id].name
+    }
+  }
+  print(`${user.grey} is viewing data from ` + '/stats'.green);
   res.send(JSON.stringify([
     top,
     weapons,
