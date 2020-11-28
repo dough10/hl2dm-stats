@@ -1261,7 +1261,7 @@ function zipDemos(lastMonth) {
 
 print(`Getting data`);
 cacheTopResponse();
-setInterval(cacheTopResponse, 3600000);
+// setInterval(cacheTopResponse, 3600000);
 
 getServerStatus();
 setInterval(getServerStatus, 5000);
@@ -1270,11 +1270,13 @@ var j = schedule.scheduleJob('0 5 1 * *', cleanUp);
 
 print(`Loading API backend calls`);
 
+// attempt to watch folder for changes and only run when a file is changed / added
 const chokidar = require('chokidar');
 const watcher = chokidar.watch(logFolder, { persistent: true });
-watcher
-  .on('all', (event, path) => print(`File ${path} has been ${event}`))
-  .on('ready', _ => print('Ready'));
+watcher.on('ready', _ => {
+  print('Ready');
+  watcher.on('all', _ => cacheTopResponse);
+});
 
 /**
  * route for gettings player stats
