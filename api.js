@@ -1273,9 +1273,9 @@ print(`Loading API backend calls`);
 const chokidar = require('chokidar');
 const watcher = chokidar.watch(logFolder, { persistent: true });
 watcher
-  .on('add', path => log(`File ${path} has been added`))
-  .on('change', path => log(`File ${path} has been changed`))
-  .on('unlink', path => log(`File ${path} has been removed`));
+  .on('add', path => console.log(`File ${path} has been added`))
+  .on('change', path => console.log(`File ${path} has been changed`))
+  .on('unlink', path => console.log(`File ${path} has been removed`));
 
 /**
  * route for gettings player stats
