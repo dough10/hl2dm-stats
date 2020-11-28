@@ -98,7 +98,7 @@ class Timer {
   }
   endString() {
     var endTime = this.end();
-    return `${endTime[0].red} hours ${endTime[1].red} minutes ${endTime[2].red} seconds`;
+    return `${endTime[0]} hours ${endTime[1]} minutes ${endTime[2]} seconds`.cyan;
   }
 }
 
