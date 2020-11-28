@@ -1208,7 +1208,7 @@ function saveTop(lastMonth) {
     fs.writeFile(filename, JSON.stringify([
       top,
       weapons,
-      totalPlayers
+      totalPlayers,
       bannedPlayers,
       lastUpdate
     ]), e => {
