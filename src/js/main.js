@@ -218,6 +218,9 @@ function lineSpacer() {
  * @param {Number} month - month number 0 - 11
  */
 function monthName(month) {
+  if (typeof month !== 'number') {
+    month = Number(month)
+  }
   switch (month) {
     case 0:
       return 'January';
@@ -946,8 +949,8 @@ function fetchOldMonths(month, cb) {
       }
       response.json().then(months => {
         for (var i = 0; i < months.length; i++) {
-          months[i] = months[i].replace('.json', '');
-          var now = new Date(Number(months[i]));
+          months[i] = Number(months[i].replace('.json', ''));
+          var now = new Date(months[i]);
           makeOption(`${monthName(now.getMonth())} ${now.getFullYear()}`, months[i], qs('#months'));
         }
         var m = new Date(Number(months[0])).getMonth();
