@@ -1274,7 +1274,7 @@ print(`Loading API backend calls`);
 const chokidar = require('chokidar');
 const watcher = chokidar.watch(logFolder, { persistent: true });
 watcher.on('ready', _ => {
-  print('Ready');
+  print(`Watching folder ${logFolder} for changes`);
   watcher.on('all', _ => cacheTopResponse);
 });
 
