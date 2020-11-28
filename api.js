@@ -1149,9 +1149,8 @@ function cleanUp() {
           if (path.extname(file) === '.dem') {
             fs.unlinkSync(path.join(config.gameServerDir, file));
             if (howMany <= 0) {
-              var ended = times.end();
               print(`Clean up complete. ${numFiles} files processed and backed up.`);
-              print(`Complete process took ${ended[0]} hours ${ended[1]} minutes  ${ended[2].toFixed(3)} seconds`)
+              print(`Complete process took ${times.endString()}`)
               top = [];
               users = {};
               cacheTopResponse();

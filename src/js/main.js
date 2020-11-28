@@ -728,6 +728,8 @@ function parseTopData(top, page, cb) {
   allWeaponsCard.appendChild(wrapper1);
   allWeaponsCard.appendChild(wrapper2);
   var lud = document.createElement('div');
+  lud.classList.add('server-stats');
+  lud.style.marginTop = '16px';
   lud.textContent = ` Last updated: ${new Date(top[4]).toLocaleString()}`;
   allWeaponsCard.appendChild(lud);
   qs(page).appendChild(allWeaponsCard);
