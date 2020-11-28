@@ -1274,13 +1274,13 @@ const chokidar = require('chokidar');
 const watcher = chokidar.watch(logFolder, { persistent: true });
 watcher
   .on('all', (event, path) => print(`File ${path} has been ${event}`))
-  .on('ready', () => { print('Ready'); });
+  .on('ready', _ => print('Ready');
 
 /**
  * route for gettings player stats
  */
 app.get('/stats', (req, res) => {
-  // console.log(req.ip);
+  print(`${req.ip} is viewing data from /stats`);
   res.send(JSON.stringify([
     top,
     weapons,
