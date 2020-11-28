@@ -1477,4 +1477,4 @@ app.get('*', (req, res) => {
 app.listen(3000);
 
 print(`API is now active on port 3000`);
-print(`log folder = ${logFolder.red}`);
+print(`log folder = ${logFolder.green}`);
