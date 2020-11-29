@@ -28,6 +28,7 @@ var weapons = {};            // server wide kill count sorted by weapons
 var serverStatus;            // placeholder for gamedig state
 var totalPlayers = 0;        // count of total players to have joined the server
 var lastUpdate;
+var demoList;
 
 var updated = false;         // if stats have been updated when a player reaches end of game kill count
 const defaultWeaponObject = {
@@ -1104,7 +1105,10 @@ function getServerStatus() {
       for (var i = 0; i < serverStatus.players.length; i++) {
         if (serverStatus.players[i].score === Number(serverStatus.raw.rules.mp_fraglimit) && !updated) {
           updated = true;
-          setTimeout(cacheTopResponse, 10000);
+          setTimeout(_ => {
+            cacheTopResponse();
+            cacheDemos();
+          }, 10000);
         }
       }
       if (serverStatus.players[0].name) {
@@ -1344,8 +1348,33 @@ function who(ip, message) {
   print(`${i.grey} ${message}`);
 }
 
+/**
+ * caches list of avaliable demo files
+ */
+function cacheDemos() {
+  var t = new Timer();
+  var arr = [];
+  getDemos().then(demos => {
+   for (var i = 0; i < demos.length; i++) {
+     if (i !== demos.length - 1) {
+       arr.push([
+         demos[i],
+         bytesToSize(getFilesizeInBytes(`${config.gameServerDir}/${demos[i]}`)),
+         createdDate(`${config.gameServerDir}/${demos[i]}`)
+       ]);
+     }
+   }
+   arr.reverse();
+   demoList = arr;
+   print(`demo file list cached ${t.end()[2]} seconds to complete`);
+ });
+}
+
 cacheTopResponse();
 setInterval(cacheTopResponse, 3600000);
+
+cacheDemos()
+setInterval(cacheDemos, 3600000);
 
 getServerStatus();
 setInterval(getServerStatus, 5000);
@@ -1455,21 +1484,8 @@ app.get('/old-stats/:month', (req, res) => {
  */
 app.get('/demos', (req, res) => {
   var t = new Timer();
-  var arr = [];
-  getDemos().then(demos => {
-   for (var i = 0; i < demos.length; i++) {
-     if (i !== demos.length - 1) {
-       arr.push([
-         demos[i],
-         bytesToSize(getFilesizeInBytes(`${config.gameServerDir}/${demos[i]}`)),
-         createdDate(`${config.gameServerDir}/${demos[i]}`)
-       ]);
-     }
-   }
-   arr.reverse();
-   res.send(arr);
-   who(req.ip, `is viewing data from ` + '/demos'.green + ` ${t.end()[2]} seconds response time`);
-  });
+  res.send(JSON.stringify(demoList));
+  who(req.ip, `is viewing data from ` + '/demos'.green + ` ${t.end()[2]} seconds response time`);
 });
 
 /**
