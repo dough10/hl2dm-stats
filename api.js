@@ -1,5 +1,4 @@
 const figlet = require('figlet');
-ascii('dough10/hl2dm-stats');
 const path = require('path');
 const fs = require('fs');
 const readline = require('readline');
@@ -21,6 +20,7 @@ const colors = require('colors');
 const config = require(`${__dirname}/config.json`);
 const logFolder = path.join(config.gameServerDir, 'logs');
 
+ascii('dough10/hl2dm-stats');
 print(`Setup storage Variables`);
 var users = {};              // all users go in this object ie. {steamid: {name:playername, kills: 1934, deaths: 1689, kdr: 1.14, .....}, steamid: {..}, ..}
 var totalFiles = 0;          // total # of log files in "logs" folder
