@@ -216,7 +216,7 @@ function cacheTopResponse() {
       }, 60000);
       print(`Logs parsed & cached. ${time.endString()} to process`);
       lastUpdate = new Date().getTime();
-      print(`Next stats update will be ${new Date(lastUpdate + (config.logRefreshTime * 1000) * 60).toLocaleString()}`)
+      print(`Next stats update will be ${new Date(lastUpdate + (config.logRefreshTime * 1000) * 60).toLocaleString().cyan}`)
       resolve();
     });
   });
@@ -1492,7 +1492,8 @@ app.get('/old-stats/:month', (req, res) => {
 app.get('/demos', (req, res) => {
   var t = new Timer();
   res.send(JSON.stringify(demoList));
-  who(req.ip, `is viewing ` + '/demos'.green + ` data ${t.end()[2]} seconds response time`);
+  var end = t.end()[2];
+  who(req.ip, `is viewing ` + '/demos'.green + ` data ${end.cyan} seconds response time`);
 });
 
 /**
