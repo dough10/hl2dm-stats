@@ -1,27 +1,30 @@
-const figlet = require('figlet');
-const path = require('path');
-const fs = require('fs');
-const readline = require('readline');
-const Gamedig = require('gamedig');
-const SteamID = require('steamid');
-const schedule = require('node-schedule');
-const child_process = require("child_process");
-const express = require('express');
-const compression = require('compression');
-const bcrypt = require('bcrypt');
-const app = express();
-app.use(compression());
-app.set('trust proxy', true);
-app.disable('x-powered-by');
-var expressWs = require('express-ws')(app);
-const io = require('@pm2/io');
-const colors = require('colors');
-const config = require(`${__dirname}/config.json`);
-const logFolder = path.join(config.gameServerDir, 'logs');
-const clear = require('clear');
+const figlet = require('figlet');                        // ascii art
+const path = require('path');                            // merger file / url names
+const fs = require('fs');                                // work with the file system
+const readline = require('readline');                    // read file one line at a time
+const Gamedig = require('gamedig');                      // get data about game servers
+const SteamID = require('steamid');                      // work with steamid's
+const schedule = require('node-schedule');               // cronjob type schecduler
+const child_process = require("child_process");          // system peocesses
+const compression = require('compression');              // compress api responses
+const bcrypt = require('bcrypt');                        // hash and check passwords
+const express = require('express');                      // web api routing
+const app = express();                                   // express init
+var expressWs = require('express-ws')(app);              // WebSocket init
+const io = require('@pm2/io');                           //pm2 functions
+const colors = require('colors');                        // colorize text
+const config = require(`${__dirname}/config.json`);      // config file location
+const logFolder = path.join(config.gameServerDir, 'logs');// game server log location
+const clear = require('clear');                          // clear screan
 
 clear();
 ascii('dough10/hl2dm-stats');
+
+print('Configure Express')
+app.use(compression());
+app.set('trust proxy', true);
+app.disable('x-powered-by');
+
 print(`Setup storage Variables`);
 
 var users = {};              // all users go in this object ie. {steamid: {name:playername, kills: 1934, deaths: 1689, kdr: 1.14, .....}, steamid: {..}, ..}
