@@ -17,7 +17,7 @@ var expressWs = require('express-ws')(app);
 const io = require('@pm2/io');
 const colors = require('colors');
 
-var config = require(`${__dirname}/config.json`);
+const config = require(`${__dirname}/config.json`);
 const logFolder = path.join(config.gameServerDir, 'logs');
 
 print(`Setup storage Variables`);
@@ -50,11 +50,6 @@ const defaultWeaponObject = {
 
 var bannedPlayers = {};
 var socket;
-
-// keep config current
-setInterval(_ => {
-  config = require(`${__dirname}/config.json`);
-}, 1000);
 
 print(`Configure PM2 metrics`);
 
