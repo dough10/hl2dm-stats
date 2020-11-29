@@ -15,7 +15,7 @@ MongoClient.connect(url, (err, db) => {
     var myobj = { name: name, key: hash };
     dbo.collection("stream-keys").insertOne(myobj, (err, res) => {
       if (err) throw err;
-      console.log(hash);
+      console.log(res);
       db.close();
     });
   });
