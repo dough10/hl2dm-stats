@@ -216,6 +216,7 @@ function cacheTopResponse() {
       }, 60000);
       print(`Logs parsed & cached. ${time.endString()} to process`);
       lastUpdate = new Date().getTime();
+      print(`Next stats update will be ${new Date(lastUpdate + (logRefreshTime * 1000) * 60).toLocaleString()}`)
       resolve();
     });
   });
