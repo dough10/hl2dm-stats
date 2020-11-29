@@ -9,14 +9,16 @@ MongoClient.connect(url, (err, db) => {
   if (err) throw err;
   var dbo = db.db("hl2dm");
   bcrypt.hash(key, 10, (err, hash) => {
-    if (err) {
-      return new Error(err);
-    }
+    if (err) throw err;
     var myobj = { name: name, key: hash };
     dbo.collection("stream-keys").insertOne(myobj, (err, res) => {
       if (err) throw err;
       console.log(res);
-      db.close();
+      dbo.collection("stream-keys").findOne({name: name}, (err, result) => {
+        if (err) throw err;
+        console.log(result);
+        db.close();
+      })
     });
   });
 });
