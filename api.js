@@ -17,7 +17,7 @@ var expressWs = require('express-ws')(app);
 const io = require('@pm2/io');
 const colors = require('colors');
 
-const config = require(`${__dirname}/config.json`);
+var config = require(`${__dirname}/config.json`);
 const logFolder = path.join(config.gameServerDir, 'logs');
 
 print(`Setup storage Variables`);
