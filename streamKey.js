@@ -5,7 +5,7 @@ const name = args[0];
 const key = args[1];
 const dbURL = require(`${__dirname}/config.json`).dbURL;
 
-MongoClient.connect(url, (err, db) => {
+MongoClient.connect(dbURL, (err, db) => {
   if (err) throw err;
   var dbo = db.db("hl2dm");
   bcrypt.hash(key, 10, (err, hash) => {
