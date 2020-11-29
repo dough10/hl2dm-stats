@@ -1370,7 +1370,9 @@ function cacheDemos() {
 }
 
 cacheTopResponse().then(cacheDemos);
-setInterval(cacheTopResponse().then(cacheDemos), 3600000);
+setInterval(_ => {
+  cacheTopResponse().then(cacheDemos);
+}, 3600000);
 
 getServerStatus();
 setInterval(getServerStatus, 5000);
