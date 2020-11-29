@@ -1097,7 +1097,7 @@ function getServerStatus() {
         }
       }
       if (serverStatus.players[0].name) {
-        print(`Players Online`.blue);
+        print(`Players Online`.grey);
       }
       for (var i = 0; i < serverStatus.players.length; i++) {
         if (serverStatus.players[i].name) {
