@@ -1373,8 +1373,9 @@ app.get('/stats', (req, res) => {
  * route for gettings a list of banned players
  */
 app.get('/banned', (req, res) => {
-  who(req.ip, `is viewing data from ` + '/banned'.green);
+  var t = new Timer();
   res.send(JSON.stringify(bannedPlayers));
+  who(req.ip, `is viewing ` + '/banned'.green + ` data ${t.end()[2]} seconds response time`);
 });
 
 /**
@@ -1388,11 +1389,12 @@ app.get('/status', (req, res) => {
  * route for downloading current months demo file
  */
 app.get('/download/:file', (req, res) => {
+  var t = new Timer();
   var dl = `${config.gameServerDir}/${req.params.file}`;
   if (!fs.existsSync(dl)){
     return res.status(404).send('File does not exist');
   }
-  who(req.ip, `qued download for file ${dl.green}`);
+  who(req.ip, `qued download for file ${dl.green} ${t.end()[2]} seconds response time`);
   res.download(dl, req.params.file);
 });
 
@@ -1400,12 +1402,13 @@ app.get('/download/:file', (req, res) => {
  * route for downloading a previous months logs zip files
  */
 app.get('/download/logs-zip/:file', (req, res) => {
+  var t = new Timer();
   var dl = `/media/nas/old-stats/logs/${req.params.file}`;
   if (!fs.existsSync(dl)){
     return res.status(404).send('File does not exist');
 
   }
-  who(req.ip, `qued download for file ${dl.green}`);
+  who(req.ip, `qued download for file ${dl.green} ${t.end()[2]} seconds response time`);
   res.download(dl, req.params.file);
 });
 
@@ -1413,12 +1416,13 @@ app.get('/download/logs-zip/:file', (req, res) => {
  * route for downloading a previous months demo zip files
  */
 app.get('/download/demos-zip/:file', (req, res) => {
+  var t = new Timer();
   var dl = `/media/nas/old-stats/demos/${req.params.file}`;
   if (!fs.existsSync(dl)){
     return res.status(404).send('File does not exist');
 
   }
-  who(req.ip, `qued download for file ${dl.green}`);
+  who(req.ip, `qued download for file ${dl.green} ${t.end()[2]} seconds response time`);
   res.download(dl, req.params.file);
 });
 
@@ -1437,8 +1441,9 @@ app.get('/old-months', (req, res) => {
  * route for getting a old months stats data
  */
 app.get('/old-stats/:month', (req, res) => {
+  var t = new Timer();
   getOldStatsList(req.params.month).then(stats => {
-    who(req.ip, `is viewing ` + '/old-stats'.green + ` data from ${monthName(req.params.month).cyan}`);
+    who(req.ip, `is viewing ` + '/old-stats'.green + ` data from ${monthName(req.params.month).cyan} ${t.end()[2]} seconds response time`);
     res.send(stats);
   }).catch(e => {
     res.status(404).send('no stats exist for this month');
@@ -1449,7 +1454,7 @@ app.get('/old-stats/:month', (req, res) => {
  * route to get list of demo recording on the server
  */
 app.get('/demos', (req, res) => {
-  who(req.ip, `is viewing data from ` + '/demos'.green);
+  var t = new Timer();
   var arr = [];
   getDemos().then(demos => {
    for (var i = 0; i < demos.length; i++) {
@@ -1463,6 +1468,7 @@ app.get('/demos', (req, res) => {
    }
    arr.reverse();
    res.send(arr);
+   who(req.ip, `is viewing data from ` + '/demos'.green + ` ${t.end()[2]} seconds response time`);
   });
 });
 
@@ -1473,6 +1479,7 @@ app.get('/demos', (req, res) => {
  * @param {String} req.query.k - the streams auth key
  */
 app.get('/auth', (req, res) => {
+  var t = new Timer();
   who(req.ip, `is requesting stream authorization`);
   var name = req.query.name;
   var pass = req.query.k;
@@ -1487,6 +1494,7 @@ app.get('/auth', (req, res) => {
     if (!match) {
       return res.status(404).send('fail');
     }
+    who(req.ip, ` is authorized ${t.end()[2]} seconds response time`);
     return res.send('ok');
   });
 });
