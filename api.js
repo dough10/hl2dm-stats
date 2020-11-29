@@ -1108,7 +1108,7 @@ function bytesToSize(bytes) {
 }
 
 
-var nr;
+var nr = 0;
 function printPlayersToConsole(players) {
   if (!config.logPlayersToConsole) {
     return;
@@ -1116,9 +1116,7 @@ function printPlayersToConsole(players) {
   if (new Date().getTime() < nr) {
     return;
   }
-  if (players[0].name) {
-    print(`Players Online`);
-  }
+  print(`Players Online`);
   // print out players in server name and score  with a fixed length of 80 chars
   for (var i = 0; i < players.length; i++) {
     if (players[i].name) {
@@ -1416,7 +1414,7 @@ print(`Loading API backend calls`);
  * route for gettings player stats
  */
 app.get('/stats', (req, res) => {
-  console.log(req.useragent.isChrome);
+  // console.log(req.useragent.isChrome);
   var t = new Timer();
   res.send(JSON.stringify([
     top,
