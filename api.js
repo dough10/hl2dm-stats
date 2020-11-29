@@ -1496,8 +1496,7 @@ app.get('/old-stats/:month', (req, res) => {
 app.get('/demos', (req, res) => {
   var t = new Timer();
   res.send(JSON.stringify(demoList));
-  var end = t.end()[2];
-  who(req.ip, `is viewing ` + '/demos'.green + ` data ${end.cyan} seconds response time`);
+  who(req.ip, `is viewing ` + '/demos'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
 });
 
 /**
@@ -1522,7 +1521,7 @@ app.get('/auth', (req, res) => {
     if (!match) {
       return res.status(404).send('fail');
     }
-    who(req.ip, ` is authorized ${t.end()[2]} seconds response time`);
+    who(req.ip, `authorized for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
     return res.send('ok');
   });
 });
