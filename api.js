@@ -156,13 +156,19 @@ function cacheTopResponse() {
       top = stats;
       // merge physics kills
       if (!weapons.physics) {
-        weapons.physics = {kills: 0};
+        weapons.physics = {
+          kills: 0
+        };
       }
       if (!weapons.physbox) {
-        weapons.physbox = {kills: 0};
+        weapons.physbox = {
+          kills: 0
+        };
       }
       if (!weapons.world) {
-        weapons.world = {kills: 0};
+        weapons.world = {
+          kills: 0
+        };
       }
       weapons.physics.kills = (weapons.physics.kills + weapons.physbox.kills) + weapons.world.kills;
       delete weapons.physbox;
@@ -172,13 +178,19 @@ function cacheTopResponse() {
       for (var i = 0; i < top.length; i++) {
         // merge player physics kills
         if (!top[i].physics) {
-          top[i].physics = {kills: 0};
+          top[i].physics = {
+            kills: 0
+          };
         }
         if (!top[i].physbox) {
-          top[i].physbox = {kills: 0};
+          top[i].physbox = {
+            kills: 0
+          };
         }
         if (!top[i].world) {
-          top[i].world = {kills: 0};
+          top[i].world = {
+            kills: 0
+          };
         }
         top[i].physics.kills = (top[i].physics.kills + top[i].physbox.kills) + top[i].world.kills;
         delete top[i].physbox;
@@ -1090,6 +1102,7 @@ function getServerStatus() {
     serverStatus = state;
     socket.send(JSON.stringify(serverStatus));
     if (serverStatus.players.length > 0) {
+      // if a player has 60 kills update stats
       for (var i = 0; i < serverStatus.players.length; i++) {
         if (serverStatus.players[i].score === Number(serverStatus.raw.rules.mp_fraglimit) && !updated) {
           updated = true;
@@ -1099,6 +1112,7 @@ function getServerStatus() {
       if (serverStatus.players[0].name) {
         print(`Players Online`);
       }
+      // print out players in server name and score  with a fixed length of 80 chars
       for (var i = 0; i < serverStatus.players.length; i++) {
         if (serverStatus.players[i].name) {
           var name = serverStatus.players[i].name;
@@ -1333,6 +1347,7 @@ print(`Loading API backend calls`);
 app.get('/stats', (req, res) => {
   var user = req.ip;
   for (id in users)  {
+    console.log(user[id].ip, req.ip)
     if (users[id].ip === req.ip) {
       user = users[id].name
     }
