@@ -1378,7 +1378,7 @@ function cacheDemos() {
    }
    arr.reverse();
    demoList = arr;
-   print(`demo file list cached ${t.end()[2]} seconds to complete`);
+   print(`demo file list cached ` + `${t.end()[2]} seconds`.cyan + ` to complete`);
  });
 }
 
