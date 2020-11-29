@@ -1483,7 +1483,7 @@ app.get('/old-months', (req, res) => {
 app.get('/old-stats/:month', (req, res) => {
   var t = new Timer();
   getOldStatsList(req.params.month).then(stats => {
-    who(req.ip, `is viewing ` + '/old-stats'.green + ` data from ${monthName(req.params.month).cyan} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+    who(req.ip, `is viewing ` + '/old-stats'.green + ` ${monthName(req.params.month).cyan} ` + ` data ${t.end()[2]} seconds`.cyan + ` response time`);
     res.send(stats);
   }).catch(e => {
     res.status(404).send('no stats exist for this month');
