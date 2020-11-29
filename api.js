@@ -20,20 +20,16 @@ const colors = require('colors');
 const config = require(`${__dirname}/config.json`);
 const logFolder = path.join(config.gameServerDir, 'logs');
 
+print(`Setup storage Variables`);
 var users = {};              // all users go in this object ie. {steamid: {name:playername, kills: 1934, deaths: 1689, kdr: 1.14, .....}, steamid: {..}, ..}
 var totalFiles = 0;          // total # of log files in "logs" folder
 var top = [];                // players with over 100 kills sorted by KDR
 var weapons = {};            // server wide kill count sorted by weapons
 var serverStatus;            // placeholder for gamedig state
 var totalPlayers = 0;        // count of total players to have joined the server
-var updated = false;         // if stats have been updated when a player reaches end of game kill count
 var lastUpdate;
 
-
-var bannedPlayers = {};
-var socket;
-
-
+var updated = false;         // if stats have been updated when a player reaches end of game kill count
 const defaultWeaponObject = {
   kills: 0,
   shots: 0,
@@ -51,6 +47,9 @@ const defaultWeaponObject = {
   lss:9999
 };
 
+var bannedPlayers = {};
+var socket;
+
 
 print(`Configure PM2 metrics`);
 
@@ -58,7 +57,6 @@ io.init({
   transactions: true,
   http: true
 });
-
 
 print(`Load Functions`);
 
@@ -933,8 +931,8 @@ function scanLine(line) {
 /*
  * returns % value
  *
- * @param {Number} small
- * @param {Number} big
+ * @param {Number} small - small #
+ * @param {Number} big - big #
  */
 function calculatePrecent(small, big) {
   return Math.round((small / big) * 100) || 0;
