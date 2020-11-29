@@ -55,14 +55,7 @@ Object.size = obj => {
 };
 
 function ascii(message) {
-  figlet(message, function(err, data) {
-    if (err) {
-        console.log('Something went wrong...');
-        console.dir(err);
-        return;
-    }
-    console.log(data.yellow)
-  });
+  figlet.textSync(message.yelloy, { horizontalLayout: 'full' });
 }
 
 
