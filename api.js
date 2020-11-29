@@ -1345,14 +1345,14 @@ print(`Loading API backend calls`);
  * route for gettings player stats
  */
 app.get('/stats', (req, res) => {
-  var user = req.ip;
-  for (id in users)  {
+  var i = req.ip;
+  for (var id in users)  {
     console.log(users[id].ip, req.ip)
     if (users[id].ip === req.ip) {
-      user = users[id].name
+      i = users[id].name
     }
   }
-  print(`${user.grey} is viewing data from ` + '/stats'.green);
+  print(`${i.grey} is viewing data from ` + '/stats'.green);
   res.send(JSON.stringify([
     top,
     weapons,
