@@ -1,4 +1,5 @@
 {
+  "port": 3000,
   "gameServerHostname": "hl2dm.dough10.me",
   "gameServerDir": "/appdata/hl2dm/hl2mp",
   "bulkStorage": "/media/nas/old-stats",
