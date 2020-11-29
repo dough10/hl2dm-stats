@@ -1559,7 +1559,7 @@ app.get('*', (req, res) => {
   res.status(404).sendFile(`${__dirname}/html/404.html`);
 });
 
-app.listen(config.port);
+app.listen(3000);
 
-print('API active on port: ' + `${config.port}`.red);
+print('API active on port: ' + `3000`.red);
 print(`log folder = ${logFolder.green}`);
