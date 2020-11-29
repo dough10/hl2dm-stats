@@ -21,7 +21,7 @@ MongoClient.connect(dbURL, {
         if (err) throw err;
         console.log(result.key);
         db.close();
-      })
+      });
     });
   });
 });

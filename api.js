@@ -1523,20 +1523,42 @@ app.get('/auth', (req, res) => {
   who(req.ip, `is requesting stream authorization`);
   var name = req.query.name;
   var pass = req.query.k;
-  if (!config.streamKeys[name]) {
-    return res.status(404).send('fail');
-  }
-  bcrypt.compare(pass, config.streamKeys[name], (err, match) => {
-    if (err) {
-      ioError('Error hashing password', err);
-      return console.error(err);
-    }
-    if (!match) {
-      return res.status(404).send('fail');
-    }
-    who(req.ip, `authorized for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
-    return res.send('ok');
+  MongoClient.connect(config.dbURL, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true
+  }, (err, db) => {
+    if (err) throw err;
+    var dbo = db.db("hl2dm");
+    dbo.collection("stream-keys").findOne({name: name}, (err, result) => {
+      if (err) throw err;
+      db.close();
+      bcrypt.compare(pass, result.key, (err, match) => {
+        if (err) {
+          ioError('Error hashing password', err);
+          return console.error(err);
+        }
+        if (!match) {
+          return res.status(404).send('fail');
+        }
+        who(req.ip, `authorized for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+        return res.send('ok');
+      });
+    });
   });
+  // if (!config.streamKeys[name]) {
+  //   return res.status(404).send('fail');
+  // }
+  // bcrypt.compare(pass, config.streamKeys[name], (err, match) => {
+  //   if (err) {
+  //     ioError('Error hashing password', err);
+  //     return console.error(err);
+  //   }
+  //   if (!match) {
+  //     return res.status(404).send('fail');
+  //   }
+  //   who(req.ip, `authorized for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+  //   return res.send('ok');
+  // });
 });
 
 /**
