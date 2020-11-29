@@ -1,6 +1,6 @@
+const figlet = require('figlet');
 ascii('dough10/hl2dm-stats');
 print(`Loading imports`);
-const figlet = require('figlet');
 const path = require('path');
 const fs = require('fs');
 const readline = require('readline');
