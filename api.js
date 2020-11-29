@@ -1366,7 +1366,7 @@ app.get('/stats', (req, res) => {
     bannedPlayers,
     lastUpdate
   ]));
-  who(req.ip, `is viewing ` + '/stats'.green + ` data ${t.end()[2].cyan} seconds response time`);
+  who(req.ip, `is viewing ` + '/stats'.green + ` data ${t.end()[2]} seconds response time`);
 });
 
 /**
