@@ -17,9 +17,9 @@ MongoClient.connect(dbURL, {
     dbo.collection("stream-keys").insertOne(myobj, (err, res) => {
       if (err) throw err;
       console.log(res);
-      dbo.collection("stream-keys").find({name: name}, (err, result) => {
+      dbo.collection("stream-keys").findOne({name: name}, (err, result) => {
         if (err) throw err;
-        console.log(result);
+        console.log(result.key);
         db.close();
       })
     });
