@@ -51,6 +51,10 @@ const defaultWeaponObject = {
 var bannedPlayers = {};
 var socket;
 
+// keep config current
+setInterval(_ => {
+  config = require(`${__dirname}/config.json`);
+}, 1000);
 
 print(`Configure PM2 metrics`);
 
