@@ -149,6 +149,8 @@ function validateIPaddress(ip) {
 function cacheTopResponse() {
   return new Promise((resolve, reject) => {
     print(`Clearing cache & parsing logs`);
+    // reset ubjects
+    users = {};
     weapons = {};
     bannedPlayers = {};
     var time = new Timer();
@@ -215,8 +217,6 @@ function cacheTopResponse() {
       }, 60000);
       print(`Logs parsed & cached. ${time.endString()} to process`);
       lastUpdate = new Date().getTime();
-      // reset users object for next run
-      users = {};
       resolve();
     });
   });
@@ -1347,7 +1347,6 @@ print(`Loading API backend calls`);
 app.get('/stats', (req, res) => {
   var i = req.ip;
   for (var id in users)  {
-    console.log(users[id].ip, req.ip)
     if (users[id].ip === req.ip) {
       i = users[id].name
     }
