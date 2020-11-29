@@ -1341,17 +1341,22 @@ var j = schedule.scheduleJob('0 5 1 * *', cleanUp);
 
 print(`Loading API backend calls`);
 
+function who(ip, message) {
+  var i = ip;
+  for (var id in users)  {
+    if (users[id].ip === ip) {
+      i = users[id].name
+    }
+  }
+  print(`${i.grey} ${message}`);
+}
+
+
 /**
  * route for gettings player stats
  */
 app.get('/stats', (req, res) => {
-  var i = req.ip;
-  for (var id in users)  {
-    if (users[id].ip === req.ip) {
-      i = users[id].name
-    }
-  }
-  print(`${i.grey} is viewing data from ` + '/stats'.green);
+  who(req.ip, `is viewing data from ` + '/stats'.green);
   res.send(JSON.stringify([
     top,
     weapons,
@@ -1365,7 +1370,7 @@ app.get('/stats', (req, res) => {
  * route for gettings a list of banned players
  */
 app.get('/banned', (req, res) => {
-  print(`${req.ip.grey} is viewing data from ` + '/banned'.green);
+  who(req.ip, `is viewing data from ` + '/banned'.green);
   res.send(JSON.stringify(bannedPlayers));
 });
 
@@ -1373,7 +1378,6 @@ app.get('/banned', (req, res) => {
  * route for gettings the status of the game server
  */
 app.get('/status', (req, res) => {
-  // print(`${req.ip.grey} is viewing data from /status`);
   res.send(serverStatus);
 });
 
