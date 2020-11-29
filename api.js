@@ -1116,7 +1116,7 @@ function printPlayersToConsole(players) {
   if (new Date().getTime() < nr) {
     return;
   }
-  if (player[0].name) {
+  if (players[0].name) {
     print(`Players Online`);
   }
   // print out players in server name and score  with a fixed length of 80 chars
