@@ -928,7 +928,7 @@ function scanLine(line) {
   }
 }
 
-/*
+/**
  * returns % value
  *
  * @param {Number} small - small #
@@ -1344,7 +1344,6 @@ function who(ip, message) {
   print(`${i.grey} ${message}`);
 }
 
-print(`Getting data`);
 cacheTopResponse();
 setInterval(cacheTopResponse, 3600000);
 
@@ -1359,7 +1358,7 @@ print(`Loading API backend calls`);
  * route for gettings player stats
  */
 app.get('/stats', (req, res) => {
-  who(req.ip, `is viewing data from ` + '/stats'.green);
+  var t = new Timer();
   res.send(JSON.stringify([
     top,
     weapons,
@@ -1367,6 +1366,7 @@ app.get('/stats', (req, res) => {
     bannedPlayers,
     lastUpdate
   ]));
+  who(req.ip, `is viewing data from ` + '/stats'.green + `${t.endString().cyan} response time`);
 });
 
 /**
