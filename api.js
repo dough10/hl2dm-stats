@@ -216,7 +216,7 @@ function cacheTopResponse() {
       }, 60000);
       print(`Logs parsed & cached. ${time.endString()} to process`);
       lastUpdate = new Date().getTime();
-      print(`Next stats update will be ${new Date(lastUpdate + (logRefreshTime * 1000) * 60).toLocaleString()}`)
+      print(`Next stats update will be ${new Date(lastUpdate + (config.logRefreshTime * 1000) * 60).toLocaleString()}`)
       resolve();
     });
   });
@@ -1381,7 +1381,7 @@ function cacheDemos() {
 cacheTopResponse().then(cacheDemos);
 setInterval(_ => {
   cacheTopResponse().then(cacheDemos);
-}, (logRefreshTime * 1000) * 60);
+}, (config.logRefreshTime * 1000) * 60);
 
 getServerStatus();
 setInterval(getServerStatus, 5000);
