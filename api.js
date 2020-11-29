@@ -31,22 +31,6 @@ var lastUpdate;
 var demoList;
 
 var updated = false;         // if stats have been updated when a player reaches end of game kill count
-const defaultWeaponObject = {
-  kills: 0,
-  shots: 0,
-  hits: 0,
-  headshots: 0,
-  head: 0,
-  chest: 0,
-  stomach: 0,
-  leftarm: 0,
-  rightarm: 0,
-  leftleg: 0,
-  rightleg:0,
-  damage:0,
-  hss:0,
-  lss:9999
-};
 
 var bannedPlayers = {};
 var socket;
@@ -501,7 +485,7 @@ function playerIsBanned(line) {
 }
 
 /**
- * scans the line for landmarks in order to get usable strings of data
+ * returns a player object
  *
  * @param {String} name - name mof the player
  * @param {Number} id - player steamID
@@ -518,6 +502,28 @@ function playerObj(name, id, time) {
     suicide: {count:0},
     updated: time,
     chat: []
+  };
+}
+
+/**
+ * returns defualt weapon object valuse
+ */
+function weaponObj() {
+  return {
+    kills: 0,
+    shots: 0,
+    hits: 0,
+    headshots: 0,
+    head: 0,
+    chest: 0,
+    stomach: 0,
+    leftarm: 0,
+    rightarm: 0,
+    leftleg: 0,
+    rightleg:0,
+    damage:0,
+    hss:0,
+    lss:9999
   };
 }
 
@@ -705,13 +711,13 @@ function scanLine(line) {
     users[killedID].kdr = Number((users[killedID].kills / users[killedID].deaths).toFixed(2));
     // add weapon for killer if doesn't exist
     if (!users[killerID][weapon]) {
-      users[killerID][weapon] = { ...defaultWeaponObject };
+      users[killerID][weapon] = weaponObj();
     }
     // add killer kill with weapon
     users[killerID][weapon].kills++;
     // add weapon for server
     if (!weapons[weapon]) {
-      weapons[weapon] = { ...defaultWeaponObject };
+      weapons[weapon] = weaponObj();
     }
     // add server wide weapon kill
     weapons[weapon].kills++;
@@ -748,7 +754,7 @@ function scanLine(line) {
     }
     users[id].suicide[weapon]++;
     if (!weapons[weapon]) {
-      weapons[weapon] = { ...defaultWeaponObject };
+      weapons[weapon] = weaponObj();
     }
     weapons[weapon].kills++;
   } else if (isHeadshot) {
@@ -811,7 +817,7 @@ function scanLine(line) {
     }
     // create players weapon object if doesn't exist
     if (!users[id3][weaponName]) {
-      users[id3][weaponName] = { ...defaultWeaponObject };
+      users[id3][weaponName] = weaponObj();
     }
     // get weapon data values
     var shots = Number(word[isStats + 4]);
@@ -837,7 +843,7 @@ function scanLine(line) {
     users[id3][weaponName].damage = users[id3][weaponName].damage + damage;
     // server wide weapon stats data object
     if (!weapons[weaponName]) {
-      weapons[weaponName] = { ...defaultWeaponObject };
+      weapons[weaponName] = weaponObj();
     }
     // highest single shot damage
     if (hits === 1 && damage > weapons[weaponName].hss && damage < 1000) {
@@ -907,7 +913,7 @@ function scanLine(line) {
       return;
     }
     if (!users[id3][weaponName]) {
-      users[id3][weaponName] = { ...defaultWeaponObject };
+      users[id3][weaponName] = weaponObj();
     }
     users[id3][weaponName].head = users[id3][weaponName].head + Number(head);
     users[id3][weaponName].chest = users[id3][weaponName].chest + Number(chest);
@@ -917,7 +923,7 @@ function scanLine(line) {
     users[id3][weaponName].leftleg = users[id3][weaponName].leftleg + Number(leftleg);
     users[id3][weaponName].rightleg = users[id3][weaponName].rightleg + Number(rightleg);
     if (!weapons[weaponName]) {
-      weapons[weaponName] = { ...defaultWeaponObject };
+      weapons[weaponName] = weaponObj();
     }
     weapons[weaponName].head = weapons[weaponName].head + Number(head);
     weapons[weaponName].chest = weapons[weaponName].chest + Number(chest);
