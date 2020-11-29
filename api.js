@@ -1090,13 +1090,36 @@ function bytesToSize(bytes) {
    return `${Math.round(bytes / Math.pow(1024, i), 2)} ${sizes[i]}`;
 }
 
+function printPlayersToConsole(players) {
+  if (!config.logPlayersToConsole) {
+    return;
+  }
+  if (players[0].name) {
+    print(`Players Online`);
+  }
+  // print out players in server name and score  with a fixed length of 80 chars
+  for (var i = 0; i < players.length; i++) {
+    if (players[i].name) {
+      var name = players[i].name;
+      var score = players[i].score.toString();
+      var l = ((80 - name.length) - score.length) - 9;
+      var space = '';
+      for (var n = 1; n < l; n++) {
+        space = space + '-';
+      }
+      console.log(`${name.cyan} ${space.grey} score: ${score.green}`)
+    }
+  }
+}
+
+
 /**
  * get GameDig data from game server
  */
 function getServerStatus() {
   Gamedig.query({
     type: 'hl2dm',
-    host: config.serverHostname
+    host: config.gameServerHostname
   }).then((state) => {
     serverStatus = state;
     socket.send(JSON.stringify(serverStatus));
@@ -1110,23 +1133,8 @@ function getServerStatus() {
           }, 10000);
         }
       }
-      if (serverStatus.players[0].name) {
-        print(`Players Online`);
-      }
-      // print out players in server name and score  with a fixed length of 80 chars
-      for (var i = 0; i < serverStatus.players.length; i++) {
-        if (serverStatus.players[i].name) {
-          var name = serverStatus.players[i].name;
-          var score = serverStatus.players[i].score.toString();
-          var l = ((80 - name.length) - score.length) - 9;
-          var space = '';
-          for (var n = 1; n < l; n++) {
-            space = space + '-';
-          }
-          console.log(`${name.cyan} ${space.grey} score: ${score.green}`)
-        }
-      }
     }
+    printPlayersToConsole(serverStatus.players);
   }).catch((error) => {
     serverStatus = 'offline';
   });
@@ -1372,7 +1380,7 @@ function cacheDemos() {
 cacheTopResponse().then(cacheDemos);
 setInterval(_ => {
   cacheTopResponse().then(cacheDemos);
-}, 3600000);
+}, (logRefreshTime * 1000) * 60);
 
 getServerStatus();
 setInterval(getServerStatus, 5000);
