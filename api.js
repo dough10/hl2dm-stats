@@ -1347,7 +1347,7 @@ print(`Loading API backend calls`);
 app.get('/stats', (req, res) => {
   var user = req.ip;
   for (id in users)  {
-    console.log(user[id].ip, req.ip)
+    console.log(users[id].ip, req.ip)
     if (users[id].ip === req.ip) {
       user = users[id].name
     }
