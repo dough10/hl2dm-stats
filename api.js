@@ -1408,7 +1408,7 @@ print(`Loading API backend calls`);
  * route for gettings player stats
  */
 app.get('/stats', (req, res) => {
-  // console.log(req.useragent);
+  console.log(req.useragent.isChrome);
   var t = new Timer();
   res.send(JSON.stringify([
     top,
