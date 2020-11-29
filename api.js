@@ -1107,8 +1107,13 @@ function bytesToSize(bytes) {
    return `${Math.round(bytes / Math.pow(1024, i), 2)} ${sizes[i]}`;
 }
 
+
+var nr;
 function printPlayersToConsole(players) {
   if (!config.logPlayersToConsole) {
+    return;
+  }
+  if (new Date().getTime() < nr) {
     return;
   }
   if (players[0].name) {
@@ -1127,6 +1132,7 @@ function printPlayersToConsole(players) {
       console.log(`${name.cyan} ${space.grey} score: ${score.green}`)
     }
   }
+  nr = new Date().getTime() + 60000;
 }
 
 
