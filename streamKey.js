@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const args = process.argv.slice(2);
 const name = args[0];
 const key = args[1];
-const dbURL = require('config.json').dbURL;
+const dbURL = require(`${__dirname}/config.json`).dbURL;
 
 MongoClient.connect(url, (err, db) => {
   if (err) throw err;
