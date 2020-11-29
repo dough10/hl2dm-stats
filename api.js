@@ -18,9 +18,7 @@ const io = require('@pm2/io');
 const colors = require('colors');
 const config = require(`${__dirname}/config.json`);
 const logFolder = path.join(config.gameServerDir, 'logs');
-const clear = require('clear');
 
-clear();
 ascii('dough10/hl2dm-stats');
 print(`Setup storage Variables`);
 
