@@ -1,4 +1,5 @@
 const figlet = require('figlet');
+ascii('dough10/hl2dm-stats');
 const path = require('path');
 const fs = require('fs');
 const readline = require('readline');
@@ -1549,6 +1550,6 @@ app.get('*', (req, res) => {
 });
 
 app.listen(3000);
-ascii('dough10/hl2dm-stats');
+
 print('API active on port: ' + '3000'.red);
 print(`log folder = ${logFolder.green}`);
