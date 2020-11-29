@@ -1106,8 +1106,7 @@ function getServerStatus() {
         if (serverStatus.players[i].score === Number(serverStatus.raw.rules.mp_fraglimit) && !updated) {
           updated = true;
           setTimeout(_ => {
-            cacheTopResponse();
-            cacheDemos();
+            cacheTopResponse().then(cacheDemos);
           }, 10000);
         }
       }
@@ -1169,7 +1168,7 @@ function cleanUp() {
               print(`Complete process took ${times.endString()}`)
               top = [];
               users = {};
-              cacheTopResponse();
+              cacheTopResponse().then(cacheDemos);
             }
           }
         });
@@ -1370,11 +1369,8 @@ function cacheDemos() {
  });
 }
 
-cacheTopResponse();
-setInterval(cacheTopResponse, 3600000);
-
-cacheDemos()
-setInterval(cacheDemos, 3600000);
+cacheTopResponse().then(cacheDemos);
+setInterval(cacheTopResponse().then(cacheDemos), 3600000);
 
 getServerStatus();
 setInterval(getServerStatus, 5000);
