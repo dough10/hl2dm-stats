@@ -1,3 +1,4 @@
+ascii('dough10/hl2dm-stats');
 print(`Loading imports`);
 const figlet = require('figlet');
 const path = require('path');
@@ -60,7 +61,7 @@ function ascii(message) {
         console.dir(err);
         return;
     }
-    console.log(data)
+    console.log(data.yellow)
   });
 }
 
@@ -1560,4 +1561,3 @@ app.listen(3000);
 
 print('API is now active on port ' + '3000'.red);
 print(`log folder = ${logFolder.green}`);
-ascii('dough10/hl2dm-stats');
