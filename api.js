@@ -1485,7 +1485,7 @@ app.get('/old-stats/:month', (req, res) => {
 app.get('/demos', (req, res) => {
   var t = new Timer();
   res.send(JSON.stringify(demoList));
-  who(req.ip, `is viewing data from ` + '/demos'.green + ` ${t.end()[2]} seconds response time`);
+  who(req.ip, `is viewing ` + '/demos'.green + ` data ${t.end()[2]} seconds response time`);
 });
 
 /**
