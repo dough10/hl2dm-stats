@@ -1406,7 +1406,7 @@ app.get('/stats', (req, res) => {
     bannedPlayers,
     lastUpdate
   ]));
-  who(req.ip, `is viewing ` + '/stats'.green + ` data ${t.end()[2]} seconds response time`);
+  who(req.ip, `is viewing ` + '/stats'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
 });
 
 /**
@@ -1415,7 +1415,7 @@ app.get('/stats', (req, res) => {
 app.get('/banned', (req, res) => {
   var t = new Timer();
   res.send(JSON.stringify(bannedPlayers));
-  who(req.ip, `is viewing ` + '/banned'.green + ` data ${t.end()[2]} seconds response time`);
+  who(req.ip, `is viewing ` + '/banned'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
 });
 
 /**
@@ -1434,7 +1434,7 @@ app.get('/download/:file', (req, res) => {
   if (!fs.existsSync(dl)){
     return res.status(404).send('File does not exist');
   }
-  who(req.ip, `qued download for file ${dl.green} ${t.end()[2]} seconds response time`);
+  who(req.ip, `qued download for file ${dl.green} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
   res.download(dl, req.params.file);
 });
 
@@ -1448,7 +1448,7 @@ app.get('/download/logs-zip/:file', (req, res) => {
     return res.status(404).send('File does not exist');
 
   }
-  who(req.ip, `qued download for file ${dl.green} ${t.end()[2]} seconds response time`);
+  who(req.ip, `qued download for file ${dl.green} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
   res.download(dl, req.params.file);
 });
 
@@ -1462,7 +1462,7 @@ app.get('/download/demos-zip/:file', (req, res) => {
     return res.status(404).send('File does not exist');
 
   }
-  who(req.ip, `qued download for file ${dl.green} ${t.end()[2]} seconds response time`);
+  who(req.ip, `qued download for file ${dl.green} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
   res.download(dl, req.params.file);
 });
 
