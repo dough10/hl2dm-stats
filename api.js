@@ -1394,7 +1394,7 @@ app.get('/download/:file', (req, res) => {
   if (!fs.existsSync(dl)){
     return res.status(404).send('File does not exist');
   }
-  print(`${req.ip.grey} qued download for file ${dl.green}`);
+  who(req.ip, `qued download for file ${dl.green}`);
   res.download(dl, req.params.file);
 });
 
@@ -1407,7 +1407,7 @@ app.get('/download/logs-zip/:file', (req, res) => {
     return res.status(404).send('File does not exist');
 
   }
-  print(`${req.ip.grey} qued download for file ${dl.green}`);
+  who(req.ip, `qued download for file ${dl.green}`);
   res.download(dl, req.params.file);
 });
 
@@ -1420,7 +1420,7 @@ app.get('/download/demos-zip/:file', (req, res) => {
     return res.status(404).send('File does not exist');
 
   }
-  print(`${req.ip.grey} qued download for file ${dl.green}`);
+  who(req.ip, `qued download for file ${dl.green}`);
   res.download(dl, req.params.file);
 });
 
@@ -1440,7 +1440,7 @@ app.get('/old-months', (req, res) => {
  */
 app.get('/old-stats/:month', (req, res) => {
   getOldStatsList(req.params.month).then(stats => {
-    print(`${req.ip.grey} is viewing ` + '/old-stats'.green + ` data from ${monthName(req.params.month).cyan}`);
+    who(req.ip, `is viewing ` + '/old-stats'.green + ` data from ${monthName(req.params.month).cyan}`);
     res.send(stats);
   }).catch(e => {
     res.status(404).send('no stats exist for this month');
@@ -1451,7 +1451,7 @@ app.get('/old-stats/:month', (req, res) => {
  * route to get list of demo recording on the server
  */
 app.get('/demos', (req, res) => {
-  print(`${req.ip.grey} is viewing data from ` + '/demos'.green);
+  who(req.ip, `is viewing data from ` + '/demos'.green);
   var arr = [];
   getDemos().then(demos => {
    for (var i = 0; i < demos.length; i++) {
@@ -1475,7 +1475,7 @@ app.get('/demos', (req, res) => {
  * @param {String} req.query.k - the streams auth key
  */
 app.get('/auth', (req, res) => {
-  print(`${req.ip.grey} is requesting stream authorization`);
+  who(req.ip, `is requesting stream authorization`);
   var name = req.query.name;
   var pass = req.query.k;
   if (!config.streamKeys[name]) {
