@@ -18,9 +18,12 @@ const io = require('@pm2/io');
 const colors = require('colors');
 const config = require(`${__dirname}/config.json`);
 const logFolder = path.join(config.gameServerDir, 'logs');
+const clear = require('clear');
 
+clear();
 ascii('dough10/hl2dm-stats');
 print(`Setup storage Variables`);
+
 var users = {};              // all users go in this object ie. {steamid: {name:playername, kills: 1934, deaths: 1689, kdr: 1.14, .....}, steamid: {..}, ..}
 var totalFiles = 0;          // total # of log files in "logs" folder
 var top = [];                // players with over 100 kills sorted by KDR
