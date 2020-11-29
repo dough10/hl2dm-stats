@@ -1545,20 +1545,6 @@ app.get('/auth', (req, res) => {
       });
     });
   });
-  // if (!config.streamKeys[name]) {
-  //   return res.status(404).send('fail');
-  // }
-  // bcrypt.compare(pass, config.streamKeys[name], (err, match) => {
-  //   if (err) {
-  //     ioError('Error hashing password', err);
-  //     return console.error(err);
-  //   }
-  //   if (!match) {
-  //     return res.status(404).send('fail');
-  //   }
-  //   who(req.ip, `authorized for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
-  //   return res.send('ok');
-  // });
 });
 
 /**

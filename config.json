@@ -5,8 +5,5 @@
   "gameServerDir": "/appdata/hl2dm/hl2mp",
   "bulkStorage": "/media/nas/old-stats",
   "logRefreshTime": 60,
-  "logPlayersToConsole": false,
-  "streamKeys": {
-    "hl2mp": "$2b$10$mh1XDBuOgSI3aTPuw7qfrOOc3eoKMC4q76QdQ5Gd0M4sgYorQ5Qhe"
-  }
+  "logPlayersToConsole": true
 }
