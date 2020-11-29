@@ -5,7 +5,10 @@ const name = args[0];
 const key = args[1];
 const dbURL = require(`${__dirname}/config.json`).dbURL;
 
-MongoClient.connect(dbURL, (err, db) => {
+MongoClient.connect(dbURL, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true
+}, (err, db) => {
   if (err) throw err;
   var dbo = db.db("hl2dm");
   bcrypt.hash(key, 10, (err, hash) => {
