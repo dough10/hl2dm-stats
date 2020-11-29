@@ -137,7 +137,7 @@ function validateIPaddress(ip) {
 function cacheTopResponse() {
   return new Promise((resolve, reject) => {
     print(`Clearing cache & parsing logs`);
-    // reset ubjects
+    // reset objects
     users = {};
     weapons = {};
     bannedPlayers = {};
@@ -961,15 +961,15 @@ function sortWeapons(user) {
   for (weapon in user) {
     if (isWeapon(weapon)) {
       if (!user.id && weapons[weapon].kill !== 0) {
-        var shots = weapons[weapon].shots;
+        var shots = weapons[weapon].shots || 0;
         var acc = calculatePrecent(weapons[weapon].hits, weapons[weapon].shots);
         var hs = calculatePrecent(weapons[weapon].headshots, weapons[weapon].shots);
         var shotsToKill = Math.floor(weapons[weapon].shots / weapons[weapon].kills) || 0;
-        var damage = weapons[weapon].damage;
+        var damage = weapons[weapon].damage || 0;
         var adpk = Math.floor(weapons[weapon].damage / weapons[weapon].kills) || 0;
         var adph = Math.floor(weapons[weapon].damage / weapons[weapon].hits) || 0;
-        var hss = weapons[weapon].hss;
-        var lss = weapons[weapon].lss;
+        var hss = weapons[weapon].hss || 0;
+        var lss = weapons[weapon].lss || 0;
         sortArr.push([
           weapon,
           user[weapon].kills,
@@ -986,15 +986,15 @@ function sortWeapons(user) {
           ]
         ]);
       } else if (user[weapon].kills !== 0) {
+        var shots = user[weapon].shots || 0;
         var acc = calculatePrecent(user[weapon].hits, user[weapon].shots);
         var hs = calculatePrecent(user[weapon].headshots, user[weapon].shots);
-        var shots = user[weapon].shots;
         var shotsToKill = Math.floor(user[weapon].shots / user[weapon].kills) || 0;
         var damage = user[weapon].damage;
         var adpk = Math.floor(user[weapon].damage / user[weapon].kills) || 0;
         var adph = Math.floor(user[weapon].damage / user[weapon].hits) || 0;
-        var hss = user[weapon].hss;
-        var lss = user[weapon].lss;
+        var hss = user[weapon].hss || 0;
+        var lss = user[weapon].lss || 0;
         if (user[weapon].kills !== 0) {
           sortArr.push([
             weapon,
@@ -1142,7 +1142,7 @@ function getServerStatus() {
           updated = true;
           setTimeout(_ => {
             cacheTopResponse().then(cacheDemos);
-          }, 10000);
+          }, 5000);
         }
       }
     }
