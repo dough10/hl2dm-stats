@@ -16,7 +16,6 @@ app.disable('x-powered-by');
 var expressWs = require('express-ws')(app);
 const io = require('@pm2/io');
 const colors = require('colors');
-const term = require( 'terminal-kit' ).terminal;
 const config = require(`${__dirname}/config.json`);
 const logFolder = path.join(config.gameServerDir, 'logs');
 
@@ -64,17 +63,7 @@ function ascii(message) {
  */
 function print(message) {
   var now = new Date().toLocaleString();
-  term.table( [
-		[ascii('dough10/hl2dm-stats')] ,
-		[`${now.yellow} - ${message}`]
-	] , {
-		hasBorder: true ,
-		contentHasMarkup: true ,
-		width: 60 ,
-		fit: true   // Activate all expand/shrink + wordWrap
-	}
-) ;
-  // console.log(`${now.yellow} - ${message}`);
+  console.log(`${now.yellow} - ${message}`);
 }
 
 /**
