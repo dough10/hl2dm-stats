@@ -53,6 +53,19 @@ Object.size = obj => {
   return size;
 };
 
+function ascii(message) {
+  figlet(message, function(err, data) {
+    if (err) {
+        console.log('Something went wrong...');
+        console.dir(err);
+        return;
+    }
+    console.log(data)
+  });
+}
+
+
+
 /**
  * print strings to log with cuttent time
  */
@@ -1547,3 +1560,4 @@ app.listen(3000);
 
 print('API is now active on port ' + '3000'.red);
 print(`log folder = ${logFolder.green}`);
+ascii('dough10/hl2dm-stats');
