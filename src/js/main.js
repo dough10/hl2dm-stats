@@ -779,11 +779,11 @@ function parseDemos(demos) {
  * @param {Object} player - player object from GameDig node js module
  */
 function displayPlayer(player) {
+  const wrapper = document.createElement('div');
   var playerName = player.name;
   if (!playerName) {
-    return;
+    return wrapper;
   }
-  const wrapper = document.createElement('div');
   wrapper.classList.add('playeronline');
   const playerDiv = document.createElement('div');
   playerDiv.textContent = playerName;
