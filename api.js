@@ -35,8 +35,6 @@ var updated = false;         // if stats have been updated when a player reaches
 var bannedPlayers = {};
 var socket;
 
-ascii('dough10/hl2dm-stats');
-
 print(`Configure PM2 metrics`);
 
 io.init({
@@ -55,7 +53,7 @@ Object.size = obj => {
 };
 
 function ascii(message) {
-  console.log(figlet.textSync(message, { horizontalLayout: 'full' }).blue);
+  console.log(figlet.textSync(message, { horizontalLayout: 'default' }).blue);
 }
 
 
@@ -1551,6 +1549,6 @@ app.get('*', (req, res) => {
 });
 
 app.listen(3000);
-
-print('API is now active on port ' + '3000'.red);
+ascii('dough10/hl2dm-stats');
+print('API active on port: ' + '3000'.red);
 print(`log folder = ${logFolder.green}`);
