@@ -1,6 +1,4 @@
 const figlet = require('figlet');
-ascii('dough10/hl2dm-stats');
-print(`Loading imports`);
 const path = require('path');
 const fs = require('fs');
 const readline = require('readline');
@@ -36,6 +34,8 @@ var updated = false;         // if stats have been updated when a player reaches
 
 var bannedPlayers = {};
 var socket;
+
+ascii('dough10/hl2dm-stats');
 
 print(`Configure PM2 metrics`);
 
