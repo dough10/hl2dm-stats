@@ -16,6 +16,7 @@ const io = require('@pm2/io');                            // pm2 functions
 const colors = require('colors');                         // colorize text
 const config = require(`${__dirname}/config.json`);       // config file location
 const logFolder = path.join(config.gameServerDir, 'logs');// game server log location
+const useragent = require('express-useragent');           // user browser data
 const clear = require('clear')();                         // clear screen
 
 console.log(figlet.textSync('dough10/hl2dm-stats', { horizontalLayout: 'default' }));
@@ -24,6 +25,7 @@ print('Configure Express');
 app.use(compression());
 app.set('trust proxy', true);
 app.disable('x-powered-by');
+app.use(useragent.express());
 
 print(`Setup storage Variables`);
 
@@ -1405,6 +1407,7 @@ print(`Loading API backend calls`);
  * route for gettings player stats
  */
 app.get('/stats', (req, res) => {
+  console.log(req.useragent);
   var t = new Timer();
   res.send(JSON.stringify([
     top,
