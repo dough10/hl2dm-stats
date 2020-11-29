@@ -1345,7 +1345,7 @@ function who(ip, message) {
   var i = ip;
   for (var id in users)  {
     if (users[id].ip === ip) {
-      i = users[id].name
+      i = users[id].name;
     }
   }
   print(`${i.grey} ${message}`);
