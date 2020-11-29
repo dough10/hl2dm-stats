@@ -1330,17 +1330,12 @@ function monthName(month) {
   }
 }
 
-print(`Getting data`);
-cacheTopResponse();
-setInterval(cacheTopResponse, 3600000);
-
-getServerStatus();
-setInterval(getServerStatus, 5000);
-
-var j = schedule.scheduleJob('0 5 1 * *', cleanUp);
-
-print(`Loading API backend calls`);
-
+/**
+ * print out player name when a know ip views page
+ *
+ * @param {String} ip - ip addres of the user
+ * @param {String} message - message string
+ */
 function who(ip, message) {
   var i = ip;
   for (var id in users)  {
@@ -1351,6 +1346,16 @@ function who(ip, message) {
   print(`${i.grey} ${message}`);
 }
 
+print(`Getting data`);
+cacheTopResponse();
+setInterval(cacheTopResponse, 3600000);
+
+getServerStatus();
+setInterval(getServerStatus, 5000);
+
+var j = schedule.scheduleJob('0 5 1 * *', cleanUp);
+
+print(`Loading API backend calls`);
 
 /**
  * route for gettings player stats
