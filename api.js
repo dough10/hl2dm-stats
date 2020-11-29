@@ -1,4 +1,5 @@
 print(`Loading imports`);
+const figlet = require('figlet');
 const path = require('path');
 const fs = require('fs');
 const readline = require('readline');
