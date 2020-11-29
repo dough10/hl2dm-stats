@@ -17,9 +17,9 @@ const colors = require('colors');                         // colorize text
 const config = require(`${__dirname}/config.json`);       // config file location
 const logFolder = path.join(config.gameServerDir, 'logs');// game server log location
 const useragent = require('express-useragent');           // user browser data
-// const clear = require('clear');                           // clear screen
+const clear = require('clear');                           // clear screen
 
-// clear();
+clear();
 console.log(figlet.textSync('dough10/hl2dm-stats', { horizontalLayout: 'default' }));
 
 print('Configure Express');
