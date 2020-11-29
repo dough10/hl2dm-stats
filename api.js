@@ -59,7 +59,7 @@ Object.size = obj => {
 };
 
 function ascii(message) {
-  console.log(figlet.textSync(message, { horizontalLayout: 'default' }).blue);
+  console.log(figlet.textSync(message, { horizontalLayout: 'default' }));
 }
 
 
