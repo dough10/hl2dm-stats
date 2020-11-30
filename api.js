@@ -601,7 +601,7 @@ function scanLine(line) {
      users[id].name = name;
     }
     // log chat
-    var said = `${new Date(lineTime).getTime()}, `;
+    var said = `${new Date(lineTime).toLocaleString()}, `;
     for (var i = (isChat + 1); i < word.length; i++) {
      said = `${said}${word[i]} `;
     }
