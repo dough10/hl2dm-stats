@@ -1407,7 +1407,6 @@ function totalStats(files) {
   for (var i = 0; i < files.length; i++) {
     f.push(require(path.join(__dirname, 'old-top', files[i])));
   }
-  console.log(f)
   return f;
 }
 
