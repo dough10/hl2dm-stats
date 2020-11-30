@@ -1403,13 +1403,16 @@ function cacheDemos() {
 
 function totalStats(files) {
   // load file data into f variable
+  var data = {};
   var f = [];
   for (var i = 0; i < files.length; i++) {
     var month = require(path.join(__dirname, 'old-top', files[i]));
-    f.push(month[0]);
+    for (var mndx = 0; mndx < month[i].length; mndx++) {
+      date[month[i][mndx].id] = month[i][mndx];
+    }
+    // f.push(month[i]);
   }
-  var data = [];
-  return f;
+  return data;
 }
 
 
