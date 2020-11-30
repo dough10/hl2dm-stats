@@ -601,7 +601,7 @@ function scanLine(line) {
      users[id].name = name;
     }
     // log chat
-    var said = `${new Date(lineTime).toLocaleString()}, `;
+    var said = `${new Date(lineTime).getTime()}, `;
     for (var i = (isChat + 1); i < word.length; i++) {
      said = `${said}${word[i]} `;
     }
@@ -1414,13 +1414,8 @@ function totalStats(files) {
       if (!data[month[i][player].id]) {
         data[month[i][player].id] = month[i][player];
       }
-      for (var thing in month[i][player]) {
-        if (typeof thing === 'number') {
-          data[month[i][player].id][thing] = (data[month[i][player].id][thing] + month[i][player][thing]) ;
-        }
-      }
+
     }
-    // f.push(month[i]);
   }
   return data;
 }
