@@ -17,12 +17,14 @@ const colors = require('colors');                         // colorize text
 const config = require(`${__dirname}/config.json`);       // config file location
 const logFolder = path.join(config.gameServerDir, 'logs');// game server log location
 const useragent = require('express-useragent');           // user browser data
-const MongoClient = require('mongodb').MongoClient;
+const MongoClient = require('mongodb').MongoClient;       // mongodb for streamkey storage
 const clear = require('clear');                           // clear screen
 
 
 clear();
-console.log(figlet.textSync('dough10/hl2dm-stats', { horizontalLayout: 'default' }));
+console.log(figlet.textSync('dough10/hl2dm-stats', {
+  horizontalLayout: 'default'
+}));
 
 print('Configure Express');
 app.use(compression());
@@ -1398,6 +1400,18 @@ function cacheDemos() {
  });
 }
 
+
+function totalStats() {
+  var f = [];
+  var data = [];
+  for (var i = 0; i < files.length; i++) {
+    f.push(require(files[i]));
+  }
+  console.log(f)
+  return data;
+}
+
+
 cacheTopResponse().then(cacheDemos);
 setInterval(_ => {
   cacheTopResponse().then(cacheDemos);
@@ -1433,6 +1447,19 @@ app.get('/banned', (req, res) => {
   var t = new Timer();
   res.send(JSON.stringify(bannedPlayers));
   who(req.ip, `is viewing ` + '/banned'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+});
+
+
+app.get('/total', (req, res) => {
+  var t = new Timer();
+  fs.readdir(`${__dirname}/old-top`, (err, files) => {
+    if (err) {
+      ioError('Unable to scan directory', err);
+      return;
+    }
+    res.send(totalStats(files));
+  });
+  who(req.ip, `is viewing ` + '/total'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
 });
 
 /**
