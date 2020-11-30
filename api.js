@@ -1535,7 +1535,9 @@ app.get('/auth', (req, res) => {
   }, (err, db) => {
     if (err) throw err;
     var dbo = db.db("hl2dm");
-    dbo.collection("stream-keys").findOne({name: name}, (err, result) => {
+    dbo.collection("stream-keys").findOne({
+      name: name
+     }, (err, result) => {
       if (err) throw err;
       db.close();
       bcrypt.compare(pass, result.key, (err, match) => {
