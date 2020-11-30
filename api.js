@@ -17,7 +17,7 @@ const colors = require('colors');                         // colorize text
 const config = require(`${__dirname}/config.json`);       // config file location
 const logFolder = path.join(config.gameServerDir, 'logs');// game server log location
 const useragent = require('express-useragent');           // user browser data
-var MongoClient = require('mongodb').MongoClient;
+const MongoClient = require('mongodb').MongoClient;
 const clear = require('clear');                           // clear screen
 
 
@@ -1107,7 +1107,6 @@ function bytesToSize(bytes) {
    return `${Math.round(bytes / Math.pow(1024, i), 2)} ${sizes[i]}`;
 }
 
-
 var nr = 0;
 function printPlayersToConsole(players) {
   if (!config.logPlayersToConsole) {
@@ -1134,7 +1133,6 @@ function printPlayersToConsole(players) {
   }
   nr = new Date().getTime() + 60000;
 }
-
 
 /**
  * get GameDig data from game server
