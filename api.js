@@ -1402,11 +1402,13 @@ function cacheDemos() {
 
 
 function totalStats(files) {
+  // load file data into f variable
   var f = [];
-  var data = [];
   for (var i = 0; i < files.length; i++) {
-    f.push(require(path.join(__dirname, 'old-top', files[i])));
+    var month = require(path.join(__dirname, 'old-top', files[i]));
+    f.push(month[0]);
   }
+  var data = [];
   return f;
 }
 
