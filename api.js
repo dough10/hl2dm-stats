@@ -1405,10 +1405,20 @@ function totalStats(files) {
   // load file data into f variable
   var data = {};
   var f = [];
+  // load files as month variable
   for (var i = 0; i < files.length; i++) {
     var month = require(path.join(__dirname, 'old-top', files[i]));
-    for (var mndx = 0; mndx < month[i].length; mndx++) {
-      data[month[i][mndx].id] = month[i][mndx];
+    // parse players for each month
+    for (var player = 0; player < month[i].length; player++) {
+      // create player obj if non existant
+      if (!data[month[i][player].id]) {
+        data[month[i][player].id] = month[i][player];
+      }
+      for (var thing in month[i][player]) {
+        if (typeof thing === 'number') {
+          data[month[i][player].id][thing] = (data[month[i][player].id][thing] + month[i][player][thing]) ;
+        }
+      }
     }
     // f.push(month[i]);
   }
