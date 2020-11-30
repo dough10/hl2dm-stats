@@ -1401,7 +1401,7 @@ function cacheDemos() {
 }
 
 
-function totalStats() {
+function totalStats(files) {
   var f = [];
   var data = [];
   for (var i = 0; i < files.length; i++) {
