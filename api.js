@@ -1256,7 +1256,7 @@ function saveTop(lastMonth) {
       weapons,
       totalPlayers,
       bannedPlayers,
-      lastUpdate
+      lastMonth
     ]), e => {
       if (e) {
         reject(e);
@@ -1368,13 +1368,14 @@ function monthName(month) {
  * @param {String} ip - ip addres of the user
  * @param {String} message - message string
  */
-function who(ip, message) {
-  var i = ip;
+function who(req, message) {
+  var i = req.ip;
   for (var id in users)  {
-    if (users[id].ip === ip) {
+    if (users[id].ip === i) {
       i = users[id].name;
     }
   }
+  if (i === '::1') i = 'LAN User'
   print(`${i.grey} ${message}`);
 }
 
@@ -1446,7 +1447,7 @@ app.get('/stats', (req, res) => {
     bannedPlayers,
     lastUpdate
   ]));
-  who(req.ip, `is viewing ` + '/stats'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+  who(req, `is viewing ` + '/stats'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
 });
 
 /**
@@ -1455,7 +1456,7 @@ app.get('/stats', (req, res) => {
 app.get('/banned', (req, res) => {
   var t = new Timer();
   res.send(JSON.stringify(bannedPlayers));
-  who(req.ip, `is viewing ` + '/banned'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+  who(req, `is viewing ` + '/banned'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
 });
 
 
@@ -1468,7 +1469,7 @@ app.get('/total', (req, res) => {
     }
     res.send(totalStats(files));
   });
-  who(req.ip, `is viewing ` + '/total'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+  who(req, `is viewing ` + '/total'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
 });
 
 /**
@@ -1487,7 +1488,7 @@ app.get('/download/:file', (req, res) => {
   if (!fs.existsSync(dl)){
     return res.status(404).send('File does not exist');
   }
-  who(req.ip, `qued download for file ${dl.green} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+  who(req, `qued download for file ${dl.green} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
   res.download(dl, req.params.file);
 });
 
@@ -1501,7 +1502,7 @@ app.get('/download/logs-zip/:file', (req, res) => {
     return res.status(404).send('File does not exist');
 
   }
-  who(req.ip, `qued download for file ${dl.green} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+  who(req, `qued download for file ${dl.green} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
   res.download(dl, req.params.file);
 });
 
@@ -1515,7 +1516,7 @@ app.get('/download/demos-zip/:file', (req, res) => {
     return res.status(404).send('File does not exist');
 
   }
-  who(req.ip, `qued download for file ${dl.green} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+  who(req, `qued download for file ${dl.green} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
   res.download(dl, req.params.file);
 });
 
@@ -1536,7 +1537,7 @@ app.get('/old-months', (req, res) => {
 app.get('/old-stats/:month', (req, res) => {
   var t = new Timer();
   getOldStatsList(req.params.month).then(stats => {
-    who(req.ip, `is viewing ` + '/old-stats'.green + ` ${monthName(req.params.month).cyan} ` + 'data' + ` ${t.end()[2]} seconds`.cyan + ` response time`);
+    who(req, `is viewing ` + '/old-stats'.green + ` ${monthName(req.params.month).cyan} ` + 'data' + ` ${t.end()[2]} seconds`.cyan + ` response time`);
     res.send(stats);
   }).catch(e => {
     res.status(404).send('no stats exist for this month');
@@ -1549,7 +1550,7 @@ app.get('/old-stats/:month', (req, res) => {
 app.get('/demos', (req, res) => {
   var t = new Timer();
   res.send(JSON.stringify(demoList));
-  who(req.ip, `is viewing ` + '/demos'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+  who(req, `is viewing ` + '/demos'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
 });
 
 /**
@@ -1560,7 +1561,7 @@ app.get('/demos', (req, res) => {
  */
 app.get('/auth', (req, res) => {
   var t = new Timer();
-  who(req.ip, `is requesting stream authorization`);
+  who(req, `is requesting stream authorization`);
   var name = req.query.name;
   var pass = req.query.k;
   MongoClient.connect(config.dbURL, {
@@ -1582,7 +1583,7 @@ app.get('/auth', (req, res) => {
         if (!match) {
           return res.status(404).send('fail');
         }
-        who(req.ip, `authorized for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+        who(req, `authorized for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
         return res.send('ok');
       });
     });
