@@ -1408,7 +1408,7 @@ function totalStats(files) {
     f.push(require(path.join(__dirname, 'old-top', files[i])));
   }
   console.log(f)
-  return data;
+  return f;
 }
 
 
