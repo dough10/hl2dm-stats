@@ -1256,7 +1256,7 @@ function saveTop(lastMonth) {
       weapons,
       totalPlayers,
       bannedPlayers,
-      lastMonth
+      lastUpdate
     ]), e => {
       if (e) {
         reject(e);
