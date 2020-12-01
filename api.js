@@ -1340,20 +1340,31 @@ function totalStats(files) {
   return data;
 }
 
+function roundEnd() {
+  updated = true;
+  cacheTopResponse().then(cacheDemos);
+}
+
 
 cacheTopResponse().then(cacheDemos);
 setInterval(_ => {
   cacheTopResponse().then(cacheDemos);
 }, (config.logRefreshTime * 1000) * 60);
 
-getServerStatus().then(status => {
+
+
+getServerStatus(roundEnd).then(status => {
   serverStatus = status;
+  socket.send(JSON.stringify(serverStatus));
 });
 setInterval(_ => {
-  getServerStatus().then(status => {
+  getServerStatus(roundEnd).then(status => {
     serverStatus = status;
+    socket.send(JSON.stringify(serverStatus));
   });
 }, 5000);
+
+
 
 var j = schedule.scheduleJob('0 5 1 * *', cleanUp);
 

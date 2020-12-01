@@ -36,7 +36,6 @@ function getstate(onFragLimit) {
       // if a player has 60 kills update stats
       for (var i = 0; i < state.players.length; i++) {
         if (state.players[i].score === Number(state.raw.rules.mp_fraglimit) && !updated) {
-          // updated = true;
           setTimeout(_ => {
             onFragLimit();
           }, 5000);
