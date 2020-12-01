@@ -966,7 +966,7 @@ function fetchOldMonths(month, cb) {
           var now = new Date(months[i]);
           makeOption(`${monthName(now.getMonth())} ${now.getFullYear()}`, months[i], qs('#months'));
         }
-        var m = new Date(Number(months[0])).getMonth();
+        var m = new Date(Number(months[months.length - 1])).getMonth();
         fetchOldMonths(m);
       });
     });
