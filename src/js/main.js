@@ -968,7 +968,7 @@ function fetchOldMonths(month, cb) {
         }
         var m = new Date(Number(months[months.length - 1])).getMonth();
         fetchOldMonths(m);
-        qs('#month').selectedIndex = months.length - 1;
+        qs('#months').selectedIndex = months.length - 1;
       });
     });
     return;
