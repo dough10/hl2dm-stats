@@ -137,7 +137,7 @@ function cacheTopResponse() {
           kills: 0
         };
       }
-      if (weapons.physics.kills === 0) {
+      if (weapons.physics && weapons.physics.kills === 0) {
         delete weapons.physics
       }
       weapons.physics.kills = (weapons.physics.kills + weapons.physbox.kills) + weapons.world.kills;
