@@ -28,25 +28,25 @@ function printPlayersToConsole(players) {
  * get GameDig data from game server
  */
 function getstate(onFragLimit) {
-  Gamedig.query({
-    type: 'hl2dm',
-    host: require(`../config.json`).gameServerHostname
-  }).then((state) => {
-    // if a player has 60 kills update stats
-    for (var i = 0; i < state.players.length; i++) {
-      if (state.players[i].score === Number(state.raw.rules.mp_fraglimit) && !updated) {
-        updated = true;
-        setTimeout(_ => {
-          onFragLimit();
-        }, 5000);
+  return new Promise((resolve, reject) => {
+    Gamedig.query({
+      type: 'hl2dm',
+      host: require(`../config.json`).gameServerHostname
+    }).then((state) => {
+      // if a player has 60 kills update stats
+      for (var i = 0; i < state.players.length; i++) {
+        if (state.players[i].score === Number(state.raw.rules.mp_fraglimit) && !updated) {
+          // updated = true;
+          setTimeout(_ => {
+            onFragLimit();
+          }, 5000);
+        }
       }
-    }
-    if (state.players.length > 0) {
-      printPlayersToConsole(state.players);
-    }
-    return state;
-  }).catch((error) => {
-    return 'offline';
+      if (state.players.length > 0) {
+        printPlayersToConsole(state.players);
+      }
+      resolve(state);
+    }).catch(reject);
   });
 }
 

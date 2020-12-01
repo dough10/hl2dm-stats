@@ -1343,9 +1343,9 @@ setInterval(_ => {
   cacheTopResponse().then(cacheDemos);
 }, (config.logRefreshTime * 1000) * 60);
 
-serverStatus = getServerStatus();
+serverStatus = await getServerStatus();
 setInterval(_ => {
-  serverStatus = getServerStatus();
+  serverStatus =  await getServerStatus();
 }, 5000);
 
 var j = schedule.scheduleJob('0 5 1 * *', cleanUp);
