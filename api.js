@@ -1,14 +1,11 @@
 #!/usr/bin/env node
-const figlet = require('figlet');                         // ascii art
 const path = require('path');                             // merger file / url names
 const fs = require('fs');                                 // work with the file system
 const readline = require('readline');                     // read file one line at a time
-const Gamedig = require('gamedig');                       // get data about game servers
 const SteamID = require('steamid');                       // work with steamid's
 const schedule = require('node-schedule');                // cronjob type schecduler
 const child_process = require("child_process");           // system peocesses
 const compression = require('compression');               // compress api responses
-const bcrypt = require('bcrypt');                         // hash and check passwords
 const express = require('express');                       // web api routing
 const app = express();                                    // express init
 var expressWs = require('express-ws')(app);               // WebSocket init
@@ -16,21 +13,20 @@ const io = require('@pm2/io');                            // pm2 functions
 const colors = require('colors');                         // colorize text
 const config = require(`${__dirname}/config.json`);       // config file location
 const logFolder = path.join(config.gameServerDir, 'logs');// game server log location
-const useragent = require('express-useragent');           // user browser data
-const MongoClient = require('mongodb').MongoClient;       // mongodb for streamkey storage
-const clear = require('clear');                           // clear screen
 
 
-clear();
-console.log(figlet.textSync('dough10/hl2dm-stats', {
-  horizontalLayout: 'default'
-}));
+// modules
+const init = require(path.join(__dirname, 'modules', 'init.js'));
+const Timer = require(path.join(__dirname, 'modules', 'Timer.js'));
+const authorize = require(path.join(__dirname, 'modules', 'auth.js'));
+const getServerStatus = require(path.join(__dirname, 'modules', 'gameServerStatus.js'));
+
+init();                                                    // ascii text /cheer
 
 print('Configure Express');
 app.use(compression());
 app.set('trust proxy', true);
 app.disable('x-powered-by');
-app.use(useragent.express());
 
 print(`Setup storage Variables`);
 
@@ -71,32 +67,6 @@ Object.size = obj => {
 function print(message) {
   var now = new Date().toLocaleString();
   console.log(`${now.yellow} - ${message}`);
-}
-
-/**
- * A class for timing duration of things
- */
-class Timer {
-  constructor() {
-    this.startTime = new Date().getTime();
-  }
-  end() {
-    var ms = new Date().getTime() - this.startTime;
-    var seconds = ms / 1000;
-    var hours = parseInt( seconds / 3600 );
-    seconds = seconds % 3600;
-    var minutes = parseInt( seconds / 60 );
-    seconds = seconds % 60;
-    return [
-      hours,
-      minutes,
-      seconds
-    ];
-  }
-  endString() {
-    var endTime = this.end();
-    return `${endTime[0]} hours ${endTime[1]} minutes ${endTime[2]} seconds`.cyan;
-  }
 }
 
 /**
@@ -1109,59 +1079,59 @@ function bytesToSize(bytes) {
    return `${Math.round(bytes / Math.pow(1024, i), 2)} ${sizes[i]}`;
 }
 
-var nr = 0;
-function printPlayersToConsole(players) {
-  if (!config.logPlayersToConsole) {
-    return;
-  }
-  if (new Date().getTime() < nr) {
-    return;
-  }
-  if (players[0].name) {
-    print(`Players Online`);
-  }
-  // print out players in server name and score  with a fixed length of 80 chars
-  for (var i = 0; i < players.length; i++) {
-    if (players[i].name) {
-      var name = players[i].name;
-      var score = players[i].score.toString();
-      var l = ((80 - name.length) - score.length) - 9;
-      var space = '';
-      for (var n = 1; n < l; n++) {
-        space = space + '-';
-      }
-      console.log(`${name.cyan} ${space.grey} score: ${score.green}`)
-    }
-  }
-  nr = new Date().getTime() + 60000;
-}
-
-/**
- * get GameDig data from game server
- */
-function getServerStatus() {
-  Gamedig.query({
-    type: 'hl2dm',
-    host: config.gameServerHostname
-  }).then((state) => {
-    serverStatus = state;
-    socket.send(JSON.stringify(serverStatus));
-    if (serverStatus.players.length > 0) {
-      // if a player has 60 kills update stats
-      for (var i = 0; i < serverStatus.players.length; i++) {
-        if (serverStatus.players[i].score === Number(serverStatus.raw.rules.mp_fraglimit) && !updated) {
-          updated = true;
-          setTimeout(_ => {
-            cacheTopResponse().then(cacheDemos);
-          }, 5000);
-        }
-      }
-    }
-    printPlayersToConsole(serverStatus.players);
-  }).catch((error) => {
-    serverStatus = 'offline';
-  });
-}
+// var nr = 0;
+// function printPlayersToConsole(players) {
+//   if (!config.logPlayersToConsole) {
+//     return;
+//   }
+//   if (new Date().getTime() < nr) {
+//     return;
+//   }
+//   if (players[0].name) {
+//     print(`Players Online`);
+//   }
+//   // print out players in server name and score  with a fixed length of 80 chars
+//   for (var i = 0; i < players.length; i++) {
+//     if (players[i].name) {
+//       var name = players[i].name;
+//       var score = players[i].score.toString();
+//       var l = ((80 - name.length) - score.length) - 9;
+//       var space = '';
+//       for (var n = 1; n < l; n++) {
+//         space = space + '-';
+//       }
+//       console.log(`${name.cyan} ${space.grey} score: ${score.green}`)
+//     }
+//   }
+//   nr = new Date().getTime() + 60000;
+// }
+//
+// /**
+//  * get GameDig data from game server
+//  */
+// function getServerStatus() {
+//   Gamedig.query({
+//     type: 'hl2dm',
+//     host: config.gameServerHostname
+//   }).then((state) => {
+//     serverStatus = state;
+//     socket.send(JSON.stringify(serverStatus));
+//     if (serverStatus.players.length > 0) {
+//       // if a player has 60 kills update stats
+//       for (var i = 0; i < serverStatus.players.length; i++) {
+//         if (serverStatus.players[i].score === Number(serverStatus.raw.rules.mp_fraglimit) && !updated) {
+//           updated = true;
+//           setTimeout(_ => {
+//             cacheTopResponse().then(cacheDemos);
+//           }, 5000);
+//         }
+//       }
+//     }
+//     printPlayersToConsole(serverStatus.players);
+//   }).catch((error) => {
+//     serverStatus = 'offline';
+//   });
+// }
 
 /**
  * end of month file cleanup process
@@ -1427,8 +1397,10 @@ setInterval(_ => {
   cacheTopResponse().then(cacheDemos);
 }, (config.logRefreshTime * 1000) * 60);
 
-getServerStatus();
-setInterval(getServerStatus, 5000);
+serverStatus = getServerStatus();
+setInterval(_ => {
+  serverStatus = getServerStatus();
+}, 5000);
 
 var j = schedule.scheduleJob('0 5 1 * *', cleanUp);
 
@@ -1563,31 +1535,13 @@ app.get('/auth', (req, res) => {
   var t = new Timer();
   who(req, `is requesting stream authorization`);
   var name = req.query.name;
-  var pass = req.query.k;
-  MongoClient.connect(config.dbURL, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true
-  }, (err, db) => {
-    if (err) throw err;
-    var dbo = db.db("hl2dm");
-    dbo.collection("stream-keys").findOne({
-      name: name
-    }, (err, result) => {
-      if (err) throw err;
-      db.close();
-      bcrypt.compare(pass, result.key, (err, match) => {
-        if (err) {
-          ioError('Error hashing password', err);
-          return console.error(err);
-        }
-        if (!match) {
-          return res.status(404).send('fail');
-        }
-        who(req, `authorized for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
-        return res.send('ok');
-      });
-    });
-  });
+  authorize(name, req.query.k).then(authorized => {
+    if (!authorized) {
+      return res.status(404).send('fail');
+    }
+    who(req, `authorized for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+    res.send('ok');
+  }).catch(console.error);
 });
 
 /**

@@ -4,6 +4,5 @@
   "gameServerHostname": "hl2dm.dough10.me",
   "gameServerDir": "Y:\\hl2dm\\hl2mp",
   "bulkStorage": "Z:\\old-stats",
-  "logRefreshTime": 60,
-  "logPlayersToConsole": true
+  "logRefreshTime": 60
 }

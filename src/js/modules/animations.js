@@ -1,6 +1,14 @@
 import * as ripples from './ripples.js';
-import {transitionEvent} from './whichtransistion.js';
-export {animateElement, animateScroll, fadeIn, fadeOut, animateHeight};
+import {
+  transitionEvent
+} from './whichtransistion.js';
+export {
+  animateElement,
+  animateScroll,
+  fadeIn,
+  fadeOut,
+  animateHeight
+};
 
 /**
  * animate transform / opacity on a give element

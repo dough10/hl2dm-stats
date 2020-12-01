@@ -1,14 +1,22 @@
 import * as animations from './modules/animations.js';
-import {qs, qsa} from './modules/helpers.js';
+import {
+  qs,
+  qsa
+} from './modules/helpers.js';
 import * as ripples from './modules/ripples.js';
-import {loadCSSFile, loadJSFile} from './modules/loadFiles.js';
-import {Toast} from './modules/toast.js';
+import {
+  loadCSSFile,
+  loadJSFile
+} from './modules/loadFiles.js';
+import {
+  Toast
+} from './modules/toast.js';
 
-var numPlayersOnline  = 0;
+var numPlayersOnline = 0;
 var playersOnline = [];
 var loaded = false;
 
-HTMLElement.prototype.onClick = function (cb) {
+HTMLElement.prototype.onClick = function(cb) {
   this.addEventListener('click', cb, false);
 };
 
@@ -22,9 +30,9 @@ class Timer {
   end() {
     var ms = new Date().getTime() - this.startTime;
     var seconds = ms / 1000;
-    var hours = parseInt( seconds / 3600 );
+    var hours = parseInt(seconds / 3600);
     seconds = seconds % 3600;
-    var minutes = parseInt( seconds / 60 );
+    var minutes = parseInt(seconds / 60);
     seconds = seconds % 60;
     return [
       hours,
@@ -168,9 +176,9 @@ function createSVG(d, count, title, suicides) {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.classList.add('svg');
   svg.classList.add('eight-right');
-  svg.setAttributeNS(null,"viewbox","0 0 24 24");
+  svg.setAttributeNS(null, "viewbox", "0 0 24 24");
   const path = document.createElementNS("http://www.w3.org/2000/svg", 'path');
-  path.setAttribute("d",d);
+  path.setAttribute("d", d);
   path.style.stroke = "#00000";
   svg.appendChild(path);
   wrapper.appendChild(svg);
@@ -524,7 +532,7 @@ function displayPlayerOnline(playersOnline) {
     qs('#reset-text').textContent = `Stats will reset ${resetTime.toDateString()} at ${resetTime.toLocaleTimeString()}`;
     animations.animateElement(el, 'translateY(0)', 800, 1, 0);
   } else if (loadtime.getDate() <= 2) {
-    var lastReset =  new Date(loadtime.getFullYear(), loadtime.getMonth(), 1);
+    var lastReset = new Date(loadtime.getFullYear(), loadtime.getMonth(), 1);
     lastReset.setHours(5);
     lastReset.setMinutes(0);
     lastReset.setSeconds(0);
@@ -584,7 +592,7 @@ function formatNumber(num) {
 function parseTopData(top, page, cb) {
   const killsIcon = "M7,5H23V9H22V10H16A1,1 0 0,0 15,11V12A2,2 0 0,1 13,14H9.62C9.24,14 8.89,14.22 8.72,14.56L6.27,19.45C6.1,19.79 5.76,20 5.38,20H2C2,20 -1,20 3,14C3,14 6,10 2,10V5H3L3.5,4H6.5L7,5M14,12V11A1,1 0 0,0 13,10H12C12,10 11,11 12,12A2,2 0 0,1 10,10A1,1 0 0,0 9,11V12A1,1 0 0,0 10,13H13A1,1 0 0,0 14,12Z";
   const deathsIcon = "M12,2A9,9 0 0,0 3,11C3,14.03 4.53,16.82 7,18.47V22H9V19H11V22H13V19H15V22H17V18.46C19.47,16.81 21,14 21,11A9,9 0 0,0 12,2M8,11A2,2 0 0,1 10,13A2,2 0 0,1 8,15A2,2 0 0,1 6,13A2,2 0 0,1 8,11M16,11A2,2 0 0,1 18,13A2,2 0 0,1 16,15A2,2 0 0,1 14,13A2,2 0 0,1 16,11M12,14L13.5,17H10.5L12,14Z";
-  const kdrIcon =   "M3 18.34C3 18.34 4 7.09 7 3L12 4L11 7.09H9V14.25H10C12 11.18 16.14 10.06 18.64 11.18C21.94 12.71 21.64 17.32 18.64 19.36C16.24 21 9 22.43 3 18.34Z";
+  const kdrIcon = "M3 18.34C3 18.34 4 7.09 7 3L12 4L11 7.09H9V14.25H10C12 11.18 16.14 10.06 18.64 11.18C21.94 12.71 21.64 17.32 18.64 19.36C16.24 21 9 22.43 3 18.34Z";
   for (let i = 0; i < top[0].length; i++) {
     const player = top[0][i];
     const wrapper = createWrapper();
@@ -713,7 +721,7 @@ function parseTopData(top, page, cb) {
   const wrapper2 = createWrapper();
   wrapper2.style.marginTop = '24px';
   var total = 0;
-  for (var n = 0; n < top[1].length; n++)  {
+  for (var n = 0; n < top[1].length; n++) {
     if (top[1][n][0] !== 'headshots') {
       total = total + top[1][n][1];
     }
@@ -766,7 +774,7 @@ function parseDemos(demos) {
     a.appendChild(card);
     qs('#page3').appendChild(a);
     ripples.attachButtonRipple(card);
-    if (idx === array.length - 1){
+    if (idx === array.length - 1) {
       console.log(`time to process demos ${timer.endString()}`);
     }
   });
@@ -932,10 +940,10 @@ function fetchDemos() {
  * @param {Element} parent - the element to append the finished option element
  */
 function makeOption(option, value, parent) {
- var el = document.createElement('option');
- el.textContent = option;
- el.value = value;
- parent.appendChild(el);
+  var el = document.createElement('option');
+  el.textContent = option;
+  el.value = value;
+  parent.appendChild(el);
 }
 
 /**
@@ -1092,12 +1100,12 @@ function homePage() {
     });
   }
   if (page3.style.display !== 'none') {
-      animations.fadeOut(page3).then(_ => {
-        page3.style.display = 'none';
-        page1.style.display = 'block';
-        animations.fadeIn(page1);
-      });
-    }
+    animations.fadeOut(page3).then(_ => {
+      page3.style.display = 'none';
+      page1.style.display = 'block';
+      animations.fadeIn(page1);
+    });
+  }
 }
 
 /**
