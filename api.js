@@ -137,12 +137,12 @@ function cacheTopResponse() {
           kills: 0
         };
       }
-      if (weapons.physics && weapons.physics.kills === 0) {
-        delete weapons.physics
-      }
       weapons.physics.kills = (weapons.physics.kills + weapons.physbox.kills) + weapons.world.kills;
       delete weapons.physbox;
       delete weapons.world;
+      if (weapons.physics && weapons.physics.kills === 0) {
+        delete weapons.physics
+      }
       // convert weapons object into sorted array by kill count array
       weapons = sortWeapons(weapons);
       for (var i = 0; i < top.length; i++) {
