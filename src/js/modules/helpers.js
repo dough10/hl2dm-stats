@@ -1,4 +1,7 @@
-export {qs, qsa}
+export {
+  qs,
+  qsa
+}
 
 // Get element(s) by CSS selector:
 function qs(selector, scope) {
