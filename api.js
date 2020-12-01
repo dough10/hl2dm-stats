@@ -928,7 +928,40 @@ function scanLine(line) {
  * @param {Number} big - big #
  */
 function calculatePrecent(small, big) {
-  return Math.round((small / big) * 100) || 0;
+  return Math.round((small / big) * 100);
+}
+
+/**
+ * calculates weapon stat values
+ *
+ * @param {String} weaponName - name of the weapon
+ * @param {String} weapon - stats associated with the named weapon
+ */
+function calculateWeaponStats(weaponsName, weapon) {
+  var shots = weapon.shots || 0;
+  var acc = calculatePrecent(weapon.hits, weapon.shots) || 0;
+  var hs = calculatePrecent(weapon.headshots, weapon.shots) || 0;
+  var shotsToKill = Math.floor(weapon.shots / weapon.kills) || 0;
+  var damage = weapon.damage || 0;
+  var adpk = Math.floor(weapon.damage / weapon.kills) || 0;
+  var adph = Math.floor(weapon.damage / weapon.hits) || 0;
+  var hss = weapon.hss || 0;
+  var lss = weapon.lss || 0;
+  return [
+    weaponsName,
+    weapon.kills,
+    [
+      shots,
+      acc,
+      hs,
+      shotsToKill,
+      damage,
+      adpk,
+      adph,
+      hss,
+      lss
+    ]
+  ];
 }
 
 /**
@@ -941,57 +974,9 @@ function sortWeapons(user) {
   for (weapon in user) {
     if (isWeapon(weapon)) {
       if (!user.id && weapons[weapon].kill !== 0) {
-        var shots = weapons[weapon].shots || 0;
-        var acc = calculatePrecent(weapons[weapon].hits, weapons[weapon].shots);
-        var hs = calculatePrecent(weapons[weapon].headshots, weapons[weapon].shots);
-        var shotsToKill = Math.floor(weapons[weapon].shots / weapons[weapon].kills) || 0;
-        var damage = weapons[weapon].damage || 0;
-        var adpk = Math.floor(weapons[weapon].damage / weapons[weapon].kills) || 0;
-        var adph = Math.floor(weapons[weapon].damage / weapons[weapon].hits) || 0;
-        var hss = weapons[weapon].hss || 0;
-        var lss = weapons[weapon].lss || 0;
-        sortArr.push([
-          weapon,
-          user[weapon].kills,
-          [
-            shots,
-            acc,
-            hs,
-            shotsToKill,
-            damage,
-            adpk,
-            adph,
-            hss,
-            lss
-          ]
-        ]);
+        sortArr.push(calculateWeaponStats(weapon, weapons[weapon]));
       } else if (user[weapon].kills !== 0) {
-        var shots = user[weapon].shots || 0;
-        var acc = calculatePrecent(user[weapon].hits, user[weapon].shots);
-        var hs = calculatePrecent(user[weapon].headshots, user[weapon].shots);
-        var shotsToKill = Math.floor(user[weapon].shots / user[weapon].kills) || 0;
-        var damage = user[weapon].damage;
-        var adpk = Math.floor(user[weapon].damage / user[weapon].kills) || 0;
-        var adph = Math.floor(user[weapon].damage / user[weapon].hits) || 0;
-        var hss = user[weapon].hss || 0;
-        var lss = user[weapon].lss || 0;
-        if (user[weapon].kills !== 0) {
-          sortArr.push([
-            weapon,
-            user[weapon].kills,
-            [
-              shots,
-              acc,
-              hs,
-              shotsToKill,
-              damage,
-              adpk,
-              adph,
-              hss,
-              lss
-            ]
-          ]);
-        }
+        sortArr.push(calculateWeaponStats(weapon, user[weapon]));
       }
       delete user[weapon];
     }
@@ -1334,10 +1319,14 @@ function totalStats(files) {
       if (!data[month[i][player].id]) {
         data[month[i][player].id] = month[i][player];
       }
-
     }
   }
   return data;
+}
+
+function roundEnd() {
+  updated = true;
+  cacheTopResponse().then(cacheDemos);
 }
 
 
@@ -1346,14 +1335,20 @@ setInterval(_ => {
   cacheTopResponse().then(cacheDemos);
 }, (config.logRefreshTime * 1000) * 60);
 
-getServerStatus().then(status => {
+
+
+getServerStatus(roundEnd).then(status => {
   serverStatus = status;
+  // socket.send(JSON.stringify(serverStatus));
 });
 setInterval(_ => {
-  getServerStatus().then(status => {
+  getServerStatus(roundEnd).then(status => {
     serverStatus = status;
+    // socket.send(JSON.stringify(serverStatus));
   });
 }, 5000);
+
+
 
 var j = schedule.scheduleJob('0 5 1 * *', cleanUp);
 
@@ -1363,7 +1358,6 @@ print(`Loading API backend calls`);
  * route for gettings player stats
  */
 app.get('/stats', (req, res) => {
-  // console.log(req.useragent.isChrome);
   var t = new Timer();
   res.send(JSON.stringify([
     top,
