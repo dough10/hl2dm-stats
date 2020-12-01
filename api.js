@@ -1079,60 +1079,6 @@ function bytesToSize(bytes) {
    return `${Math.round(bytes / Math.pow(1024, i), 2)} ${sizes[i]}`;
 }
 
-// var nr = 0;
-// function printPlayersToConsole(players) {
-//   if (!config.logPlayersToConsole) {
-//     return;
-//   }
-//   if (new Date().getTime() < nr) {
-//     return;
-//   }
-//   if (players[0].name) {
-//     print(`Players Online`);
-//   }
-//   // print out players in server name and score  with a fixed length of 80 chars
-//   for (var i = 0; i < players.length; i++) {
-//     if (players[i].name) {
-//       var name = players[i].name;
-//       var score = players[i].score.toString();
-//       var l = ((80 - name.length) - score.length) - 9;
-//       var space = '';
-//       for (var n = 1; n < l; n++) {
-//         space = space + '-';
-//       }
-//       console.log(`${name.cyan} ${space.grey} score: ${score.green}`)
-//     }
-//   }
-//   nr = new Date().getTime() + 60000;
-// }
-//
-// /**
-//  * get GameDig data from game server
-//  */
-// function getServerStatus() {
-//   Gamedig.query({
-//     type: 'hl2dm',
-//     host: config.gameServerHostname
-//   }).then((state) => {
-//     serverStatus = state;
-//     socket.send(JSON.stringify(serverStatus));
-//     if (serverStatus.players.length > 0) {
-//       // if a player has 60 kills update stats
-//       for (var i = 0; i < serverStatus.players.length; i++) {
-//         if (serverStatus.players[i].score === Number(serverStatus.raw.rules.mp_fraglimit) && !updated) {
-//           updated = true;
-//           setTimeout(_ => {
-//             cacheTopResponse().then(cacheDemos);
-//           }, 5000);
-//         }
-//       }
-//     }
-//     printPlayersToConsole(serverStatus.players);
-//   }).catch((error) => {
-//     serverStatus = 'offline';
-//   });
-// }
-
 /**
  * end of month file cleanup process
  */
