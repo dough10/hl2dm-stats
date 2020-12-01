@@ -2,7 +2,7 @@
   "port": 3000,
   "dbURL": "mongodb://192.168.86.2:27017/",
   "gameServerHostname": "hl2dm.dough10.me",
-  "gameServerDir": "Y:\\hl2dm\\hl2mp",
-  "bulkStorage": "Z:\\old-stats",
+  "gameServerDir": "/appdata/hl2dm/hl2mp",
+  "bulkStorage": "/media/nas/old-stats",
   "logRefreshTime": 60
 }
