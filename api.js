@@ -137,6 +137,9 @@ function cacheTopResponse() {
           kills: 0
         };
       }
+      if (weapons.physics.kills === 0) {
+        delete weapons.physics
+      }
       weapons.physics.kills = (weapons.physics.kills + weapons.physbox.kills) + weapons.world.kills;
       delete weapons.physbox;
       delete weapons.world;
@@ -1343,9 +1346,13 @@ setInterval(_ => {
   cacheTopResponse().then(cacheDemos);
 }, (config.logRefreshTime * 1000) * 60);
 
-serverStatus = getServerStatus();
+getServerStatus().then(status => {
+  serverStatus = status;
+});
 setInterval(_ => {
-  serverStatus = getServerStatus();
+  getServerStatus().then(status => {
+    serverStatus = status;
+  });
 }, 5000);
 
 var j = schedule.scheduleJob('0 5 1 * *', cleanUp);
