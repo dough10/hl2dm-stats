@@ -1283,7 +1283,7 @@ function who(req, message) {
       i = users[id].name;
     }
   }
-  if (i === '::1') i = 'LAN User'
+  if (i === '::1') i = 'LAN User';
   print(`${i.grey} ${message}`);
 }
 
@@ -1403,6 +1403,19 @@ app.get('/total', (req, res) => {
  */
 app.get('/status', (req, res) => {
   res.send(serverStatus);
+});
+
+/**
+ * route for gettings a individual players stats
+ */
+app.get('/playerStats/:name', (req, res) => {
+  var name = req.params.name;
+  for (var id in users) {
+    if (users[id].name === name) {
+      return res.send(JSON.stringify(users[id]));
+    }
+  }
+  res.status(404).send('');
 });
 
 /**
