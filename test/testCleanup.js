@@ -7,4 +7,6 @@ var bannedPlayers = data[3];
 var lastUpdate = new Date().getTime();
 
 
-cleanUp('testsave', top, weapons, totalPlayers, bannedPlayers, lastUpdate);
+cleanUp('testsave', top, weapons, totalPlayers, bannedPlayers, lastUpdate).then(_ => {
+  console.log('/cheer');
+});

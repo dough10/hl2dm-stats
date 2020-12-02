@@ -104,22 +104,24 @@ function deleteLogs() {
 
 
 function deleteDemos() {
-  fs.readdir(config.gameServerDir, (err, files) => {
-    if (err) {
-      ioError('Unable to scan directory', err);
-      return;
-    }
-    console.log(`${new Date().toLocaleString()} - Running demo file clean up`);
-    for (var i = 0; i < files.length; i++) {
-      if (path.extname(files[i]) === '.dem') {
-        numFiles++;
-        console.log(path.join(config.gameServerDir, files[i]));
-        // fs.unlinkSync(path.join(config.gameServerDir, files[i]));
+  return new Promise((resolve, reject) => {
+    fs.readdir(config.gameServerDir, (err, files) => {
+      if (err) {
+        reject('Unable to scan directory', err);
+        return;
       }
-    }
-    console.log(`${new Date().toLocaleString()} - Clean up complete. ${numFiles} files processed and backed up.`);
-    console.log(`${new Date().toLocaleString()} - Complete process took ${time.endString()}`)
-    cacheTopResponse().then(cacheDemos);
+      console.log(`${new Date().toLocaleString()} - Running demo file clean up`);
+      for (var i = 0; i < files.length; i++) {
+        if (path.extname(files[i]) === '.dem') {
+          numFiles++;
+          console.log(path.join(config.gameServerDir, files[i]));
+          // fs.unlinkSync(path.join(config.gameServerDir, files[i]));
+        }
+      }
+      console.log(`${new Date().toLocaleString()} - Clean up complete. ${numFiles} files processed and backed up.`);
+      console.log(`${new Date().toLocaleString()} - Complete process took ${time.endString()}`)
+      resolve();
+    });
   });
 }
 
@@ -127,17 +129,18 @@ function deleteDemos() {
  * end of month file cleanup process
  */
 function cleanUp(lastMonth, top, weapons, totalPlayers, bannedPlayers, lastUpdate) {
-  console.log(`${new Date().toLocaleString()} - Clean up started`);
-  var now = new Date();
-  var lastMonth = now.setMonth(now.getMonth() - 1);
-  time = new Timer();
-  saveTop(lastMonth, top, weapons, totalPlayers, bannedPlayers, lastUpdate)
-  .then(zipLogs)
-  .then(zipDemos)
-  .then(deleteLogs)
-  .then(deleteDemos)
-  .catch(e => {
-    console.log(e.message);
+  return new Promise((resolve, reject) => {
+    console.log(`${new Date().toLocaleString()} - Clean up started`);
+    var now = new Date();
+    var lastMonth = now.setMonth(now.getMonth() - 1);
+    time = new Timer();
+    saveTop(lastMonth, top, weapons, totalPlayers, bannedPlayers, lastUpdate)
+    .then(zipLogs)
+    .then(zipDemos)
+    .then(deleteLogs)
+    .then(deleteDemos)
+    .then(resolve)
+    .catch(reject);
   });
 }
 
