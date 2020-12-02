@@ -1333,6 +1333,14 @@ function roundEnd() {
   cacheTopResponse().then(cacheDemos);
 }
 
+function statsLoop() {
+  getServerStatus(roundEnd, updated).then(status => {
+    serverStatus = status;
+    if (socket) {
+      socket.send(JSON.stringify(serverStatus));
+    }
+  });
+}
 
 cacheTopResponse().then(cacheDemos);
 setInterval(_ => {
@@ -1340,20 +1348,8 @@ setInterval(_ => {
 }, (config.logRefreshTime * 1000) * 60);
 
 
-getServerStatus(roundEnd, updated).then(status => {
-  serverStatus = status;
-  // if (socket) {
-  //   socket.send(JSON.stringify(serverStatus));
-  // }
-});
-setInterval(_ => {
-  getServerStatus(roundEnd, updated).then(status => {
-    serverStatus = status;
-    // if (socket) {
-    //   socket.send(JSON.stringify(serverStatus));
-    // }
-  });
-}, 5000);
+statsLoop();
+setInterval(statsLoop, 5000);
 
 
 
