@@ -94,8 +94,8 @@ function deleteLogs() {
       console.log(`${new Date().toLocaleString()} - Running log file clean up`);
       for (var i = 0; i < files.length; i++) {
         numFiles++;
-        console.log(path.join(logFolder, files[i]));
-        // fs.unlinkSync(path.join(logFolder, files[i]));
+        // console.log(path.join(logFolder, files[i]));
+        fs.unlinkSync(path.join(logFolder, files[i]));
       }
       resolve();
     });
@@ -114,8 +114,8 @@ function deleteDemos() {
       for (var i = 0; i < files.length; i++) {
         if (path.extname(files[i]) === '.dem') {
           numFiles++;
-          console.log(path.join(config.gameServerDir, files[i]));
-          // fs.unlinkSync(path.join(config.gameServerDir, files[i]));
+          // console.log(path.join(config.gameServerDir, files[i]));
+          fs.unlinkSync(path.join(config.gameServerDir, files[i]));
         }
       }
       console.log(`${new Date().toLocaleString()} - Clean up complete. ${numFiles} files processed and backed up.`);

@@ -20,6 +20,8 @@ const init = require(path.join(__dirname, 'modules', 'init.js'));
 const Timer = require(path.join(__dirname, 'modules', 'Timer.js'));
 const authorize = require(path.join(__dirname, 'modules', 'auth.js'));
 const getServerStatus = require(path.join(__dirname, 'modules', 'gameServerStatus.js'));
+const cleanUp = require(path.join(__dirname, 'modules', 'fileCleanup.js'))
+
 
 init();                                                    // ascii text /cheer
 
@@ -1072,53 +1074,6 @@ function bytesToSize(bytes) {
 }
 
 /**
- * end of month file cleanup process
- */
-function cleanUp() {
-  print('Clean up started');
-  var now = new Date();
-  var lastMonth = now.setMonth(now.getMonth() - 1);
-  var times = new Timer();
-  zipDemos(lastMonth).then(zipLogs).then(saveTop).then(_ => {
-    var numFiles = 0;
-    fs.readdir(logFolder, (err, files) => {
-      if (err) {
-        ioError('Unable to scan directory', err);
-        return;
-      }
-      print(`Running log file clean up`);
-      numFiles = numFiles + files.length;
-      files.forEach(file => {
-        fs.unlinkSync(path.join(logFolder, file));
-      });
-      fs.readdir(config.gameServerDir, (err, filess) => {
-        if (err) {
-          ioError('Unable to scan directory', err);
-        }
-        print(`Running demo file clean up`);
-        var howMany = filess.length;
-        numFiles = numFiles + filess.length;
-        filess.forEach(file => {
-          howMany--;
-          if (path.extname(file) === '.dem') {
-            fs.unlinkSync(path.join(config.gameServerDir, file));
-            if (howMany <= 0) {
-              print(`Clean up complete. ${numFiles} files processed and backed up.`);
-              print(`Complete process took ${times.endString()}`)
-              top = [];
-              users = {};
-              cacheTopResponse().then(cacheDemos);
-            }
-          }
-        });
-      });
-    });
-  }).catch(e => {
-    console.log(e.message);
-  });
-}
-
-/**
  * grabs stats object from json file for a given month
  *
  * @param {Number} month - number of the month 0 - 11
@@ -1145,79 +1100,6 @@ function getOldStatsList(month) {
       reject();
     });
   });
-}
-
-/**
- * saves top data before log clear
- *
- * @param {Number} lastMonth - new Date() output for the time cleanup() was run
- */
-function saveTop(lastMonth) {
-  return new Promise((resolve, reject) => {
-    var folder = `${__dirname}/old-top`;
-    if (!fs.existsSync(folder)){
-      fs.mkdirSync(folder);
-    }
-    var filename = `${__dirname}/old-top/${lastMonth}.json`;
-    fs.writeFile(filename, JSON.stringify([
-      top,
-      weapons,
-      totalPlayers,
-      bannedPlayers,
-      lastUpdate
-    ]), e => {
-      if (e) {
-        reject(e);
-      }
-      if (!fs.existsSync(filename)){
-        reject();
-      }
-      print('top player data saved to ' + filename.green);
-      resolve();
-    });
-  });
-}
-
-/**
- * zips up log files before clear
- *S
- * @param {Number} lastMonth - new Date() output for the time cleanup() was run
- */
-function zipLogs(lastMonth) {
-  return new Promise((resolve, reject) => {
-    var folder = `${config.bulkStorage}/logs`;
-    if (!fs.existsSync(folder)){
-      fs.mkdirSync(folder);
-    }
-    var t = new Timer();
-    child_process.execSync(`zip -r ${config.bulkStorage}/logs/${lastMonth}.zip *`, {
-      cwd: logFolder
-    });
-    print(`Zippin logs complete: ${t.endString()} time to complete`);
-    print('Logs saved as ' + `${config.bulkStorage}/logs/${lastMonth}.zip`.green);
-    resolve(lastMonth);
-  });
-}
-
-/**
- * zip up demo files before clear
- *
- * @param {Number} lastMonth - new Date() output for the time cleanup() was run
- */
-function zipDemos(lastMonth) {
-  return new Promise((resolve, reject) => {
-    var folder = `${config.bulkStorage}/demos`;
-    if (!fs.existsSync(folder)){
-      fs.mkdirSync(folder);
-    }
-    var t = new Timer();
-    child_process.execSync(`zip -r ${config.bulkStorage}/demos/${lastMonth}.zip *.dem`, {
-      cwd: config.gameServerDir
-    });
-    print(`Zippin demos complete: ${t.endString()} time to complete`);
-    print('Demos saved as ' + `${config.bulkStorage}/demos/${lastMonth}.zip`.green);
-    resolve(lastMonth);
-  })
 }
 
 /**
@@ -1377,7 +1259,6 @@ app.get('/banned', (req, res) => {
   res.send(JSON.stringify(bannedPlayers));
   who(req, `is viewing ` + '/banned'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
 });
-
 
 app.get('/total', (req, res) => {
   var t = new Timer();
