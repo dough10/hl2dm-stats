@@ -20,7 +20,9 @@ const init = require(path.join(__dirname, 'modules', 'init.js'));
 const Timer = require(path.join(__dirname, 'modules', 'Timer.js'));
 const authorize = require(path.join(__dirname, 'modules', 'auth.js'));
 const getServerStatus = require(path.join(__dirname, 'modules', 'gameServerStatus.js'));
-const cleanUp = require(path.join(__dirname, 'modules', 'fileCleanup.js'))
+const cleanUp = require(path.join(__dirname, 'modules', 'fileCleanup.js'));
+const isWeapon = require(path.join(__dirname, 'modules', 'weaponsCheck.js'));
+const print = require(path.join(__dirname, 'modules', 'printer.js'));
 
 
 init();                                                    // ascii text /cheer
@@ -62,42 +64,6 @@ Object.size = obj => {
   }
   return size;
 };
-
-/**
- * print strings to log with cuttent time
- */
-function print(message) {
-  var now = new Date().toLocaleString();
-  console.log(`${now.yellow} - ${message}`);
-}
-
-/**
- * checks if weapon selection is a valid weapon name
- *
- * @param {String} weapon - name of a weapon
- */
-function isWeapon(weapon) {
-  var w = [
-    '357',
-    'ar2',
-    'combine_ball',
-    'crossbow_bolt',
-    'crowbar',
-    'grenade_frag',
-    'physbox',
-    'physics',
-    'pistol',
-    'shotgun',
-    'smg1',
-    'smg1_grenade',
-    'stunstick',
-    'rpg_missile',
-    'world',
-    'headshots',
-    'physcannon'
-  ];
-  return w.includes(weapon);
-}
 
 /**
  * check if ip  address is valid
@@ -1192,6 +1158,11 @@ function cacheDemos() {
 }
 
 
+/**
+ * total all players stats for all months
+ *
+ * @param {Array} files - list of all stats JSON files
+ */
 function totalStats(files) {
   // load file data into f variable
   var data = {};
@@ -1210,11 +1181,17 @@ function totalStats(files) {
   return data;
 }
 
+/**
+ * runs when player reaches fragLimit
+ */
 function roundEnd() {
   updated = true;
   cacheTopResponse().then(cacheDemos);
 }
 
+/**
+ * caches list of avaliable demo files
+ */
 function statsLoop() {
   getServerStatus(roundEnd, updated).then(status => {
     serverStatus = status;
@@ -1288,6 +1265,7 @@ app.get('/who', (req, res) => {
     arr.push(users[id].name);
   }
   res.send(arr);
+  who(req, `is viewing ` + '/who'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
 });
 
 /**
@@ -1299,6 +1277,7 @@ app.get('/playerStats/:name', (req, res) => {
     if (users[id].name === name) {
       var obj = { ...users[id] }
       obj.weapons = sortWeapons(obj);
+      who(req, `is viewing ` + '/playerStats'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
       return res.send(JSON.stringify(obj));
     }
   }
