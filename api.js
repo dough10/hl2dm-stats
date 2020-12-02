@@ -1260,6 +1260,7 @@ app.get('/status', (req, res) => {
  * route for getting who has played in server
  */
 app.get('/who', (req, res) => {
+  var t = new Timer();
   var arr = [];
   for (var id in users) {
     arr.push(users[id].name);
@@ -1272,6 +1273,7 @@ app.get('/who', (req, res) => {
  * route for gettings a individual players stats
  */
 app.get('/playerStats/:name', (req, res) => {
+  var t = new Timer();
   var name = req.params.name;
   for (var id in users) {
     if (users[id].name === name) {
