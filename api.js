@@ -1336,15 +1336,18 @@ setInterval(_ => {
 }, (config.logRefreshTime * 1000) * 60);
 
 
-
 getServerStatus(roundEnd).then(status => {
   serverStatus = status;
-  // socket.send(JSON.stringify(serverStatus));
+  if (socket) {
+    socket.send(JSON.stringify(serverStatus));
+  }
 });
 setInterval(_ => {
   getServerStatus(roundEnd).then(status => {
     serverStatus = status;
-    // socket.send(JSON.stringify(serverStatus));
+    if (socket) {
+      socket.send(JSON.stringify(serverStatus));
+    }
   });
 }, 5000);
 
