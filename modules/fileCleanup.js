@@ -7,6 +7,7 @@ const colors = require('colors');                         // colorize text
 const Timer = require(path.join(__dirname, 'Timer.js'));
 
 var numFiles = 0;                                         // running total of files deleted
+var time;
 
 /**
  * saves top data before log clear
@@ -117,7 +118,7 @@ function deleteDemos() {
       }
     }
     console.log(`${new Date().toLocaleString()} - Clean up complete. ${numFiles} files processed and backed up.`);
-    console.log(`${new Date().toLocaleString()} - Complete process took ${times.endString()}`)
+    console.log(`${new Date().toLocaleString()} - Complete process took ${time.endString()}`)
     cacheTopResponse().then(cacheDemos);
   });
 }
@@ -129,7 +130,7 @@ function cleanUp(lastMonth, top, weapons, totalPlayers, bannedPlayers, lastUpdat
   console.log(`${new Date().toLocaleString()} - Clean up started`);
   var now = new Date();
   var lastMonth = now.setMonth(now.getMonth() - 1);
-  var times = new Timer();
+  time = new Timer();
   saveTop(lastMonth, top, weapons, totalPlayers, bannedPlayers, lastUpdate)
   .then(zipLogs)
   .then(zipDemos)
