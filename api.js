@@ -1406,6 +1406,17 @@ app.get('/status', (req, res) => {
 });
 
 /**
+ * route for getting who has played in server
+ */
+app.get('/who', (req, res) => {
+  var arr = [];
+  for (var id in users) {
+    arr.push(users[id].name);
+  }
+  res.send(arr);
+});
+
+/**
  * route for gettings a individual players stats
  */
 app.get('/playerStats/:name', (req, res) => {
