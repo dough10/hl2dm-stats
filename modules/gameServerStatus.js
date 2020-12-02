@@ -27,7 +27,7 @@ function printPlayersToConsole(players) {
 /**
  * get GameDig data from game server
  */
-function getstate(onFragLimit) {
+function getstate(onFragLimit, updated) {
   return new Promise((resolve, reject) => {
     Gamedig.query({
       type: 'hl2dm',
