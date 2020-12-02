@@ -1195,7 +1195,9 @@ function roundEnd() {
 function statsLoop() {
   getServerStatus(roundEnd, updated).then(status => {
     serverStatus = status;
-    socket.send(JSON.stringify(serverStatus), console.log);
+    if (socket) {
+      socket.send(JSON.stringify(serverStatus), console.log);
+    }
   });
 }
 
