@@ -1411,7 +1411,6 @@ app.get('/status', (req, res) => {
 app.get('/playerStats/:name', (req, res) => {
   var name = req.params.name;
   for (var id in users) {
-    console.log(id, users[id].name)
     if (users[id].name === name) {
       return res.send(JSON.stringify(users[id]));
     }
