@@ -974,6 +974,7 @@ function sortWeapons(user) {
   for (weapon in user) {
     if (isWeapon(weapon)) {
       if (!user.id) {
+        console.log(weapon, weapons[weapon].kill)
         if (weapons[weapon].kill !== 0) {
           sortArr.push(calculateWeaponStats(weapon, weapons[weapon]));
         }
