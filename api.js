@@ -975,8 +975,10 @@ function sortWeapons(user) {
     if (isWeapon(weapon)) {
       if (!user.id && weapons[weapon].kill !== 0) {
         sortArr.push(calculateWeaponStats(weapon, weapons[weapon]));
-      } else if (user[weapon].kills !== 0) {
-        sortArr.push(calculateWeaponStats(weapon, user[weapon]));
+      } else {
+        if (user[weapon].kills !== 0) {
+          sortArr.push(calculateWeaponStats(weapon, user[weapon]));
+        }
       }
       delete user[weapon];
     }
@@ -1336,14 +1338,14 @@ setInterval(_ => {
 }, (config.logRefreshTime * 1000) * 60);
 
 
-getServerStatus(roundEnd).then(status => {
+getServerStatus(roundEnd, updated).then(status => {
   serverStatus = status;
   if (socket) {
     socket.send(JSON.stringify(serverStatus));
   }
 });
 setInterval(_ => {
-  getServerStatus(roundEnd).then(status => {
+  getServerStatus(roundEnd, updated).then(status => {
     serverStatus = status;
     if (socket) {
       socket.send(JSON.stringify(serverStatus));
