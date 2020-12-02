@@ -1342,16 +1342,16 @@ setInterval(_ => {
 
 getServerStatus(roundEnd, updated).then(status => {
   serverStatus = status;
-  if (socket) {
-    socket.send(JSON.stringify(serverStatus));
-  }
+  // if (socket) {
+  //   socket.send(JSON.stringify(serverStatus));
+  // }
 });
 setInterval(_ => {
   getServerStatus(roundEnd, updated).then(status => {
     serverStatus = status;
-    if (socket) {
-      socket.send(JSON.stringify(serverStatus));
-    }
+    // if (socket) {
+    //   socket.send(JSON.stringify(serverStatus));
+    // }
   });
 }, 5000);
 
