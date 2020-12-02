@@ -975,8 +975,10 @@ function sortWeapons(user) {
     if (isWeapon(weapon)) {
       if (!user.id && weapons[weapon].kill !== 0) {
         sortArr.push(calculateWeaponStats(weapon, weapons[weapon]));
-      } else if (user[weapon].kills !== 0) {
-        sortArr.push(calculateWeaponStats(weapon, user[weapon]));
+      } else {
+        if (user[weapon].kills !== 0) {
+          sortArr.push(calculateWeaponStats(weapon, user[weapon]));
+        }
       }
       delete user[weapon];
     }
