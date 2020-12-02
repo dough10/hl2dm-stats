@@ -1423,7 +1423,9 @@ app.get('/playerStats/:name', (req, res) => {
   var name = req.params.name;
   for (var id in users) {
     if (users[id].name === name) {
-      return res.send(JSON.stringify(users[id]));
+      var obj = { ...users[id] }
+      obj.weapons = sortWeapons(obj);
+      return res.send(JSON.stringify(obj));
     }
   }
   res.status(404).send('');
