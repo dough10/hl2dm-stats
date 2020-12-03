@@ -2,6 +2,7 @@ var fs = require( 'fs' );
 var esperanto = require( 'esperanto' );
 var uglifyJS = require('uglify-es');
 var minify = require('html-minifier').minify;
+var uglifycss = require('uglifycss');
 
 
 const files = [
@@ -37,7 +38,7 @@ function copyFile(filePath) {
 
 
 function bundleImports() {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     esperanto.bundle({
       base: 'src/js', // optional, defaults to current dir
       entry: 'main.js' // the '.js' is optional
@@ -50,7 +51,7 @@ function bundleImports() {
 
 
 function minifyHTML() {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     fs.readFile('./src/index.html', 'utf8', (err, html) => {
       var smallHTML = minify(html, {
         removeAttributeQuotes: true,
@@ -66,13 +67,23 @@ function minifyHTML() {
 
 
 function uglifyJavaScript(js) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     var uglyCode = uglifyJS.minify(js);
     if (uglyCode.error) {
       console.log(uglyCode.error)
       return;
     }
     fs.writeFile( './html/js/main.js', uglyCode.code, resolve);
+  });
+}
+
+function uglyCss() {
+  return new Promise((resolve) => {
+    var uglified = uglifycss.processFiles(
+      [ './src/css/base.css'],
+      { maxLineLen: 500, expandVars: true }
+    );
+    fs.writeFile( './html/css/base.css', uglified, resolve);
   });
 }
 
@@ -96,5 +107,6 @@ if (!fs.existsSync(jsFolder)){
 
 bundleImports()
 .then(uglifyJavaScript)
+.then(uglyCss)
 .then(minifyHTML)
 .then(_ => files.forEach(copyFile));
