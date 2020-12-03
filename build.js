@@ -107,5 +107,6 @@ if (!fs.existsSync(jsFolder)){
 
 bundleImports()
 .then(uglifyJavaScript)
+.then(uglyCss)
 .then(minifyHTML)
 .then(_ => files.forEach(copyFile));
