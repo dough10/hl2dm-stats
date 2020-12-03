@@ -1,16 +1,8 @@
 import * as animations from './modules/animations.js';
-import {
-  qs,
-  qsa
-} from './modules/helpers.js';
+import {qs, qsa} from './modules/helpers.js';
 import * as ripples from './modules/ripples.js';
-import {
-  loadCSSFile,
-  loadJSFile
-} from './modules/loadFiles.js';
-import {
-  Toast
-} from './modules/toast.js';
+import {loadCSSFile, loadJSFile} from './modules/loadFiles.js';
+import {Toast} from './modules/toast.js';
 import {Timer} from './modules/Timer.js';
 
 
