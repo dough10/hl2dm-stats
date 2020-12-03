@@ -488,7 +488,7 @@ function statsLoop() {
       socket.send(JSON.stringify(serverStatus), e => {});
     }
   }, err => {
-    serverStatus = 'Offline';
+    serverStatus = 'offline';
   });
 }
 
