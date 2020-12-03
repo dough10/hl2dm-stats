@@ -4,7 +4,7 @@
   "description": "",
   "main": "api.js",
   "scripts": {
-    "start": "forever start api.js -l -o -e",
+    "start": "pm2 start api.js --watch",
     "build": "node build.js",
     "monitor": "./monitor.sh",
     "update-app": "./update.sh"
