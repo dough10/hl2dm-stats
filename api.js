@@ -526,6 +526,9 @@ app.get('/banned', (req, res) => {
   who(req, `is viewing ` + '/banned'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
 });
 
+/**
+ * route for gettings a total of player stats
+ */
 app.get('/total', (req, res) => {
   var t = new Timer();
   fs.readdir(`${__dirname}/old-top`, (err, files) => {
