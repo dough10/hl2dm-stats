@@ -573,7 +573,7 @@ app.get('/playerStats/:name', (req, res) => {
     if (users[id].name === name) {
       var obj = { ...users[id] }
       obj.weapons = sortWeapons(obj);
-      who(req, `is viewing ` + '/playerStats'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+      who(req, `is viewing ` + '/playerStats'.green + ` data for ${name.green}` + `${t.end()[2]} seconds`.cyan + ` response time`);
       return res.send(JSON.stringify(obj));
     }
   }
