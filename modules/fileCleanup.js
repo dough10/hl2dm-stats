@@ -5,6 +5,7 @@ const child_process = require("child_process");           // system peocesses
 const logFolder = path.join(config.gameServerDir, 'logs');// game server log location
 const colors = require('colors');                         // colorize text
 const Timer = require(path.join(__dirname, 'Timer.js'));
+const print = require(path.join(__dirname, 'printer.js'));
 
 var numFiles = 0;                                         // running total of files deleted
 var time;
@@ -36,7 +37,7 @@ function saveTop(lastMonth, top, weapons, totalPlayers, bannedPlayers, lastUpdat
         reject();
         return;
       }
-      console.log(`${new Date().toLocaleString()} - top player data saved to ` + filename.green);
+      print(`top player data saved to ` + filename.green);
       resolve(lastMonth);
     });
   });
@@ -57,8 +58,8 @@ function zipLogs(lastMonth) {
     child_process.execSync(`zip -r ${config.bulkStorage}/logs/${lastMonth}.zip *`, {
       cwd: logFolder
     });
-    console.log(`${new Date().toLocaleString()} - Zippin logs complete: ${t.endString()} time to complete`);
-    console.log(`${new Date().toLocaleString()} - Logs saved as ` + `${config.bulkStorage}/logs/${lastMonth}.zip`.green);
+    print(`Zippin logs complete: ${t.endString()} time to complete`);
+    print(`Logs saved as ` + `${config.bulkStorage}/logs/${lastMonth}.zip`.green);
     resolve(lastMonth);
   });
 }
@@ -78,8 +79,8 @@ function zipDemos(lastMonth) {
     child_process.execSync(`zip -r ${config.bulkStorage}/demos/${lastMonth}.zip *.dem`, {
       cwd: config.gameServerDir
     });
-    console.log(`${new Date().toLocaleString()} - Zippin demos complete: ${t.endString()} time to complete`);
-    console.log(`${new Date().toLocaleString()} - Demos saved as ` + `${config.bulkStorage}/demos/${lastMonth}.zip`.green);
+    print(`Zippin demos complete: ${t.endString()} time to complete`);
+    print(`Demos saved as ` + `${config.bulkStorage}/demos/${lastMonth}.zip`.green);
     resolve(lastMonth);
   })
 }
@@ -91,7 +92,7 @@ function deleteLogs() {
         reject('Unable to scan directory', err);
         return;
       }
-      console.log(`${new Date().toLocaleString()} - Running log file clean up`);
+      print(`Running log file clean up`);
       for (var i = 0; i < files.length; i++) {
         numFiles++;
         // console.log(path.join(logFolder, files[i]));
@@ -110,7 +111,7 @@ function deleteDemos() {
         reject('Unable to scan directory', err);
         return;
       }
-      console.log(`${new Date().toLocaleString()} - Running demo file clean up`);
+      print(`Running demo file clean up`);
       for (var i = 0; i < files.length; i++) {
         if (path.extname(files[i]) === '.dem') {
           numFiles++;
@@ -118,8 +119,8 @@ function deleteDemos() {
           fs.unlinkSync(path.join(config.gameServerDir, files[i]));
         }
       }
-      console.log(`${new Date().toLocaleString()} - Clean up complete. ${numFiles} files processed and backed up.`);
-      console.log(`${new Date().toLocaleString()} - Complete process took ${time.endString()}`)
+      print(`Clean up complete. ${numFiles} files processed and backed up.`);
+      print(`Complete process took ${time.endString()}`)
       resolve();
     });
   });
@@ -130,7 +131,7 @@ function deleteDemos() {
  */
 function cleanUp(lastMonth, top, weapons, totalPlayers, bannedPlayers, lastUpdate) {
   return new Promise((resolve, reject) => {
-    console.log(`${new Date().toLocaleString()} - Clean up started`);
+    print(`Clean up started`);
     var now = new Date();
     var lastMonth = now.setMonth(now.getMonth() - 1);
     time = new Timer();
