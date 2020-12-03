@@ -1,8 +1,9 @@
-/html/
+# /html/maps/
+# /html/
 /node_modules/
 /logs/
 /IDcache/
 /old-top/
 /.vscode/
-/config.json
+# /config.json
 
