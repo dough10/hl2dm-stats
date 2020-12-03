@@ -4,7 +4,7 @@
   "description": "",
   "main": "api.js",
   "scripts": {
-    "start": "pm2 start api.js --watch",
+    "start": "pm2 start /var/www/hl2dm/api.js --watch",
     "build": "node build.js",
     "monitor": "./monitor.sh",
     "update-app": "./update.sh"

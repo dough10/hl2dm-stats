@@ -1024,20 +1024,20 @@ function favWeapon(weapons) {
  */
 function connectWSS() {
   const socket = new WebSocket('wss://hl2dm.dough10.me/api');
-  socket.onopen = console.log(`${new Date()} WebSocket connected`);
+  socket.onopen = console.log(`${new Date().toLocaleString()} - WebSocket connected`);
   socket.onmessage = event => {
     const data = JSON.parse(event.data);
     parseServerStatus(data);
   };
   socket.onclose = _ => {
     var seconds = 2;
-    console.log(`${new Date()} - Socket close. Reconnecting in ${seconds} seconds.`);
+    console.log(`${new Date().toLocaleString()} - Socket close. Reconnecting in ${seconds} seconds.`);
     setTimeout(_ => {
       connectWSS();
     }, seconds * 1000);
   };
   socket.onerror = err => {
-    console.error(`${new Date()} - Socket encountered error: ${err.message} closing socket`);
+    console.error(`${new Date().toLocaleString()} - Socket encountered error: ${err.message} closing socket`);
     socket.close();
   };
 }
