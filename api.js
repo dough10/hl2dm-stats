@@ -8,7 +8,7 @@ const express = require('express');                       // web api routing
 const app = express();                                    // express init
 var expressWs = require('express-ws')(app);               // WebSocket init
 const colors = require('colors');                         // colorize text
-const config = require(`${__dirname}/config.json`);       // config file location
+const config = require(`config.json`);                    // config file location
 const logFolder = path.join(config.gameServerDir, 'logs');// game server log location
 
 
