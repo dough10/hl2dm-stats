@@ -5,6 +5,9 @@ const name = args[0];
 const key = args[1];
 const dbURL = require(`${__dirname}/config.json`).dbURL;
 
+if (!name) throw Error("name required");
+if (!key) throw Error("key required");
+
 MongoClient.connect(dbURL, {
   useUnifiedTopology: true,
   useNewUrlParser: true
