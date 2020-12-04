@@ -337,14 +337,13 @@ function scanLine(line, users, weapons, bannedPlayers) {
      users[id].name = name;
     }
     // log chat
-    var said = `${new Date(lineTime).toLocaleString()} ${name}`;
+    var said = `${new Date(lineTime).toLocaleString()} `;
     for (var i = (isChat + 1); i < word.length; i++) {
      said = `${said}${word[i]} `;
     }
     said.replace('"', '');
     said.replace('"', '');
     users[id].chat.push(said);
-    console.log(said);
   } else if (isBanned) {
     // important data
     const nameString = buildKillerNameString(word, isBanned);
@@ -439,12 +438,12 @@ function scanLine(line, users, weapons, bannedPlayers) {
     if (!users[killedID]) {
       users[killedID] = playerObj(killedName, killedID, lineTime);
     }
-    // update killer name if changed
+    // update killer name
     if (lineTime >= users[killerID].updated) {
       users[killerID].updated = lineTime;
       users[killerID].name = killerName;
     }
-    // update killed name if changed
+    // update killed name
     if (lineTime > users[killedID].updated) {
       users[killedID].updated = lineTime;
       users[killedID].name = killedName;
