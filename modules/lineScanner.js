@@ -403,10 +403,10 @@ function scanLine(line, users, weapons, bannedPlayers) {
     }
   } else if (isKill) {
     // get players details
-    const killerNameString = buildKillerNameString(word, isKill);
+    const killerNameString = buildKillerNameString(word, isKill);  // isKill is the index after the last index of the player name
     const killerID = getID3(killerNameString);
     const killerName = getName(killerNameString);
-    const killedNameString = buildKilledNameString(word, isKill + 1);
+    const killedNameString = buildKilledNameString(word, isKill + 1); // isKill + 1 is the index @ the beginning of the killed players name
     const killedID = getID3(killedNameString);
     const killedName = getName(killedNameString);
     const weapon = word[word.length - 1].replace('"', '').replace('"', '');
