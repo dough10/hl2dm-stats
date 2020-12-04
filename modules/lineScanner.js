@@ -337,13 +337,14 @@ function scanLine(line, users, weapons, bannedPlayers) {
      users[id].name = name;
     }
     // log chat
-    var said = `${new Date(lineTime).toLocaleString()}, `;
+    var said = `${new Date(lineTime).toLocaleString()} ${name}`;
     for (var i = (isChat + 1); i < word.length; i++) {
      said = `${said}${word[i]} `;
     }
     said.replace('"', '');
     said.replace('"', '');
     users[id].chat.push(said);
+    console.log(said);
   } else if (isBanned) {
     // important data
     const nameString = buildKillerNameString(word, isBanned);
