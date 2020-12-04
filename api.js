@@ -57,6 +57,31 @@ Object.size = obj => {
   return size;
 };
 
+function mergePhysicsKills(user) {
+  // merge physics kills
+  if (!user.physics) {
+    user.physics = {
+      kills: 0
+    };
+  }
+  if (!user.physbox) {
+    user.physbox = {
+      kills: 0
+    };
+  }
+  if (!user.world) {
+    user.world = {
+      kills: 0
+    };
+  }
+  user.physics.kills = (user.physics.kills + user.physbox.kills) + user.world.kills;
+  delete user.physbox;
+  delete user.world;
+  if (user.physics.kills === 0) {
+    delete user.physics
+  }
+}
+
 /**
  * stores top data in memory for fast response times
  * cleans up un nessacery entrys and merges physics kills,
@@ -72,61 +97,21 @@ function cacheTopResponse() {
     var time = new Timer();
     parseLogs().then(stats => {
       top = stats;
-      // merge physics kills
-      if (!weapons.physics) {
-        weapons.physics = {
-          kills: 0
-        };
-      }
-      if (!weapons.physbox) {
-        weapons.physbox = {
-          kills: 0
-        };
-      }
-      if (!weapons.world) {
-        weapons.world = {
-          kills: 0
-        };
-      }
-      weapons.physics.kills = (weapons.physics.kills + weapons.physbox.kills) + weapons.world.kills;
-      delete weapons.physbox;
-      delete weapons.world;
-      if (weapons.physics && weapons.physics.kills === 0) {
-        delete weapons.physics
-      }
-      // convert weapons object into sorted array by kill count array
+
+      // weapons stats
+      mergePhysicsKills(weapons);
       weapons = sortWeapons(weapons);
+
+      // players stats
       for (var i = 0; i < top.length; i++) {
-        // merge player physics kills
-        if (!top[i].physics) {
-          top[i].physics = {
-            kills: 0
-          };
-        }
-        if (!top[i].physbox) {
-          top[i].physbox = {
-            kills: 0
-          };
-        }
-        if (!top[i].world) {
-          top[i].world = {
-            kills: 0
-          };
-        }
-        top[i].physics.kills = (top[i].physics.kills + top[i].physbox.kills) + top[i].world.kills;
-        delete top[i].physbox;
-        delete top[i].world;
+        mergePhysicsKills(top[i]);
         delete top[i].updated;
-        // remove weapons with 0 kills from object
-        if (top[i].physics.kills === 0) {
-          delete top[i].physics;
-        }
-        // extract weapons from player object and place in sorted by kill count array
         top[i].weapons = sortWeapons(top[i]);
       }
-      // do weapon stats for banned players
+      // banned players stats
       var arr = [];
       for (var player in bannedPlayers) {
+        mergePhysicsKills(bannedPlayers[player]);
         bannedPlayers[player].weapons = sortWeapons(bannedPlayers[player]);
         arr.push(bannedPlayers[player]);
       }
@@ -138,7 +123,7 @@ function cacheTopResponse() {
       lastUpdate = new Date().getTime();
       print(`Next stats update will be ${new Date(lastUpdate + (config.logRefreshTime * 1000) * 60).toLocaleString().cyan}`)
       resolve();
-    });
+    }).catch(reject);
   });
 }
 
@@ -148,10 +133,8 @@ function cacheTopResponse() {
 function parseLogs() {
   return new Promise((resolve, reject) => {
     fs.readdir(logFolder, (err, files) => {
-      var remaining = '';
       if (err) {
-        ioError('Unable to scan directory', err);
-        print(`Unable to scan directory: ` + err);
+        reject(`Unable to scan directory: ` + err);
         return ;
       }
       totalFiles = files.length;
@@ -171,8 +154,7 @@ function parseLogs() {
             }
           });
         } catch (e) {
-          ioError('Unable to scan directory', e);
-          console.error(e);
+          reject(e);
         }
       });
     });
@@ -223,9 +205,9 @@ function calculateWeaponStats(weaponsName, weapon) {
 }
 
 /**
- * removes weapon specific data from user object and places it in it's own array
+ * remove weapon specific data from user object and place it in it's own array
  *
- * @param {Object} user - a user object we need to reconstruct a weapn data array fro
+ * @param {Object} user - a user object we need to construct a weapn data array fro
  */
 function sortWeapons(user) {
   var sortArr = [];
@@ -243,9 +225,11 @@ function sortWeapons(user) {
       delete user[weapon];
     }
   }
+  // sort array by kill count
   sortArr.sort((a, b) => {
     return a[1] - b[1];
   });
+  // reverse array cause i still can't javascript
   sortArr.reverse();
   return sortArr;
 }
@@ -255,15 +239,18 @@ function sortWeapons(user) {
  */
 function sortUsersByKDR() {
   var arr = [];
-  totalPlayers = Object.size(users);
+  totalPlayers = Object.size(users);   // total # of players to has joined the server
   for (var user in users) {
+    // push non banned players with over 100 kills to top Array
     if (users[user].kills >= 100 && !users[user].banned) {
       arr.push(users[user]);
     }
   }
+  // do the actual sorting
   arr.sort((a,b) => {
     return a.kdr - b.kdr;
   });
+  // rever array cause i don't know how to javascript.
   arr.reverse();
   return arr;
 }
@@ -434,10 +421,11 @@ function cacheDemos() {
   getDemos().then(demos => {
    for (var i = 0; i < demos.length; i++) {
      if (i !== demos.length - 1) {
+       var filepath = path.join(config.gameServerDir, demos[i])
        arr.push([
          demos[i],
-         bytesToSize(getFilesizeInBytes(`${config.gameServerDir}/${demos[i]}`)),
-         createdDate(`${config.gameServerDir}/${demos[i]}`)
+         bytesToSize(getFilesizeInBytes(filepath)),
+         createdDate(filepath)
        ]);
      }
    }
@@ -492,9 +480,9 @@ function statsLoop() {
   });
 }
 
-cacheTopResponse().then(cacheDemos);
+cacheTopResponse().then(cacheDemos).catch(ioError);
 setInterval(_ => {
-  cacheTopResponse().then(cacheDemos);
+  cacheTopResponse().then(cacheDemos).catch(ioError);
 }, (config.logRefreshTime * 1000) * 60);
 
 statsLoop();
