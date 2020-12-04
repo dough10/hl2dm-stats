@@ -231,7 +231,8 @@ function monthName(month) {
 }
 
 /**
- * returns the text valuse to represent the weapon used
+ * returns the text value to represent the weapon used 
+ * also the name of the class to display the correct font
  *
  * @param {String} weapon - weapon needing icon
  */
@@ -301,7 +302,7 @@ function isLessThenOne(p) {
 }
 
 /**
- * creates a element a add text content
+ * creates a element and add text content
  *
  * @param {String} text - the string of text to display in the element
  * @param {String} color - color to display the text
@@ -378,11 +379,14 @@ function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, s
 /**
  * displays weapon stats
  *
- * @param {Array} wrappers - list of elements to send output to
+ * @param {Array} wrappers - pair of elements to send output to limit 2
  * @param {Array} weapons - list of weapons
  * @param {Number} kills - total number of kills
  */
 function displayWeaponData(wrappers, weapons, kills) {
+  if (wrappers.length > 2) {
+    throw Error('List or wrappers for weapons must not excede length of 2');
+  }
   for (let i = 0; i < weapons.length; i++) {
     const weaponName = weapons[i][0];
     var count = weapons[i][1];
