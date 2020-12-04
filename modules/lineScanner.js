@@ -595,7 +595,7 @@ function scanLine(line, users, weapons, bannedPlayers) {
       weapons[weaponName] = weaponObj();
     }
     // highest single shot damage
-    if (hits === 1 && damage > weapons[weaponName].hss && damage < 1000) {
+    if (hits === 1 && damage > weapons[weaponName].hss) {
       weapons[weaponName].hss = damage;
     }
     // lowest single shot damage
