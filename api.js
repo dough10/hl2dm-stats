@@ -6,7 +6,7 @@ const schedule = require('node-schedule');                // cronjob type schecd
 const compression = require('compression');               // compress api responses
 const express = require('express');                       // web api routing
 const app = express();                                    // express init
-var expressWs = require('express-ws')(app);               // WebSocket init
+const expressWs = require('express-ws')(app);               // WebSocket init
 const colors = require('colors');                         // colorize text
 const config = require(`./config.json`);                    // config file location
 const logFolder = path.join(config.gameServerDir, 'logs');// game server log location
@@ -211,11 +211,11 @@ function calculateWeaponStats(weaponsName, weapon) {
  */
 function sortWeapons(user) {
   var sortArr = [];
-  for (weapon in user) {
+  for (var weapon in user) {
     if (isWeapon(weapon)) {
       if (!user.id) {
-        if (weapons[weapon].kills !== 0) {
-          sortArr.push(calculateWeaponStats(weapon, weapons[weapon]));
+        if (user[weapon].kills !== 0) {
+          sortArr.push(calculateWeaponStats(weapon, user[weapon]));
         }
       } else {
         if (user[weapon].kills !== 0) {
