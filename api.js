@@ -562,12 +562,14 @@ app.get('/playerStats/:name', (req, res) => {
   for (var id in users) {
     if (users[id].name === name) {
       var obj = { ...users[id] }
-      obj.weapons = sortWeapons(obj);
+      if (!obj.weapons) {
+        obj.weapons = sortWeapons(obj);
+      }
       who(req, `is viewing ` + '/playerStats'.green + ` data for ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
       return res.send(JSON.stringify(obj));
     }
   }
-  res.status(404).send('');
+  res.status(404).sendFile(`${__dirname}/html/404.html`);
 });
 
 /**
@@ -577,7 +579,7 @@ app.get('/download/:file', (req, res) => {
   var t = new Timer();
   var dl = `${config.gameServerDir}/${req.params.file}`;
   if (!fs.existsSync(dl)){
-    return res.status(404).send('File does not exist');
+    res.status(404).sendFile(`${__dirname}/html/404.html`);
   }
   who(req, `qued download for file ${dl.green} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
   res.download(dl, req.params.file);
@@ -590,8 +592,7 @@ app.get('/download/logs-zip/:file', (req, res) => {
   var t = new Timer();
   var dl = path.join(config.bulkStorage, 'logs', req.params.file);
   if (!fs.existsSync(dl)){
-    return res.status(404).send('File does not exist');
-
+    res.status(404).sendFile(`${__dirname}/html/404.html`);
   }
   who(req, `qued download for file ${dl.green} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
   res.download(dl, req.params.file);
@@ -604,8 +605,7 @@ app.get('/download/demos-zip/:file', (req, res) => {
   var t = new Timer();
   var dl = path.join(config.bulkStorage, 'demos', req.params.file);
   if (!fs.existsSync(dl)){
-    return res.status(404).send('File does not exist');
-
+    res.status(404).sendFile(`${__dirname}/html/404.html`);
   }
   who(req, `qued download for file ${dl.green} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
   res.download(dl, req.params.file);
@@ -618,7 +618,7 @@ app.get('/old-months', (req, res) => {
   getOldStatsList().then(stats => {
     res.send(stats);
   }).catch(e => {
-    res.status(404).send('File does not exist');
+    res.status(404).sendFile(`${__dirname}/html/404.html`);
   });
 });
 
@@ -631,7 +631,7 @@ app.get('/old-stats/:month', (req, res) => {
     who(req, `is viewing ` + '/old-stats'.green + ` ${monthName(req.params.month).cyan} ` + 'data' + ` ${t.end()[2]} seconds`.cyan + ` response time`);
     res.send(stats);
   }).catch(e => {
-    res.status(404).send('no stats exist for this month');
+    res.status(404).sendFile(`${__dirname}/html/404.html`);
   });
 });
 
