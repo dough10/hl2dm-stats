@@ -500,7 +500,9 @@ setInterval(_ => {
 statsLoop();
 setInterval(statsLoop, 5000);
 
-var j = schedule.scheduleJob('0 5 1 * *', cleanUp);
+var j = schedule.scheduleJob('0 5 1 * *', _ => {
+  cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate);
+});
 
 print(`Loading API backend calls`);
 
@@ -598,7 +600,7 @@ app.get('/download/:file', (req, res) => {
  */
 app.get('/download/logs-zip/:file', (req, res) => {
   var t = new Timer();
-  var dl = `${config.bulkStorage}/logs/${req.params.file}`;
+  var dl = path.join(config.bulkStorage, 'logs', req.params.file);
   if (!fs.existsSync(dl)){
     return res.status(404).send('File does not exist');
 
@@ -612,7 +614,7 @@ app.get('/download/logs-zip/:file', (req, res) => {
  */
 app.get('/download/demos-zip/:file', (req, res) => {
   var t = new Timer();
-  var dl = `${config.bulkStorage}/demos/${req.params.file}`;
+  var dl = path.join(config.bulkStorage, 'demos', req.params.file);
   if (!fs.existsSync(dl)){
     return res.status(404).send('File does not exist');
 

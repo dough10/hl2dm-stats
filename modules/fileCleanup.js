@@ -4,6 +4,7 @@ const config = require(`../config.json`);                 // config file locatio
 const child_process = require("child_process");           // system peocesses
 const logFolder = path.join(config.gameServerDir, 'logs');// game server log location
 const colors = require('colors');                         // colorize text
+
 const Timer = require(path.join(__dirname, 'Timer.js'));
 const print = require(path.join(__dirname, 'printer.js'));
 
@@ -17,11 +18,11 @@ var time;
  */
 function saveTop(lastMonth, top, weapons, totalPlayers, bannedPlayers, lastUpdate) {
   return new Promise((resolve, reject) => {
-    var folder = `../old-top`;
+    var folder = path.join(__dirname, `old-top`);
     if (!fs.existsSync(folder)){
       fs.mkdirSync(folder);
     }
-    var filename = `../old-top/${lastMonth}.json`;
+    var filename = path.join(folder, `${lastMonth}.json`);
     fs.writeFile(filename, JSON.stringify([
       top,
       weapons,
@@ -34,7 +35,7 @@ function saveTop(lastMonth, top, weapons, totalPlayers, bannedPlayers, lastUpdat
         return;
       }
       if (!fs.existsSync(filename)){
-        reject();
+        reject('Error saving Top Data!! aka. Shits broke.');
         return;
       }
       print(`top player data saved to ` + filename.green);
@@ -44,47 +45,60 @@ function saveTop(lastMonth, top, weapons, totalPlayers, bannedPlayers, lastUpdat
 }
 
 /**
- * zips up log files before clear
- *S
+ * zip log files before cleanUp deletes them
+ *
  * @param {Number} lastMonth - new Date() output for the time cleanup() was run
  */
 function zipLogs(lastMonth) {
   return new Promise((resolve, reject) => {
-    var folder = `${config.bulkStorage}/logs`;
+    var folder = path.join(config.bulkStorage, `logs`);
     if (!fs.existsSync(folder)){
       fs.mkdirSync(folder);
     }
     var t = new Timer();
-    child_process.execSync(`zip -r ${config.bulkStorage}/logs/${lastMonth}.zip *`, {
+    var filename = path.join(folder, `${lastMonth}.zip`);
+    child_process.execSync(`zip -r ${filename} *`, {
       cwd: logFolder
     });
+    if (!fs.existsSync(filename)){
+      reject('Error saving Log Zip!! aka. Shits broke.');
+      return;
+    }
     print(`Zippin logs complete: ${t.endString()} time to complete`);
-    print(`Logs saved as ` + `${config.bulkStorage}/logs/${lastMonth}.zip`.green);
+    print(`Logs saved as ` + `${filename}`.green);
     resolve(lastMonth);
   });
 }
 
 /**
- * zip up demo files before clear
- *
+ * zip demo files before cleanUp deletes them
+ * 
  * @param {Number} lastMonth - new Date() output for the time cleanup() was run
  */
 function zipDemos(lastMonth) {
   return new Promise((resolve, reject) => {
-    var folder = `${config.bulkStorage}/demos`;
+    var folder = path.join(config.bulkStorage, 'demos');
     if (!fs.existsSync(folder)){
       fs.mkdirSync(folder);
     }
     var t = new Timer();
-    child_process.execSync(`zip -r ${config.bulkStorage}/demos/${lastMonth}.zip *.dem`, {
+    var filename = path.join(folder, `${lastMonth}.zip`);
+    child_process.execSync(`zip -r ${filename} *.dem`, {
       cwd: config.gameServerDir
     });
+    if (!fs.existsSync(filename)){
+      reject('Error saving Demos Zip!! aka. Shits broke.');
+      return;
+    }
     print(`Zippin demos complete: ${t.endString()} time to complete`);
-    print(`Demos saved as ` + `${config.bulkStorage}/demos/${lastMonth}.zip`.green);
+    print(`Demos saved as ` + `${filename}`.green);
     resolve(lastMonth);
   })
 }
 
+/**
+ * remove all log files from logs folder
+ */
 function deleteLogs() {
   return new Promise((resolve, reject) => {
     fs.readdir(logFolder, (err, files) => {
@@ -103,7 +117,9 @@ function deleteLogs() {
   });
 }
 
-
+/**
+ * remove all demo files from game folder
+ */
 function deleteDemos() {
   return new Promise((resolve, reject) => {
     fs.readdir(config.gameServerDir, (err, files) => {
@@ -129,7 +145,7 @@ function deleteDemos() {
 /**
  * end of month file cleanup process
  */
-function cleanUp(lastMonth, top, weapons, totalPlayers, bannedPlayers, lastUpdate) {
+function cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate) {
   return new Promise((resolve, reject) => {
     print(`Clean up started`);
     var now = new Date();
