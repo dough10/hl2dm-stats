@@ -1,4 +1,3 @@
-import * as ripples from './ripples.js';
 import {
   transitionEvent
 } from './whichtransistion.js';

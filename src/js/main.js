@@ -181,15 +181,6 @@ function emptyServer() {
 }
 
 /**
- * returns a line seperator element
- */
-function lineSpacer() {
-  const spacer = document.createElement('div');
-  spacer.classList.add('spacer');
-  return spacer;
-}
-
-/**
  * returns month name in string form
  *
  * @param {Number} month - month number 0 - 11

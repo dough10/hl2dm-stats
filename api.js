@@ -59,7 +59,7 @@ Object.size = obj => {
 
 /**
  * stores top data in memory for fast response times
- * cleans up un nessacery entrys and merges physics kills
+ * cleans up un nessacery entrys and merges physics kills,
  * sorts weapons into array and out of the main object
  */
 function cacheTopResponse() {
@@ -190,7 +190,7 @@ function calculatePrecent(small, big) {
 }
 
 /**
- * calculates weapon stat values
+ * calculates weapon stats values ie shots per kill, average damage per hit, headshot %, and more
  *
  * @param {String} weaponName - name of the weapon
  * @param {String} weapon - stats associated with the named weapon
@@ -409,7 +409,7 @@ function monthName(month) {
 }
 
 /**
- * print out player name when a know ip views page
+ * print out player name when a known ip views page
  *
  * @param {String} ip - ip addres of the user
  * @param {String} message - message string
@@ -676,7 +676,7 @@ app.get('/auth', (req, res) => {
 /**
  * route for WebSocket
  */
-app.ws('/', (ws, req) => {
+app.ws('/', ws => {
   socket = ws;
   socket.send(JSON.stringify(serverStatus));
 });

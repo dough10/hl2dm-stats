@@ -1,7 +1,7 @@
 import {qs} from './helpers.js';
 
 /**
- * push csS file to DOM
+ * push CSS file to DOM
  * @param {String} src - url
  */
 function loadCSSFile(src) {
