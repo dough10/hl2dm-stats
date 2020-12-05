@@ -235,11 +235,6 @@
       function displayPlayer(player) {
         var playerName = player.name;
         const wrapper = document.createElement('div');
-        wrapper.onClick(_ => {
-          fetch(`https://hl2dm.dough10.me/director/view/${name}`);
-        });
-        attachButtonRipple(wrapper);
-        wrapper.style.cursor = 'pointer';
         wrapper.classList.add('playeronline');
         const playerDiv = document.createElement('div');
         playerDiv.textContent = playerName;
@@ -287,7 +282,13 @@
             pContainer.appendChild(emptyServer());
           } else {
             for (let i = 0; i < numPlayersOnline; i++) {
-              pContainer.appendChild(displayPlayer(status.players[i]));
+              var wrapper = displayPlayer(status.players[i])
+              wrapper.onClick(_ => {
+                fetch(`https://hl2dm.dough10.me/director/view/${status.players[i].name}`);
+              });
+              attachButtonRipple(wrapper);
+              wrapper.style.cursor = 'pointer';
+              pContainer.appendChild(wrapper);
             }
           }
         } else {
