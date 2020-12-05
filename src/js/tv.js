@@ -167,7 +167,6 @@ window.onload = loadRipples().then(_ => {
       video.poster = 'images/offline.webp';
       qsa('.rb').forEach(el => {
         el.setAttribute('disabled', true);
-        console.log(el)
       });
     });
     qs('#play').onClick(_ => {
