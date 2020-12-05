@@ -120,7 +120,7 @@ function parseServerStatus(status) {
     score: "Score"
   }));
   if (status !== "offline") {
-    numPlayersOnline = status.players.length;
+    var numPlayersOnline = status.players.length;
     if (numPlayersOnline === 0) {
       pContainer.appendChild(emptyServer());
     } else {
