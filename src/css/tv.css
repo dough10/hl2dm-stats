@@ -1,4 +1,10 @@
-@font-face {
+  :root {
+    --header-height: 64px;
+    --main-color: #4c72b9;
+    --theme-color: #395486;
+    --background-color: rgb(179, 179, 179);
+  }
+  @font-face {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
