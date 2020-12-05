@@ -13,6 +13,7 @@ const files = [
   'images/avatar.webp',
   'images/logo.webp',
   'images/yeeeeeehawwwwwwmf.webp',
+  'images/offline.webp',
   'images/maskable_icon.png',
   'images/404.png',
   'css/paper-ripple.min.css',
@@ -50,17 +51,25 @@ function bundleImports() {
 }
 
 
-function minifyHTML() {
+function minifyHTML(file) {
   return new Promise((resolve) => {
-    fs.readFile('./src/index.html', 'utf8', (err, html) => {
+    fs.readFile(`./src/${file}.html`, 'utf8', (err, html) => {
+      if (err) {
+        throw new Error(err);
+      }
       var smallHTML = minify(html, {
         removeAttributeQuotes: true,
+        useShortDoctype: true,
+        removeRedundantAttributes: true,
         collapseWhitespace: true,
+        removeOptionalTags: true,
         minifyCSS: true,
+        minifyJS: true,
         minifyURLs: true,
+        removeEmptyAttributes: true,
         removeComments: true
       });
-      fs.writeFile( './html/index.html', smallHTML, resolve);
+      fs.writeFile( `./html/${file}.html`, smallHTML, resolve);
     });
   });
 }
@@ -107,5 +116,11 @@ if (!fs.existsSync(jsFolder)){
 
 bundleImports()
 .then(uglifyJavaScript)
-.then(minifyHTML)
+.then(_ => {
+  minifyHTML('index').then(_ => {
+    minifyHTML('hoedowntv').then(_ => {
+      return;
+    });
+  })
+})
 .then(_ => files.forEach(copyFile));
