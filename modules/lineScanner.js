@@ -528,7 +528,9 @@ function scanLine(line, users, weapons, bannedPlayers) {
       users[id3] = playerObj(name, id3, lineTime);
     }
     if (!users[id3].headshots) {
-      users[id3].headshots = {kills:0};
+      users[id3].headshots = {
+        kills:0
+      };
     }
     users[id3].headshots.kills++;
     if (lineTime >= users[id3].updated) {
