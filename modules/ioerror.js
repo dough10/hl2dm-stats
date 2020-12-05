@@ -19,3 +19,5 @@ function ioError(err, line) {
     }
   });
 }
+
+module.exports = ioError;
