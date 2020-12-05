@@ -172,6 +172,7 @@ window.onload = loadRipples().then(_ => {
       ];
       video.poster = 'images/offline.webp';
       els.forEach(el => {
+        console.log(el)
         qs(el).disabled = true;
       });
     });
