@@ -5,11 +5,19 @@ const child_process = require("child_process");           // system peocesses
 const logFolder = path.join(config.gameServerDir, 'logs');// game server log location
 const colors = require('colors');                         // colorize text
 
-const Timer = require(path.join(__dirname, 'Timer.js'));
+/**
+ * A class for timing duration of things
+ */
+const Timer = require(path.join(__dirname, 'Timer.js'));  // time things
+
+/**
+ * log message to console with time stamp
+ *
+ * @param {String} message - message to be printed
+ */
 const print = require(path.join(__dirname, 'printer.js'));
 
 var numFiles = 0;                                         // running total of files deleted
-var time;
 
 /**
  * saves top data before log clear
@@ -109,8 +117,8 @@ function deleteLogs() {
       print(`Running log file clean up`);
       for (var i = 0; i < files.length; i++) {
         numFiles++;
-        // console.log(path.join(logFolder, files[i]));
-        fs.unlinkSync(path.join(logFolder, files[i]));
+        console.log(path.join(logFolder, files[i]));
+        // fs.unlinkSync(path.join(logFolder, files[i]));
       }
       resolve();
     });
@@ -131,12 +139,10 @@ function deleteDemos() {
       for (var i = 0; i < files.length; i++) {
         if (path.extname(files[i]) === '.dem') {
           numFiles++;
-          // console.log(path.join(config.gameServerDir, files[i]));
-          fs.unlinkSync(path.join(config.gameServerDir, files[i]));
+          console.log(path.join(config.gameServerDir, files[i]));
+          // fs.unlinkSync(path.join(config.gameServerDir, files[i]));
         }
       }
-      print(`Clean up complete. ${numFiles} files processed and backed up.`);
-      print(`Complete process took ${time.endString()}`)
       resolve();
     });
   });
@@ -150,13 +156,17 @@ function cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate) {
     print(`Clean up started`);
     var now = new Date();
     var lastMonth = now.setMonth(now.getMonth() - 1);
-    time = new Timer();
+    var time = new Timer();
     saveTop(lastMonth, top, weapons, totalPlayers, bannedPlayers, lastUpdate)
     .then(zipLogs)
     .then(zipDemos)
     .then(deleteLogs)
     .then(deleteDemos)
-    .then(resolve)
+    .then(_ => {
+      print(`Clean up complete. ${numFiles} files processed and backed up.`);
+      print(`Complete process took ${time.endString()}`);
+      resolve();
+    })
     .catch(reject);
   });
 }

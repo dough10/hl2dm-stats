@@ -19,8 +19,11 @@ function auth(name, pass) {
       dbo.collection("stream-keys").findOne({
         name: name
       }, (err, result) => {
-        if (err) reject(err);
         db.close();
+        if (err) {
+          reject(err);
+          return;
+        } 
         bcrypt.compare(pass, result.key, (err, match) => {
           if (err) reject(err);
           resolve(match);
