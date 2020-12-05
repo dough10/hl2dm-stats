@@ -90,11 +90,6 @@ function mergePhysicsKills(user) {
 function cacheTopResponse() {
   return new Promise((resolve, reject) => {
 
-    // run again
-    setTimeout(_ => {
-      cacheTopResponse().then(cacheDemos).catch(ioError);
-    }, (config.logRefreshTime * 1000) * 60);
-
 
     print(`Clearing cache & parsing logs`);
     // reset objects
@@ -495,6 +490,10 @@ function statsLoop() {
 }
 
 cacheTopResponse().then(cacheDemos).catch(ioError);
+// run again
+setInterval(_ => {
+  cacheTopResponse().then(cacheDemos).catch(ioError);
+}, (config.logRefreshTime * 1000) * 60);
 
 statsLoop();
 

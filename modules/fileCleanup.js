@@ -117,8 +117,8 @@ function deleteLogs() {
       print(`Running log file clean up`);
       for (var i = 0; i < files.length; i++) {
         numFiles++;
-        console.log(path.join(logFolder, files[i]));
-        // fs.unlinkSync(path.join(logFolder, files[i]));
+        // console.log(path.join(logFolder, files[i]));
+        fs.unlinkSync(path.join(logFolder, files[i]));
       }
       resolve();
     });
@@ -139,8 +139,8 @@ function deleteDemos() {
       for (var i = 0; i < files.length; i++) {
         if (path.extname(files[i]) === '.dem') {
           numFiles++;
-          console.log(path.join(config.gameServerDir, files[i]));
-          // fs.unlinkSync(path.join(config.gameServerDir, files[i]));
+          // console.log(path.join(config.gameServerDir, files[i]));
+          fs.unlinkSync(path.join(config.gameServerDir, files[i]));
         }
       }
       resolve();
