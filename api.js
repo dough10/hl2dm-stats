@@ -221,14 +221,8 @@ function sortWeapons(user) {
   var sortArr = [];
   for (var weapon in user) {
     if (isWeapon(weapon)) {
-      if (!user.id) {
-        if (user[weapon].kills !== 0) {
-          sortArr.push(calculateWeaponStats(weapon, user[weapon]));
-        }
-      } else {
-        if (user[weapon].kills !== 0) {
-          sortArr.push(calculateWeaponStats(weapon, user[weapon]));
-        }
+      if (user[weapon].kills !== 0) {
+        sortArr.push(calculateWeaponStats(weapon, user[weapon]));
       }
       delete user[weapon];
     }
@@ -271,7 +265,7 @@ function getDemos() {
     var demos = [];
     fs.readdir(config.gameServerDir, (err, files) => {
       if (err) {
-        ioError('Unable to scan directory', err);
+        reject('Unable to scan directory', err);
       }
       for (var i = 0; i < files.length; i++) {
         if (path.extname(files[i]) === '.dem') {
@@ -440,7 +434,7 @@ function cacheDemos() {
    arr.reverse();
    demoList = arr;
    print(`demo file list cached ${t.endString()} to complete`);
- });
+ }).catch(ioError);
 }
 
 /**
@@ -489,8 +483,8 @@ function statsLoop() {
   });
 }
 
-cacheTopResponse().then(cacheDemos).catch(ioError);
 // run again & again & again;
+cacheTopResponse().then(cacheDemos).catch(ioError);
 setInterval(_ => {
   cacheTopResponse().then(cacheDemos).catch(ioError);
 }, (config.logRefreshTime * 1000) * 60);
