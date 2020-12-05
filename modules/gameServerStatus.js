@@ -37,7 +37,7 @@ function getstate(onFragLimit, updated) {
       for (var i = 0; i < state.players.length; i++) {
         if (state.players[i].score === Number(state.raw.rules.mp_fraglimit) && !updated) {
           setTimeout(_ => {
-            onFragLimit();
+            onFragLimit(state.players);
           }, 5000);
         }
       }

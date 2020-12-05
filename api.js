@@ -450,7 +450,19 @@ function roundEnd() {
  */
 function statsLoop() {
   setTimeout(statsLoop, 5000);
-  getServerStatus(roundEnd, updated).then(status => {
+  getServerStatus(players => {
+    players.forEach(player => {
+      if (player.score === 60) {
+        for (var id in users) {
+          if (users[id].name === player.name) {
+            users[id].l--;
+            users[id].w++;
+          }
+        }
+      }
+    });
+    roundEnd();
+  }, updated).then(status => {
     serverStatus = status;
     if (socket) {
       socket.send(JSON.stringify(serverStatus), e => {});
