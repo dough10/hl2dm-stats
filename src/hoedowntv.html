@@ -155,12 +155,23 @@
       </div>
     </div>
     <script>
+      HTMLElement.prototype.onClick = function(cb) {
+        this.addEventListener('click', cb, false);
+      };
+
       function qs(selector, scope) {
         return (scope || document).querySelector(selector)
       }
 
       function qsa(selector, scope) {
         return (scope || document).querySelectorAll(selector)
+      }
+
+      function attachButtonRipple(button) {
+        button.PaperRipple = new PaperRipple();
+        button.appendChild(button.PaperRipple.$);
+        button.addEventListener('mousedown', ev => button.PaperRipple.downAction(ev));
+        button.addEventListener('mouseup', e => button.PaperRipple.upAction());
       }
 
       function attachRoundButtonRipple(button) {
@@ -224,6 +235,11 @@
       function displayPlayer(player) {
         var playerName = player.name;
         const wrapper = document.createElement('div');
+        wrapper.onClick(_ => {
+          fetch(`https://hl2dm.dough10.me/director/view/${name}`);
+        });
+        attachButtonRipple(wrapper);
+        wrapper.style.cursor = 'pointer';
         wrapper.classList.add('playeronline');
         const playerDiv = document.createElement('div');
         playerDiv.textContent = playerName;
