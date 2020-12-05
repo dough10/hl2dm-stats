@@ -108,6 +108,10 @@
         position: relative;
         padding: 8px;
       }
+      .rb[disabled] {
+        pointer-events: none;
+        color: #cccccc;
+      }
       svg {
         cursor: pointer;
       }
@@ -327,7 +331,16 @@
           hls.attachMedia(video);
           // hls.on(Hls.Events.MANIFEST_PARSED, video.play);
           hls.on(Hls.Events.ERROR, _ => {
-            video.poster = '';
+            var els = [
+            '#play',
+            '#mute',
+            '#fullscreen',
+            '#pip'
+            ];
+            video.poster = 'images/offline.webp';
+            els.forEach(el => {
+              qs(el).disabled = true;
+            });
           });
           qs('#play').onClick(_ => {
             if (video.paused) {
