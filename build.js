@@ -20,9 +20,9 @@ const files = [
   'js/paper-ripple.min.js',
   'js/analytics.js',
   'js/page.min.js',
-  'js/tv.js',
-  'css/tv.css',
-  'css/base.css',
+  // 'js/tv.js',
+  // 'css/tv.css',
+  // 'css/base.css',
   'fonts/roboto-v15-latin-regular.woff2',
   'fonts/roboto-v15-latin-regular.woff',
   'fonts/roboto-v15-latin-regular.ttf',
@@ -119,6 +119,7 @@ if (!fs.existsSync(jsFolder)){
 
 bundleImports()
 .then(uglifyJavaScript)
+.then(uglyCss)
 .then(_ => {
   minifyHTML('index').then(_ => {
     minifyHTML('hoedowntv').then(_ => {
