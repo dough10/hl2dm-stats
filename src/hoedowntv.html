@@ -325,6 +325,7 @@
           var hls = new Hls();
           hls.loadSource('https://hl2dm.dough10.me/hls/hl2mp.m3u8');
           hls.attachMedia(video);
+          console.log(Hls.Events)
           hls.on(Hls.Events.MANIFEST_PARSED, video.play);
           qs('#play').onClick(_ => {
             if (video.paused) {
