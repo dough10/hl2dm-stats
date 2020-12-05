@@ -20,7 +20,7 @@ const files = [
   'js/paper-ripple.min.js',
   'js/analytics.js',
   'js/page.min.js',
-  // 'js/tv.js',
+  'js/tv.js',
   // 'css/tv.css',
   // 'css/base.css',
   'fonts/roboto-v15-latin-regular.woff2',
@@ -89,13 +89,24 @@ function uglifyJavaScript(js) {
   });
 }
 
-function uglyCss() {
+
+function uglyBaseCss() {
   return new Promise((resolve) => {
     var uglified = uglifycss.processFiles(
       [ './src/css/base.css'],
       {debug: true}
     );
     fs.writeFile( './html/css/base.css', uglified, resolve);
+  });
+}
+
+function uglyTvCss() {
+  return new Promise((resolve) => {
+    var uglified = uglifycss.processFiles(
+      [ './src/css/tv.css'],
+      {debug: true}
+    );
+    fs.writeFile( './html/css/tv.css', uglified, resolve);
   });
 }
 
@@ -119,12 +130,16 @@ if (!fs.existsSync(jsFolder)){
 
 bundleImports()
 .then(uglifyJavaScript)
-.then(uglyCss)
+.then(uglyBaseCss)
+.then(uglyTvCss)
 .then(_ => {
   minifyHTML('index').then(_ => {
-    minifyHTML('hoedowntv').then(_ => {
-      return;
-    });
-  })
+    return;
+  });
+})
+.then(_ => {
+  minifyHTML('hoedowntv').then(_ => {
+    return;
+  });
 })
 .then(_ => files.forEach(copyFile));
