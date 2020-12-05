@@ -108,6 +108,7 @@ function cacheTopResponse() {
         delete top[i].updated;
         top[i].weapons = sortWeapons(top[i]);
       }
+      
       // banned players stats
       var arr = [];
       for (var player in bannedPlayers) {
@@ -116,6 +117,7 @@ function cacheTopResponse() {
         arr.push(bannedPlayers[player]);
       }
       bannedPlayers = arr;
+
       setTimeout(_ => {
         updated = false;
       }, 60000);
@@ -323,7 +325,7 @@ function bytesToSize(bytes) {
  */
 function getOldStatsList(month) {
   return new Promise((resolve, reject) => {
-    fs.readdir(`${__dirname}/old-top`, (err, files) => {
+    fs.readdir(path.join(__dirname, 'old-top'), (err, files) => {
       if (err) {
         ioError('Unable to scan directory', err);
         return;
@@ -523,7 +525,7 @@ app.get('/banned', (req, res) => {
  */
 app.get('/total', (req, res) => {
   var t = new Timer();
-  fs.readdir(`${__dirname}/old-top`, (err, files) => {
+  fs.readdir(path.join(__dirname, 'old-top'), (err, files) => {
     if (err) {
       ioError('Unable to scan directory', err);
       return;
@@ -569,7 +571,7 @@ app.get('/playerStats/:name', (req, res) => {
       return res.send(JSON.stringify(obj));
     }
   }
-  res.status(404).sendFile(`${__dirname}/html/404.html`);
+  res.status(404).sendFile(path.join(__dirname, 'html', '404.html'));
 });
 
 /**
@@ -577,9 +579,9 @@ app.get('/playerStats/:name', (req, res) => {
  */
 app.get('/download/:file', (req, res) => {
   var t = new Timer();
-  var dl = `${config.gameServerDir}/${req.params.file}`;
+  var dl = path.join(config.gameServerDir, req.params.file);
   if (!fs.existsSync(dl)){
-    res.status(404).sendFile(`${__dirname}/html/404.html`);
+    res.status(404).sendFile(path.join(__dirname, 'html', '404.html'));
   }
   who(req, `qued download for file ${dl.green} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
   res.download(dl, req.params.file);
@@ -592,7 +594,7 @@ app.get('/download/logs-zip/:file', (req, res) => {
   var t = new Timer();
   var dl = path.join(config.bulkStorage, 'logs', req.params.file);
   if (!fs.existsSync(dl)){
-    res.status(404).sendFile(`${__dirname}/html/404.html`);
+    res.status(404).sendFile(path.join(__dirname, 'html', '404.html'));
   }
   who(req, `qued download for file ${dl.green} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
   res.download(dl, req.params.file);
@@ -605,7 +607,7 @@ app.get('/download/demos-zip/:file', (req, res) => {
   var t = new Timer();
   var dl = path.join(config.bulkStorage, 'demos', req.params.file);
   if (!fs.existsSync(dl)){
-    res.status(404).sendFile(`${__dirname}/html/404.html`);
+    res.status(404).sendFile(path.join(__dirname, 'html', '404.html'));
   }
   who(req, `qued download for file ${dl.green} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
   res.download(dl, req.params.file);
@@ -618,7 +620,7 @@ app.get('/old-months', (req, res) => {
   getOldStatsList().then(stats => {
     res.send(stats);
   }).catch(e => {
-    res.status(404).sendFile(`${__dirname}/html/404.html`);
+    res.status(404).sendFile(path.join(__dirname, 'html', '404.html'));
   });
 });
 
@@ -631,7 +633,7 @@ app.get('/old-stats/:month', (req, res) => {
     who(req, `is viewing ` + '/old-stats'.green + ` ${monthName(req.params.month).cyan} ` + 'data' + ` ${t.end()[2]} seconds`.cyan + ` response time`);
     res.send(stats);
   }).catch(e => {
-    res.status(404).sendFile(`${__dirname}/html/404.html`);
+    res.status(404).sendFile(path.join(__dirname, 'html', '404.html'));
   });
 });
 
@@ -660,7 +662,7 @@ app.get('/auth', (req, res) => {
     }
     who(req, `authorized for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
     res.send('ok');
-  }).catch(console.error);
+  }).catch(ioError);
 });
 
 /**
@@ -675,7 +677,7 @@ app.ws('/', ws => {
  * 404
  */
 app.get('*', (req, res) => {
-  res.status(404).sendFile(`${__dirname}/html/404.html`);
+  res.status(404).sendFile(path.join(__dirname, 'html', '404.html'));
 });
 
 app.listen(config.port);
