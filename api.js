@@ -89,11 +89,20 @@ function mergePhysicsKills(user) {
  */
 function cacheTopResponse() {
   return new Promise((resolve, reject) => {
+
+    // run again
+    setTimeout(_ => {
+      cacheTopResponse().then(cacheDemos).catch(ioError);
+    }, (config.logRefreshTime * 1000) * 60);
+
+
     print(`Clearing cache & parsing logs`);
     // reset objects
     users = {};
     weapons = {};
     bannedPlayers = {};
+
+
     var time = new Timer();
     parseLogs().then(stats => {
       top = stats;
@@ -113,7 +122,9 @@ function cacheTopResponse() {
       var arr = [];
       for (var player in bannedPlayers) {
         mergePhysicsKills(bannedPlayers[player]);
-        bannedPlayers[player].weapons = sortWeapons(bannedPlayers[player]);
+        if (!bannedPlayers[player].weapons) {
+          bannedPlayers[player].weapons = sortWeapons(bannedPlayers[player]);
+        }
         arr.push(bannedPlayers[player]);
       }
       bannedPlayers = arr;
@@ -209,7 +220,7 @@ function calculateWeaponStats(weaponsName, weapon) {
 /**
  * remove weapon specific data from user object and place it in it's own array
  *
- * @param {Object} user - a user object we need to construct a weapn data array fro
+ * @param {Object} user - a user object we need to construct a weapn data array
  */
 function sortWeapons(user) {
   var sortArr = [];
@@ -311,7 +322,7 @@ function bytesToSize(bytes) {
      'GB',
      'TB'
    ];
-   if (bytes == 0) {
+   if (bytes === 0) {
      return '0 Byte';
    }
    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
@@ -472,6 +483,7 @@ function roundEnd() {
  * caches list of avaliable demo files
  */
 function statsLoop() {
+  setTimeout(statsLoop, 5000);
   getServerStatus(roundEnd, updated).then(status => {
     serverStatus = status;
     if (socket) {
@@ -483,12 +495,8 @@ function statsLoop() {
 }
 
 cacheTopResponse().then(cacheDemos).catch(ioError);
-setInterval(_ => {
-  cacheTopResponse().then(cacheDemos).catch(ioError);
-}, (config.logRefreshTime * 1000) * 60);
 
 statsLoop();
-setInterval(statsLoop, 5000);
 
 var j = schedule.scheduleJob('0 5 1 * *', _ => {
   cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate);
@@ -563,7 +571,7 @@ app.get('/playerStats/:name', (req, res) => {
   var name = req.params.name;
   for (var id in users) {
     if (users[id].name === name) {
-      var obj = { ...users[id] }
+      var obj = {...users[id]};
       if (!obj.weapons) {
         obj.weapons = sortWeapons(obj);
       }
