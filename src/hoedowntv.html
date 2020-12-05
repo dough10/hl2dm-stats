@@ -327,6 +327,9 @@
           hls.attachMedia(video);
           console.log(Hls.Events)
           hls.on(Hls.Events.MANIFEST_PARSED, video.play);
+          hls.on(Hls.Events.ERROR, err => {
+            console.log(err);
+          });
           qs('#play').onClick(_ => {
             if (video.paused) {
               qs('#playIcon').setAttribute('d', `M14,19H18V5H14M6,19H10V5H6V19Z`);
