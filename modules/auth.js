@@ -15,6 +15,7 @@ function auth(name, pass) {
       useNewUrlParser: true
     }, (err, db) => {
       if (err) reject(err);
+      if (!db) reject(err);
       var dbo = db.db("hl2dm");
       dbo.collection("stream-keys").findOne({
         name: name

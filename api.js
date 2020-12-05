@@ -546,14 +546,14 @@ app.get('/status', (req, res) => {
 /**
  * route for getting who has played in server
  */
-app.get('/who', (req, res) => {
+app.get('/playersList', (req, res) => {
   var t = new Timer();
   var arr = [];
   for (var id in users) {
     arr.push(users[id].name);
   }
   res.send(arr);
-  who(req, `is viewing ` + '/who'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+  who(req, `is viewing ` + '/playersList'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
 });
 
 /**
