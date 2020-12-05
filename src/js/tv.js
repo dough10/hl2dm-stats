@@ -164,16 +164,9 @@ window.onload = loadRipples().then(_ => {
     hls.attachMedia(video);
     // hls.on(Hls.Events.MANIFEST_PARSED, video.play);
     hls.on(Hls.Events.ERROR, _ => {
-      var els = [
-      '#play',
-      '#mute',
-      '#fullscreen',
-      '#pip'
-      ];
       video.poster = 'images/offline.webp';
-      els.forEach(el => {
-        console.log(el)
-        qs(el).disabled = true;
+      qsa('.rb').forEach(el => {
+        el.disabled = true;
       });
     });
     qs('#play').onClick(_ => {
