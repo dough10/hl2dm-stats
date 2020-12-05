@@ -297,26 +297,22 @@
         }
       }
 
-      function getPlayers(firstCall) {
+      function getPlayers() {
         fetch('https://hl2dm.dough10.me/api/status').then(response => {
           if (response.status !== 200) {
             console.error(response.status);
             return;
           }
           response.json().then(data => {
-            if (!firstCall) {
-              parseServerStatus(data);
-              return;
-            }
             parseServerStatus(data);
           });
         });
       }
 
       window.onload = loadRipples().then(_ => {
-        getPlayers(true);
+        getPlayers();
         setInterval(_ => {
-          getPlayers(false);
+          getPlayers();
         }, 10000);
         qsa('.rb').forEach(attachRoundButtonRipple);
         if(Hls.isSupported()) {
