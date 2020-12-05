@@ -438,29 +438,6 @@ function cacheDemos() {
 }
 
 /**
- * total all players stats for all months
- *
- * @param {Array} files - list of all stats JSON files
- */
-function totalStats(files) {
-  // load file data into f variable
-  var data = {};
-  var f = [];
-  // load files as month variable
-  for (var i = 0; i < files.length; i++) {
-    var month = require(path.join(__dirname, 'old-top', files[i]));
-    // parse players for each month
-    for (var player = 0; player < month[i].length; player++) {
-      // create player obj if non existant
-      if (!data[month[i][player].id]) {
-        data[month[i][player].id] = month[i][player];
-      }
-    }
-  }
-  return data;
-}
-
-/**
  * runs when player reaches fragLimit
  */
 function roundEnd() {
@@ -519,21 +496,6 @@ app.get('/banned', (req, res) => {
   var t = new Timer();
   res.send(JSON.stringify(bannedPlayers));
   who(req, `is viewing ` + '/banned'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
-});
-
-/**
- * route for gettings a total of player stats
- */
-app.get('/total', (req, res) => {
-  var t = new Timer();
-  fs.readdir(path.join(__dirname, 'old-top'), (err, files) => {
-    if (err) {
-      ioError('Unable to scan directory', err);
-      return;
-    }
-    res.send(totalStats(files));
-  });
-  who(req, `is viewing ` + '/total'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
 });
 
 /**

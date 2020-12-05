@@ -1,10 +1,11 @@
 {
   "name": "hl2dm",
   "version": "1.0.0",
-  "description": "",
+  "description": "Logparser and stats calculator for HL2DM game servers",
   "main": "api.js",
   "scripts": {
     "start": "pm2 start /var/www/hl2dm/api.js --watch",
+    "update": "git pull",
     "build": "node build.js",
     "monitor": "/var/www/hl2dm/monitor.sh",
     "update-app": "/var/www/hl2dm/update.sh",
