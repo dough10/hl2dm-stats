@@ -1,6 +1,7 @@
 const SteamID = require('steamid');                       // work with steamid's
 const path = require('path');                             // merger file / url names
 const isWeapon = require(path.join(__dirname, 'weaponsCheck.js'));
+const ioError = require(path.join(__dirname, 'ioerror.js'));
 
 /**
  * returns the player name string
