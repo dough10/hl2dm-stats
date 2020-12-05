@@ -21,8 +21,8 @@ const files = [
   'js/analytics.js',
   'js/page.min.js',
   'js/tv.js',
-  'css/tv.css',
-  'css/base.css',
+  // 'css/tv.css',
+  // 'css/base.css',
   'fonts/roboto-v15-latin-regular.woff2',
   'fonts/roboto-v15-latin-regular.woff',
   'fonts/roboto-v15-latin-regular.ttf',
@@ -89,13 +89,13 @@ function uglifyJavaScript(js) {
   });
 }
 
-function uglyCss() {
+function uglyCss(file) {
   return new Promise((resolve) => {
     var uglified = uglifycss.processFiles(
-      [ './src/css/base.css'],
+      [ `./src/css/${file}.css`],
       { maxLineLen: 500, expandVars: true }
     );
-    fs.writeFile( './html/css/base.css', uglified, resolve);
+    fs.writeFile( `./html/css/${file}.css`, uglified, resolve);
   });
 }
 
@@ -124,6 +124,11 @@ bundleImports()
     minifyHTML('hoedowntv').then(_ => {
       return;
     });
-  })
-})
-.then(_ => files.forEach(copyFile));
+  });
+}).then(_ => {
+  uglyCss('base').then(_ => {
+    uglyCss('tv').then(_ => {
+      return;
+    });
+  });
+}).then(_ => files.forEach(copyFile));
