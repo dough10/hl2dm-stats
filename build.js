@@ -93,7 +93,7 @@ function uglyCss() {
   return new Promise((resolve) => {
     var uglified = uglifycss.processFiles(
       [ './src/css/base.css'],
-      { maxLineLen: 50000, expandVars: true }
+      {debug: true}
     );
     fs.writeFile( './html/css/base.css', uglified, resolve);
   });
