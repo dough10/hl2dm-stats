@@ -14,8 +14,14 @@ function auth(name, pass) {
       useUnifiedTopology: true,
       useNewUrlParser: true
     }, (err, db) => {
-      if (err) reject(err);
-      if (!db) reject(err);
+      if (err) {
+        reject(err);
+        return;
+      }
+      if (!db) {
+        reject(err);
+        return;
+      } 
       var dbo = db.db("hl2dm");
       dbo.collection("stream-keys").findOne({
         name: name

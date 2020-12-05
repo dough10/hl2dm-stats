@@ -1,30 +1,45 @@
+const readline = require("readline");
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
 const MongoClient = require('mongodb').MongoClient;
 const bcrypt = require('bcrypt');
-const args = process.argv.slice(2);
-const name = args[0];
-const key = args[1];
 const dbURL = require(`${__dirname}/config.json`).dbURL;
 
-if (!name) throw Error("name required");
-if (!key) throw Error("key required");
 
-MongoClient.connect(dbURL, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true
-}, (err, db) => {
-  if (err) throw err;
-  var dbo = db.db("hl2dm");
-  bcrypt.hash(key, 10, (err, hash) => {
+function createUser(name, key) {
+  if (!name) throw Error("stream name is required");
+  if (!key) throw Error("stream key is required");
+  MongoClient.connect(dbURL, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true
+  }, (err, db) => {
     if (err) throw err;
-    var myobj = { name: name, key: hash };
-    dbo.collection("stream-keys").insertOne(myobj, (err, res) => {
+    var dbo = db.db("hl2dm");
+    bcrypt.hash(key, 10, (err, hash) => {
       if (err) throw err;
-      console.log(res);
-      dbo.collection("stream-keys").findOne({name: name}, (err, result) => {
+      dbo.collection("stream-keys").insertOne({ 
+        name: name, 
+        key: hash 
+      }, (err, res) => {
         if (err) throw err;
-        console.log(result.key);
-        db.close();
+        // console.log(res);
+        dbo.collection("stream-keys").findOne({name: name}, (err, result) => {
+          db.close();
+          if (err) throw err;
+          console.log(result.key);
+          console.log("Streamkey saved");
+          process.exit(0);
+        });
       });
     });
+  });
+}
+
+rl.question("stream name ? ", name => {
+  rl.question("stream key ? ", key => {
+    createUser(name, key);
+    rl.close();
   });
 });

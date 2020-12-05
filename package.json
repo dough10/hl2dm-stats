@@ -6,8 +6,9 @@
   "scripts": {
     "start": "pm2 start /var/www/hl2dm/api.js --watch",
     "build": "node build.js",
-    "monitor": "./monitor.sh",
-    "update-app": "./update.sh"
+    "monitor": "/var/www/hl2dm/monitor.sh",
+    "update-app": "/var/www/hl2dm/update.sh",
+    "add-streamkey": "node streamKey.js"
   },
   "repository": {
     "type": "git",
