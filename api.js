@@ -490,7 +490,7 @@ function statsLoop() {
 }
 
 cacheTopResponse().then(cacheDemos).catch(ioError);
-// run again
+// run again & again & again;
 setInterval(_ => {
   cacheTopResponse().then(cacheDemos).catch(ioError);
 }, (config.logRefreshTime * 1000) * 60);
@@ -501,7 +501,7 @@ var j = schedule.scheduleJob('0 5 1 * *', _ => {
   cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate);
 });
 
-print(`Loading API backend calls`);
+print(`Loading API endpoints`);
 
 /**
  * route for gettings player stats
