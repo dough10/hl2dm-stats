@@ -498,7 +498,7 @@ setInterval(_ => {
 statsLoop();
 
 var j = schedule.scheduleJob('0 5 1 * *', _ => {
-  cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate);
+  cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate).catch(ioError);
 });
 
 print(`Loading API endpoints`);
