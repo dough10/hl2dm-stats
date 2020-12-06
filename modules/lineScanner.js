@@ -401,13 +401,17 @@ function scanLine(line, users, weapons, bannedPlayers) {
       users[connectedUser].updated = lineTime;
       users[connectedUser].name = connectedUserName;
     }
+    var newUser = Object.keys(users).some(key => {
+      return users[key] === connectedUser;
+    });
     var obj = {
       name: connectedUserName,
       id: connectedUser,
       time: lineTime,
       date: new Date(lineTime).getDate(),
       month: new Date(lineTime).getMonth(),
-      year: new Date(lineTime).getFullYear()
+      year: new Date(lineTime).getFullYear(),
+      new: newUser
     }
     console.log(obj);
   } else if (isKill) {
