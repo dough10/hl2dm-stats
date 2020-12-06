@@ -1,6 +1,44 @@
 const MongoClient = require('mongodb').MongoClient;       // mongodb for streamkey storage
 const config = require(`../config.json`);                 // config file location
 
+
+var dbo;
+
+function entryExists(data) {
+  return new Promise((resolve, reject) => {
+    dbo.collection("players").findOne({
+      time: data.time
+    }, (err, result) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(result);
+    });
+  })
+}
+
+function insertPlayer(data) {
+  return new Promise((resolve, reject) => {
+    dbo.collection("players").insertOne(data, err => {
+      if (err) {
+        reject(err);
+        return;
+      } 
+      dbo.collection("players").findOne({
+        time: data.time
+      }, (err, res) => {
+        if (err) {
+          reject(err);
+          return;
+        } 
+        resolve('connection saved');
+      });
+    });
+  })
+}
+
+
 function logUser(data) {
   return new Promise((resolve, reject) => {
     MongoClient.connect(config.dbURL, {
@@ -12,20 +50,15 @@ function logUser(data) {
         return;
       }
       if (!db) {
-        reject(err);
+        reject('no db');
         return;
       } 
-      var dbo = db.db("hl2dm");
-      dbo.collection("players").insertOne(data, err => {
-        if (err) reject(err);
-        dbo.collection("players").findOne({
-          id: data.id
-        }, err => {
-          db.close();
-          if (err) reject(err);
-          resolve('connection saved');
-        });
-      });
+      dbo = db.db("hl2dm");
+      entryExists(data).then(exists => {
+        if (!exists) {
+          insertPlayer(data).then(resolve).catch(reject);
+        }
+      }).catch(reject);
     });
   })
 }

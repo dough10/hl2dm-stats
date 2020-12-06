@@ -379,6 +379,7 @@ function scanLine(line, users, weapons, bannedPlayers) {
     const connectedUser = getID3(connectedNameString);
     const connectedUserName = getName(connectedNameString);
     const ip = word[isConnect  + 2].replace('"', '').replace('"', '').replace(/:\d{4,5}$/, '');
+    var newUser = false;
     // check for important data
     if (!connectedUserName) {
       // ioError('Forming player name', line);
@@ -395,6 +396,7 @@ function scanLine(line, users, weapons, bannedPlayers) {
     // create users object if doesn't exist
     if (!users[connectedUser]) {
       users[connectedUser] = playerObj(connectedUserName, connectedUser, lineTime);
+      newUser = true;
     }
     // set address
     users[connectedUser].ip = ip;
@@ -403,9 +405,6 @@ function scanLine(line, users, weapons, bannedPlayers) {
       users[connectedUser].updated = lineTime;
       users[connectedUser].name = connectedUserName;
     }
-    var newUser = Object.keys(users).some(key => {
-      return users[key] === connectedUser;
-    });
     var obj = {
       name: connectedUserName,
       id: connectedUser,
@@ -415,7 +414,7 @@ function scanLine(line, users, weapons, bannedPlayers) {
       year: new Date(lineTime).getFullYear(),
       new: newUser
     }
-    logUser(obj).then(console.log).catch(ioError);
+    logUser(obj).catch(ioError);
   } else if (isKill) {
     // get players details
     const killerNameString = buildKillerNameString(word, isKill);  // isKill is the index after the last index of the player name
