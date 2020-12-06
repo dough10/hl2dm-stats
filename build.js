@@ -20,7 +20,6 @@ const files = [
   'js/paper-ripple.min.js',
   'js/analytics.js',
   'js/page.min.js',
-  'js/tv.js',
   'fonts/roboto-v15-latin-regular.woff2',
   'fonts/roboto-v15-latin-regular.woff',
   'fonts/roboto-v15-latin-regular.ttf',
@@ -39,14 +38,18 @@ function copyFile(filePath) {
 }
 
 
-function bundleImports() {
+function bundleImports(file) {
   return new Promise((resolve) => {
     esperanto.bundle({
       base: 'src/js', // optional, defaults to current dir
-      entry: 'main.js' // the '.js' is optional
+      entry: `${file}.js` // the '.js' is optional
     }).then(bundle => {
       var cjs = bundle.toCjs();
-      resolve(cjs.code);
+      console.log(file)
+      resolve([
+        cjs.code, 
+        file
+      ]);
     });
   });
 }
@@ -56,8 +59,10 @@ function minifyHTML(file) {
   return new Promise((resolve) => {
     fs.readFile(`./src/${file}.html`, 'utf8', (err, html) => {
       if (err) {
-        throw new Error(err);
+        reject(err);
+        return;
       }
+      
       var smallHTML = minify(html, {
         removeAttributeQuotes: true,
         useShortDoctype: true,
@@ -65,7 +70,6 @@ function minifyHTML(file) {
         collapseWhitespace: true,
         removeOptionalTags: true,
         minifyCSS: true,
-        minifyJS: true,
         minifyURLs: true,
         removeEmptyAttributes: true,
         removeComments: true
@@ -76,37 +80,68 @@ function minifyHTML(file) {
 }
 
 
-function uglifyJavaScript(js) {
+function uglifyJavaScript(arr) {
   return new Promise((resolve) => {
+    var js = arr[0];
+    var file = arr[1];
     var uglyCode = uglifyJS.minify(js);
     if (uglyCode.error) {
-      console.log(uglyCode.error)
+      reject(uglyCode.error)
       return;
     }
-    fs.writeFile( './html/js/main.js', uglyCode.code, resolve);
+    fs.writeFile( `./html/js/${file}.js`, uglyCode.code, resolve);
   });
 }
 
 
-function uglyBaseCss() {
+function bundleMainJs() {
+  return new Promise((resolve, reject) => {
+    bundleImports('main').then(uglifyJavaScript).then(resolve).catch(reject);
+  });
+}
+
+function bundleTvJs() {
+  return new Promise((resolve, reject) => {
+    bundleImports('tv').then(uglifyJavaScript).then(resolve).catch(reject);
+  });
+}
+
+function uglyCss(file) {
   return new Promise((resolve) => {
     var uglified = uglifycss.processFiles(
-      [ './src/css/base.css'],
+      [`./src/css/${file}.css`],
       {debug: true}
     );
-    fs.writeFile( './html/css/base.css', uglified, resolve);
+    fs.writeFile( `./html/css/${file}.css`, uglified, resolve);
+  });
+}
+
+function uglyBaseCss() {
+  return new Promise((resolve) => {
+    uglyCss('base').then(resolve);
   });
 }
 
 function uglyTvCss() {
   return new Promise((resolve) => {
-    var uglified = uglifycss.processFiles(
-      [ './src/css/tv.css'],
-      {debug: true}
-    );
-    fs.writeFile( './html/css/tv.css', uglified, resolve);
+    return new Promise((resolve) => {
+      uglyCss('tv').then(resolve);
+    });
   });
 }
+
+function minifyIndex() {
+  return new Promise((resolve, reject) => {
+    minifyHTML('index').then(resolve).catch(reject);
+  });
+}
+
+function minifyTV() {
+  return new Promise((resolve, reject) => {
+    minifyHTML('hoedowntv').then(resolve).catch(reject);
+  });
+}
+
 
 var imgFolder = './html/images';
 var cssFolder = './html/css';
@@ -126,18 +161,12 @@ if (!fs.existsSync(jsFolder)){
   fs.mkdirSync(jsFolder);
 }
 
-bundleImports()
-.then(uglifyJavaScript)
+bundleMainJs()
+.then(minifyIndex)
 .then(uglyBaseCss)
+.then(bundleTvJs)
+.then(minifyTV)
 .then(uglyTvCss)
-.then(_ => {
-  minifyHTML('index').then(_ => {
-    return;
-  });
-})
-.then(_ => {
-  minifyHTML('hoedowntv').then(_ => {
-    return;
-  });
-})
-.then(_ => files.forEach(copyFile));
+.then(_ => files.forEach(copyFile)).catch(e => {
+  throw new Error(e);
+});
