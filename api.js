@@ -8,9 +8,13 @@ const express = require('express');                       // web api routing
 const app = express();                                    // express init
 const expressWs = require('express-ws')(app);               // WebSocket init
 const colors = require('colors');                         // colorize text
-const config = require(`./config.json`);                    // config file location
-const logFolder = path.join(config.gameServerDir, 'logs');// game server log location
+var config = require(`./config.json`);                    // config file location
 
+if (process.platform === "win32") {
+  config = require(`./config-win.json`);  
+}
+
+const logFolder = path.join(config.gameServerDir, 'logs');// game server log location
 
 // modules
 const init = require(path.join(__dirname, 'modules', 'init.js'));

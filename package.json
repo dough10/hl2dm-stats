@@ -9,8 +9,7 @@
     "build": "node build.js",
     "monitor": "monitor.sh",
     "update-app": "update.sh",
-    "add-streamkey": "node streamKey.js",
-    "push-to-github": "github.sh"
+    "add-streamkey": "node streamKey.js"
   },
   "repository": {
     "type": "git",
