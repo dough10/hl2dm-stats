@@ -299,7 +299,7 @@ function weaponObj() {
  *
  * @param {String} line - one line of the log file being parsed
  */
-function scanLine(line, users, weapons, bannedPlayers) {
+function scanLine(line, users, weapons, bannedPlayers, lNum, totalFiles) {
   var word  = line.split(' ');
   var isKill = lineIsKill(word);
   var isConnect = lineIsConnect(word);
@@ -405,6 +405,7 @@ function scanLine(line, users, weapons, bannedPlayers) {
       users[connectedUser].updated = lineTime;
       users[connectedUser].name = connectedUserName;
     }
+    // console.log(totalFiles, lNum);
     logUser({
       name: connectedUserName,
       id: connectedUser,

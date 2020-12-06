@@ -6,7 +6,7 @@ const schedule = require('node-schedule');                // cronjob type schecd
 const compression = require('compression');               // compress api responses
 const express = require('express');                       // web api routing
 const app = express();                                    // express init
-const expressWs = require('express-ws')(app);               // WebSocket init
+const expressWs = require('express-ws')(app);             // WebSocket init
 const colors = require('colors');                         // colorize text
 var config = require(`./config.json`);                    // config file location
 
@@ -159,7 +159,7 @@ function parseLogs() {
           var lNum = 0;
           rl.on('line', line => {
             lNum++;
-            scanLine(line, users, weapons, bannedPlayers);
+            scanLine(line, users, weapons, bannedPlayers, lNum, totalFiles);
           });
           rl.on('close', _ => {
             totalFiles--;
