@@ -26,10 +26,10 @@ MongoClient.connect(config.dbURL, {
     if (err) throw err;
     db.close();
     if (!res.length) {
-      console.log(`No players found for that day`)
+      console.log(`No new players found for that day`);
     }
     res.forEach(player => {
       console.log(player)
-    })
+    });
   });
 });

@@ -1,8 +1,9 @@
-var CACHE_NAME = 'cache-v1.5.4';
+var CACHE_NAME = 'cache-v1.5.5';
 var urlsToCache = [
   '/index.html',
   '/manifest.json',
   '/js/main.js',
+  '/css/base.css',
   '/css/paper-ripple.min.css',
   '/js/paper-ripple.min.js',
   '/images/avatar.webp',
