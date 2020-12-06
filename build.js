@@ -21,8 +21,6 @@ const files = [
   'js/analytics.js',
   'js/page.min.js',
   'js/tv.js',
-  // 'css/tv.css',
-  // 'css/base.css',
   'fonts/roboto-v15-latin-regular.woff2',
   'fonts/roboto-v15-latin-regular.woff',
   'fonts/roboto-v15-latin-regular.ttf',
