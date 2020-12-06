@@ -9,6 +9,3 @@ d=$(date +%s)
 git add .
 git commit -m "$d, V:$v"
 git push
-
-
-echo "$1 $2 $3 $4"
