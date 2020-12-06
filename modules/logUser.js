@@ -57,6 +57,7 @@ function logUser(data) {
       entryExists(data).then(exists => {
         if (!exists) {
           insertPlayer(data).then(resolve).catch(reject);
+          db.close();
         }
       }).catch(reject);
     });

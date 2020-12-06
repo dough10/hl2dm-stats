@@ -398,14 +398,14 @@ function scanLine(line, users, weapons, bannedPlayers) {
       users[connectedUser] = playerObj(connectedUserName, connectedUser, lineTime);
       newUser = true;
     }
-    // set address
-    users[connectedUser].ip = ip;
     if (lineTime >= users[connectedUser].updated) {
+      // set address
+      users[connectedUser].ip = ip;
       // update user name if changed
       users[connectedUser].updated = lineTime;
       users[connectedUser].name = connectedUserName;
     }
-    var obj = {
+    logUser({
       name: connectedUserName,
       id: connectedUser,
       time: lineTime,
@@ -413,8 +413,7 @@ function scanLine(line, users, weapons, bannedPlayers) {
       month: new Date(lineTime).getMonth(),
       year: new Date(lineTime).getFullYear(),
       new: newUser
-    }
-    logUser(obj).catch(ioError);
+    }).catch(ioError);
   } else if (isKill) {
     // get players details
     const killerNameString = buildKillerNameString(word, isKill);  // isKill is the index after the last index of the player name

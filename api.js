@@ -152,11 +152,14 @@ function parseLogs() {
             input: fs.createReadStream(path.join(logFolder, file)),
             crlfDelay: Infinity
           });
+          var lNum = 0;
           rl.on('line', line => {
+            lNum++;
             scanLine(line, users, weapons, bannedPlayers);
           });
           rl.on('close', _ => {
             totalFiles--;
+            lNum = 0;
             if (totalFiles === 0) {
               resolve(sortUsersByKDR());
             }
