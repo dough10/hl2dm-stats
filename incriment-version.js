@@ -1,7 +1,6 @@
 const fs = require('fs');                                 // work with the file system
 var package = require('./package.json');
-var inc = require('version-incrementer').increment;
-var newVersion = inc(package.version);
+var newVersion = require('version-incrementer').increment(package.version);
 var updated = JSON.stringify({...package, version: newVersion}, null, 2);
 
 fs.writeFile('package.json', updated, e => {
