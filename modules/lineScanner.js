@@ -1,7 +1,9 @@
 const SteamID = require('steamid');                       // work with steamid's
 const path = require('path');                             // merger file / url names
+const logUser = require('./logUser');
 const isWeapon = require(path.join(__dirname, 'weaponsCheck.js'));
 const ioError = require(path.join(__dirname, 'ioerror.js'));
+const loguser = require(path.join(__dirname, 'logUser.js'));
 
 /**
  * returns the player name string
@@ -413,7 +415,7 @@ function scanLine(line, users, weapons, bannedPlayers) {
       year: new Date(lineTime).getFullYear(),
       new: newUser
     }
-    console.log(obj);
+    logUser(obj).then(console.log).catch(ioError);
   } else if (isKill) {
     // get players details
     const killerNameString = buildKillerNameString(word, isKill);  // isKill is the index after the last index of the player name
