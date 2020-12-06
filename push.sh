@@ -6,7 +6,6 @@ if [ "$1" == "+" ]
     v=$(node -p "require('./package.json').version")
 fi
 d=$(date +%s)
-echo "$d, V:$v"
 git add .
 git commit -m "$d, V:$v"
 git push
