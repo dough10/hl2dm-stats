@@ -45,7 +45,6 @@ function bundleImports(file) {
       entry: `${file}.js` // the '.js' is optional
     }).then(bundle => {
       var cjs = bundle.toCjs();
-      console.log(file)
       resolve([
         cjs.code, 
         file
@@ -124,9 +123,7 @@ function uglyBaseCss() {
 
 function uglyTvCss() {
   return new Promise((resolve) => {
-    return new Promise((resolve) => {
-      uglyCss('tv').then(resolve);
-    });
+    uglyCss('tv').then(resolve);
   });
 }
 
@@ -167,6 +164,8 @@ bundleMainJs()
 .then(bundleTvJs)
 .then(minifyTV)
 .then(uglyTvCss)
-.then(_ => files.forEach(copyFile)).catch(e => {
+.then(_ => {
+  files.forEach(copyFile);
+}).catch(e => {
   throw new Error(e);
 });

@@ -262,8 +262,6 @@ function playerObj(name, id, time) {
     deaths: 0,
     kdr: 0,
     banned: false,
-    w:0,
-    l:0,
     suicide: {
       count:0
     },
@@ -396,14 +394,22 @@ function scanLine(line, users, weapons, bannedPlayers) {
     if (!users[connectedUser]) {
       users[connectedUser] = playerObj(connectedUserName, connectedUser, lineTime);
     }
+    // set address
+    users[connectedUser].ip = ip;
     if (lineTime >= users[connectedUser].updated) {
-      // set address
-      users[connectedUser].ip = ip;
       // update user name if changed
       users[connectedUser].updated = lineTime;
       users[connectedUser].name = connectedUserName;
     }
-    users[connectedUser].l++;
+    var obj = {
+      name: connectedUserName,
+      id: connectedUser,
+      time: lineTime,
+      date: new Date(lineTime).getDate(),
+      month: new Date(lineTime).getMonth(),
+      year: new Date(lineTime).getFullYear()
+    }
+    console.log(obj);
   } else if (isKill) {
     // get players details
     const killerNameString = buildKillerNameString(word, isKill);  // isKill is the index after the last index of the player name
