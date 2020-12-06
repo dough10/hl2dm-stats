@@ -652,5 +652,5 @@ app.get('*', (req, res) => {
 
 app.listen(config.port);
 
-print('API Version:' + `${require('./package.json').version}`.red + ' active on port: ' + `${config.port}`.red);
+print('API active on port: ' + `${config.port}`.red);
 print(`log folder = ${logFolder.green}`);
