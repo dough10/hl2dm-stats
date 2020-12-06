@@ -6,7 +6,7 @@ function init() {
   console.log(figlet.textSync('dough10/hl2dm-stats', {
     horizontalLayout: 'default'
   }));
-  console.log('API Version:' + `${require('../package.json').version}`.red);
+  console.log(`${new Date().toLocaleString()} - API Version:` + `${require('../package.json').version}`.red);
 }
 
 module.exports = init;
