@@ -1,4 +1,4 @@
-var CACHE_NAME = 'cache-v1.5.3';
+var CACHE_NAME = 'cache-v1.5.4';
 var urlsToCache = [
   '/index.html',
   '/manifest.json',
@@ -8,6 +8,7 @@ var urlsToCache = [
   '/images/avatar.webp',
   '/images/logo.webp',
   '/images/maskable_icon.png',
+  '/images/offline.webp',
   '/fonts/halflife2.ttf',
   '/fonts/hl2mp.ttf',
   '/fonts/csd.ttf',
