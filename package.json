@@ -8,8 +8,11 @@
     "update": "git pull",
     "build": "node build.js",
     "monitor": "monitor.sh",
+    "startPM2": "pm2 start api.js --watch",
     "update-app": "update.sh",
-    "add-streamkey": "node streamKey.js"
+    "add-streamkey": "node streamKey.js",
+    "push": "push.sh",
+    "push +": "push.sh +"
   },
   "repository": {
     "type": "git",

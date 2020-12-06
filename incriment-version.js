@@ -6,5 +6,5 @@ var updated = JSON.stringify({...package, version: newVersion}, null, 2);
 
 fs.writeFile('package.json', updated, e => {
   if (e) throw e;
-  console.log(`Version: ${newVersion} :${new Date().getTime()}`);
+  console.log(newVersion);
 });
