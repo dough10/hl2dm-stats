@@ -249,7 +249,7 @@ function sortUsersByKDR() {
   var arr = [];
   totalPlayers = Object.size(users);   // total # of players to has joined the server
   for (var user in users) {
-    // push non banned players with over 100 kills to top Array
+    // push non banned players with over 100 kills to "top" Array
     if (users[user].kills >= 100 && !users[user].banned) {
       arr.push(users[user]);
     }
