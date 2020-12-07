@@ -256,8 +256,8 @@ function playerIsBanned(line) {
  * @param {Number} id - player steamID
  * @param {Number} time - new Date().getTime() output
  */
-function playerObj(name, id, time) {
-  return {
+function playerObj(name, id, time, ip) {
+  var obj = {
     name: name,
     id: id,
     kills: 0,
@@ -270,6 +270,10 @@ function playerObj(name, id, time) {
     updated: time,
     chat: []
   };
+  if (ip) {
+    obj.ip = ip;
+  }
+  return obj;
 }
 
 /**
@@ -395,7 +399,7 @@ function scanLine(line, users, weapons, bannedPlayers, lNum, totalFiles) {
     }
     // create users object if doesn't exist
     if (!users[connectedUser]) {
-      users[connectedUser] = playerObj(connectedUserName, connectedUser, lineTime);
+      users[connectedUser] = playerObj(connectedUserName, connectedUser, lineTime, ip);
       newUser = true;
     }
     if (lineTime >= users[connectedUser].updated) {
