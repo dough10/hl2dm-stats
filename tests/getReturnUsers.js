@@ -17,17 +17,17 @@ MongoClient.connect(config.dbURL, {
     return;
   } 
   var dbo = db.db("hl2dm");
-  dbo.collection("players").find({
+  dbo.collection("players").distinct("name", {
     date: Number(args[2]) || now.getDate(),
     year: now.getFullYear(),
     month: now.getMonth(),
     new: false
-  }).toArray((err, res) => {
+  }, (err, res) => {
     if (err) throw err;
     db.close();
-    console.log(`${res.length} New Players`);
+    console.log(`${res.length} return Players`);
     res.forEach(player => {
-      console.log(player.name)
+      console.log(player)
     })
   });
 });
