@@ -944,7 +944,9 @@ function fetchOldMonths(month, cb) {
       return;
     }
     response.json().then(logs => {
-      parseTopData(logs, '#oldData', cb);
+      parseTopData(logs, '#oldData', _ => {
+        setTimeout(cb, 500);
+      });
     });
   });
 }
@@ -1233,9 +1235,7 @@ qs('#logZip').onClick(_ => {
 qs('#months').addEventListener('change', e => {
   var m = new Date(Number(e.target.value)).getMonth();
   fetchOldMonths(m, _ => {
-    setTimeout(_ => {
-      cascadeCards(qs('#page2'));
-    }, 100);
+    cascadeCards(qs('#page2'));
   });
 });
 
