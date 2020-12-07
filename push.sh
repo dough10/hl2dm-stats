@@ -6,5 +6,5 @@ v=$(node -p "require('./package.json').version");
 # fi
 d=$(date +%s);
 git add .
-git commit -m "$d, V: $v"
+git commit -m "$d, V: $1"
 git push
