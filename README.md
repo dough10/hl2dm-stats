@@ -8,3 +8,5 @@ A logparser and stats calculator for HL2DM game servers. Parses logs and stores 
 2. cd into directory `cd hl2dm-stats`
 3. install modules `npm install`
 4. configure config.json `nano config.json`
+5. install pm2 for runtime package management *optional `npm install -g pm2`
+6. run app `pm2 start api.js` or `npm start`
