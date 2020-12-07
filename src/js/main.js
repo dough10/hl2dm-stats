@@ -1233,7 +1233,7 @@ qs('#logZip').onClick(_ => {
 qs('#months').addEventListener('change', e => {
   var m = new Date(Number(e.target.value)).getMonth();
   fetchOldMonths(m, _ => {
-    cascadeCards(qs('#page2'));
+    // cascadeCards(qs('#page2'));
   });
 });
 
