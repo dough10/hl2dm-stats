@@ -5,12 +5,14 @@
   "main": "api.js",
   "scripts": {
     "start": "node api.js",
-    "git pull": "git pull",
+    "pull": "git pull",
     "build": "node build.js",
     "monitor": "monitor.sh",
     "startPM2": "pm2 start api.js --watch",
     "update-app": "update.sh",
-    "add-streamkey": "node streamKey.js"
+    "add-streamkey": "node streamKey.js",
+    "push": "push.sh",
+    "push +version#": "push.sh +"
   },
   "repository": {
     "type": "git",
