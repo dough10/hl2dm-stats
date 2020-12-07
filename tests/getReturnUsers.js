@@ -25,11 +25,9 @@ MongoClient.connect(config.dbURL, {
   }).toArray((err, res) => {
     if (err) throw err;
     db.close();
-    if (!res.length) {
-      console.log(`No returning players found for that day`);
-    }
+    console.log(`${res.length} New Players`);
     res.forEach(player => {
-      console.log(player)
+      console.log(player.name)
     })
   });
 });
