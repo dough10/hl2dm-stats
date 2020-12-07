@@ -1146,6 +1146,32 @@ function oldStatsPage() {
   }
 }
 
+function init() {
+  var page_load_time = new Date().getTime() - performance.timing.navigationStart;
+  console.log(`Page load: ${page_load_time}ms`);
+  registerServiceWorker().then(reg => {
+    if (!('PushManager' in window)) {
+      return;
+    }
+    console.log(reg);
+  }).then(loadRipples).then(_ => {
+    if ("WebSocket" in window) {
+      connectWSS();
+    } else {
+      fetchServerStatus();
+      setTimeout(fetchServerStatus, 5000);
+    }
+    if (!page) {
+      console.error('Error loading page.js');
+      return;
+    }
+    page('/', homePage);
+    page('/old-stats', oldStatsPage);
+    page('/demos', demosPage);
+    page();
+  });  
+}
+
 /**
  * page scroll listener
  */
@@ -1244,24 +1270,4 @@ alert.onClick(_ => {
 
 qs('#fab').onClick(animations.animateScroll);
 
-window.onload = registerServiceWorker().then(reg => {
-  if (!('PushManager' in window)) {
-    return;
-  }
-  console.log(reg);
-}).then(loadRipples).then(_ => {
-  if ("WebSocket" in window) {
-    connectWSS();
-  } else {
-    fetchServerStatus();
-    setTimeout(fetchServerStatus, 5000);
-  }
-  if (!page) {
-    console.error('Error loading page.js');
-    return;
-  }
-  page('/', homePage);
-  page('/old-stats', oldStatsPage);
-  page('/demos', demosPage);
-  page();
-});
+window.onload = init();
