@@ -28,7 +28,6 @@ const files = [
   'fonts/halflife2.ttf',
   'fonts/hl2mp.ttf',
   'fonts/csd.ttf',
-  'hoedowntv.html',
   '404.html'
 ];
 
@@ -61,7 +60,6 @@ function minifyHTML(file) {
         reject(err);
         return;
       }
-      
       var smallHTML = minify(html, {
         removeAttributeQuotes: true,
         useShortDoctype: true,
