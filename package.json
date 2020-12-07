@@ -12,7 +12,7 @@
     "update-app": "update.sh",
     "add-streamkey": "node streamKey.js",
     "push +": "push.sh +",
-    "push": "push.sh $(node -p \"require('./package.json').version\")"
+    "push": "push.sh (node -p \"require('./package.json').version\")"
   },
   "repository": {
     "type": "git",
