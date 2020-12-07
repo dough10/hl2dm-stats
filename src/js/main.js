@@ -944,9 +944,7 @@ function fetchOldMonths(month, cb) {
       return;
     }
     response.json().then(logs => {
-      parseTopData(logs, '#oldData', _ => {
-        setTimeout(cb, 500);
-      });
+      parseTopData(logs, '#oldData', cb);
     });
   });
 }
