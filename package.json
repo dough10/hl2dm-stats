@@ -1,15 +1,15 @@
 {
   "name": "hl2dm",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Logparser and stats calculator for HL2DM game servers",
   "main": "api.js",
   "scripts": {
     "start": "node api.js",
     "pull": "git pull",
     "build": "node build.js",
-    "monitor": "monitor.sh",
-    "startPM2": "pm2 start api.js --watch",
-    "update-app": "update.sh",
+    "monitor.sh": "monitor.sh",
+    "start.sh": "start.sh",
+    "update.sh": "update.sh",
     "add-streamkey": "node streamKey.js"
   },
   "repository": {

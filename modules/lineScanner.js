@@ -1,9 +1,8 @@
 const SteamID = require('steamid');                       // work with steamid's
 const path = require('path');                             // merger file / url names
-const logUser = require('./logUser');
+const logUser = require(path.join(__dirname, 'logUser.js'));
 const isWeapon = require(path.join(__dirname, 'weaponsCheck.js'));
 const ioError = require(path.join(__dirname, 'ioerror.js'));
-const loguser = require(path.join(__dirname, 'logUser.js'));
 
 /**
  * returns the player name string
@@ -489,6 +488,27 @@ function scanLine(line, users, weapons, bannedPlayers, lNum, totalFiles) {
     }
     // add server wide weapon kill
     weapons[weapon].kills++;
+
+    // players kills per map
+    // if (!killsPerMap[totalFiles]) {
+    //   killsPerMap[totalFiles] = {};
+    // }
+    // if (!killsPerMap[totalFiles][killerID]) {
+    //   killsPerMap[totalFiles][killerID] = {
+    //     name: killerName,
+    //     kills: 0,
+    //     deaths: 0
+    //   };
+    // }
+    // killsPerMap[totalFiles][killerID].kills++
+    // if (!killsPerMap[totalFiles][killedID]) {
+    //   killsPerMap[totalFiles][killedID] = {
+    //     name: killedName,
+    //     kills: 0,
+    //     deaths: 0
+    //   };
+    // }
+    // killsPerMap[totalFiles][killedID].deaths++
   } else if (isSuicide) {
     const nameString = buildKillerNameString(word, isSuicide);
     const id = getID3(nameString);

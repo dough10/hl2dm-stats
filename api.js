@@ -46,7 +46,6 @@ var totalPlayers = 0;        // count of total players to have joined the server
 var lastUpdate;              // last time the stats were updated. time in ms
 var demoList = [];           // list of all the demo files avaliable for download
 var updated = false;         // if stats have been updated when a player reaches end of game kill count
-
 var socket;
 
 
