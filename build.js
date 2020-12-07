@@ -1,5 +1,5 @@
 var fs = require( 'fs' );
-var esperanto = require( 'esperanto' );
+var esperanto = require('esperanto');
 var uglifyJS = require('uglify-es');
 var minify = require('html-minifier').minify;
 var uglifycss = require('uglifycss');

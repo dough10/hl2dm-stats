@@ -3,7 +3,7 @@ if [ "$1" == "+" ]
   then
     v=$(node incriment-version.js)
   else
-    v=$(node -p "require('./package.json').version")
+    v=$(node -p "console.log(require('./package.json').version)")
 fi
 d=$(node -p "new Date().getTime()")
 echo "$d, V: $v"
