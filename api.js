@@ -46,6 +46,7 @@ var totalPlayers = 0;        // count of total players to have joined the server
 var lastUpdate;              // last time the stats were updated. time in ms
 var demoList = [];           // list of all the demo files avaliable for download
 var updated = false;         // if stats have been updated when a player reaches end of game kill count
+var killsPerMap = {};
 var socket;
 
 
@@ -158,12 +159,13 @@ function parseLogs() {
           var lNum = 0;
           rl.on('line', line => {
             lNum++;
-            scanLine(line, users, weapons, bannedPlayers, lNum, totalFiles);
+            scanLine(line, users, weapons, bannedPlayers, lNum, totalFiles, killsPerMap);
           });
           rl.on('close', _ => {
             totalFiles--;
             lNum = 0;
             if (totalFiles === 0) {
+              // console.log(killsPerMap)
               resolve(sortUsersByKDR());
             }
           });

@@ -302,7 +302,7 @@ function weaponObj() {
  *
  * @param {String} line - one line of the log file being parsed
  */
-function scanLine(line, users, weapons, bannedPlayers, lNum, totalFiles) {
+function scanLine(line, users, weapons, bannedPlayers, lNum, totalFiles, killsPerMap) {
   var word  = line.split(' ');
   var isKill = lineIsKill(word);
   var isConnect = lineIsConnect(word);
