@@ -715,7 +715,7 @@ function parseTopData(top, page, cb) {
  * @param {Array} demos - list of demos from this month
  */
 function parseDemos(demos) {
-  var timer = new Timer()
+  var timer = new Timer('parse demos')
   demos.forEach((demo, idx, array) => {
     const a = document.createElement('a');
     a.href = `https://hl2dm.dough10.me/api/download/${demo[0]}`;
@@ -953,6 +953,7 @@ function fetchOldMonths(month, cb) {
  * grabs server stats from the server and send it to parse t he response
  */
 function fetchServerStatus() {
+  setTimeout(fetchServerStatus, 5000);
   fetch('/api/status').then(response => {
     if (response.status !== 200) {
       console.error(response.status);
@@ -1153,22 +1154,22 @@ function init() {
     if (!('PushManager' in window)) {
       return;
     }
-    console.log(reg);
+    // console.log(reg);
   }).then(loadRipples).then(_ => {
-    if ("WebSocket" in window) {
-      connectWSS();
-    } else {
-      fetchServerStatus();
-      setTimeout(fetchServerStatus, 5000);
-    }
     if (!page) {
-      console.error('Error loading page.js');
-      return;
+      throw Error('Error loading page.js');
     }
     page('/', homePage);
     page('/old-stats', oldStatsPage);
     page('/demos', demosPage);
     page();
+    if ("WebSocket" in window) {
+      connectWSS();
+    } else {
+      fetchServerStatus();
+    }
+    var page_ready_time = new Date().getTime() - performance.timing.navigationStart;
+    console.log(`Page Ready: ${page_ready_time}ms`);
   });  
 }
 

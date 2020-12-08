@@ -3,10 +3,19 @@
  * A class for timing duration of things
  */
 class Timer {
-  constructor() {
+  constructor(label) {
+    this.hasTime = 'time' in console;
+    this.label = label;
+    if (this.hasTime) {
+      console.time(this.label);
+      return;
+    }
     this.startTime = new Date().getTime();
   }
   end() {
+    if (this.hasTime) {
+      return console.timeEnd(this.label);
+    }
     var ms = new Date().getTime() - this.startTime;
     var seconds = ms / 1000;
     var hours = parseInt( seconds / 3600 );
@@ -20,6 +29,9 @@ class Timer {
     ];
   }
   endString() {
+    if (this.hasTime) {
+      return console.timeEnd(this.label);
+    }
     var endTime = this.end();
     return `${endTime[0]} hours ${endTime[1]} minutes ${endTime[2]} seconds`.cyan;
   }
