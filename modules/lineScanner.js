@@ -302,7 +302,7 @@ function weaponObj() {
  *
  * @param {String} line - one line of the log file being parsed
  */
-function scanLine(line, users, weapons, bannedPlayers, lNum, totalFiles, killsPerMap) {
+function scanLine(line, users, weapons, bannedPlayers, lNum, totalFiles) {
   var word  = line.split(' ');
   var isKill = lineIsKill(word);
   var isConnect = lineIsConnect(word);
@@ -488,27 +488,6 @@ function scanLine(line, users, weapons, bannedPlayers, lNum, totalFiles, killsPe
     }
     // add server wide weapon kill
     weapons[weapon].kills++;
-
-    // players kills per map
-    // if (!killsPerMap[totalFiles]) {
-    //   killsPerMap[totalFiles] = {};
-    // }
-    // if (!killsPerMap[totalFiles][killerID]) {
-    //   killsPerMap[totalFiles][killerID] = {
-    //     name: killerName,
-    //     kills: 0,
-    //     deaths: 0
-    //   };
-    // }
-    // killsPerMap[totalFiles][killerID].kills++
-    // if (!killsPerMap[totalFiles][killedID]) {
-    //   killsPerMap[totalFiles][killedID] = {
-    //     name: killedName,
-    //     kills: 0,
-    //     deaths: 0
-    //   };
-    // }
-    // killsPerMap[totalFiles][killedID].deaths++
   } else if (isSuicide) {
     const nameString = buildKillerNameString(word, isSuicide);
     const id = getID3(nameString);

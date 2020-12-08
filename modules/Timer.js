@@ -1,3 +1,5 @@
+const colors = require('colors');                         // colorize text
+
 
 /**
  * A class for timing duration of things

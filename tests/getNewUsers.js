@@ -1,6 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;       // mongodb for streamkey storage
 const config = require(`../config.json`);                 // config file location
 const args = process.argv;
+const Timer = require('../modules/Timer.js');
 
 var now = new Date();
 
@@ -15,7 +16,8 @@ MongoClient.connect(config.dbURL, {
   if (!db) {
     reject('no db');
     return;
-  } 
+  }
+  var t = new Timer();
   var dbo = db.db("hl2dm");
   dbo.collection("players").find({
     date: Number(args[2]) || now.getDate(),
@@ -25,9 +27,9 @@ MongoClient.connect(config.dbURL, {
   }).toArray((err, res) => {
     if (err) throw err;
     db.close();
-    console.log(`${res.length} New Players`);
     res.forEach(player => {
       console.log(player.name)
     });
+    console.log(`${res.length} new players ${t.endString()} time to complete request`);
   });
 });
