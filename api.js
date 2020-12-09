@@ -639,6 +639,11 @@ app.get('/auth', (req, res) => {
   }).catch(ioError);
 });
 
+/**
+ * return array of new users
+ *
+ * @param {Number} req.params.date - date of this month you want to view user for 0 = today
+ */
 app.get('/newPlayers/:date', (req, res) => {
   var t = new Timer();
   var date = req.params.date;
@@ -651,6 +656,11 @@ app.get('/newPlayers/:date', (req, res) => {
   });
 });
 
+/**
+ * return array of return users
+ *
+ * @param {Number} req.params.date - date of this month you want to view user for 0 = today
+ */
 app.get('/returnPlayers/:date', (req, res) => {
   var t = new Timer();
   var date = req.params.date;
