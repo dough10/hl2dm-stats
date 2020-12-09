@@ -26,6 +26,9 @@ const isWeapon = require(path.join(__dirname, 'modules', 'weaponsCheck.js'));
 const print = require(path.join(__dirname, 'modules', 'printer.js'));
 const ioError = require(path.join(__dirname, 'modules', 'ioerror.js'));
 const scanLine = require(path.join(__dirname, 'modules', 'lineScanner.js'));
+const getNewUsers = require(path.join(__dirname, 'modules', 'getNewUsers.js'));
+const getReturnUsers = require(path.join(__dirname, 'modules', 'getReturnUsers.js'));
+
 
 init();                                                    // ascii text /cheer
 
@@ -634,6 +637,30 @@ app.get('/auth', (req, res) => {
     who(req, `authorized for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
     res.send('ok');
   }).catch(ioError);
+});
+
+app.get('/newPlayers/:date', (req, res) => {
+  var t = new Timer();
+  var date = req.params.date;
+  getNewUsers(date).then(users => {
+    if (date === '0') {
+      date = new Date().getDate();
+    }
+    who(req, `is viewing ` + `/newPlayers/${date}`.green + ` data ` + `${users.length} new players.`.grey + ` ${t.end()[2]} seconds`.cyan + ` response time`);
+    res.send(users);
+  });
+});
+
+app.get('/returnPlayers/:date', (req, res) => {
+  var t = new Timer();
+  var date = req.params.date;
+  getReturnUsers(date).then(users => {
+    if (date === '0') {
+      date = new Date().getDate();
+    }
+    who(req, `is viewing ` + `/returnPlayers/${date}`.green + ` data ` + `${users.length} return players.`.grey + ` ${t.end()[2]} seconds`.cyan + ` response time`);
+    res.send(users);
+  });
 });
 
 /**
