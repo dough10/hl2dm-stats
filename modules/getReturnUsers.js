@@ -1,7 +1,11 @@
 const MongoClient = require('mongodb').MongoClient;       // mongodb for streamkey storage
 const config = require(`../config.json`);                 // config file location
-const Timer = require('./Timer.js');
 
+/**
+ * returns a list of  return users from the date givin
+ * 
+ * @param {Number} date - the date of this month to get user list for
+ */
 function getReturnUsers(date) {
   return new Promise((resolve, reject) => {
     MongoClient.connect(config.dbURL, {

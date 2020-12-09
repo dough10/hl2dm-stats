@@ -1,4 +1,5 @@
 const io = require('@pm2/io');                            // pm2 functions
+const colors = require('colors');                         // colorize text
 
 io.init({
   transactions: true,
@@ -12,7 +13,7 @@ io.init({
  * @param {String} line - one line of the log file being parsed
  */
 function ioError(err, line) {
-  new Error(err, line.red);
+  new Error(err, line);
   io.notifyError(new Error(`${err}: ${line}`), {
     custom: {
       error: err

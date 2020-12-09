@@ -28,6 +28,7 @@ const ioError = require(path.join(__dirname, 'modules', 'ioerror.js'));
 const scanLine = require(path.join(__dirname, 'modules', 'lineScanner.js'));
 const getNewUsers = require(path.join(__dirname, 'modules', 'getNewUsers.js'));
 const getReturnUsers = require(path.join(__dirname, 'modules', 'getReturnUsers.js'));
+const cacheDemos = require(path.join(__dirname, 'modules', 'cacheDemos.js'));
 
 
 init();                                                    // ascii text /cheer
@@ -267,68 +268,6 @@ function sortUsersByKDR() {
 }
 
 /**
- * returns array of demo files from game server dir
- */
-function getDemos() {
-  return new Promise((resolve, reject) => {
-    var demos = [];
-    fs.readdir(config.gameServerDir, (err, files) => {
-      if (err) {
-        reject('Unable to scan directory', err);
-        return;
-      }
-      for (var i = 0; i < files.length; i++) {
-        if (path.extname(files[i]) === '.dem') {
-          demos.push(files[i]);
-        }
-      }
-      resolve(demos);
-    });
-  });
-}
-
-/**
- * returns created date of a file
- *
- * @param {String} file - path to the file
- */
-function createdDate(file) {
-  const stats = fs.statSync(file)
-  return stats.mtime
-}
-
-/**
- * returns file size in bytes
- *
- * @param {String} filename - file path
- */
-function getFilesizeInBytes(filename) {
-  var stats = fs.statSync(filename)
-  var fileSizeInBytes = stats["size"]
-  return fileSizeInBytes
-}
-
-/**
- * makes bytes readable
- *
- * @param {Number} bytes - file size yay
- */
-function bytesToSize(bytes) {
-   var sizes = [
-     'Bytes',
-     'KB',
-     'MB',
-     'GB',
-     'TB'
-   ];
-   if (bytes === 0) {
-     return '0 Byte';
-   }
-   var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-   return `${Math.round(bytes / Math.pow(1024, i), 2)} ${sizes[i]}`;
-}
-
-/**
  * grabs stats object from json file for a given month
  *
  * @param {Number} month - number of the month 0 - 11
@@ -426,38 +365,17 @@ function who(req, message) {
 }
 
 /**
- * caches list of avaliable demo files
- */
-function cacheDemos() {
-  var t = new Timer();
-  var arr = [];
-  getDemos().then(demos => {
-   for (var i = 0; i < demos.length; i++) {
-     if (i !== demos.length - 1) {
-       var filepath = path.join(config.gameServerDir, demos[i])
-       arr.push([
-         demos[i],
-         bytesToSize(getFilesizeInBytes(filepath)),
-         createdDate(filepath)
-       ]);
-     }
-   }
-   arr.reverse();
-   demoList = arr;
-   print(`demo file list cached ${t.endString()} to complete`);
- }).catch(ioError);
-}
-
-/**
  * runs when player reaches fragLimit
  */
 function roundEnd() {
   updated = true;
-  cacheTopResponse().then(cacheDemos);
+  cacheTopResponse().then(cacheDemos).then(demos => {
+    demoList = demos;
+  });
 }
 
 /**
- * caches list of avaliable demo files
+ * 
  */
 function statsLoop() {
   setTimeout(statsLoop, 5000);
@@ -471,12 +389,18 @@ function statsLoop() {
   });
 }
 
-// run again & again & again;
-cacheTopResponse().then(cacheDemos).catch(ioError);
-setInterval(_ => {
-  cacheTopResponse().then(cacheDemos).catch(ioError);
-}, (config.logRefreshTime * 1000) * 60);
+/**
+ * 
+ */
+function cacheData() {
+  setTimeout(cacheData, (config.logRefreshTime * 1000) * 60);
+  cacheTopResponse().then(cacheDemos).then(demos => {
+    demoList = demos;
+  }).catch(ioError);
+}
 
+print('Getting Data!!');
+cacheData();
 statsLoop();
 
 var j = schedule.scheduleJob('0 5 1 * *', _ => {
