@@ -10,7 +10,8 @@
     "monitor.sh": "monitor.sh",
     "start.sh": "start.sh",
     "update.sh": "update.sh",
-    "add-streamkey": "node streamKey.js"
+    "add-streamkey": "node streamKey.js",
+    "api-test": "node api-test.js"
   },
   "repository": {
     "type": "git",
