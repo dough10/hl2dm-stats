@@ -1,168 +1,133 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style media="screen">
-      :root {
-        --header-height: 64px;
-        --main-color: #4c72b9;
-        --theme-color: #395486;
-        --background-color: rgb(179, 179, 179);
-      }
-      @font-face {
-        font-family: 'Roboto';
-        font-style: normal;
-        font-weight: 400;
-        font-display: fallback;
-        src: url('../fonts/roboto-v15-latin-regular.eot'); /* IE9 Compat Modes */
-        src: local('Roboto'), local('Roboto-Regular'),
-           url('../fonts/roboto-v15-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-           url('../fonts/roboto-v15-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
-           url('../fonts/roboto-v15-latin-regular.woff') format('woff'), /* Modern Browsers */
-           url('../fonts/roboto-v15-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-           url('../fonts/roboto-v15-latin-regular.svg#Roboto') format('svg'); /* Legacy iOS */
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="HTML5">
+  <meta name="author" content="SitePoint">
+  <style>
+    * {
+        border: 0;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
       body {
-        display: flex;
-        justify-content: center;
-        background: var(--background-color);
-        font-family: 'Roboto', 'Noto', sans-serif;
+        background: currentColor;
       }
-      header {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      /* I. Containers */
+      figure {
+        font-size: 6px;
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: var(--header-height);
-        background: var(--main-color);
-        color: #ffffff;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 64em;
       }
-      .header-shadow {
-        height: 6px;
-        box-shadow: inset 0px 5px 6px -3px rgba(0,0,0,0.4);
-        position: absolute;
-        will-change: auto;
-        top: var(--header-height);
-        left: 0;
-        right: 0;
-        pointer-events: none;
-        z-index: 1;
+      figcaption {
+        color: #fff;
+        display: flex;
+        align-content: space-between;
+        flex-wrap: wrap;
+        height: 17em;
       }
-      .card {
-        max-width: 675px;
-        min-width: 280px;
-        padding: 20px;
-        background: #fff;
-        z-index: 1;
-        position: relative;
-        margin: auto;
-        border-radius: 3px;
-        margin-bottom: 8px;
-        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
-        text-align: center;
-        background-image: url('../images/logo.webp');
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 270px;
-      }
-      .container {
-        position: fixed;
-        will-change: auto;
-        top: var(--header-height);
-        left:0;
-        right:0;
-        bottom: 0;
-        overflow: auto;
-        overflow-x: hidden;
-        padding:8px;
-        transform: translateZ(0);
-        -webkit-overflow-scrolling: touch;
-        text-align: center;
-        background: var(--background-color);
-      }
-      .flushed {
-        background-image: url("../images/404.png");
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 150px;
-        height:150px;
-      }
-      .button {
-        display: inline-flex;
-        min-width: 5.14em;
-        margin: 0.29em 0.29em;
-        text-align: center;
-        text-transform: uppercase;
-        outline-width: 0;
-        border-radius: 3px;
-        padding: 0.7em 0.57em;
-        cursor: pointer;
-        position: relative;
-        box-sizing:border-box;
-        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
-        -webkit-user-select: none;
-        user-select: none;
-        pointer-events: all;
-        justify-content: center;
-        align-items: center;
-        background-color: #ec8b8f;
-      }
-      .button:after {
+      figcaption span:before, .sad-mac:before {
+        content: "";
+        display: block;
+        width: 1em;
+        height: 1em;
+        transform: translate(-1em,-1em);
+      } 
+      figcaption span {
         display: inline-block;
-        z-index: -1;
-        width: 100%;
-        height: 100%;
-        border-radius: 3px;
-        opacity: 0;
-        transition: opacity 150ms cubic-bezier(.33,.17,.85,1.1);
-        box-shadow: 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12), 0 5px 5px -3px rgba(0,0,0,.4);
-        content:' ';
+        margin: 0 2em;
+        width: 4em;
+        height: 6em;
+      }
+      .sr-text {
+        overflow: hidden;
         position: absolute;
-        top: 0;
-        left: 0;
+        width: 0;
+        height: 0;
       }
-      .button:hover:after {
-        opacity: 1;
+      /* II. Sprites */
+      /* 1. Sad Mac */
+      .sad-mac {
+        background: #fff;
+        margin: 0 auto 7em auto;
+        width: 23em;
+        height: 30em;
       }
-      .button:hover:active:after {
-        opacity: 0;
+      .sad-mac:before {
+        box-shadow: 1em 1em, 23em 1em, 4em 3em, 5em 3em, 6em 3em, 7em 3em, 8em 3em, 9em 3em, 10em 3em, 11em 3em, 12em 3em, 13em 3em, 14em 3em, 15em 3em, 16em 3em, 17em 3em, 18em 3em, 19em 3em, 20em 3em, 3em 4em, 21em 4em, 3em 5em, 21em 5em, 3em 6em, 7em 6em, 9em 6em, 15em 6em, 17em 6em, 21em 6em, 3em 7em, 8em 7em, 16em 7em, 21em 7em, 3em 8em, 7em 8em, 9em 8em, 15em 8em, 17em 8em, 21em 8em, 3em 9em, 21em 9em, 3em 10em, 10em 10em, 13em 10em, 21em 10em, 3em 11em, 11em 11em, 12em 11em, 21em 11em, 3em 12em, 21em 12em, 3em 13em, 10em 13em, 11em 13em, 12em 13em, 13em 13em, 14em 13em, 21em 13em, 3em 14em, 9em 14em, 15em 14em, 16em 14em, 21em 14em, 3em 15em, 17em 15em, 21em 15em, 3em 16em, 21em 16em, 4em 17em, 5em 17em, 6em 17em, 7em 17em, 8em 17em, 9em 17em, 10em 17em, 11em 17em, 12em 17em, 13em 17em, 14em 17em, 15em 17em, 16em 17em, 17em 17em, 18em 17em, 19em 17em, 20em 17em, 3em 22em, 4em 22em, 5em 22em, 14em 22em, 15em 22em, 16em 22em, 17em 22em, 18em 22em, 19em 22em, 20em 22em, 1em 27em, 2em 27em, 3em 27em, 4em 27em, 5em 27em, 6em 27em, 7em 27em, 8em 27em, 9em 27em, 10em 27em, 11em 27em, 12em 27em, 13em 27em, 14em 27em, 15em 27em, 16em 27em, 17em 27em, 18em 27em, 19em 27em, 20em 27em, 21em 27em, 22em 27em, 23em 27em, 1em 28em, 23em 28em, 1em 29em, 23em 29em, 1em 30em, 23em 30em;
       }
-      .button[disabled] {
-        background: rgba(84, 84, 84, 0.4);
-        box-shadow: none;
-        cursor: none;
-        pointer-events: none;
+      /* 2. Letters */
+      ._0:before {
+        box-shadow: 2em 1em, 3em 1em, 1em 2em, 1em 3em, 1em 4em, 1em 5em, 4em 2em, 4em 3em, 4em 4em, 4em 5em, 2em 4em, 3em 3em, 2em 6em, 3em 6em;
       }
-      .button[disabled]:active, .button[disabled]:hover, .button[disabled]:active:hover {
-        box-shadow: none;
+      ._4:before {
+        box-shadow: 1em 1em, 1em 2em, 1em 3em, 1em 4em, 4em 1em, 4em 2em, 4em 3em, 4em 4em, 2em 4em, 3em 4em, 4em 5em, 4em 6em;
       }
-      .button[noshadow], .button[noshadow]:hover, .button[noshadow]:hover:after, .button[noshadow]:after {
-        box-shadow: none;
+      .d:before {
+        box-shadow: 1em 1em, 2em 1em, 3em 1em, 1em 2em, 4em 2em, 1em 3em, 4em 3em, 1em 4em, 4em 4em, 1em 5em, 4em 5em, 1em 6em, 2em 6em, 3em 6em;
       }
-      .button[noshadow]:active {
-        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
+      .e:before {
+        box-shadow: 1em 1em, 2em 1em, 3em 1em, 4em 1em, 1em 2em, 1em 3em, 2em 3em, 3em 3em, 1em 4em, 1em 5em, 1em 6em, 2em 6em, 3em 6em, 4em 6em;
       }
-    </style>
-    <title>Error 404 Not Found</title>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-  </head>
-  <body>
-    <header></header>
-    <div class="header-shadow"></div>
-    <div class="container">
-      <div class="card">
-        <h1>404</h1>
-        <div class="flushed"></div>
-        <div class="button">
-          home
-        </div>
-      </div>
-    </div>
-
-  </body>
+      .f:before {
+        box-shadow: 1em 1em, 2em 1em, 3em 1em, 4em 1em, 1em 2em, 1em 3em, 2em 3em, 3em 3em, 1em 4em, 1em 5em, 1em 6em;
+      }
+      .n:before {
+        box-shadow: 1em 1em, 1em 2em, 1em 3em, 1em 4em, 1em 5em, 1em 6em, 4em 1em, 4em 2em, 4em 3em, 4em 4em, 4em 5em, 4em 6em, 2em 3em, 3em 4em;
+      }
+      .o:before {
+        box-shadow: 2em 1em, 3em 1em, 1em 2em, 1em 3em, 1em 4em, 1em 5em, 4em 2em, 4em 3em, 4em 4em, 4em 5em, 2em 6em, 3em 6em;
+      }
+      .r:before {
+        box-shadow: 1em 1em, 2em 1em, 3em 1em, 4em 2em, 1em 2em, 1em 3em, 1em 4em, 2em 3em, 3em 3em, 1em 5em, 1em 6em, 4em 4em, 4em 5em, 4em 6em;
+      }
+      .t:before {
+        box-shadow: 1em 1em, 2em 1em, 3em 1em, 2em 2em, 2em 3em, 2em 4em, 2em 5em, 2em 6em;
+      }
+      .u:before {
+        box-shadow: 1em 1em, 1em 2em, 1em 3em, 1em 4em, 1em 5em, 4em 1em, 4em 2em, 4em 3em, 4em 4em, 4em 5em, 2em 6em, 3em 6em;
+      }
+      /* III. Responsiveness */
+      /* This cannot be smoothly done using viewport units; sprite pixels will look divided when font size is a floating point. */
+      @media screen and (min-width: 720px) {
+        figure {
+            font-size: 7px;
+        }
+      }
+      @media screen and (min-width: 1440px) {
+        figure {
+            font-size: 8px;
+        }
+      }
+  </style>
+</head>
+<body>
+  <figure>
+    <div class="sad-mac"></div>
+    <figcaption>
+      <span class="sr-text">Error 404: Not Found</span>
+      <span class="e"></span>
+      <span class="r"></span>
+      <span class="r"></span>
+      <span class="o"></span>
+      <span class="r"></span>
+      <span class="_4"></span>
+      <span class="_0"></span>
+      <span class="_4"></span>
+      <span class="n"></span>
+      <span class="o"></span>
+      <span class="t"></span>
+      <span class="f"></span>
+      <span class="o"></span>
+      <span class="u"></span>
+      <span class="n"></span>
+      <span class="d"></span>
+    </figcaption>
+  </figure>
+</body>
 </html>
