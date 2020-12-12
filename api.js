@@ -616,4 +616,4 @@ app.listen(config.port);
 
 print('API active on port: ' + `${config.port}`.red);
 print(`log folder = ${logFolder.green}`);
-if (process.platform !== "win32") require("child_process").execSync('goaccess /home/crumb/logs/hl2dm.log -c -o /var/www/html/report.html --log-format=COMBINED --real-time-html').toString();
+// if (process.platform !== "win32") require("child_process").execSync('goaccess /home/crumb/logs/hl2dm.log -c -o /var/www/html/report.html --log-format=COMBINED --real-time-html').toString();
