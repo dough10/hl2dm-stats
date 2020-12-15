@@ -56,8 +56,10 @@ function logUser(data) {
       dbo = db.db("hl2dm");
       entryExists(data).then(exists => {
         if (!exists) {
-          insertPlayer(data).then(resolve).catch(reject);
-          db.close();
+          insertPlayer(data).then(_ => {
+            resolve();
+            db.close();
+          }).catch(reject);
         }
       }).catch(reject);
     });

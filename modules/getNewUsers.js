@@ -40,7 +40,7 @@ function getNewUsers(date) {
         }
         var arr = [];
         for (var i = 0; i < res.length; i++) {
-          arr.push(res[i].name)
+          arr.push(res[i].name);
         }
         db.close();
         resolve(arr);

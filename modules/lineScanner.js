@@ -1,8 +1,44 @@
 const SteamID = require('steamid');                       // work with steamid's
-const path = require('path');                             // merger file / url names
-const logUser = require(path.join(__dirname, 'logUser.js'));
-const isWeapon = require(path.join(__dirname, 'weaponsCheck.js'));
-const ioError = require(path.join(__dirname, 'ioerror.js'));
+const isWeapon = require('./weaponsCheck.js');
+const print = require('./printer.js');
+const readableTime = require('./readable-time.js');
+
+/**
+ * check if ip  address is valid
+ *
+ * @param {String} ip - ip address
+ */
+function validateIPaddress(ip) {
+  return /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ip);
+}
+
+/**
+ * scans the line for landmarks in order to get usable strings of data
+ *
+ * @param {String} line - one line of the log file being parsed
+ */
+function isFileStart(word) {
+  for (var i = 0 ; i < word.length; i++) {
+    if (word[i] === 'started' && word[i - 1] === 'file' && word[i - 2] === 'Log') {
+      return i;
+    }
+  }
+  return false;
+}
+
+/**
+ * scans the line for landmarks in order to get usable strings of data
+ *
+ * @param {String} line - one line of the log file being parsed
+ */
+function isFileEnd(word) {
+  for (var i = 0; i < word.length; i++) {
+    if (word[i] === 'closed.' && word[i - 1] === 'file' && word[i - 2] === 'Log') {
+      return i;
+    }
+  }
+  return false;
+}
 
 /**
  * returns the player name string
@@ -14,7 +50,7 @@ function getName(word) {
     return false;
   }
   word = word.replace('"', '');
-  var end = word.search(/<([1-9][0-9]{0,2}|1000)>/);
+  var end = word.search(/<([1-9][0-9]{0,2}|1000)></);
   var str = '';
   for (var i = 0; i < end; i++) {
     str = str + word[i];
@@ -248,62 +284,28 @@ function playerIsBanned(line) {
   return false;
 }
 
-/**
- * returns a player object
- *
- * @param {String} name - name mof the player
- * @param {Number} id - player steamID
- * @param {Number} time - new Date().getTime() output
- */
-function playerObj(name, id, time, ip) {
-  var obj = {
-    name: name,
-    id: id,
-    kills: 0,
-    deaths: 0,
-    kdr: 0,
-    banned: false,
-    suicide: {
-      count:0
-    },
-    updated: time,
-    chat: []
-  };
-  if (ip) {
-    obj.ip = ip;
+function playerHasDisconnected(line) {
+  for (var i = 0; i < line.length; i++) {
+    if (line[i] === 'disconnected') {
+      return i;
+    }
   }
-  return obj;
+  return false;
 }
 
-/**
- * returns defualt weapon object valuse
- */
-function weaponObj() {
-  return {
-    kills: 0,
-    shots: 0,
-    hits: 0,
-    headshots: 0,
-    head: 0,
-    chest: 0,
-    stomach: 0,
-    leftarm: 0,
-    rightarm: 0,
-    leftleg: 0,
-    rightleg:0,
-    damage:0,
-    hss:0,
-    lss:9999
-  };
-}
+var startDebounceTime = 0;
+var endDebounceTime = 0;
 
 /**
  * scans the line for landmarks in order to get usable strings of data
  *
  * @param {String} line - one line of the log file being parsed
+ * @param {Class} dataModel - data!!!!!!!
+ * @param {Function} onJoin - callback when player joins server (to be used to Toast?)
  */
-function scanLine(line, users, weapons, bannedPlayers, lNum, totalFiles) {
-  var word  = line.split(' ');
+function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, loggingEnabled) {
+  //print(line);
+  var word  = line.split(' ');  // array
   var isKill = lineIsKill(word);
   var isConnect = lineIsConnect(word);
   var isSuicide = lineIsSuicide(word);
@@ -313,6 +315,9 @@ function scanLine(line, users, weapons, bannedPlayers, lNum, totalFiles) {
   var isStats2 = lineIsStats2(word);
   var isConsole = lineIsConsole(word);
   var isBanned = playerIsBanned(word);
+  var isStart = isFileStart(word);
+  var isEnd = isFileEnd(word);
+  var hasDisconnected = playerHasDisconnected(word);
   var lineTime;
   if (word[3] && isTime(word[3])) {
     lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
@@ -326,323 +331,149 @@ function scanLine(line, users, weapons, bannedPlayers, lNum, totalFiles) {
     const name = getName(nameString);
     // check if variables have data
     if (!id) {
-      // ioError('Forming player ID', line);
       return;
     }
     if (!name) {
-      // ioError('Forming player name', line);
       return;
     }
-    // create user object if it doesn't exist
-    if (!users[id]) {
-     users[id] = playerObj(name, id, lineTime);
-    }
-    // update player name if it has changed
-    if (lineTime >= users[id].updated) {
-     users[id].updated = lineTime;
-     users[id].name = name;
-    }
-    // log chat
-    var said = `${new Date(lineTime).toLocaleString()} `;
-    for (var i = (isChat + 1); i < word.length; i++) {
-     said = `${said}${word[i]} `;
-    }
-    said.replace('"', '');
-    said.replace('"', '');
-    users[id].chat.push(said);
+    dataModel.addChat(lineTime, id, name, word, isChat + 1);
   } else if (isBanned) {
     // important data
     const nameString = buildKillerNameString(word, isBanned);
-    const name = getName(nameString);
+    // const name = getName(nameString);
     const id = getID3(nameString);
     // check if variables have data
     if (!id) {
-      // ioError('Forming player ID', line);
       return;
     }
-    // create user object if it doesn't exist
-
-    if (!users[id]) {
-      users[id] = {
-        id: id,
-        banned: true
-      };
-      bannedPlayers[id] = {
-        id: id,
-        banned: true
-      };
-      return;
-    }
-    // mark player as banned
-    users[id].banned = true;
-    bannedPlayers[id] = users[id];
+    // add the ban
+    dataModel.addBanned(id);
   } else if (isConnect) {
     // get user details
-    const connectedNameString = buildKillerNameString(word, isConnect);
-    const connectedUser = getID3(connectedNameString);
-    const connectedUserName = getName(connectedNameString);
+    const nameString = buildKillerNameString(word, isConnect);
+    const id = getID3(nameString);
+    const name = getName(nameString);
     const ip = word[isConnect  + 2].replace('"', '').replace('"', '').replace(/:\d{4,5}$/, '');
-    var newUser = false;
     // check for important data
-    if (!connectedUserName) {
-      // ioError('Forming player name', line);
+    if (!name) {
       return;
     }
-    if (!connectedUser) {
-      // ioError('Forming player ID', line);
+    if (!id) {
       return;
     }
     if (!validateIPaddress(ip)) {
-      ioError('Forming player ip address', line);
       return;
     }
-    // create users object if doesn't exist
-    if (!users[connectedUser]) {
-      users[connectedUser] = playerObj(connectedUserName, connectedUser, lineTime, ip);
-      newUser = true;
+    dataModel.playerTimes[id] = new Date().getTime();
+    var newUser = dataModel.playerConnect(lineTime, id, name, ip);
+    var constr = '';
+    if (newUser) {
+      constr = 'NEW USER! ';
     }
-    if (lineTime >= users[connectedUser].updated) {
-      // set address
-      users[connectedUser].ip = ip;
-      // update user name if changed
-      users[connectedUser].updated = lineTime;
-      users[connectedUser].name = connectedUserName;
-    }
-    // console.log(totalFiles, lNum);
-    logUser({
-      name: connectedUserName,
-      id: connectedUser,
+    if (loggingEnabled) print(`${constr.red}${name.grey} connected with IP address: ${ip.grey}`);
+    if (onJoin) onJoin({
+      name: name,
+      id: id,
       time: lineTime,
       date: new Date(lineTime).getDate(),
       month: new Date(lineTime).getMonth(),
       year: new Date(lineTime).getFullYear(),
       new: newUser
-    }).catch(ioError);
+    });
   } else if (isKill) {
     // get players details
     const killerNameString = buildKillerNameString(word, isKill);  // isKill is the index after the last index of the player name
-    const killerID = getID3(killerNameString);
-    const killerName = getName(killerNameString);
     const killedNameString = buildKilledNameString(word, isKill + 1); // isKill + 1 is the index @ the beginning of the killed players name
-    const killedID = getID3(killedNameString);
-    const killedName = getName(killedNameString);
+    const killer = {
+      name: getName(killerNameString),
+      id: getID3(killerNameString)
+    };
+    const killed = {
+      name: getName(killedNameString),
+      id: getID3(killedNameString)
+    };
     const weapon = word[word.length - 1].replace('"', '').replace('"', '');
     // check important data exists
-    if (!killerID) {
-      ioError('Forming killer ID', line);
+    if (!killer.id) {
       return;
     }
-    if (!killerName) {
-      ioError('Forming killer name', line);
+    if (!killer.name) {
       return;
     }
-    if (!killedID) {
-      ioError('Forming killed ID', line);
+    if (!killed.id) {
       return;
     }
-    if (!killedName) {
-      ioError('Forming killed name', line);
+    if (!killed.name) {
       return;
     }
     if (!isWeapon(weapon)) {
-      ioError('Forming weapon name', line);
       return;
     }
-    // killer object
-    if (!users[killerID]) {
-      users[killerID] = playerObj(killerName, killerID, lineTime);
-    }
-    // killed object
-    if (!users[killedID]) {
-      users[killedID] = playerObj(killedName, killedID, lineTime);
-    }
-    // update killer name
-    if (lineTime >= users[killerID].updated) {
-      users[killerID].updated = lineTime;
-      users[killerID].name = killerName;
-    }
-    // update killed name
-    if (lineTime > users[killedID].updated) {
-      users[killedID].updated = lineTime;
-      users[killedID].name = killedName;
-    }
-    // add killers kill
-    users[killerID].kills++;
-    // add killed player death
-    users[killedID].deaths++;
-    // calculate everyones involveds KDR
-    users[killerID].kdr = Number((users[killerID].kills / users[killerID].deaths).toFixed(2));
-    if (users[killerID].kdr === Infinity) {
-      users[killerID].kdr = users[killerID].kills;
-    }
-    users[killedID].kdr = Number((users[killedID].kills / users[killedID].deaths).toFixed(2));
-    // add weapon for killer if doesn't exist
-    if (!users[killerID][weapon]) {
-      users[killerID][weapon] = weaponObj();
-    }
-    // add killer kill with weapon
-    users[killerID][weapon].kills++;
-    // add weapon for server
-    if (!weapons[weapon]) {
-      weapons[weapon] = weaponObj();
-    }
-    // add server wide weapon kill
-    weapons[weapon].kills++;
+    dataModel.addKill(lineTime, killer, killed, weapon);
+    if (loggingEnabled) print(`${killer.name.grey} killed ${killed.name.grey} with weapon ${weapon.magenta}`);
   } else if (isSuicide) {
     const nameString = buildKillerNameString(word, isSuicide);
     const id = getID3(nameString);
     const name = getName(nameString);
     const weapon = word[word.length - 1].replace('"', '').replace('"', '');
     if (!id) {
-      ioError('Forming player ID', line);
       return;
     }
     if (!name) {
-      ioError('Forming player name', line);
       return;
     }
     if (!isWeapon(weapon)) {
-      ioError('Forming weapon name', line);
       return;
     }
-    if (!users[id]) {
-      users[id] = playerObj(name, id, lineTime);
-    }
-    if (lineTime >= users[id].updated) {
-      users[id].updated = lineTime;
-      users[id].name = name;
-    }
-    users[id].kills--;
-    users[id].deaths++;
-    users[id].suicide.count++;
-    users[id].kdr = Number((users[id].kills / users[id].deaths).toFixed(2));
-    if (!users[id].suicide[weapon]) {
-      users[id].suicide[weapon] = 0;
-    }
-    users[id].suicide[weapon]++;
-    if (!weapons[weapon]) {
-      weapons[weapon] = weaponObj();
-    }
-    weapons[weapon].kills++;
+    dataModel.addSuicide(lineTime, id, name, weapon);
+    if (loggingEnabled) print(`${name} has commit suicide with ${weapon}`);
   } else if (isHeadshot) {
-    if (!weapons.headshots) {
-      weapons.headshots = {kills:0};
-    }
-    weapons.headshots.kills++;
     const killerNameString = buildKillerNameString(word, isHeadshot);
-    const id = getID2(killerNameString);
     const name = getName(killerNameString);
-    const sid = new SteamID(id);
-    const id3 = getID3(sid.getSteam3RenderedID());
-    if (!id3) {
-      ioError('Forming player ID', line);
+    const id = getID3(new SteamID(getID2(killerNameString)).getSteam3RenderedID());
+    if (!id) {
       return;
     }
     if (!name) {
-      ioError('Forming player name', line);
       return;
     }
-    if (!users[id3]) {
-      users[id3] = playerObj(name, id3, lineTime);
-    }
-    if (!users[id3].headshots) {
-      users[id3].headshots = {
-        kills:0
-      };
-    }
-    users[id3].headshots.kills++;
-    if (lineTime >= users[id3].updated) {
-      users[id3].updated = lineTime;
-      users[id3].name = name;
-    }
+    dataModel.addHeadshot(lineTime, id, name);
+    if (loggingEnabled) print(`${name.grey} got a HEADSHOT!!`);
   } else if (isStats) {
      // get important information
     const killedNameString = buildKillerNameString(word, isStats - 1);
-    const id = getID2(killedNameString);
     const name = getName(killedNameString);
-    const sid = new SteamID(id);
-    const id3 = getID3(sid.getSteam3RenderedID());
+    const id3 = getID3(new SteamID(getID2(killedNameString)).getSteam3RenderedID());
     // check variables have data
     if (!id3) {
-      ioError('Forming player ID', line);
       return;
     }
     if (!name) {
-      ioError('Forming player name', line);
       return;
     }
-    // create user object if doesn't exist
-    if (!users[id3]) {
-      users[id3] = playerObj(name, id3, lineTime);
-    }
-    // clean up extra chars from logs
     for (var i = 0; i < word.length; i++) {
       word[i] = word[i].replace('"', '').replace('(', '').replace(')', '').replace('"', '');
     }
     var weaponName = word[isStats + 2];
     if (!isWeapon(weaponName)) {
-      ioError('Forming weapon name', line);
       return;
     }
-    // create players weapon object if doesn't exist
-    if (!users[id3][weaponName]) {
-      users[id3][weaponName] = weaponObj();
-    }
-    // get weapon data values
-    var shots = Number(word[isStats + 4]);
-    var hits = Number(word[isStats + 6]);
-    var hs = Number(word[isStats + 8]);
-    var damage = Number(word[isStats + 14]);
-    /*
-     * single shot damage
-     * this is not accurate in that if more then 1 shot hits it will be ignored
-     */
-     // highest damage single shot
-    if (hits === 1 && damage > users[id3][weaponName].hss) {
-      users[id3][weaponName].hss = damage;
-    }
-    // lowest damage single shot
-    if (hits === 1 && damage < users[id3][weaponName].lss && damage !== 0) {
-      users[id3][weaponName].lss = damage;
-    }
-    // running total of values for player
-    users[id3][weaponName].shots = users[id3][weaponName].shots + shots;
-    users[id3][weaponName].hits = users[id3][weaponName].hits + hits;
-    users[id3][weaponName].headshots = users[id3][weaponName].headshots + hs;
-    users[id3][weaponName].damage = users[id3][weaponName].damage + damage;
-    // server wide weapon stats data object
-    if (!weapons[weaponName]) {
-      weapons[weaponName] = weaponObj();
-    }
-    // highest single shot damage
-    if (hits === 1 && damage > weapons[weaponName].hss) {
-      weapons[weaponName].hss = damage;
-    }
-    // lowest single shot damage
-    if (hits === 1 && damage < weapons[weaponName].lss && damage !== 0) {
-      weapons[weaponName].lss = damage;
-    }
-    // running total of values for server
-    weapons[weaponName].shots = weapons[weaponName].shots + shots;
-    weapons[weaponName].hits = weapons[weaponName].hits + hits;
-    weapons[weaponName].headshots = weapons[weaponName].headshots + hs;
-    weapons[weaponName].damage = weapons[weaponName].damage + damage;
+    dataModel.addWeaponStats(lineTime, id3, name, {
+      name: weaponName,
+      shots: Number(word[isStats + 4]),
+      hits: Number(word[isStats + 6]),
+      hs: Number(word[isStats + 8]),
+      damage: Number(word[isStats + 14])
+    });
   } else if (isStats2) {
     const killedNameString = buildKillerNameString(word, isStats2 - 1);
-    const id = getID2(killedNameString);
     const name = getName(killedNameString);
-    const sid = new SteamID(id);
-    const id3 = getID3(sid.getSteam3RenderedID());
-    if (!id3) {
-      ioError('Forming player id', line);
+    const id = getID3(new SteamID(getID2(killedNameString)).getSteam3RenderedID());
+    if (!id) {
       return;
     }
     if (!name) {
-      ioError('Forming player name', line);
       return;
-    }
-    if (!users[id3]) {
-      users[id3] = playerObj(name, id3, lineTime);
     }
     // clean up extra chars
     for (var i = 0; i < word.length; i++) {
@@ -650,7 +481,6 @@ function scanLine(line, users, weapons, bannedPlayers, lNum, totalFiles) {
     }
     var weaponName = word[isStats2 + 2];
     if (!isWeapon(weaponName)) {
-      ioError('Forming weapon name', line);
       return;
     }
     var head = word[isStats2 + 4];
@@ -681,36 +511,49 @@ function scanLine(line, users, weapons, bannedPlayers, lNum, totalFiles) {
     if (!rightleg) {
       return;
     }
-    if (!users[id3][weaponName]) {
-      users[id3][weaponName] = weaponObj();
+    dataModel.addWeaponStats2(lineTime, id, name, {
+      name: weaponName,
+      head: head,
+      chest: chest,
+      stomach: stomach,
+      leftarm: leftarm,
+      rightarm: rightarm,
+      leftleg: leftleg,
+      rightleg: rightleg
+    });
+  } else if (isStart) {
+    if (new Date().getTime() - startDebounceTime < 5000) {
+      return;
     }
-    users[id3][weaponName].head = users[id3][weaponName].head + Number(head);
-    users[id3][weaponName].chest = users[id3][weaponName].chest + Number(chest);
-    users[id3][weaponName].stomach = users[id3][weaponName].stomach + Number(stomach);
-    users[id3][weaponName].leftarm = users[id3][weaponName].leftarm + Number(leftarm);
-    users[id3][weaponName].rightarm = users[id3][weaponName].rightarm + Number(rightarm);
-    users[id3][weaponName].leftleg = users[id3][weaponName].leftleg + Number(leftleg);
-    users[id3][weaponName].rightleg = users[id3][weaponName].rightleg + Number(rightleg);
-    if (!weapons[weaponName]) {
-      weapons[weaponName] = weaponObj();
+    var log = Number(word[isStart + 2].replace('"logs/L', '').replace('.log")', '')) + 1;
+    if (loggingEnabled) print(`Current log file ` + `L${log}.log`.green);
+    if (onMapStart) onMapStart(`L${log}`);
+    startDebounceTime = new Date().getTime();
+  } else if (isEnd) {
+    if (loggingEnabled) {
+      if (new Date().getTime() - endDebounceTime < 5000) {
+        return;
+      }
+      print(`Map reset.`);
+      if (onMapEnd) onMapEnd();
+      endDebounceTime = new Date().getTime();
     }
-    weapons[weaponName].head = weapons[weaponName].head + Number(head);
-    weapons[weaponName].chest = weapons[weaponName].chest + Number(chest);
-    weapons[weaponName].stomach = weapons[weaponName].stomach + Number(stomach);
-    weapons[weaponName].leftarm = weapons[weaponName].leftarm + Number(leftarm);
-    weapons[weaponName].rightarm = weapons[weaponName].rightarm + Number(rightarm);
-    weapons[weaponName].leftleg = weapons[weaponName].leftleg + Number(leftleg);
-    weapons[weaponName].rightleg = weapons[weaponName].rightleg + Number(rightleg);
+  } else if (hasDisconnected) {
+    var nameString = buildKillerNameString(word, hasDisconnected);
+    var name = getName(nameString);
+    var id = getID3(nameString);
+    var onlineFor = new Date().getTime() - dataModel.playerTimes[id];
+    if (loggingEnabled) print(`${name.grey} disconnected ${readableTime(onlineFor).cyan} time online`);
+    if (onDisconnect) onDisconnect({
+      name: name,
+      id: id,
+      time: lineTime,
+      date: new Date(lineTime).getDate(),
+      month: new Date(lineTime).getMonth(),
+      year: new Date(lineTime).getFullYear(),
+    });
+    delete dataModel.playerTimes[id];
   }
-}
-
-/**
- * check if ip  address is valid
- *
- * @param {String} ip - ip address
- */
-function validateIPaddress(ip) {
-  return /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ip);
 }
 
 module.exports = scanLine;
