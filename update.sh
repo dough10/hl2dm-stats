@@ -30,6 +30,7 @@ sudo chmod +x ./monitor.sh
 sudo chmod +x ./update.sh
 sudo chmod +x ./start.sh
 sudo chmod +x ./push.sh
+sudo chmod +x ./api.js
 
 echo "\e[39m---------------\e[33mresume monitor\e[39m---------------"
 ./monitor.sh

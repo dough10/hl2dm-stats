@@ -1,7 +1,7 @@
 const SteamID = require('steamid');                       // work with steamid's
 const isWeapon = require('./weaponsCheck.js');
 const print = require('./printer.js');
-const readableTime = require('./readable-time.js');
+const Timer = require('./Timer.js');
 
 /**
  * check if ip  address is valid
@@ -302,9 +302,13 @@ var endDebounceTime = 0;
  * @param {String} line - one line of the log file being parsed
  * @param {Class} dataModel - data!!!!!!!
  * @param {Function} onJoin - callback when player joins server (to be used to Toast?)
+ * @param {Function} onDisconnect - callback when player leaves server (to be used to Toast?)
+ * @param {Function} onMapStart - callback when the map begins
+ * @param {Function} onMapEnd - callback when the map ends
+ * @param {Boolean} loggingEnabled - log to console or not. (used to avoid spam when scanning logs while still getting data from realtime to log to console)
  */
 function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, loggingEnabled) {
-  //print(line);
+  // if (loggingEnabled) console.log(line);
   var word  = line.split(' ');  // array
   var isKill = lineIsKill(word);
   var isConnect = lineIsConnect(word);
@@ -336,7 +340,16 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
     if (!name) {
       return;
     }
-    dataModel.addChat(lineTime, id, name, word, isChat + 1);
+    for (var i = 0; i < word.length; i++) {
+      word[i] = word[i].replace('"', '').replace('"', '');
+    }
+    // log chat
+    var said = '';
+    for (var i = isChat + 1; i < word.length; i++) {
+      said = `${said}${word[i]} `;
+    }
+    dataModel.addChat(lineTime, id, name, `${new Date(lineTime).toLocaleString()} - ${said}`);
+    if (loggingEnabled) print(`${name} said ${said.magenta}`)
   } else if (isBanned) {
     // important data
     const nameString = buildKillerNameString(word, isBanned);
@@ -364,13 +377,15 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
     if (!validateIPaddress(ip)) {
       return;
     }
-    dataModel.playerTimes[id] = new Date().getTime();
     var newUser = dataModel.playerConnect(lineTime, id, name, ip);
     var constr = '';
     if (newUser) {
       constr = 'NEW USER! ';
     }
-    if (loggingEnabled) print(`${constr.red}${name.grey} connected with IP address: ${ip.grey}`);
+    if (loggingEnabled) {
+      dataModel.playerTimes[id] = new Timer();
+      print(`${constr.red}${name.grey} connected with IP address: ${ip.grey}`);
+    }
     if (onJoin) onJoin({
       name: name,
       id: id,
@@ -426,7 +441,7 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
       return;
     }
     dataModel.addSuicide(lineTime, id, name, weapon);
-    if (loggingEnabled) print(`${name} has commit suicide with ${weapon}`);
+    if (loggingEnabled) print(`${name.grey} has commit suicide with ${weapon.magenta}`);
   } else if (isHeadshot) {
     const killerNameString = buildKillerNameString(word, isHeadshot);
     const name = getName(killerNameString);
@@ -438,7 +453,7 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
       return;
     }
     dataModel.addHeadshot(lineTime, id, name);
-    if (loggingEnabled) print(`${name.grey} got a HEADSHOT!!`);
+    if (loggingEnabled) print(`${name.grey} got a ` + `HEADSHOT!!`.magenta);
   } else if (isStats) {
      // get important information
     const killedNameString = buildKillerNameString(word, isStats - 1);
@@ -542,8 +557,7 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
     var nameString = buildKillerNameString(word, hasDisconnected);
     var name = getName(nameString);
     var id = getID3(nameString);
-    var onlineFor = new Date().getTime() - dataModel.playerTimes[id];
-    if (loggingEnabled) print(`${name.grey} disconnected ${readableTime(onlineFor).cyan} time online`);
+    if (loggingEnabled && dataModel.playerTimes[id]) print(`${name.grey} disconnected ${dataModel.playerTimes[id].endString().cyan} time online`);
     if (onDisconnect) onDisconnect({
       name: name,
       id: id,

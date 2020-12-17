@@ -1,3 +1,4 @@
+#! /usr/bin/env node
 const scanner = require('./modules/lineScanner.js');
 const Datamodel = require('./modules/data-model.js');
 const logUser = require('./modules/logUser.js');
@@ -11,18 +12,19 @@ const readline = require('readline');
 const compression = require('compression'); 
 const express = require('express');
 const schedule = require('node-schedule');
-const path = require('path'); 
+const path = require('path');
+const url = require('url');
 const logReceiver = require("srcds-log-receiver");
 const app = express();   
 const expressWs = require('express-ws')(app); 
 const colors = require('colors'); 
 
 var socket;
-
-var config = require(`./config-win.json`);
+var configPath = path.join(__dirname, `config-win.json`);
+var config = require(configPath);
 const logFolder = path.join(config.gameServerDir, 'logs');
 
-init();
+init(logFolder, configPath);
 
 /**
  *  DATA!!!!!!
@@ -63,7 +65,11 @@ function userDisconnected(user) {
  * callback for when a round / map has ended
  */
 function mapEnd() {
+  appData.reset();
   appData.cacheDemos();
+  parseLogs().then(seconds => {
+    print(`Log parser complete in ` + `${seconds} seconds`.cyan);
+  }).catch(errorHandler);
 }
 
 /**
@@ -149,6 +155,15 @@ function parseLogs() {
   });
 }
 
+function fourohfour(req, res) {
+  var reqadd = {
+    protocol: req.protocol,
+    host:req.get('host'),
+    pathname:req.originalUrl
+  };
+  who(req, `requested ` + `${url.format(reqadd)}`.green + ` got ` + `error 404! ╭∩╮(︶︿︶)╭∩╮`.red);
+  res.status(404).sendFile(path.join(__dirname, 'html', '404.html'));
+}
 
 /**
  * cleanup files on first @ 5:00am
@@ -211,7 +226,7 @@ app.get('/old-months', (req, res) => {
     who(req, `is viewing ` + '/old-months'.green + ' data' + ` ${t.end()[2]} seconds`.cyan + ` response time`);
     res.send(stats);
   }).catch(e => {
-    res.status(404).sendFile(path.join(__dirname, 'html', '404.html'));
+    fourohfour(req, res);
   });
 });
 
@@ -221,10 +236,10 @@ app.get('/old-months', (req, res) => {
 app.get('/old-stats/:month', (req, res) => {
   var t = new Timer();
   getOldStatsList(req.params.month).then(stats => {
-    who(req, `is viewing ` + '/old-stats'.green + ` ${monthName(req.params.month).cyan} ` + 'data' + ` ${t.end()[2]} seconds`.cyan + ` response time`);
+    who(req, `is viewing ` + '/old-stats'.green + ' data for ' + `${monthName(req.params.month).yellow}` + ` ${t.end()[2]} seconds`.cyan + ` response time`);
     res.send(stats);
   }).catch(e => {
-    res.status(404).sendFile(path.join(__dirname, 'html', '404.html'));
+    fourohfour(req, res);
   });
 });
 
@@ -241,7 +256,7 @@ app.get('/playerList', (req, res) => {
     });
   }
   res.send(arr);
-  who(req, `is viewing ` + '/playersList'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+  who(req, `is viewing ` + '/playersList'.green + ` data of ` + `${arr.length} players `.grey + `${t.end()[2]} seconds`.cyan + ` response time`);
 });
 
 /**
@@ -256,7 +271,7 @@ app.get('/newPlayers/:date', (req, res) => {
     if (date === '0') {
       date = new Date().getDate();
     }
-    who(req, `is viewing ` + `/newPlayers/${date}`.green + ` data on ` + `${monthName(new Date().getMonth())} ${suffix(date)} `.cyan + `${users.length} new players`.grey + ` ${t.end()[2]} seconds`.cyan + ` response time`);
+    who(req, `is viewing ` + `/newPlayers/${date}`.green + ` data on ` + `${monthName(new Date().getMonth())} ${suffix(date)} `.yellow + `${users.length} new players`.grey + ` ${t.end()[2]} seconds`.cyan + ` response time`);
     res.send(users);
   });
 });
@@ -273,7 +288,7 @@ app.get('/returnPlayers/:date', (req, res) => {
     if (date === '0') {
       date = new Date().getDate();
     }
-    who(req, `is viewing ` + `/returnPlayers/${date}`.green + ` data on ` + `${monthName(new Date().getMonth())} ${suffix(date)} `.cyan + `${users.length} new players`.grey + ` ${t.end()[2]} seconds`.cyan + ` response time`);
+    who(req, `is viewing ` + `/returnPlayers/${date}`.green + ` data on ` + `${monthName(new Date().getMonth())} ${suffix(date)} `.yellow + `${users.length} new players`.grey + ` ${t.end()[2]} seconds`.cyan + ` response time`);
     res.send(users);
   });
 });
@@ -286,7 +301,7 @@ app.get('/playerStats/:id', (req, res) => {
   var id = req.params.id;
   var player = appData.generatePlayerStats(id);
   if (typeof player !== 'object') {
-    res.status(404).sendFile(path.join(__dirname, 'html', '404.html'));
+    fourohfour(req, res);
     return;
   }
   who(req, `is viewing ` + `/playerStats/${id}`.green + ` data for player ` + `${player.name}`.grey + ` ${t.end()[2]} seconds`.cyan + ` response time`);
@@ -300,7 +315,8 @@ app.get('/download/:file', (req, res) => {
   var t = new Timer();
   var dl = path.join(config.gameServerDir, req.params.file);
   if (!fs.existsSync(dl)){
-    res.status(404).sendFile(path.join(__dirname, 'html', '404.html'));
+    fourohfour(req, res);
+    return;
   }
   who(req, `qued download for file ${dl.green} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
   res.download(dl, req.params.file);
@@ -313,7 +329,8 @@ app.get('/download/logs-zip/:file', (req, res) => {
   var t = new Timer();
   var dl = path.join(config.bulkStorage, 'logs', req.params.file);
   if (!fs.existsSync(dl)){
-    res.status(404).sendFile(path.join(__dirname, 'html', '404.html'));
+    fourohfour(req, res);
+    return;
   }
   who(req, `qued download for file ${dl.green} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
   res.download(dl, req.params.file);
@@ -326,7 +343,8 @@ app.get('/download/demos-zip/:file', (req, res) => {
   var t = new Timer();
   var dl = path.join(config.bulkStorage, 'demos', req.params.file);
   if (!fs.existsSync(dl)){
-    res.status(404).sendFile(path.join(__dirname, 'html', '404.html'));
+    fourohfour(req, res);
+    return;
   }
   who(req, `qued download for file ${dl.green} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
   res.download(dl, req.params.file);
@@ -347,7 +365,8 @@ app.get('/demos', (req, res) => {
 app.get('/cvarlist', (req, res) => {
   var t = new Timer();
   if (!fs.existsSync(`${__dirname}/cvarlist.txt`)){
-    res.status(404).sendFile(path.join(__dirname, 'html', '404.html'));
+    fourohfour(req, res);
+    return;
   }
   res.sendFile(`${__dirname}/cvarlist.txt`);
   who(req, `is viewing ` + '/cvarlist'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
@@ -356,20 +375,25 @@ app.get('/cvarlist', (req, res) => {
 /**
  * 404
  */
-app.get('*', (req, res) => {
-  res.status(404).sendFile(path.join(__dirname, 'html', '404.html'));
-});
+app.get('*', fourohfour);
 
 /**
  * Go Live!!
  */
-app.listen(config.port);
-print('Endpoints active on port: ' + `${config.port}`.red);
-print(`log folder = ${logFolder.green}`);
+var server = app.listen(config.port, _ => {
+  console.log('Endpoints active on port: ' + `${config.port}`.red)
+  console.log('');
+  print('Online.')
+  parseLogs().then(seconds => {
+    print(`Log parser complete in ` + `${seconds} seconds`.cyan);
+  }).catch(errorHandler);
+});
 
-parseLogs().then(seconds => {
-  print(`Log parser complete in ` + `${seconds} seconds`.cyan);
-}).catch(errorHandler);
+process.on('SIGTERM', _ => {
+  server.close(_ => {
+    console.log('Process terminated');
+  });
+});
 
 
 /**

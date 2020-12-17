@@ -14,7 +14,7 @@ class Timer {
     var hours = parseInt( seconds / 3600 );
     seconds = seconds % 3600;
     var minutes = parseInt( seconds / 60 );
-    seconds = seconds % 60;
+    seconds = Number((seconds % 60).toFixed(3));
     return [
       hours,
       minutes,

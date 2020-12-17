@@ -12,7 +12,7 @@ Object.size = obj => {
  * returns a player object
  *
  * @param {String} name - name mof the player
- * @param {Number} id - player steamID
+ * @param {String} id - player steamID
  * @param {Number} time - new Date().getTime() output
  * @param {String} ip - users ip address
  */
@@ -166,7 +166,6 @@ module.exports = class Data {
     this.bannedUsers = {};
     this.totalPlayers = 0;
     this.weapons = {};
-    this.mapHistory = {};
     this.demos = [];
     this.playerTimes = {};
     // imported function
@@ -184,9 +183,18 @@ module.exports = class Data {
     this.bannedUsers = {};
     this.totalPlayers = 0;
     this.weapons = {};
-    this.mapHistory = [];
+    this.demos = [];
+    console.log(`${new Date().toLocaleString().yellow} - Data model reset`);
   }
 
+  /**
+   * player has connected to thje server
+   *
+   * @param {Number} time - time the suicide happened
+   * @param {String} id - steamid
+   * @param {String} name - player name
+   * @param {String} ip - ip address of the connected user
+   */
   playerConnect(time, id, name, ip) {
     var newUser = false;
     if (!this.users[id]) {
@@ -286,7 +294,7 @@ module.exports = class Data {
   /**
    * calculates stats when a kill takes place
    *
-   * @param {String} time - time the kill happened
+   * @param {Number} time - time the kill happened
    * @param {Object} killer - player details
    * @param {Object} killed - player details
    * @param {String} weapon - name of the weapon used
@@ -351,8 +359,8 @@ module.exports = class Data {
   /**
    * calculates stats when a suicide takes place
    *
-   * @param {String} time - time the suicide happened
-   * @param {Number} id - steamid
+   * @param {Number} time - time the suicide happened
+   * @param {String} id - steamid
    * @param {String} name - player name
    * @param {String} weapon - name of the weapon used
    */
@@ -381,8 +389,8 @@ module.exports = class Data {
   /**
    * calculates stats when a headshot takes place
    *
-   * @param {String} time - time the headshot happened
-   * @param {Number} id - steamid
+   * @param {Number} time - time the headshot happened
+   * @param {String} id - steamid
    * @param {String} name - player name
    * @param {String} weapon - name of the weapon used
    */
@@ -401,7 +409,9 @@ module.exports = class Data {
       this.users[id].name = name;
     }
     if (!this.weapons.headshots) {
-      this.weapons.headshots = {kills:0};
+      this.weapons.headshots = {
+        kills:0
+      };
     }
     this.weapons.headshots.kills++;
   }
@@ -409,7 +419,7 @@ module.exports = class Data {
   /**
    * add player to the banned list
    *
-   * @param {Number} id - steamid
+   * @param {String} id - steamid
    */
   addBanned(id) {
     if (!this.users[id]) {
@@ -430,12 +440,12 @@ module.exports = class Data {
   /**
    * add change to user object
    *
-   * @param {String} time - time the headshot happened
-   * @param {Number} id - steamid
+   * @param {Number} time - time the headshot happened
+   * @param {String} id - steamid
    * @param {String} name - player name
-   * @param {Array} word - array of words from the log line
+   * @param {String} said - chat line with timestamp
    */
-  addChat(time, id, name, word, index) {
+  addChat(time, id, name, said) {
     // create user object if it doesn't exist
     if (!this.users[id]) {
       this.users[id] = playerObj(name, id, time);
@@ -445,20 +455,14 @@ module.exports = class Data {
     this.users[id].updated = time;
     this.users[id].name = name;
     }
-    // log chat
-    var said = `${new Date(time).toLocaleString()} `;
-    for (var i = index; i < word.length; i++) {
-      said = `${said}${word[i]} `;
-    }
-    said.replace('"', '').replace('"', '');
     this.users[id].chat.push(said);
   }
 
   /**
    * add weapon stats to player object
    *
-   * @param {String} time - time the headshot happened
-   * @param {Number} id - steamid
+   * @param {Number} time - time the headshot happened
+   * @param {String} id - steamid
    * @param {String} name - player name
    * @param {Object} weapon - object of weapn data
    */
@@ -504,8 +508,8 @@ module.exports = class Data {
   /**
    * add weapon stats to player object
    *
-   * @param {String} time - time the headshot happened
-   * @param {Number} id - steamid
+   * @param {Number} time - time the headshot happened
+   * @param {String} id - steamid
    * @param {String} name - player name
    * @param {object} weapon - object of weapn data
    */
@@ -535,12 +539,18 @@ module.exports = class Data {
     this.weapons[weapon.name].rightleg += Number(weapon.rightleg);
   }
 
+  /**
+   * caches list of avaliable demo files
+   */
   cacheDemos() {
     require('./cacheDemos.js')().then(demos => {
       this.demos = demos;
     });
   }
 
+  /**
+   * end of month file cleanup process
+   */
   runCleanup() {
     require('./fileCleanup.js')(
       this.generateTop(), 
