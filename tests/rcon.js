@@ -1,4 +1,4 @@
-const Timer = require('../modules/Timer.js');
+
 var rcon = require('srcds-rcon')({
   address: '192.168.86.2',
   password: 'oicu812'
@@ -20,16 +20,23 @@ function parseStatus(s) {
   delete data.version;
   delete data['udp/ip'];
   delete data.edicts;
-  var p = [];
+  data.players = [];
   for(var i = 11; i < lines.length - 1; i++) {
     var pdetails = lines[i].replace(/\s+/g,',').trim().split(',');
+    var str = '';
+    for (var ndx = 2; ndx < pdetails.length - 6; ndx++) {
+      str = str + pdetails[ndx] + ' ';
+    }
     var obj = {
-      sessionid: pdetails[1]
+      name: str.trim(),
+      sessionid: pdetails[1],
+      address: pdetails[pdetails.length - 1],
+      status: pdetails[pdetails.length - 2],
+      timeOnline: pdetails[pdetails.length - 5],
+      steamid: pdetails[pdetails.length - 6],
     };
-    p.push(obj);
-    console.log(i, pdetails, pdetails.length)
+    data.players.push(obj);
   }
-  data.players = p;
   console.log(data);
 }
 

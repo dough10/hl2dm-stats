@@ -382,8 +382,8 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
     if (newUser) {
       constr = 'NEW USER! ';
     }
+    dataModel.playerTimes[id] = new Timer();
     if (loggingEnabled) {
-      dataModel.playerTimes[id] = new Timer();
       print(`${constr.red}${name.grey} connected with IP address: ${ip.grey}`);
     }
     if (onJoin) onJoin({
@@ -557,7 +557,10 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
     var nameString = buildKillerNameString(word, hasDisconnected);
     var name = getName(nameString);
     var id = getID3(nameString);
-    if (loggingEnabled && dataModel.playerTimes[id]) print(`${name.grey} disconnected ${dataModel.playerTimes[id].endString().cyan} time online`);
+    if (loggingEnabled && dataModel.playerTimes[id]) {
+      print(`${name.grey} disconnected ${dataModel.playerTimes[id].endString().cyan} time online`);
+    } else if (loggingEnabled) print(`${name.grey} disconnected.`);
+    // if (dataModel.playerTimes[id] === undefined) console.log(id, dataModel.playerTimes[id])
     if (onDisconnect) onDisconnect({
       name: name,
       id: id,
@@ -566,7 +569,6 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
       month: new Date(lineTime).getMonth(),
       year: new Date(lineTime).getFullYear(),
     });
-    delete dataModel.playerTimes[id];
   }
 }
 

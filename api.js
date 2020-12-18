@@ -20,7 +20,7 @@ const expressWs = require('express-ws')(app);
 const colors = require('colors'); 
 
 var socket;
-var configPath = path.join(__dirname, `config-win.json`);
+var configPath = path.join(__dirname, `config.json`);
 var config = require(configPath);
 const logFolder = path.join(config.gameServerDir, 'logs');
 
@@ -400,7 +400,7 @@ process.on('SIGTERM', _ => {
  * recieved log line / lines from server
  */
 receiver.on("data", data => {
-	if (data.isValid) {
+  if (data.isValid) {
     scanner(data.message, appData, userConnected, userDisconnected, mapStart, mapEnd, true);
-	}
+  }
 });

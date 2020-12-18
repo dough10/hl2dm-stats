@@ -4,14 +4,11 @@
   "description": "Logparser and stats calculator for HL2DM game servers",
   "main": "api.js",
   "scripts": {
-    "start": "node api.js",
+    "dev": "nodemon api.js",
     "pull": "git pull",
     "build": "node build.js",
-    "monitor.sh": "monitor.sh",
-    "start.sh": "start.sh",
-    "update.sh": "update.sh",
     "add-streamkey": "node streamKey.js",
-    "api-test": "node api-test.js"
+    "docker": "docker build -t dough10/hl2dm-stats ."
   },
   "repository": {
     "type": "git",
@@ -44,5 +41,8 @@
     "steamid": "^1.1.3",
     "uglify-es": "^3.3.10",
     "uglifycss": "0.0.29"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }
