@@ -1,5 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;       // mongodb for streamkey storage
-const config = require(`../config.json`);                 // config file location
+var config = require('./loadConfig.js')();                // config file location
 const bcrypt = require('bcrypt');                         // hash and check passwords
 
 /**

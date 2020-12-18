@@ -20,11 +20,10 @@ const expressWs = require('express-ws')(app);
 const colors = require('colors'); 
 
 var socket;
-var configPath = path.join(__dirname, `config.json`);
-var config = require(configPath);
+var config = require('./modules/loadConfig.js')();
 const logFolder = path.join(config.gameServerDir, 'logs');
 
-init(logFolder, configPath);
+init(logFolder);
 
 /**
  *  DATA!!!!!!
@@ -162,7 +161,7 @@ function fourohfour(req, res) {
     pathname:req.originalUrl
   };
   who(req, `requested ` + `${url.format(reqadd)}`.green + ` got ` + `error 404! ╭∩╮(︶︿︶)╭∩╮`.red);
-  res.status(404).sendFile(path.join(__dirname, 'html', '404.html'));
+  res.status(404).sendFile(path.join(__dirname, '404.html'));
 }
 
 /**

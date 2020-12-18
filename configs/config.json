@@ -2,7 +2,7 @@
   "port": 3000,
   "dbURL": "mongodb://192.168.86.2:27017/",
   "gameServerHostname": "192.168.86.2",
-  "gameServerDir": "Y:\\hl2dm\\hl2mp",
-  "bulkStorage": "Z:\\old-stats",
+  "gameServerDir": "/usr/src/app/hl2mp",
+  "bulkStorage": "/usr/src/app/old-stats",
   "logRefreshTime": 60
 }
