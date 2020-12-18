@@ -3,3 +3,5 @@ tests
 node_modules
 npm-debug.log
 *.md
+push.sh
+incriment-version.js
