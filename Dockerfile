@@ -10,4 +10,4 @@ COPY . .
 
 
 EXPOSE 3000
-CMD [ "./install.sh" ]
+CMD [ "sh", "install.sh" ]
