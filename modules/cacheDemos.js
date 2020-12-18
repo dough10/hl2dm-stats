@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var config = require(`../config-win.json`);                    // config file location
+var config = require(`../config.json`);                    // config file location
 const path = require('path');                             // merger file / url names
 const fs = require('fs');                                 // work with the file system
 const colors = require('colors');                         // colorize text
