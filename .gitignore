@@ -1,9 +1,6 @@
 /html/maps/
 /html/
 /node_modules/
-/logs/
 /IDcache/
-/old-top/
 /.vscode/
-/config-win.json
 config-win.json
