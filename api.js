@@ -5,6 +5,7 @@ const logUser = require('./modules/logUser.js');
 const print = require('./modules/printer.js');
 const Timer = require('./modules/Timer.js');
 const monthName = require('./modules/month-name.js');
+const gameServerStatus = require('./modules/gameServerStatus.js');
 const init = require('./modules/init.js');
 const suffix = require('./modules/suffix.js');
 const fs = require('fs');  
@@ -119,6 +120,21 @@ function getOldStatsList(month) {
 }
 
 /**
+ * 
+ */
+function statsLoop() {
+  setTimeout(statsLoop, 5000);
+  gameServerStatus().then(status => {
+    appData.updateStatus(status);
+    if (socket) {
+      socket.send(JSON.stringify(appData.getStatus()), e => {});
+    }
+  }).catch(_ => {
+    serverStatus = 'offline';
+  });
+}
+
+/**
  * parse folder of logs 1 line @ a time.
  */
 function parseLogs() {
@@ -178,7 +194,14 @@ app.disable('x-powered-by');
  */
 app.ws('/', ws => {
   socket = ws;
-  socket.send('');
+  socket.send(JSON.stringify(appData.getStatus()));
+});
+
+/**
+ * route for gettings the status of the game server
+ */
+app.get('/status', (req, res) => {
+  res.send(appData.getStatus());
 });
 
 /**
@@ -382,7 +405,8 @@ app.get('*', fourohfour);
 var server = app.listen(config.port, _ => {
   console.log('Endpoints active on port: ' + `${config.port}`.red)
   console.log('');
-  print('Online.')
+  print('Online. ' + 'ᕦ(ò_óˇ)ᕤ'.red);
+  statsLoop();
   parseLogs().then(seconds => {
     print(`Log parser complete in ` + `${seconds} seconds`.cyan);
   }).catch(errorHandler);
@@ -403,3 +427,5 @@ receiver.on("data", data => {
     scanner(data.message, appData, userConnected, userDisconnected, mapStart, mapEnd, true);
   }
 });
+
+

@@ -1,6 +1,7 @@
 .vscode
 tests
 node_modules
+old-top/*
 npm-debug.log
 *.md
 push.sh

@@ -167,12 +167,21 @@ module.exports = class Data {
     this.totalPlayers = 0;
     this.weapons = {};
     this.demos = [];
+    this.gameStatus = {};
     this.playerTimes = {};
     // imported function
     this.getNewUsers = require('./getNewUsers.js');
     this.getReturnUsers = require('./getReturnUsers.js');
     this.authorize = require('./auth.js');
     this.cacheDemos();
+  }
+
+  getStatus() {
+    return this.gameStatus;
+  }
+
+  updateStatus(status) {
+    this.gameStatus = status;
   }
 
   /**
