@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "nodemon api.js",
     "pull": "git pull",
-    "add-streamkey": "node streamKey.js",
-    "docker": "docker build -t dough10/hl2dm-stats ."
+    "add-streamkey": "node streamKey.js"
   },
   "repository": {
     "type": "git",
