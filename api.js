@@ -125,9 +125,10 @@ function getOldStatsList(month) {
 function statsLoop() {
   setTimeout(statsLoop, 5000);
   gameServerStatus().then(status => {
+    console.log(status)
     appData.updateStatus(status);
     if (socket) {
-      socket.send(JSON.stringify(appData.getStatus()), e => {});
+      socket.send(JSON.stringify(status), e => {});
     }
   }).catch(_ => {
     serverStatus = 'offline';
