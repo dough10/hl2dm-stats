@@ -1,5 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;       // mongodb for streamkey storage
-const config = require(`../config.json`);                 // config file location
+var config = require('./loadConfig.js')();                   // config file location
 
 /**
  * returns a list of  new users from the date givin
@@ -40,7 +40,7 @@ function getNewUsers(date) {
         }
         var arr = [];
         for (var i = 0; i < res.length; i++) {
-          arr.push(res[i].name)
+          arr.push(res[i].name);
         }
         db.close();
         resolve(arr);

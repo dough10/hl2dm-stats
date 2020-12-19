@@ -1,15 +1,10 @@
 #!/usr/bin/env node
-var config = require(`../config.json`);                    // config file location
+var config = require('./loadConfig.js')();                     // config file location
 const path = require('path');                             // merger file / url names
 const fs = require('fs');                                 // work with the file system
 const colors = require('colors');                         // colorize text
 const print = require(path.join(__dirname, 'printer.js'));
 const Timer = require(path.join(__dirname, 'Timer.js'));
-
-// for testing on my windows machine
-if (process.platform === "win32") {
-  config = require(`../config-win.json`);  
-}
 
 
 /**
@@ -94,7 +89,7 @@ function cacheDemos() {
       }
       arr.reverse();
       resolve(arr);
-      print(`demo file list cached ${t.endString()} to complete`);
+      print(`demo file list cached ` + `${t.end()[2]} seconds`.cyan + ` to complete`);
     }).catch(reject);
   })
 }

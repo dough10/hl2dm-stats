@@ -1,12 +1,16 @@
 const clear = require('clear');                           // clear screen
 const figlet = require('figlet');                         // ascii art
+const package = require('../package.json');
+const colors = require('colors');
 
-function init() {
+function init(logFolder) {
   clear();
-  console.log(figlet.textSync('HL2DM-stats', {
+  console.log(colors.magenta(figlet.textSync(package.name, {
     horizontalLayout: 'default'
-  }));
-  console.log(`${new Date().toLocaleString().yellow} - API Version: ` + `${require('../package.json').version}`.red);
+  })));
+  console.log(`Legend: ` + 'Local Time, '.yellow + ' Timers,'.cyan + ' Important,'.red + ' People / IP\'s,'.grey + ' Files / Paths,'.green + ' Weapons / Chat'.magenta);
+  console.log(`Log folder = ${logFolder.green}`);
+  console.log(`API Version: ` + `${package.version}`.red);
 }
 
 module.exports = init;

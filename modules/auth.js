@@ -1,5 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;       // mongodb for streamkey storage
-const config = require(`../config.json`);                 // config file location
+var config = require('./loadConfig.js')();                // config file location
 const bcrypt = require('bcrypt');                         // hash and check passwords
 
 /**
@@ -10,33 +10,37 @@ const bcrypt = require('bcrypt');                         // hash and check pass
  */
 function auth(name, pass) {
   return new Promise((resolve, reject) => {
-    MongoClient.connect(config.dbURL, {
-      useUnifiedTopology: true,
-      useNewUrlParser: true
-    }, (err, db) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      if (!db) {
-        reject(err);
-        return;
-      } 
-      var dbo = db.db("hl2dm");
-      dbo.collection("stream-keys").findOne({
-        name: name
-      }, (err, result) => {
-        db.close();
+    try {
+      MongoClient.connect(config.dbURL, {
+        useUnifiedTopology: true,
+        useNewUrlParser: true
+      }, (err, db) => {
         if (err) {
           reject(err);
           return;
+        }
+        if (!db) {
+          reject(err);
+          return;
         } 
-        bcrypt.compare(pass, result.key, (err, match) => {
-          if (err) reject(err);
-          resolve(match);
+        var dbo = db.db("hl2dm");
+        dbo.collection("stream-keys").findOne({
+          name: name
+        }, (err, result) => {
+          db.close();
+          if (err) {
+            reject(err);
+            return;
+          } 
+          bcrypt.compare(pass, result.key, (err, match) => {
+            if (err) reject(err);
+            resolve(match);
+          });
         });
       });
-    });
+    } catch (e) {
+      resolve(e);
+    }
   });
 }
 

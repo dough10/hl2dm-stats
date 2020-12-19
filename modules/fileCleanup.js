@@ -1,6 +1,6 @@
 const path = require('path');                             // merger file / url names
 const fs = require('fs');                                 // work with the file system
-const config = require(`../config.json`);                 // config file location
+var config = require('./loadConfig.js')();                   // config file location
 const child_process = require("child_process");           // system peocesses
 const logFolder = path.join(config.gameServerDir, 'logs');// game server log location
 const colors = require('colors');                         // colorize text

@@ -5,7 +5,7 @@ const rl = readline.createInterface({
 });
 const MongoClient = require('mongodb').MongoClient;
 const bcrypt = require('bcrypt');
-const dbURL = require(`${__dirname}/config.json`).dbURL;
+const dbURL = require('./modules/loadConfig.js')().dbURL;
 
 
 function createUser(name, key) {
