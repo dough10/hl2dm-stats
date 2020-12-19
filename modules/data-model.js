@@ -227,7 +227,7 @@ module.exports = class Data {
     var arr = [];
     this.totalPlayers = Object.size(this.users);   // total # of players to have joined the server
     for (var user in this.users) {
-      // push non banned players with # of kills greater then or equal to 100 kills to "top" Array
+      // push non banned players with greater then or equal to 100 kills to "top" Array
       if (this.users[user].kills >= 100 && !this.users[user].banned) {
         var obj = { ... this.users[user] };
         mergePhysicsKills(obj);
@@ -312,12 +312,12 @@ module.exports = class Data {
 
     // killer object
     if (!this.users[killer.id]) {
-      this.users[killer.id] = playerObj(killer.name, killer.id, time)
+      this.users[killer.id] = playerObj(killer.name, killer.id, time);
     }
 
     // killed object
     if (!this.users[killed.id]) {
-      this.users[killed.id] = playerObj(killed.name, killed.id, time)
+      this.users[killed.id] = playerObj(killed.name, killed.id, time);
     }
     
     // add weapon for killer if doesn't exist
@@ -342,10 +342,10 @@ module.exports = class Data {
     }
 
     // add killers kill
-    this.users[killer.id].kills++
+    this.users[killer.id].kills++;
 
     // add killed player death
-    this.users[killed.id].deaths++
+    this.users[killed.id].deaths++;
 
     // add killer kill with weapon
     this.users[killer.id][weapon].kills++;
