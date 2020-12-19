@@ -436,10 +436,6 @@ module.exports = class Data {
         id: id,
         banned: true
       };
-      this.bannedPlayers[id] = {
-        id: id,
-        banned: true
-      };
     }
     // mark player as banned
     this.users[id].banned = true;
