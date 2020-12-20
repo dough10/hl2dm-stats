@@ -35,6 +35,7 @@ function parseStatus(s) {
       timeOnline: pdetails[pdetails.length - 5],
       steamid: pdetails[pdetails.length - 6],
     };
+    console.log(pdetails[i])
     data.players.push(obj);
   }
   console.log(data);

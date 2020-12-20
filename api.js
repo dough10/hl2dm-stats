@@ -170,6 +170,9 @@ function parseLogs() {
   });
 }
 
+/**
+ * four oh four
+ */
 function fourohfour(req, res) {
   var reqadd = {
     protocol: req.protocol,

@@ -41,29 +41,33 @@ function insertPlayer(data) {
 
 function logUser(data) {
   return new Promise((resolve, reject) => {
-    MongoClient.connect(config.dbURL, {
-      useUnifiedTopology: true,
-      useNewUrlParser: true
-    }, (err, db) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      if (!db) {
-        reject('no db');
-        return;
-      } 
-      dbo = db.db("hl2dm");
-      entryExists(data).then(exists => {
-        if (!exists) {
-          insertPlayer(data).then(_ => {
-            resolve();
-            db.close();
-          }).catch(reject);
+    try {
+      MongoClient.connect(config.dbURL, {
+        useUnifiedTopology: true,
+        useNewUrlParser: true
+      }, (err, db) => {
+        if (err) {
+          reject(err);
+          return;
         }
-      }).catch(reject);
-    });
-  })
+        if (!db) {
+          reject('no db');
+          return;
+        } 
+        dbo = db.db("hl2dm");
+        entryExists(data).then(exists => {
+          if (!exists) {
+            insertPlayer(data).then(_ => {
+              resolve();
+              db.close();
+            }).catch(reject);
+          }
+        }).catch(reject);
+      });
+    } catch(e) {
+      console.error(e.message);
+    }
+  });
 }
 
 module.exports = logUser;
