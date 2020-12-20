@@ -49,7 +49,7 @@ function errorHandler(e) {
  * @param {Object} user - user object with name, id, time, date, month, year, and if user is new to server
  */
 function userConnected(user) {
-  logUser(user);
+  logUser(user).catch(e => console.error(e.message));
 }
 
 /**
@@ -180,7 +180,7 @@ function fourohfour(req, res) {
     pathname:req.originalUrl
   };
   who(req, `requested ` + `${url.format(reqadd)}`.green + ` got ` + `error 404! ╭∩╮(︶︿︶)╭∩╮`.red);
-  res.status(404).sendFile(path.join(__dirname, '404.html'));
+  res.status(404).sendFile(path.join(__dirname, 'assets', '404.html'));
 }
 
 /**
@@ -389,11 +389,11 @@ app.get('/demos', (req, res) => {
  */
 app.get('/cvarlist', (req, res) => {
   var t = new Timer();
-  if (!fs.existsSync(`${__dirname}/cvarlist.txt`)){
+  if (!fs.existsSync(`${__dirname}/assets/cvarlist.txt`)){
     fourohfour(req, res);
     return;
   }
-  res.sendFile(`${__dirname}/cvarlist.txt`);
+  res.sendFile(`${__dirname}/assets/cvarlist.txt`);
   who(req, `is viewing ` + '/cvarlist'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
 });
 

@@ -65,7 +65,7 @@ function logUser(data) {
         }).catch(reject);
       });
     } catch(e) {
-      console.error(e.message);
+      reject(e.message);
     }
   });
 }

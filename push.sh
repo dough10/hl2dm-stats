@@ -1,7 +1,7 @@
 #!/bin/sh
 if [ "$2" == "+" ]
   then
-    v=$(node incriment-version.js);
+    v=$(node modules/incriment-version.js);
   else
     v=$(node -p "require('./package.json').version");
 fi
