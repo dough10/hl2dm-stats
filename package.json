@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon api.js",
     "pull": "git pull",
-    "add-streamkey": "node streamKey.js"
+    "add-streamkey": "node modules/streamKey.js"
   },
   "repository": {
     "type": "git",
