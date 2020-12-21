@@ -49,7 +49,11 @@ function errorHandler(e) {
  * @param {Object} user - user object with name, id, time, date, month, year, and if user is new to server
  */
 function userConnected(user) {
-  logUser(user).catch(e => console.error(e.message));
+  logUser(user).then(user => {
+    print(`${user.name.grey} was added to the login database at ${new Date(user.time).toLocaleString().green}`);
+  }).catch(e => {
+    console.error(e.message);
+  });
 }
 
 /**
