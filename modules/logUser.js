@@ -81,6 +81,6 @@ setInterval(_ => {
     }).catch(console.error);
     cache.splice(0,1);
   }
-}, 100);
+}, 500);
 
 module.exports = cacheData;
