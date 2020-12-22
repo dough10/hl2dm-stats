@@ -13,4 +13,4 @@ COPY . .
 EXPOSE 3000
 EXPOSE 9871
 
-CMD [ "node", "api.js > hoedown.log" ]
+CMD [ "node", "api.js", "> hoedown.log" ]
