@@ -174,7 +174,6 @@ module.exports = class Data {
     this.getNewUsers = require('./getNewUsers.js');
     this.getReturnUsers = require('./getReturnUsers.js');
     this.authorize = require('./auth.js');
-    this.cacheDemos();
   }
 
   getStatus() {

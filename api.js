@@ -135,6 +135,7 @@ function statsLoop() {
       socket.send(JSON.stringify(status), e => {});
     }
   }).catch(_ => {
+    print(`Got offline status from server`);
     serverStatus = 'offline';
   });
 }
@@ -417,9 +418,18 @@ var server = app.listen(config.port, _ => mongoConnect().then(database => {
   console.log('');
   print('Online. ' + 'ᕦ(ò_óˇ)ᕤ'.red);
   statsLoop();
+  appData.cacheDemos();
   parseLogs().then(seconds => {
     print(`Log parser complete in ` + `${seconds} seconds`.cyan);
+
+    /**
+     * recieved log line / lines from server
+     */
+    receiver.on("data", data => {
+      if (data.isValid) scanner(data.message, appData, userConnected, userDisconnected, mapStart, mapEnd, true);
+    });
   }).catch(errorHandler);
+
 }));
 
 process.on('SIGTERM', _ => {
@@ -430,13 +440,5 @@ process.on('SIGTERM', _ => {
 });
 
 
-/**
- * recieved log line / lines from server
- */
-receiver.on("data", data => {
-  if (data.isValid) {
-    scanner(data.message, appData, userConnected, userDisconnected, mapStart, mapEnd, true);
-  }
-});
 
 
