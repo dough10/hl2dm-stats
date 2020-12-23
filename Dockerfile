@@ -13,4 +13,4 @@ COPY . .
 EXPOSE 3000
 EXPOSE 9871
 
-CMD [ "sh", "start.sh" ]
+CMD [ "node", "api.js" ]
