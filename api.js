@@ -6,6 +6,7 @@ const print = require('./modules/printer.js');
 const Timer = require('./modules/Timer.js');
 const monthName = require('./modules/month-name.js');
 const gameServerStatus = require('./modules/gameServerStatus.js');
+const mongoConnect = require('./modules/mongo-connect.js');
 const init = require('./modules/init.js');
 const suffix = require('./modules/suffix.js');
 const fs = require('fs');  
@@ -20,6 +21,8 @@ const app = express();
 const expressWs = require('express-ws')(app); 
 const colors = require('colors'); 
 
+
+var db;
 var socket;
 var config = require('./modules/loadConfig.js')();
 const logFolder = path.join(config.gameServerDir, 'logs');
@@ -49,7 +52,7 @@ function errorHandler(e) {
  * @param {Object} user - user object with name, id, time, date, month, year, and if user is new to server
  */
 function userConnected(u) {
-  logUser(u).then(user => {
+  logUser(db, u).then(user => {
     if (user) print(`${user.name.grey} connection at ${new Date(user.time).toLocaleString().yellow} was logged into database`);
   }).catch(e => console.error(e.message));
 }
@@ -294,7 +297,7 @@ app.get('/playerList', (req, res) => {
 app.get('/newPlayers/:date', (req, res) => {
   var t = new Timer();
   var date = req.params.date;
-  appData.getNewUsers(date).then(users => {
+  appData.getNewUsers(db, date).then(users => {
     if (date === '0') {
       date = new Date().getDate();
     }
@@ -311,7 +314,7 @@ app.get('/newPlayers/:date', (req, res) => {
 app.get('/returnPlayers/:date', (req, res) => {
   var t = new Timer();
   var date = req.params.date;
-  appData.getReturnUsers(date).then(users => {
+  appData.getReturnUsers(db, date).then(users => {
     if (date === '0') {
       date = new Date().getDate();
     }
@@ -407,7 +410,9 @@ app.get('*', fourohfour);
 /**
  * Go Live!!
  */
-var server = app.listen(config.port, _ => {
+var server = app.listen(config.port, _ => mongoConnect().then(database => {
+  db = database;
+  console.log(`MongoDB connected. URL: ${config.dbURL.green}`);
   console.log('Endpoints active on port: ' + `${config.port}`.red)
   console.log('');
   print('Online. ' + 'ᕦ(ò_óˇ)ᕤ'.red);
@@ -415,9 +420,10 @@ var server = app.listen(config.port, _ => {
   parseLogs().then(seconds => {
     print(`Log parser complete in ` + `${seconds} seconds`.cyan);
   }).catch(errorHandler);
-});
+}));
 
 process.on('SIGTERM', _ => {
+  db.close();
   server.close(_ => {
     console.log('Process terminated');
   });
