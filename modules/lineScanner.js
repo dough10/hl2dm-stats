@@ -383,18 +383,20 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
       constr = 'NEW USER! ';
     }
     dataModel.playerTimes[id] = new Timer();
+    if (onJoin) {
+      onJoin({
+        name: name,
+        id: id,
+        time: lineTime,
+        date: new Date(lineTime).getDate(),
+        month: new Date(lineTime).getMonth(),
+        year: new Date(lineTime).getFullYear(),
+        new: newUser
+      });
+    }
     if (loggingEnabled) {
       print(`${constr.red}${name.grey} connected with IP address: ${ip.grey}`);
     }
-    if (onJoin) onJoin({
-      name: name,
-      id: id,
-      time: lineTime,
-      date: new Date(lineTime).getDate(),
-      month: new Date(lineTime).getMonth(),
-      year: new Date(lineTime).getFullYear(),
-      new: newUser
-    });
   } else if (isKill) {
     // get players details
     const killerNameString = buildKillerNameString(word, isKill);  // isKill is the index after the last index of the player name
