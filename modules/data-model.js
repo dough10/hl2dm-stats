@@ -18,9 +18,11 @@ Object.size = obj => {
  * @param {String} ip - users ip address
  */
 function playerObj(name, id, time, ip) {
-  var obj = {
+  return {
     name: name,
     id: id,
+    ip: ip,
+    geo: geoip.lookup(ip),
     kills: 0,
     deaths: 0,
     kdr: 0,
@@ -31,11 +33,6 @@ function playerObj(name, id, time, ip) {
     updated: time,
     chat: []
   };
-  if (ip) {
-    obj.ip = ip;
-    obj.geo = geoip.lookup(ip);
-  }
-  return obj;
 }
 
 /**
@@ -210,8 +207,10 @@ module.exports = class Data {
       this.users[id] = playerObj(name, id, time, ip);
       newUser = true;
     }
+    // set address
+    this.users[id].ip = ip;
     if (time >= this.users[id].updated) {
-      // set address
+      // update address
       this.users[id].ip = ip;
       // update user name if changed
       this.users[id].updated = time;
@@ -257,12 +256,12 @@ module.exports = class Data {
    * creates a array of players who have been banned
    */
   generateBannedPlayerList() {
-    var obj = { ... this.bannedUsers };
     var arr = [];
-    for (var player in obj) {
-      mergePhysicsKills(obj[player]);
-      obj[player].weapons = sortWeapons(obj[player]);
-      arr.push(obj[player]);
+    for (var player in this.bannedUsers) {
+      var obj = { ... this.bannedUsers[player] };
+      mergePhysicsKills(obj);
+      obj.weapons = sortWeapons(obj);
+      arr.push(obj);
     }
     return arr;
   }

@@ -293,6 +293,15 @@ function playerHasDisconnected(line) {
   return false;
 }
 
+function getLineTime(line) {
+  for (var i = 0; i < line.length; i++) {
+    if (isTime(line[i])) {
+      return new Date(`${line[i].slice(0, -1)} ${line[i - 2]}`).getTime()
+    }
+  }
+  return false;
+}
+
 var startDebounceTime = 0;
 var endDebounceTime = 0;
 
@@ -322,15 +331,10 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
   var isStart = isFileStart(word);
   var isEnd = isFileEnd(word);
   var hasDisconnected = playerHasDisconnected(word);
-  var lineTime;
-  if (word[3] && isTime(word[3])) {
-    if (loggingEnabled) console.log(`${word[3].slice(0, -1)} ${word[1]}`)
-    lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
-  }
+  var lineTime = getLineTime(word);
   if (isConsole) {
      return;
   } else if (isChat) {
-    // console.log(lineTime);
     // important data
     const nameString = buildKillerNameString(word, isChat);
     const id = getID3(nameString);
@@ -351,7 +355,7 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
       said = `${said}${word[i]} `;
     }
     dataModel.addChat(lineTime, id, name, `${new Date(lineTime).toLocaleString()} - ${said}`);
-    if (loggingEnabled) print(`${name} said ${said.magenta}`)
+    if (loggingEnabled) print(`${name.grey} said ${said.magenta}`)
   } else if (isBanned) {
     // important data
     const nameString = buildKillerNameString(word, isBanned);
@@ -371,12 +375,15 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
     const ip = word[isConnect  + 2].replace('"', '').replace('"', '').replace(/:\d{4,5}$/, '');
     // check for important data
     if (!name) {
+      console.log(name, 'name', line)
       return;
     }
     if (!id) {
+      // console.log(id, 'id', line)
       return;
     }
-    if (!validateIPaddress(ip)) {
+    if (!validateIPaddress(ip) || ip === 'none') {
+      console.log(ip, 'ip', line)
       return;
     }
     var newUser = dataModel.playerConnect(lineTime, id, name, ip);
@@ -389,6 +396,7 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
       onJoin({
         name: name,
         id: id,
+        ip: ip,
         time: lineTime,
         date: new Date(lineTime).getDate(),
         month: new Date(lineTime).getMonth(),
@@ -398,6 +406,11 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
     }
     if (loggingEnabled) {
       print(`${constr.red}${name.grey} connected with IP address: ${ip.grey}`);
+    }
+
+    // debugging line
+    if (!lineTime) {
+      console.log(line);
     }
   } else if (isKill) {
     // get players details
@@ -562,9 +575,11 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
     var name = getName(nameString);
     var id = getID3(nameString);
     if (loggingEnabled && dataModel.playerTimes[id]) {
-      print(`${name.grey} disconnected ${dataModel.playerTimes[id].endString().cyan} time online`);
-    } else if (loggingEnabled) print(`${name.grey} disconnected.`);
-    // if (dataModel.playerTimes[id] === undefined) console.log(id, dataModel.playerTimes[id])
+      print(`${name.grey} disconnected after ${dataModel.playerTimes[id].endString().cyan} online`);
+    } else if (loggingEnabled) {
+      print(`${name.grey} disconnected after` + ' an unknown ammount of time'.cyan + ` online`);
+    }
+    if (dataModel.playerTimes[id] === undefined) console.count(name)
     if (onDisconnect) onDisconnect({
       name: name,
       id: id,
