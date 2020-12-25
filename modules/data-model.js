@@ -457,8 +457,8 @@ module.exports = class Data {
     }
     // update player name if it has changed
     if (time >= this.users[id].updated) {
-    this.users[id].updated = time;
-    this.users[id].name = name;
+      this.users[id].updated = time;
+      this.users[id].name = name;
     }
     this.users[id].chat.push(said);
   }
