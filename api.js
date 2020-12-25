@@ -177,7 +177,7 @@ function parseLogs() {
 }
 
 /**
- * four oh four
+ * 404 page
  */
 function fourohfour(req, res) {
   var reqadd = {
@@ -218,12 +218,14 @@ app.get('/status', (req, res) => {
  *
  * @param {String} req.query.name - the name of the stream
  * @param {String} req.query.k - the streams auth key
+ * 
+ * @returns {String} ok: authorized, fail: failed to authorize
  */
 app.get('/auth', (req, res) => {
   var t = new Timer();
   who(req, `is requesting stream authorization`);
   var name = req.query.name;
-  appData.authorize(name, req.query.k).then(authorized => {
+  appData.authorize(db, name, req.query.k).then(authorized => {
     if (!authorized) {
       who(req, `failed to authorize for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
       return res.status(404).send('fail');
@@ -235,6 +237,8 @@ app.get('/auth', (req, res) => {
 
 /**
  * route for gettings player stats
+ * 
+ * @returns {Array} stats top players list, server wide weapons list, # of total players, list of banned players, time of generation
  */
 app.get('/stats', (req, res) => {
   var t = new Timer();
@@ -250,6 +254,8 @@ app.get('/stats', (req, res) => {
 
 /**
  * route for getting a list of svaliable old months data
+ * 
+ * @returns {Array} list of months with stats history
  */
 app.get('/old-months', (req, res) => {
   var t = new Timer();
@@ -263,6 +269,8 @@ app.get('/old-months', (req, res) => {
 
 /**
  * route for getting a old months stats data
+ * 
+ * @returns {Array} statistics from a previous month
  */
 app.get('/old-stats/:month', (req, res) => {
   var t = new Timer();
@@ -276,6 +284,8 @@ app.get('/old-stats/:month', (req, res) => {
 
 /**
  * route for getting app players who has played in server
+ * 
+ * @returns {Array} list of all players to join server
  */
 app.get('/playerList', (req, res) => {
   var t = new Timer();
@@ -294,6 +304,8 @@ app.get('/playerList', (req, res) => {
  * return array of new users
  *
  * @param {Number} req.params.date - date of this month you want to view user for 0 = today
+ * 
+ * @returns {Array} list of players from the given date
  */
 app.get('/newPlayers/:date', (req, res) => {
   var t = new Timer();
@@ -311,6 +323,8 @@ app.get('/newPlayers/:date', (req, res) => {
  * return array of return users
  *
  * @param {Number} req.params.date - date of this month you want to view user for 0 = today
+ * 
+ * @returns {Array} list of players from the given date
  */
 app.get('/returnPlayers/:date', (req, res) => {
   var t = new Timer();
