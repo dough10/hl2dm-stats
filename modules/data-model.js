@@ -261,9 +261,7 @@ module.exports = class Data {
     var arr = [];
     for (var player in obj) {
       mergePhysicsKills(obj[player]);
-      if (!obj[player].weapons) {
-        obj[player].weapons = sortWeapons(obj);
-      }
+      obj[player].weapons = sortWeapons(obj);
       arr.push(obj[player]);
     }
     return arr;
