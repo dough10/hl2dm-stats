@@ -439,7 +439,7 @@ module.exports = class Data {
     }
     // mark player as banned
     this.users[id].banned = true;
-    this.bannedPlayers[id] = this.users[id];
+    this.bannedUsers[id] = this.users[id];
   }
 
   /**
