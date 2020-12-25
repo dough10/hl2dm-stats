@@ -3,6 +3,5 @@
   "dbURL": "mongodb://172.17.0.11:27017/",
   "gameServerHostname": "172.17.0.4",
   "gameServerDir": "/usr/src/app/hl2mp",
-  "bulkStorage": "/usr/src/app/old-stats",
-  "logRefreshTime": 60
+  "bulkStorage": "/usr/src/app/old-stats"
 }
