@@ -439,7 +439,7 @@ module.exports = class Data {
     }
     // mark player as banned
     this.users[id].banned = true;
-    this.bannedPlayers[id] = this.users[id];
+    this.bannedUsers[id] = this.users[id];
   }
 
   /**
@@ -457,8 +457,8 @@ module.exports = class Data {
     }
     // update player name if it has changed
     if (time >= this.users[id].updated) {
-    this.users[id].updated = time;
-    this.users[id].name = name;
+      this.users[id].updated = time;
+      this.users[id].name = name;
     }
     this.users[id].chat.push(said);
   }
