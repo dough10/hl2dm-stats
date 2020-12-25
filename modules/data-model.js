@@ -207,8 +207,6 @@ module.exports = class Data {
       this.users[id] = playerObj(name, id, time, ip);
       newUser = true;
     }
-    // set address
-    this.users[id].ip = ip;
     if (time >= this.users[id].updated) {
       // update address
       this.users[id].ip = ip;
