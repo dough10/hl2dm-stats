@@ -141,7 +141,7 @@ function statsLoop() {
 }
 
 /**
- * parse folder of logs 1 line @ a time.
+ * parse folder of logs 1 line @ a time. dumping each line into the scanner
  */
 function parseLogs() {
   return new Promise((resolve, reject) => {

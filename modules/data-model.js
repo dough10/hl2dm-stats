@@ -1,6 +1,6 @@
 /**
  * data module.
- * @module modules/data-model
+ * @module data-model
  */
 
 const geoip = require('geoip-lite');
@@ -191,7 +191,7 @@ module.exports = class Data {
   /**
    * update game server status
    * 
-   * @param {Object / String} status - the game server status from Gamedig 
+   * @param {Object} status - the game server status from Gamedig 
    */
   updateStatus(status) {
     this.gameStatus = status;

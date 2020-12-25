@@ -1,4 +1,5 @@
 #!/bin/sh
+node modules/document.js
 if [ "$2" == "+" ]
   then
     v=$(node modules/incriment-version.js);
