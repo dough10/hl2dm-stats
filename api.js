@@ -134,7 +134,7 @@ function statsLoop() {
     if (socket) {
       socket.send(JSON.stringify(status), e => {});
     }
-  }).catch(_ => {
+  }).catch(e => {
     print(`Got offline status from server`);
     serverStatus = 'offline';
   });

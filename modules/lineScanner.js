@@ -324,11 +324,13 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
   var hasDisconnected = playerHasDisconnected(word);
   var lineTime;
   if (word[3] && isTime(word[3])) {
+    if (loggingEnabled) console.log(`${word[3].slice(0, -1)} ${word[1]}`)
     lineTime = new Date(`${word[3].slice(0, -1)} ${word[1]}`).getTime();
   }
   if (isConsole) {
      return;
   } else if (isChat) {
+    // console.log(lineTime);
     // important data
     const nameString = buildKillerNameString(word, isChat);
     const id = getID3(nameString);
