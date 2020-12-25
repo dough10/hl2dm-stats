@@ -433,7 +433,7 @@ var server = app.listen(config.port, _ => mongoConnect().then(database => {
 }));
 
 process.on('SIGTERM', _ => {
-  db.close();
+  // db.close();
   server.close(_ => {
     console.log('Process terminated');
   });

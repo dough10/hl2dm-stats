@@ -10,7 +10,7 @@ RUN cd node_modules/geoip-lite && npm run-script updatedb license_key=zGwtu2clq9
 
 COPY . .
 
-EXPOSE 3000
-EXPOSE 9871
+EXPOSE 3000/tcp
+EXPOSE 9871/udp
 
 CMD [ "node", "api.js" ]
