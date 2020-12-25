@@ -210,6 +210,7 @@ app.ws('/', ws => {
  * route for gettings the status of the game server
  */
 app.get('/status', (req, res) => {
+  who(req, `is viewing ` + '/status'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
   res.send(appData.getStatus());
 });
 
