@@ -1,3 +1,8 @@
+/**
+ * data module.
+ * @module modules/data-model
+ */
+
 const geoip = require('geoip-lite');
 
 
@@ -159,12 +164,16 @@ function mergePhysicsKills(user) {
  *  DATA!!!!!!
  */
 module.exports = class Data {
+  /**
+   * Data
+   * @constructor
+   */
   constructor() {
-    this.users = {};
-    this.bannedUsers = {};
-    this.totalPlayers = 0;
-    this.weapons = {};
-    this.demos = [];
+    this.users = {};                // object of all users and their data
+    this.bannedUsers = {};          // object of players who have been banned
+    this.totalPlayers = 0;          // total # of players to have joined the server / been added to this.users object
+    this.weapons = {};              // server wide weapon data not specific to any player
+    this.demos = [];                // {Array} array of demo Files
     this.gameStatus = {};
     this.playerTimes = {};
     // imported function
@@ -172,11 +181,18 @@ module.exports = class Data {
     this.getReturnUsers = require('./getReturnUsers.js');
     this.authorize = require('./auth.js');
   }
-
+  /**
+   * gets the current status of gameserver
+   */
   getStatus() {
     return this.gameStatus;
   }
 
+  /**
+   * update game server status
+   * 
+   * @param {Object / String} status - the game server status from Gamedig 
+   */
   updateStatus(status) {
     this.gameStatus = status;
   }
@@ -200,6 +216,8 @@ module.exports = class Data {
    * @param {String} id - steamid
    * @param {String} name - player name
    * @param {String} ip - ip address of the connected user
+   * 
+   * @returns {Boolean} true: new player, false: been bere before
    */
   playerConnect(time, id, name, ip) {
     var newUser = false;
@@ -207,8 +225,6 @@ module.exports = class Data {
       this.users[id] = playerObj(name, id, time, ip);
       newUser = true;
     }
-    // set address
-    this.users[id].ip = ip;
     if (time >= this.users[id].updated) {
       // update address
       this.users[id].ip = ip;
@@ -221,6 +237,8 @@ module.exports = class Data {
 
   /**
    * creates a array of players with kills greater than or equal to 100
+   * 
+   * @returns {Array} list of players with kills greater than or equal to 100
    */
   generateTop() {
     var arr = [];
@@ -245,6 +263,8 @@ module.exports = class Data {
 
   /**
    * creates a array of weapon data
+   * 
+   * @returns {Array} returns list of weapons sorted by kill count
    */
   generateWeapons() {
     let obj = { ... this.weapons };

@@ -7,6 +7,8 @@ const Timer = require('./Timer.js');
  * check if ip  address is valid
  *
  * @param {String} ip - ip address
+ * 
+ * @returns {Boolean} true: validated, false: failed
  */
 function validateIPaddress(ip) {
   return /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ip);
@@ -15,7 +17,9 @@ function validateIPaddress(ip) {
 /**
  * scans the line for landmarks in order to get usable strings of data
  *
- * @param {String} line - one line of the log file being parsed
+ * @param {Array} line - one line of the log file being parsed
+ * 
+ * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function isFileStart(word) {
   for (var i = 0 ; i < word.length; i++) {
@@ -29,7 +33,9 @@ function isFileStart(word) {
 /**
  * scans the line for landmarks in order to get usable strings of data
  *
- * @param {String} line - one line of the log file being parsed
+ * @param {Array} line - one line of the log file being parsed
+ * 
+ * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function isFileEnd(word) {
   for (var i = 0; i < word.length; i++) {
@@ -85,6 +91,8 @@ function getID2(word) {
  * returns the player steamID in format 3
  *
  * @param {String} word - player name string
+ * 
+ * @returns {String} returns players SteamID3 number
  */
 function getID3(word) {
   if (!word) {
@@ -108,6 +116,8 @@ function getID3(word) {
  * if a string of text a time string
  *
  * @param {String} str - player name string
+ * 
+ * @returns {Boolean} true: string is a time string, false: is not time string
  */
 function isTime(str) {
   return /^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d):$/.test(str);
@@ -116,8 +126,10 @@ function isTime(str) {
 /**
  * builds a name string if name was broken by .split()
  *
- * @param {Array} line - one line from a log file broken @ spaces
+ * @param {Array} line - one line from a log file broken at spaces
  * @param {Number} end - index point of the end of the name string
+ * 
+ * @returns {String} returns killers name
  */
 function buildKillerNameString(line, end)  {
   let name = '';
@@ -141,6 +153,8 @@ function buildKillerNameString(line, end)  {
  *
  * @param {Array} line - one line from a log file broken @ spaces
  * @param {Number} start - index point of the start of the name string
+ * 
+ * @returns {String} returns killed player name
  */
 function buildKilledNameString(line, start) {
   var end = 7;
@@ -159,7 +173,9 @@ function buildKilledNameString(line, start) {
 /**
  * scans the line for landmarks in order to get usable strings of data
  *
- * @param {String} line - one line of the log file being parsed
+ * @param {Array} line - one line of the log file being parsed
+ * 
+ * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function lineIsKill(line) {
   for (var i = 0; i < line.length; i++) {
@@ -173,7 +189,9 @@ function lineIsKill(line) {
 /**
  * scans the line for landmarks in order to get usable strings of data
  *
- * @param {String} line - one line of the log file being parsed
+ * @param {Array} line - one line of the log file being parsed
+ * 
+ * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function lineIsConnect(line) {
   for (var i = 0; i < line.length; i++) {
@@ -187,7 +205,9 @@ function lineIsConnect(line) {
 /**
  * scans the line for landmarks in order to get usable strings of data
  *
- * @param {String} line - one line of the log file being parsed
+ * @param {Array} line - one line of the log file being parsed
+ * 
+ * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function lineIsSuicide(line) {
   for (var i = 0; i < line.length; i++) {
@@ -201,7 +221,9 @@ function lineIsSuicide(line) {
 /**
  * scans the line for landmarks in order to get usable strings of data
  *
- * @param {String} line - one line of the log file being parsed
+ * @param {Array} line - one line of the log file being parsed
+ * 
+ * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function lineIsChat(line) {
   for (var i = 0; i < line.length; i++) {
@@ -215,7 +237,9 @@ function lineIsChat(line) {
 /**
  * scans the line for landmarks in order to get usable strings of data
  *
- * @param {String} line - one line of the log file being parsed
+ * @param {Array} line - one line of the log file being parsed
+ * 
+ * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function lineIsHeadshot(line) {
   for (var i = 0; i < line.length; i++) {
@@ -229,7 +253,9 @@ function lineIsHeadshot(line) {
 /**
  * scans the line for landmarks in order to get usable strings of data
  *
- * @param {String} line - one line of the log file being parsed
+ * @param {Array} line - one line of the log file being parsed
+ * 
+ * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function lineIsStats(line) {
   for (var i = 0; i < line.length; i++) {
@@ -243,7 +269,9 @@ function lineIsStats(line) {
 /**
  * scans the line for landmarks in order to get usable strings of data
  *
- * @param {String} line - one line of the log file being parsed
+ * @param {Array} line - one line of the log file being parsed
+ * 
+ * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function lineIsStats2(line) {
   for (var i = 0; i < line.length; i++) {
@@ -258,7 +286,9 @@ function lineIsStats2(line) {
 /**
  * scans the line for landmarks in order to get usable strings of data
  *
- * @param {String} line - one line of the log file being parsed
+ * @param {Array} line - one line of the log file being parsed
+ * 
+ * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function lineIsConsole(line) {
   var ipstring = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):\d{4,5}$/
@@ -273,7 +303,9 @@ function lineIsConsole(line) {
 /**
  * scans the line for landmarks in order to get usable strings of data
  *
- * @param {String} line - one line of the log file being parsed
+ * @param {Array} line - one line of the log file being parsed
+ * 
+ * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function playerIsBanned(line) {
   for (var i = 0; i < line.length; i++) {
@@ -284,6 +316,13 @@ function playerIsBanned(line) {
   return false;
 }
 
+/**
+ * scans the line for landmarks in order to get usable strings of data
+ *
+ * @param {Array} line - one line of the log file being parsed
+ * 
+ * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
+ */
 function playerHasDisconnected(line) {
   for (var i = 0; i < line.length; i++) {
     if (line[i] === 'disconnected') {
@@ -293,6 +332,13 @@ function playerHasDisconnected(line) {
   return false;
 }
 
+/**
+ * scans the line for landmarks in order to get usable strings of data
+ *
+ * @param {Array} line - one line of the log file being parsed
+ * 
+ * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
+ */
 function getLineTime(line) {
   for (var i = 0; i < line.length; i++) {
     if (isTime(line[i])) {
@@ -308,7 +354,7 @@ var endDebounceTime = 0;
 /**
  * scans the line for landmarks in order to get usable strings of data
  *
- * @param {String} line - one line of the log file being parsed
+ * @param {Array} line - one line of the log file being parsed
  * @param {Class} dataModel - data!!!!!!!
  * @param {Function} onJoin - callback when player joins server (to be used to Toast?)
  * @param {Function} onDisconnect - callback when player leaves server (to be used to Toast?)
@@ -317,7 +363,6 @@ var endDebounceTime = 0;
  * @param {Boolean} loggingEnabled - log to console or not. (used to avoid spam when scanning logs while still getting data from realtime to log to console)
  */
 function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, loggingEnabled) {
-  // if (loggingEnabled) console.log(line);
   var word  = line.split(' ');  // array
   var isKill = lineIsKill(word);
   var isConnect = lineIsConnect(word);
@@ -375,15 +420,12 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
     const ip = word[isConnect  + 2].replace('"', '').replace('"', '').replace(/:\d{4,5}$/, '');
     // check for important data
     if (!name) {
-      console.log(name, 'name', line)
       return;
     }
     if (!id) {
-      // console.log(id, 'id', line)
       return;
     }
     if (!validateIPaddress(ip) || ip === 'none') {
-      console.log(ip, 'ip', line)
       return;
     }
     var newUser = dataModel.playerConnect(lineTime, id, name, ip);
@@ -579,7 +621,7 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
     } else if (loggingEnabled) {
       print(`${name.grey} disconnected after` + ' an unknown ammount of time'.cyan + ` online`);
     }
-    if (dataModel.playerTimes[id] === undefined) console.count(name)
+    // if (dataModel.playerTimes[id] === undefined) console.count(name)
     if (onDisconnect) onDisconnect({
       name: name,
       id: id,
