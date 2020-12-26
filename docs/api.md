@@ -2,24 +2,44 @@
 
 <dl>
 <dt><a href="#appData">appData</a></dt>
-<dd><p>DATA!!!!!!</p>
+<dd><p>application data model</p>
+<p> contains variables users, bannedUsers, totalPlayers, weapons, demos &amp; playerTimer</p>
 </dd>
 <dt><a href="#receiver">receiver</a></dt>
-<dd><p>Log reciver</p>
-</dd>
-<dt><a href="#j">j</a></dt>
-<dd><p>cleanup files on first @ 5:00am</p>
+<dd><p>Recieve logs on UDP port# 9871</p>
 </dd>
 <dt><a href="#server">server</a></dt>
-<dd><p>Go Live!!</p>
+<dd><p>express server instance listening on config.port</p>
 </dd>
+</dl>
+
+## Constants
+
+<dl>
+<dt><a href="#scanner">scanner</a></dt>
+<dd><p>reads log one line at a time looking for landmark words</p>
+</dd>
+<dt><a href="#Datamodel">Datamodel</a></dt>
+<dd><p>data class</p>
+</dd>
+<dt><a href="#logUser">logUser</a></dt>
+<dd><p>logs a user connection to database</p>
+</dd>
+<dt><a href="#print">print</a></dt>
+<dd><p>log line to console with timestamp</p>
+</dd>
+<dt><a href="#Timer">Timer</a></dt>
+<dd><p>time things</p>
+</dd>
+<dt><a href="#monthName">monthName</a></dt>
+<dd></dd>
 </dl>
 
 ## Functions
 
 <dl>
 <dt><a href="#errorHandler">errorHandler()</a></dt>
-<dd><p>throw a error</p>
+<dd><p>throw a error message stopping app when something breaks</p>
 </dd>
 <dt><a href="#userConnected">userConnected(user)</a></dt>
 <dd><p>callback for when a player joins server</p>
@@ -52,31 +72,59 @@
 <a name="appData"></a>
 
 ## appData
-DATA!!!!!!
+application data model contains variables users, bannedUsers, totalPlayers, weapons, demos & playerTimer
 
 **Kind**: global variable  
 <a name="receiver"></a>
 
 ## receiver
-Log reciver
-
-**Kind**: global variable  
-<a name="j"></a>
-
-## j
-cleanup files on first @ 5:00am
+Recieve logs on UDP port# 9871
 
 **Kind**: global variable  
 <a name="server"></a>
 
 ## server
-Go Live!!
+express server instance listening on config.port
 
 **Kind**: global variable  
+<a name="scanner"></a>
+
+## scanner
+reads log one line at a time looking for landmark words
+
+**Kind**: global constant  
+<a name="Datamodel"></a>
+
+## Datamodel
+data class
+
+**Kind**: global constant  
+<a name="logUser"></a>
+
+## logUser
+logs a user connection to database
+
+**Kind**: global constant  
+<a name="print"></a>
+
+## print
+log line to console with timestamp
+
+**Kind**: global constant  
+<a name="Timer"></a>
+
+## Timer
+time things
+
+**Kind**: global constant  
+<a name="monthName"></a>
+
+## monthName
+**Kind**: global constant  
 <a name="errorHandler"></a>
 
 ## errorHandler()
-throw a error
+throw a error message stopping app when something breaks
 
 **Kind**: global function  
 <a name="userConnected"></a>

@@ -173,7 +173,7 @@ module.exports = class Data {
     this.bannedUsers = {};          // object of players who have been banned
     this.totalPlayers = 0;          // total # of players to have joined the server / been added to this.users object
     this.weapons = {};              // server wide weapon data not specific to any player
-    this.demos = [];                // {Array} array of demo Files
+    this.demos = [];                // array of demo Files
     this.gameStatus = {};
     this.playerTimes = {};
     // imported function

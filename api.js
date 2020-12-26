@@ -1,9 +1,16 @@
 #! /usr/bin/env node
+
+/** reads log one line at a time looking for landmark words */
 const scanner = require('./modules/lineScanner.js');
+/** data class */
 const Datamodel = require('./modules/data-model.js');
+/** logs a user connection to database */
 const logUser = require('./modules/logUser.js');
+/** log line to console with timestamp */
 const print = require('./modules/printer.js');
+/** time things */
 const Timer = require('./modules/Timer.js');
+/**  */
 const monthName = require('./modules/month-name.js');
 const gameServerStatus = require('./modules/gameServerStatus.js');
 const mongoConnect = require('./modules/mongo-connect.js');
@@ -20,30 +27,33 @@ const logReceiver = require("srcds-log-receiver");
 const app = express();   
 const expressWs = require('express-ws')(app); 
 const colors = require('colors'); 
+const config = require('./modules/loadConfig.js')();
+const logFolder = path.join(config.gameServerDir, 'logs');
 
 
 var db;
 var socket;
-var config = require('./modules/loadConfig.js')();
-const logFolder = path.join(config.gameServerDir, 'logs');
 
 init(logFolder);
 
 /**
- *  DATA!!!!!!
+ *  application data model
+ * 
+ *  contains variables users, bannedUsers, totalPlayers, weapons, demos & playerTimer
+ * 
  */
 var appData = new Datamodel();
 
 /**
- *  Log reciver
+ *  Recieve logs on UDP port# 9871
  */
 var receiver = new logReceiver.LogReceiver();
 
 /**
- *  throw a error
+ *  throw a error message stopping app when something breaks
  */
 function errorHandler(e) {
-  throw new Error(e);
+  throw new Error(e.messgae);
 }
 
 /**
@@ -192,7 +202,7 @@ function fourohfour(req, res) {
 /**
  * cleanup files on first @ 5:00am
  */
-var j = schedule.scheduleJob('0 5 1 * *', appData.runCleanup);
+schedule.scheduleJob('0 5 1 * *', appData.runCleanup);
 
 app.use(compression());
 app.set('trust proxy', true);
@@ -424,7 +434,7 @@ app.get('/cvarlist', (req, res) => {
 app.get('*', fourohfour);
 
 /**
- * Go Live!!
+ * express server instance listening on config.port
  */
 var server = app.listen(config.port, _ => mongoConnect().then(database => {
   db = database;
