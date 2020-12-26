@@ -17,22 +17,23 @@
 
 <dl>
 <dt><a href="#scanner">scanner</a></dt>
-<dd><p>reads log one line at a time looking for landmark words</p>
+<dd><p>reads log one line at a time looking for game events</p>
 </dd>
 <dt><a href="#Datamodel">Datamodel</a></dt>
-<dd><p>data class</p>
+<dd><p>data - this data has Class ;)</p>
 </dd>
 <dt><a href="#logUser">logUser</a></dt>
-<dd><p>logs a user connection to database</p>
+<dd><p>logs a user connection to a mongodb session</p>
 </dd>
 <dt><a href="#print">print</a></dt>
-<dd><p>log line to console with timestamp</p>
+<dd><p>log line a to console with timestamp</p>
 </dd>
 <dt><a href="#Timer">Timer</a></dt>
 <dd><p>time things</p>
 </dd>
 <dt><a href="#monthName">monthName</a></dt>
-<dd></dd>
+<dd><p>switch statement get get month name</p>
+</dd>
 </dl>
 
 ## Functions
@@ -67,6 +68,15 @@
 <dt><a href="#fourohfour">fourohfour()</a></dt>
 <dd><p>404 page</p>
 </dd>
+<dt><a href="#api/">api/()</a> ⇒ <code>Array</code></dt>
+<dd><p>route for WebSocket</p>
+</dd>
+<dt><a href="#api/status">api/status()</a> ⇒ <code>Object</code></dt>
+<dd><p>route for gettings the status of the game server</p>
+</dd>
+<dt><a href="#api/stats">api/stats()</a> ⇒ <code>Array</code></dt>
+<dd><p>route for gettings player stats</p>
+</dd>
 </dl>
 
 <a name="appData"></a>
@@ -90,25 +100,25 @@ express server instance listening on config.port
 <a name="scanner"></a>
 
 ## scanner
-reads log one line at a time looking for landmark words
+reads log one line at a time looking for game events
 
 **Kind**: global constant  
 <a name="Datamodel"></a>
 
 ## Datamodel
-data class
+data - this data has Class ;)
 
 **Kind**: global constant  
 <a name="logUser"></a>
 
 ## logUser
-logs a user connection to database
+logs a user connection to a mongodb session
 
 **Kind**: global constant  
 <a name="print"></a>
 
 ## print
-log line to console with timestamp
+log line a to console with timestamp
 
 **Kind**: global constant  
 <a name="Timer"></a>
@@ -120,6 +130,8 @@ time things
 <a name="monthName"></a>
 
 ## monthName
+switch statement get get month name
+
 **Kind**: global constant  
 <a name="errorHandler"></a>
 
@@ -200,3 +212,24 @@ parse folder of logs 1 line @ a time. dumping each line into the scanner
 404 page
 
 **Kind**: global function  
+<a name="api/"></a>
+
+## api/() ⇒ <code>Array</code>
+route for WebSocket
+
+**Kind**: global function  
+**Returns**: <code>Array</code> - websocket pipeline  
+<a name="api/status"></a>
+
+## api/status() ⇒ <code>Object</code>
+route for gettings the status of the game server
+
+**Kind**: global function  
+**Returns**: <code>Object</code> - game server rcon status response  
+<a name="api/stats"></a>
+
+## api/stats() ⇒ <code>Array</code>
+route for gettings player stats
+
+**Kind**: global function  
+**Returns**: <code>Array</code> - stats top players list, server wide weapons list, # of total players, list of banned players, time of generation  

@@ -1,16 +1,18 @@
 #! /usr/bin/env node
-
-/** reads log one line at a time looking for landmark words */
+/**
+ * 
+ */
+/** reads log one line at a time looking for game events */
 const scanner = require('./modules/lineScanner.js');
-/** data class */
-const Datamodel = require('./modules/data-model.js');
-/** logs a user connection to database */
+/** data - this data has Class ;) */
+const Datamodel = require('./modules/data-model/data-model.js');
+/** logs a user connection to a mongodb session */
 const logUser = require('./modules/logUser.js');
-/** log line to console with timestamp */
+/** log line a to console with timestamp */
 const print = require('./modules/printer.js');
 /** time things */
-const Timer = require('./modules/Timer.js');
-/**  */
+const Timer = require('./modules/Timer/Timer.js');
+/** switch statement get get month name */
 const monthName = require('./modules/month-name.js');
 const gameServerStatus = require('./modules/gameServerStatus.js');
 const mongoConnect = require('./modules/mongo-connect.js');
@@ -80,7 +82,7 @@ function userDisconnected(user) {
  * callback for when a round / map has ended
  */
 function mapEnd() {
-  appData.reset();
+  appData.reset().then(console.log);
   appData.cacheDemos();
   parseLogs().then(seconds => {
     print(`Log parser complete in ` + `${seconds} seconds`.cyan);
@@ -210,6 +212,9 @@ app.disable('x-powered-by');
 
 /**
  * route for WebSocket
+ * @function
+ * @name api/
+ * @returns {Array} websocket pipeline
  */
 app.ws('/', ws => {
   socket = ws;
@@ -218,6 +223,9 @@ app.ws('/', ws => {
 
 /**
  * route for gettings the status of the game server
+ * @function
+ * @name api/status
+ * @returns {Object} game server rcon status response
  */
 app.get('/status', (req, res) => {
   who(req, `is viewing ` + '/status'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
@@ -248,7 +256,8 @@ app.get('/auth', (req, res) => {
 
 /**
  * route for gettings player stats
- * 
+ * @function
+ * @name api/stats
  * @returns {Array} stats top players list, server wide weapons list, # of total players, list of banned players, time of generation
  */
 app.get('/stats', (req, res) => {

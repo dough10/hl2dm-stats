@@ -3,20 +3,23 @@ const fs = require('fs');
 
 const files = [
   'api',
-  'modules/auth',
-  'modules/data-model'
+  'modules/auth/auth',
+  'modules/data-model/data-model',
+  'modules/Timer/Timer'
 ];
 
 function renderDoc(filename) {
-  jsdoc2md.render({ files: `${filename}.js` }).then(md => {
-    fs.writeFile(`docs/${filename}.md`, md, e => {
+  jsdoc2md.render({ 
+    files: `${filename}.js`
+  }).then(md => {
+    fs.writeFile(`${filename}-doc.md`, md, e => {
       if (e) {
         throw e;
       }
-      if (!fs.existsSync(`docs/${filename}.md`)){
+      if (!fs.existsSync(`${filename}-doc.md`)){
         throw new Error('Error saving markdown!! aka. Shits broke.');
       }
-      console.log(`docs/${filename}.ms data saved`);
+      console.log(`${filename}-doc.md data saved`);
     });
   });
 }

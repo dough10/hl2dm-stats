@@ -2,6 +2,8 @@
  * returns month name in string form
  *
  * @param {Number} month - month number 0 - 11
+ * 
+ * @returns {String} month name
  */
 function monthName(month) {
     if (typeof month !== 'number') {

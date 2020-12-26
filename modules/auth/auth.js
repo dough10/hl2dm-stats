@@ -1,18 +1,20 @@
 /**
  * stream authorization module.
  * @module modules/auth
+ * @requires bcrypt
  */
 
-const bcrypt = require('bcrypt');                         // hash and check passwords
+ /** hashing password / auth keys */
+const bcrypt = require('bcrypt');
 
 /**
- * authorize stream upload
+ * authorize stream
  *
- * @param {Object} db - mongodb object
- * @param {String} name - the name of the stream
- * @param {String} pass - the streams auth key
+ * @param {Object} db - mongodb connection object
+ * @param {String} name - the name of the stream / user
+ * @param {String} pass - the streams auth key / password
  * 
- * @returns {Boolean} returns true for authorized, false for failed
+ * @returns {Promise<Object>} returns user object for True, error if failed
  */
 function auth(db, name, pass) {
   return new Promise((resolve, reject) => {

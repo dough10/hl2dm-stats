@@ -1,7 +1,7 @@
 const SteamID = require('steamid');                       // work with steamid's
 const isWeapon = require('./weaponsCheck.js');
 const print = require('./printer.js');
-const Timer = require('./Timer.js');
+const Timer = require('./Timer/Timer.js');
 
 /**
  * check if ip  address is valid
