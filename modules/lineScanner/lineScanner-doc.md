@@ -278,10 +278,10 @@ scans the line for usable data for the data-model
 | Param | Type | Description |
 | --- | --- | --- |
 | line | <code>Array</code> | one line of the log file being parsed split at spaces |
-| dataModel | <code>Class</code> | @see modules/data-model/data-model-doc.md |
-| onJoin | <code>function</code> | callback when player joins server @see api-doc.md#module_api..userConnected |
-| onDisconnect | <code>function</code> | callback when player leaves server @see api-doc.md#module_api..userDisconnected |
-| onMapStart | <code>function</code> | callback when the map begins @see api-doc.md#apimapstart |
-| onMapEnd | <code>function</code> | callback when the map ends @see api-doc.md#apimapend |
+| dataModel | <code>Class</code> | @link modules/data-model/data-model-doc.md |
+| onJoin | <code>function</code> | callback when player joins server @link api-doc.md#module_api..userConnected |
+| onDisconnect | <code>function</code> | callback when player leaves server @link api-doc.md#module_api..userDisconnected |
+| onMapStart | <code>function</code> | callback when the map begins @link api-doc.md#apimapstart |
+| onMapEnd | <code>function</code> | callback when the map ends @link api-doc.md#apimapend |
 | loggingEnabled | <code>Boolean</code> | log to console. (used to avoid spam when scanning logs when getting data from realtime from rcon logs) |
 

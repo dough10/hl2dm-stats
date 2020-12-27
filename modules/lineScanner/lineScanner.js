@@ -345,11 +345,11 @@ var endDebounceTime = 0;
  * scans the line for usable data for the data-model
  *
  * @param {Array} line - one line of the log file being parsed split at spaces
- * @param {Class} dataModel - @see modules/data-model/data-model-doc.md
- * @param {Function} onJoin - callback when player joins server @see api-doc.md#module_api..userConnected
- * @param {Function} onDisconnect - callback when player leaves server @see api-doc.md#module_api..userDisconnected
- * @param {Function} onMapStart - callback when the map begins @see api-doc.md#apimapstart
- * @param {Function} onMapEnd - callback when the map ends @see api-doc.md#apimapend
+ * @param {Class} dataModel - @link modules/data-model/data-model-doc.md
+ * @param {Function} onJoin - callback when player joins server @link api-doc.md#module_api..userConnected
+ * @param {Function} onDisconnect - callback when player leaves server @link api-doc.md#module_api..userDisconnected
+ * @param {Function} onMapStart - callback when the map begins @link api-doc.md#apimapstart
+ * @param {Function} onMapEnd - callback when the map ends @link api-doc.md#apimapend
  * @param {Boolean} loggingEnabled - log to console. (used to avoid spam when scanning logs when getting data from realtime from rcon logs)
  */
 function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, loggingEnabled) {
