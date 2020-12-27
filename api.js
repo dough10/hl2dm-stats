@@ -255,6 +255,11 @@ function fourohfour(req, res) {
   res.status(404).sendFile(path.join(__dirname, 'assets', '404.html'));
 }
 
+/**
+ * 500 page
+ * 
+ * @returns {HTML} 500
+ */
 function fiveHundred() {
   var reqadd = {
     protocol: req.protocol,
@@ -298,9 +303,10 @@ app.get('/status', (req, res) => {
 });
 
 /**
- * authorize stream for hoedowntv
+ * authorize
  * @function
  * @name /auth
+ * @see modules/auth/auth-doc.md#module_modules/auth..auth
  * @param {String} req.query.name - the name of the stream
  * @param {String} req.query.k - the streams auth key
  * 

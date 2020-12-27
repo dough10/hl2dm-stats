@@ -20,6 +20,7 @@
     * [~getOldStatsList(month)](#module_api..getOldStatsList) ⇒ <code>Promise.&lt;MonthData&gt;</code>
     * [~parseLogs()](#module_api..parseLogs) ⇒ <code>Promise.&lt;String&gt;</code>
     * [~fourohfour()](#module_api..fourohfour) ⇒ <code>HTML</code>
+    * [~fiveHundred()](#module_api..fiveHundred) ⇒ <code>HTML</code>
     * [~/()](#module_api../) ⇒ <code>JSON</code>
     * [~/status()](#module_api../status) ⇒ <code>JSON</code>
     * [~/auth()](#module_api../auth) ⇒ <code>JSON</code>
@@ -157,6 +158,13 @@ parse folder of logs 1 line @ a time. dumping each line into the scanner
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
 **Returns**: <code>HTML</code> - 404  
+<a name="module_api..fiveHundred"></a>
+
+### api~fiveHundred() ⇒ <code>HTML</code>
+500 page
+
+**Kind**: inner method of [<code>api</code>](#module_api)  
+**Returns**: <code>HTML</code> - 500  
 <a name="module_api../"></a>
 
 ### api~/() ⇒ <code>JSON</code>
@@ -174,10 +182,11 @@ route for gettings the status of the game server
 <a name="module_api../auth"></a>
 
 ### api~/auth() ⇒ <code>JSON</code>
-authorize stream for hoedowntv
+authorize
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
 **Returns**: <code>JSON</code> - ok: authorized, fail: failed to authorize  
+**See**: modules/auth/auth-doc.md#module_modules/auth..auth  
 
 | Param | Type | Description |
 | --- | --- | --- |
