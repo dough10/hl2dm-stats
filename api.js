@@ -1,7 +1,17 @@
 #! /usr/bin/env node
 /**
- * 
+ * @requires fs
+ * @requires readline
+ * @requires compression
+ * @requires express
+ * @requires node-schedule
+ * @requires path
+ * @requires url
+ * @requires srcds-log-receiver
+ * @requires expresss-ws
+ * @requires colors
  */
+
 /** reads log one line at a time looking for game events */
 const scanner = require('./modules/lineScanner.js');
 /** data - this data has Class ;) */
@@ -12,7 +22,7 @@ const logUser = require('./modules/logUser.js');
 const print = require('./modules/printer.js');
 /** time things */
 const Timer = require('./modules/Timer/Timer.js');
-/** switch statement get get month name */
+/** switch statement for month name */
 const monthName = require('./modules/month-name.js');
 const gameServerStatus = require('./modules/gameServerStatus.js');
 const mongoConnect = require('./modules/mongo-connect.js');
@@ -53,6 +63,8 @@ var receiver = new logReceiver.LogReceiver();
 
 /**
  *  throw a error message stopping app when something breaks
+ * @param {Object} e - error object
+ * @throws error message
  */
 function errorHandler(e) {
   throw new Error(e.messgae);
@@ -61,7 +73,7 @@ function errorHandler(e) {
 /**
  * callback for when a player joins server
  *
- * @param {Object} user - user object with name, id, time, date, month, year, and if user is new to server
+ * @param {Object} u - user object with name, id, time, date, month, year, and if user is new to server
  */
 function userConnected(u) {
   logUser(db, u).then(user => {
@@ -72,21 +84,23 @@ function userConnected(u) {
 /**
  * callback for when a player leaves server
  *
- * @param {Object} user - user object with name, id, time, date, month, year, and if user is new to server
+ * @param {Object} u - user object with name, id, time, date, month, year, and if user is new to server
  */
-function userDisconnected(user) {
-
+function userDisconnected(u) {
+  //...
 }
 
 /**
  * callback for when a round / map has ended
  */
 function mapEnd() {
-  appData.reset().then(console.log);
-  appData.cacheDemos();
-  parseLogs().then(seconds => {
-    print(`Log parser complete in ` + `${seconds} seconds`.cyan);
-  }).catch(errorHandler);
+  appData.reset().then(m => {
+    print(m);
+    appData.cacheDemos();
+    parseLogs().then(seconds => {
+      print(`Log parser complete in ` + `${seconds} seconds`.cyan);
+    }).catch(errorHandler);
+  });
 }
 
 /**

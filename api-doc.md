@@ -32,20 +32,20 @@
 <dd><p>time things</p>
 </dd>
 <dt><a href="#monthName">monthName</a></dt>
-<dd><p>switch statement get get month name</p>
+<dd><p>switch statement for month name</p>
 </dd>
 </dl>
 
 ## Functions
 
 <dl>
-<dt><a href="#errorHandler">errorHandler()</a></dt>
+<dt><a href="#errorHandler">errorHandler(e)</a></dt>
 <dd><p>throw a error message stopping app when something breaks</p>
 </dd>
-<dt><a href="#userConnected">userConnected(user)</a></dt>
+<dt><a href="#userConnected">userConnected(u)</a></dt>
 <dd><p>callback for when a player joins server</p>
 </dd>
-<dt><a href="#userDisconnected">userDisconnected(user)</a></dt>
+<dt><a href="#userDisconnected">userDisconnected(u)</a></dt>
 <dd><p>callback for when a player leaves server</p>
 </dd>
 <dt><a href="#mapEnd">mapEnd()</a></dt>
@@ -130,36 +130,45 @@ time things
 <a name="monthName"></a>
 
 ## monthName
-switch statement get get month name
+switch statement for month name
 
 **Kind**: global constant  
 <a name="errorHandler"></a>
 
-## errorHandler()
+## errorHandler(e)
 throw a error message stopping app when something breaks
 
 **Kind**: global function  
+**Throws**:
+
+- error message
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| e | <code>Object</code> | error object |
+
 <a name="userConnected"></a>
 
-## userConnected(user)
+## userConnected(u)
 callback for when a player joins server
 
 **Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| user | <code>Object</code> | user object with name, id, time, date, month, year, and if user is new to server |
+| u | <code>Object</code> | user object with name, id, time, date, month, year, and if user is new to server |
 
 <a name="userDisconnected"></a>
 
-## userDisconnected(user)
+## userDisconnected(u)
 callback for when a player leaves server
 
 **Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| user | <code>Object</code> | user object with name, id, time, date, month, year, and if user is new to server |
+| u | <code>Object</code> | user object with name, id, time, date, month, year, and if user is new to server |
 
 <a name="mapEnd"></a>
 

@@ -12,7 +12,8 @@ const colors = require('colors');
  */
 class Timer {
   /**
-   * @param {String} title - name of the timer
+   * @class
+   * @param {String} title - name of the timer *optional
    * @constructor
    */
   constructor(title) {

@@ -7,11 +7,11 @@ Class to hold and manipulate the app data
 
 * [data-model](#module_data-model)
     * [~Data](#module_data-model..Data)
-        * [new Data()](#new_module_data-model..Data_new)
         * [.getStatus()](#module_data-model..Data+getStatus) ⇒ <code>Object</code>
         * [.updateStatus(status)](#module_data-model..Data+updateStatus)
         * [.reset()](#module_data-model..Data+reset) ⇒ <code>Promise.&lt;String&gt;</code>
         * [.playerConnect(time, id, name, ip)](#module_data-model..Data+playerConnect) ⇒ <code>Boolean</code>
+        * [.playerDisconnect(id)](#module_data-model..Data+playerDisconnect) ⇒ <code>Promise.&lt;String&gt;</code>
         * [.generateTop()](#module_data-model..Data+generateTop) ⇒ <code>Array</code>
         * [.generateWeapons()](#module_data-model..Data+generateWeapons) ⇒ <code>Array</code>
         * [.generateBannedPlayerList()](#module_data-model..Data+generateBannedPlayerList) ⇒ <code>Array</code>
@@ -26,6 +26,7 @@ Class to hold and manipulate the app data
         * [.addWeaponStats2(time, id, name, weapon)](#module_data-model..Data+addWeaponStats2)
         * [.cacheDemos()](#module_data-model..Data+cacheDemos) ⇒ <code>Promise.&lt;Array&gt;</code>
         * [.runCleanup()](#module_data-model..Data+runCleanup)
+    * [~geoip](#module_data-model..geoip)
     * [~playerObj(name, id, time, ip)](#module_data-model..playerObj) ⇒ <code>Object</code>
     * [~weaponObj()](#module_data-model..weaponObj) ⇒ <code>Object</code>
     * [~calculatePrecent(small, big)](#module_data-model..calculatePrecent) ⇒ <code>Number</code>
@@ -41,11 +42,11 @@ Class to hold and manipulate the app data
 **Kind**: inner class of [<code>data-model</code>](#module_data-model)  
 
 * [~Data](#module_data-model..Data)
-    * [new Data()](#new_module_data-model..Data_new)
     * [.getStatus()](#module_data-model..Data+getStatus) ⇒ <code>Object</code>
     * [.updateStatus(status)](#module_data-model..Data+updateStatus)
     * [.reset()](#module_data-model..Data+reset) ⇒ <code>Promise.&lt;String&gt;</code>
     * [.playerConnect(time, id, name, ip)](#module_data-model..Data+playerConnect) ⇒ <code>Boolean</code>
+    * [.playerDisconnect(id)](#module_data-model..Data+playerDisconnect) ⇒ <code>Promise.&lt;String&gt;</code>
     * [.generateTop()](#module_data-model..Data+generateTop) ⇒ <code>Array</code>
     * [.generateWeapons()](#module_data-model..Data+generateWeapons) ⇒ <code>Array</code>
     * [.generateBannedPlayerList()](#module_data-model..Data+generateBannedPlayerList) ⇒ <code>Array</code>
@@ -60,11 +61,6 @@ Class to hold and manipulate the app data
     * [.addWeaponStats2(time, id, name, weapon)](#module_data-model..Data+addWeaponStats2)
     * [.cacheDemos()](#module_data-model..Data+cacheDemos) ⇒ <code>Promise.&lt;Array&gt;</code>
     * [.runCleanup()](#module_data-model..Data+runCleanup)
-
-<a name="new_module_data-model..Data_new"></a>
-
-#### new Data()
-create the data variables
 
 <a name="module_data-model..Data+getStatus"></a>
 
@@ -105,6 +101,18 @@ a player has connected to the game server
 | id | <code>String</code> | steamid3 of the connecting player |
 | name | <code>String</code> | player name of the connection player |
 | ip | <code>String</code> | ip address of the connection player |
+
+<a name="module_data-model..Data+playerDisconnect"></a>
+
+#### data.playerDisconnect(id) ⇒ <code>Promise.&lt;String&gt;</code>
+a player has connected to the game server
+
+**Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
+**Returns**: <code>Promise.&lt;String&gt;</code> - timer object string  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>String</code> | steamid3 of the connecting player |
 
 <a name="module_data-model..Data+generateTop"></a>
 
@@ -254,6 +262,12 @@ caches list of avaliable demo files
 runs end of month file cleanup process
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
+<a name="module_data-model..geoip"></a>
+
+### data-model~geoip
+geoip import
+
+**Kind**: inner constant of [<code>data-model</code>](#module_data-model)  
 <a name="module_data-model..playerObj"></a>
 
 ### data-model~playerObj(name, id, time, ip) ⇒ <code>Object</code>
@@ -317,7 +331,7 @@ remove weapon specific data from user object and place it in it's own array
 <a name="module_data-model..mergePhysicsKills"></a>
 
 ### data-model~mergePhysicsKills(user)
-merger all physics, physbox & world kills to physics kills
+merge all physics kills, physbox & world kills to physics kills
 
 **Kind**: inner method of [<code>data-model</code>](#module_data-model)  
 

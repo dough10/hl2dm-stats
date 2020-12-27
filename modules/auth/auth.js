@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt');
 
 /**
  * authorize stream
- *
+ * @async
  * @param {Object} db - mongodb connection object
  * @param {String} name - the name of the stream / user
  * @param {String} pass - the streams auth key / password

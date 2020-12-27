@@ -5,9 +5,14 @@
  * @requires geoip-lite
  */
 
+ /** geoip import */
 const geoip = require('geoip-lite');
+const Timer = require('../Timer/Timer.js');
 
-
+/** 
+ * get the length / size of a object
+ * @returns {Number} count of items in the object
+ */
 Object.size = obj => {
   var size = 0, key;
   for (key in obj) {
@@ -142,7 +147,7 @@ function sortWeapons(user) {
 }
 
 /**
- * merger all physics, physbox & world kills to physics kills 
+ * merge all physics kills, physbox & world kills to physics kills 
  *
  * @param {Object} user - a user object
  */
@@ -176,9 +181,8 @@ function mergePhysicsKills(user) {
  *  Class to hold and manipulate the app data
  */
 class Data {
+
   /**
-   * create the data variables 
-   * 
    * @constructor
    */
   constructor() {
@@ -194,6 +198,7 @@ class Data {
     this.getReturnUsers = require('../getReturnUsers.js');
     this.authorize = require('../auth/auth.js');
   }
+
   /**
    * gets the current status of gameserver
    * 
@@ -224,7 +229,7 @@ class Data {
       this.totalPlayers = 0;
       this.weapons = {};
       this.demos = [];
-      resolve(`${new Date().toLocaleString().yellow} - Data model reset`);
+      resolve(`Data model reset`);
     });
   }
 
@@ -239,10 +244,15 @@ class Data {
    * @returns {Boolean} true: new player, false: been bere before
    */
   playerConnect(time, id, name, ip) {
+    this.playerTimes[id] = new Timer(name);
     var newUser = false;
     if (!this.users[id]) {
       this.users[id] = playerObj(name, id, time, ip);
       newUser = true;
+    }
+    if (!this.users[id].ip) {
+      this.users[id].ip = ip;
+      this.users[id].geo = geoip.lookup(ip);
     }
     if (time >= this.users[id].updated) {
       // update address
@@ -252,6 +262,24 @@ class Data {
       this.users[id].name = name;
     }
     return newUser;
+  }
+
+    /**
+   * a player has connected to the game server
+   *
+   * @param {String} id - steamid3 of the connecting player
+   * 
+   * @returns {Promise<String>} timer object string
+   */
+  playerDisconnect(id) {
+    return new Promise((resolve, reject) => {
+      var time;
+      if (this.playerTimes[id]) {
+        time = this.playerTimes[id].endString();
+        delete this.playerTimes[id];
+      }
+       resolve(time);
+    });
   }
 
   /**

@@ -4,7 +4,7 @@ const path = require('path');                             // merger file / url n
 const fs = require('fs');                                 // work with the file system
 const colors = require('colors');                         // colorize text
 const print = require(path.join(__dirname, 'printer.js'));
-const Timer = require(path.join(__dirname, 'Timer.js'));
+const Timer = require(path.join(__dirname, 'Timer', 'Timer.js'));
 
 
 /**
