@@ -3,6 +3,7 @@
  * 
  * @module data-model
  * @requires geoip-lite
+ * @exports Data
  */
 
  /** geoip import */

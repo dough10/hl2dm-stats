@@ -2,6 +2,7 @@
  * authorization module.
  * @module modules/auth
  * @requires bcrypt
+ * @exports auth
  */
 
  /** hashing password / auth keys */

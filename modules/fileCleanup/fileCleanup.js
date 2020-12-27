@@ -8,6 +8,7 @@
  * @requires colors
  * @requires modules/Timer
  * @requires modules/printer.js
+ * @exports fileCleanup
  */
 
 const path = require('path');

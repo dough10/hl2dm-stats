@@ -3,6 +3,7 @@
  * @requires steamid
  * @requires weaponsCheck.js
  * @requires printer.js
+ * @exports scanLine 
  */
 const SteamID = require('steamid');
 const isWeapon = require('../weaponsCheck.js');

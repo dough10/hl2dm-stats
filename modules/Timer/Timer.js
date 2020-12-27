@@ -1,6 +1,7 @@
 /**
  * @module modules/Timer
  * @requires colors
+ * @exports Timer
  */
 
  /** colorize text */
@@ -13,7 +14,7 @@ const colors = require('colors');
 class Timer {
   /**
    * @class
-   * @param {String} title - name of the timer *optional
+   * @param {String} title - name of the timer *optional*
    * @constructor
    */
   constructor(title) {

@@ -1,4 +1,13 @@
 #!/usr/bin/env node
+/**
+ * @module modules/cacheDemos
+ * @requires path
+ * @requires fs
+ * @requires colors
+ * @requires modules/printer
+ * @requires modules/Timer
+ * @exports cacheDemos
+ */
 const config = require('../loadConfig.js')();                     // config file location
 const path = require('path');                             // merger file / url names
 const fs = require('fs');                                 // work with the file system

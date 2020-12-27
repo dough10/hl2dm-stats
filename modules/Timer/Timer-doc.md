@@ -28,7 +28,7 @@ Class for timing the duration of things
 
 | Param | Type | Description |
 | --- | --- | --- |
-| title | <code>String</code> | name of the timer *optional |
+| title | <code>String</code> | name of the timer *optional* |
 
 <a name="module_modules/Timer..Timer+end"></a>
 
