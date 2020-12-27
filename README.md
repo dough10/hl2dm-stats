@@ -18,8 +18,8 @@ avaliable from <https://github.com/dough10/hl2dm-stats-ui>
 
 ## Documentation
 
-- [api.md](api.md)
-  - [modules&#x2F;auth&#x2F;auth.md](modules&#x2F;auth&#x2F;auth.md)
-  - [modules&#x2F;data-model&#x2F;data-model.md](modules&#x2F;data-model&#x2F;data-model.md)
-  - [modules&#x2F;Timer&#x2F;Timer.md](modules&#x2F;Timer&#x2F;Timer.md)
-  - [modules&#x2F;cacheDemos&#x2F;cacheDemos.md](modules&#x2F;cacheDemos&#x2F;cacheDemos.md)
+- [api-doc.md](api-doc.md)
+  - [modules&#x2F;auth&#x2F;auth-doc.md](modules&#x2F;auth&#x2F;auth-doc.md)
+  - [modules&#x2F;data-model&#x2F;data-model-doc.md](modules&#x2F;data-model&#x2F;data-model-doc.md)
+  - [modules&#x2F;Timer&#x2F;Timer-doc.md](modules&#x2F;Timer&#x2F;Timer-doc.md)
+  - [modules&#x2F;cacheDemos&#x2F;cacheDemos-doc.md](modules&#x2F;cacheDemos&#x2F;cacheDemos-doc.md)

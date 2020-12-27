@@ -4,8 +4,8 @@ const {render} = require('mustache');
 
 const head = fs.readFileSync('./modules/document/head.md').toString();
 
-const parent = `- [{{file}}.md]({{file}}.md)\n`;
-const child = `  - [{{file}}.md]({{file}}.md)\n`;
+const parent = `- [{{file}}-doc.md]({{file}}-doc.md)\n`;
+const child = `  - [{{file}}-doc.md]({{file}}-doc.md)\n`;
 
 // file names without extensions ie. .js, .html
 const files = [
