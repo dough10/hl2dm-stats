@@ -9,22 +9,17 @@
 const bcrypt = require('bcrypt');
 
 /**
- * @typedef Token
- * @property {bool} match False if the token is invalid.
- * @property {JSON} match - user info.
- */
-
-/**
  * authorize
  * @async
  * @param {Object} db - mongodb connection object
  * @param {String} name - the name of the stream / user
  * @param {String} pass - the streams auth key / password
  * 
- * @returns {Promise<Token>} promise to a token
+ * @returns {Promise<Boolean>} promise to a boolean.  true: authorized, false: not authorized
  * 
  * @example  <caption>Example usage of auth function.</caption>
  * // returns true | false;
+ * var auth = require('modules/auth/auth');
  * auth(mongoDB-connection, 'registeredUser', 'supersecurepassword').then(authorized => {
  *   if (!authorized) return 'fail';
  *   return 'allowed';
