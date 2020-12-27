@@ -20,6 +20,7 @@ const scanner = require('./modules/lineScanner/lineScanner.js');
 const Datamodel = require('./modules/data-model/data-model.js');
 /** logs a user connection to a mongodb session */
 const logUser = require('./modules/logUser.js');
+const logBan = require('./modules/logBan');
 /** log line a to console with timestamp */
 const print = require('./modules/printer.js');
 /** time things */
@@ -102,6 +103,19 @@ function userConnected(u) {
  */
 function userDisconnected(u) {
   //...
+}
+
+/**
+ * callback for when a player is banned
+ * 
+ * @param {Object} player - user object of the banned player
+ * @callback
+ * @async
+ */
+function playerBan(player) {
+  logBan(db, player).then(p => {
+    if (p) print(`${player.name.grey} was saved to ban database`);
+  });
 }
 
 /**
@@ -224,7 +238,7 @@ function parseLogs() {
             crlfDelay: Infinity
           });
           rl.on('line', line => {
-            scanner(line, appData, userConnected, userDisconnected, mapStart, mapEnd, false);
+            scanner(line, appData, userConnected, userDisconnected, mapStart, mapEnd, playerBan, false);
           });
           rl.on('close', _ => {
             totalFiles--;
@@ -581,7 +595,7 @@ app.get('*', fourohfour);
 var server = app.listen(config.port, _ => mongoConnect().then(database => {
   db = database;
   console.log(`MongoDB connected. URL: ${config.dbURL.green}`);
-  console.log('Endpoints active on port: ' + `${config.port}`.red)
+  console.log('Endpoints active on port: ' + `${config.port}`.red);
   console.log('');
   print('Online. ' + 'ᕦ(ò_óˇ)ᕤ'.red);
   statsLoop();
@@ -593,7 +607,7 @@ var server = app.listen(config.port, _ => mongoConnect().then(database => {
      * recieved log line / lines from server
      */
     receiver.on("data", data => {
-      if (data.isValid) scanner(data.message, appData, userConnected, userDisconnected, mapStart, mapEnd, true);
+      if (data.isValid) scanner(data.message, appData, userConnected, userDisconnected, mapStart, mapEnd, playerBan, true);
     });
   }).catch(errorHandler);
 

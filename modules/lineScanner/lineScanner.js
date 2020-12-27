@@ -83,7 +83,7 @@ function getID2(word) {
     return false;
   }
   const start = u;
-  word = word.substring(start)
+  word = word.substring(start);
   const end = word.search('>');
   let str = '';
   for (var i = 0; i < end; i++) {
@@ -107,7 +107,7 @@ function getID3(word) {
     return false;
   }
   let start = u + 4;
-  word = word.substring(start)
+  word = word.substring(start);
   let end = word.search(']');
   let str = '';
   for (var i = 0; i < end; i++) {
@@ -147,7 +147,7 @@ function buildKillerNameString(line, end)  {
   for (var i = start; i < end; i++) {
     name = `${name}${line[i]} `;
   }
-  return name
+  return name;
 }
 
 /**
@@ -284,7 +284,7 @@ function lineIsStats2(line) {
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function lineIsConsole(line) {
-  var ipstring = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):\d{4,5}$/
+  var ipstring = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):\d{4,5}$/;
   for (var i = 0; i < line.length; i++) {
     if (line[i] === 'rcon' && line[i + 1] === 'from' && ipstring.test(line[i + 2].slice(0, -1).replace('"', '').replace('"', ''))) {
       return i;
@@ -332,7 +332,7 @@ function playerHasDisconnected(line) {
 function getLineTime(line) {
   for (var i = 0; i < line.length; i++) {
     if (isTime(line[i])) {
-      return new Date(`${line[i].slice(0, -1)} ${line[i - 2]}`).getTime()
+      return new Date(`${line[i].slice(0, -1)} ${line[i - 2]}`).getTime();
     }
   }
   return false;
@@ -352,7 +352,7 @@ var endDebounceTime = 0;
  * @param {Function} onMapEnd - callback when the map ends @link api-doc.md#apimapend
  * @param {Boolean} loggingEnabled - log to console. (used to avoid spam when scanning logs when getting data from realtime from rcon logs)
  */
-function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, loggingEnabled) {
+function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, onBan, loggingEnabled) {
   var word  = line.split(' ');  // array
   var isKill = lineIsKill(word);
   var isConnect = lineIsConnect(word);
@@ -390,7 +390,7 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
       said = `${said}${word[i]} `;
     }
     dataModel.addChat(lineTime, id, name, `${new Date(lineTime).toLocaleString()} - ${said}`);
-    if (loggingEnabled) print(`${name.grey} said ${said.magenta}`)
+    if (loggingEnabled) print(`${name.grey} said ${said.magenta}`);
   } else if (isBanned) {
     // important data
     const nameString = buildKillerNameString(word, isBanned);
@@ -401,7 +401,8 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
       return;
     }
     // add the ban
-    dataModel.addBanned(id);
+    var player = dataModel.addBanned(id);
+    if (onBan) onBan(player);
   } else if (isConnect) {
     // get user details
     const nameString = buildKillerNameString(word, isConnect);

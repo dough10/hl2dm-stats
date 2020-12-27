@@ -1,4 +1,4 @@
-# hl2dm-stats
+# hl2dm-stats V:1.1.1
 
 A logparser and stats calculator for HL2DM game servers. As seen at [Lo-g DeathMatch Hoedown](https://hl2dm.dough10.me). Parse logs to generate player stats. Stores the data in system memory for fast page response times. Logs player connections into mongodb in order to know who played when and who joined for the first time.
 
@@ -9,12 +9,12 @@ Requires Sourcemod and Superlogs Sourcemod plugin for weapon accuacy stat tracki
 ## Documentation
 
 - [api-doc.md](api-doc.md)
-  - [modules&#x2F;auth&#x2F;auth-doc.md](modules&#x2F;auth&#x2F;auth-doc.md)
-  - [modules&#x2F;Timer&#x2F;Timer-doc.md](modules&#x2F;Timer&#x2F;Timer-doc.md)
-  - [modules&#x2F;data-model&#x2F;data-model-doc.md](modules&#x2F;data-model&#x2F;data-model-doc.md)
-  - [modules&#x2F;cacheDemos&#x2F;cacheDemos-doc.md](modules&#x2F;cacheDemos&#x2F;cacheDemos-doc.md)
-  - [modules&#x2F;fileCleanup&#x2F;fileCleanup-doc.md](modules&#x2F;fileCleanup&#x2F;fileCleanup-doc.md)
-  - [modules&#x2F;lineScanner&#x2F;lineScanner-doc.md](modules&#x2F;lineScanner&#x2F;lineScanner-doc.md)
+  - [modules/auth/auth-doc.md](modules/auth/auth-doc.md)
+  - [modules/Timer/Timer-doc.md](modules/Timer/Timer-doc.md)
+  - [modules/data-model/data-model-doc.md](modules/data-model/data-model-doc.md)
+  - [modules/cacheDemos/cacheDemos-doc.md](modules/cacheDemos/cacheDemos-doc.md)
+  - [modules/fileCleanup/fileCleanup-doc.md](modules/fileCleanup/fileCleanup-doc.md)
+  - [modules/lineScanner/lineScanner-doc.md](modules/lineScanner/lineScanner-doc.md)
 
 ## Install
 
@@ -53,5 +53,4 @@ avaliable from <https://github.com/dough10/hl2dm-stats-ui>
 
 - jsdoc-to-markdown: ^6.0.1
 - jshint: ^2.12.0
-- mustache: ^4.1.0
 - version-incrementer: ^0.1.1

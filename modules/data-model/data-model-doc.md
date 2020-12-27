@@ -26,7 +26,7 @@ var appData = new Datamodel();
         * [.addKill(time, killer, killed, weapon)](#module_data-model..Data+addKill)
         * [.addSuicide(time, id, name, weapon)](#module_data-model..Data+addSuicide)
         * [.addHeadshot(time, id, name, weapon)](#module_data-model..Data+addHeadshot)
-        * [.addBanned(id)](#module_data-model..Data+addBanned)
+        * [.addBanned(id)](#module_data-model..Data+addBanned) ⇒ <code>Object</code>
         * [.addChat(time, id, name, said)](#module_data-model..Data+addChat)
         * [.addWeaponStats(time, id, name, weapon)](#module_data-model..Data+addWeaponStats)
         * [.addWeaponStats2(time, id, name, weapon)](#module_data-model..Data+addWeaponStats2)
@@ -61,7 +61,7 @@ Class to hold and manipulate the app data
     * [.addKill(time, killer, killed, weapon)](#module_data-model..Data+addKill)
     * [.addSuicide(time, id, name, weapon)](#module_data-model..Data+addSuicide)
     * [.addHeadshot(time, id, name, weapon)](#module_data-model..Data+addHeadshot)
-    * [.addBanned(id)](#module_data-model..Data+addBanned)
+    * [.addBanned(id)](#module_data-model..Data+addBanned) ⇒ <code>Object</code>
     * [.addChat(time, id, name, said)](#module_data-model..Data+addChat)
     * [.addWeaponStats(time, id, name, weapon)](#module_data-model..Data+addWeaponStats)
     * [.addWeaponStats2(time, id, name, weapon)](#module_data-model..Data+addWeaponStats2)
@@ -214,10 +214,11 @@ calculates stats when a headshot takes place
 
 <a name="module_data-model..Data+addBanned"></a>
 
-#### data.addBanned(id)
+#### data.addBanned(id) ⇒ <code>Object</code>
 add player to the banned list
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
+**Returns**: <code>Object</code> - player object  
 
 | Param | Type | Description |
 | --- | --- | --- |

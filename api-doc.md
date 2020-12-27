@@ -38,6 +38,7 @@
     * [~/cvarlist()](#module_api../cvarlist) ⇒ <code>Text</code>
     * [~userConnected](#module_api..userConnected)
     * [~userDisconnected](#module_api..userDisconnected)
+    * [~playerBan](#module_api..playerBan)
     * [~mapEnd](#module_api..mapEnd)
     * [~mapStart](#module_api..mapStart)
     * [~MonthData](#module_api..MonthData)
@@ -333,6 +334,17 @@ callback for when a player leaves server
 | Param | Type | Description |
 | --- | --- | --- |
 | u | <code>Object</code> | user object with name, id, time, date, month, year, and if user is new to server |
+
+<a name="module_api..playerBan"></a>
+
+### api~playerBan
+callback for when a player is banned
+
+**Kind**: inner typedef of [<code>api</code>](#module_api)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| player | <code>Object</code> | user object of the banned player |
 
 <a name="module_api..mapEnd"></a>
 

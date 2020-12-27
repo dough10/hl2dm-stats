@@ -12,14 +12,10 @@ const files = [
 
 const jsdoc2md = require('jsdoc-to-markdown');
 const fs = require('fs'); 
-const {render} = require('mustache');
 const head = fs.readFileSync('./modules/document/head.md').toString();
 const foot = fs.readFileSync('./modules/document/foot.md').toString();
-const parent = `- [{{file}}-doc.md]({{file}}-doc.md)\n`;
-const child = `  - [{{file}}-doc.md]({{file}}-doc.md)\n`;
 const pack = require('../../package.json');
 
-var out = '\n## Documentation\n\n';
 
 function writeFile(name, md) {
   return new Promise((resolve, reject) => {
@@ -61,20 +57,18 @@ function devDependencies() {
   return out;
 }
 
+var out = '\n## Documentation\n\n';
 for (var i = 0; i < files.length; i++) {
   renderDoc(files[i]);
-  var obj = {
-    file: files[i]
-  };
   if (i === 0) {
-    out = out + render(parent, obj);
+    out = out + `- [${files[i]}-doc.md](${files[i]}-doc.md)\n`;
   } else {
-    out = out + render(child, obj);
+    out = out + `  - [${files[i]}-doc.md](${files[i]}-doc.md)\n`;
   }
 }
 
 function hulkSmash() {
-  return head + out + '\n' + foot + '\n' + dependencies() + '\n' + devDependencies();
+  return `# ${pack.name} V:${pack.version}\n` + head + out + '\n' + foot + '\n' + dependencies() + '\n' + devDependencies();
 }
 
 writeFile('README.md', hulkSmash()).then(console.log);

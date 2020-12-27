@@ -518,6 +518,8 @@ class Data {
    * add player to the banned list
    *
    * @param {String} id - steamid3 of the player
+   * 
+   * @returns {Object} player object
    */
   addBanned(id) {
     if (!this.users[id]) {
@@ -529,6 +531,16 @@ class Data {
     // mark player as banned
     this.users[id].banned = true;
     this.bannedUsers[id] = this.users[id];
+    // data to be returned
+    var r = { ... this.bannedUsers[id] };
+    r.weapons = sortWeapons(r);
+    delete r.weapons;
+    delete r.banned;
+    delete r.kills;
+    delete r.deaths;
+    delete r.kdr;
+    delete r.suicide;
+    return r;
   }
 
   /**
