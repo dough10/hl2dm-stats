@@ -1,7 +1,6 @@
 const SteamID = require('steamid');                       // work with steamid's
 const isWeapon = require('./weaponsCheck.js');
 const print = require('./printer.js');
-const Timer = require('./Timer.js');
 
 /**
  * check if ip  address is valid
@@ -433,7 +432,6 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
     if (newUser) {
       constr = 'NEW USER! ';
     }
-    dataModel.playerTimes[id] = new Timer();
     if (onJoin) {
       onJoin({
         name: name,
@@ -449,7 +447,6 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
     if (loggingEnabled) {
       print(`${constr.red}${name.grey} connected with IP address: ${ip.grey}`);
     }
-
     // debugging line
     if (!lineTime) {
       console.log(line);
@@ -596,7 +593,7 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
       rightleg: rightleg
     });
   } else if (isStart) {
-    if (new Date().getTime() - startDebounceTime < 5000) {
+    if (new Date().getTime() - startDebounceTime < 15000) {
       return;
     }
     var log = Number(word[isStart + 2].replace('"logs/L', '').replace('.log")', '')) + 1;
@@ -605,7 +602,7 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
     startDebounceTime = new Date().getTime();
   } else if (isEnd) {
     if (loggingEnabled) {
-      if (new Date().getTime() - endDebounceTime < 5000) {
+      if (new Date().getTime() - endDebounceTime < 15000) {
         return;
       }
       print(`Map reset.`);
@@ -616,12 +613,13 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, l
     var nameString = buildKillerNameString(word, hasDisconnected);
     var name = getName(nameString);
     var id = getID3(nameString);
-    if (loggingEnabled && dataModel.playerTimes[id]) {
-      print(`${name.grey} disconnected after ${dataModel.playerTimes[id].endString().cyan} online`);
-    } else if (loggingEnabled) {
-      print(`${name.grey} disconnected after` + ' an unknown ammount of time'.cyan + ` online`);
-    }
-    // if (dataModel.playerTimes[id] === undefined) console.count(name)
+    dataModel.playerDisconnect(id).then(timeOnline => {
+      if (loggingEnabled && timeOnline) {
+        print(`${name.grey} disconnected after ${timeOnline.cyan} online`);
+      } else if (loggingEnabled) {
+        print(`${name.grey} disconnected after` + ' an unknown ammount of time'.cyan + ` online`);
+      }
+    });
     if (onDisconnect) onDisconnect({
       name: name,
       id: id,

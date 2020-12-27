@@ -1,9 +1,29 @@
 #! /usr/bin/env node
+/**
+ * @requires fs
+ * @requires readline
+ * @requires compression
+ * @requires express
+ * @requires node-schedule
+ * @requires path
+ * @requires url
+ * @requires srcds-log-receiver
+ * @requires expresss-ws
+ * @requires express-validator
+ * @requires colors
+ */
+
+/** reads log one line at a time looking for game events */
 const scanner = require('./modules/lineScanner.js');
-const Datamodel = require('./modules/data-model.js');
+/** data - this data has Class ;) */
+const Datamodel = require('./modules/data-model/data-model.js');
+/** logs a user connection to a mongodb session */
 const logUser = require('./modules/logUser.js');
+/** log line a to console with timestamp */
 const print = require('./modules/printer.js');
-const Timer = require('./modules/Timer.js');
+/** time things */
+const Timer = require('./modules/Timer/Timer.js');
+/** switch statement for month name */
 const monthName = require('./modules/month-name.js');
 const gameServerStatus = require('./modules/gameServerStatus.js');
 const mongoConnect = require('./modules/mongo-connect.js');
@@ -18,38 +38,45 @@ const path = require('path');
 const url = require('url');
 const logReceiver = require("srcds-log-receiver");
 const app = express();   
-const expressWs = require('express-ws')(app); 
+const expressWs = require('express-ws')(app);
+/** input validation */
+const { check, oneOf, validationResult } = require('express-validator');
 const colors = require('colors'); 
+const config = require('./modules/loadConfig.js')();
+const logFolder = path.join(config.gameServerDir, 'logs');
 
 
 var db;
 var socket;
-var config = require('./modules/loadConfig.js')();
-const logFolder = path.join(config.gameServerDir, 'logs');
 
 init(logFolder);
 
 /**
- *  DATA!!!!!!
+ *  application data model
+ * 
+ *  contains variables users, bannedUsers, totalPlayers, weapons, demos & playerTimer
+ * 
  */
 var appData = new Datamodel();
 
 /**
- *  Log reciver
+ *  Recieve logs on UDP port# 9871
  */
 var receiver = new logReceiver.LogReceiver();
 
 /**
- *  throw a error
+ *  throw a error message stopping app when something breaks
+ * @param {Object} e - error object
+ * @throws error message
  */
 function errorHandler(e) {
-  throw new Error(e);
+  console.error(e);
 }
 
 /**
  * callback for when a player joins server
  *
- * @param {Object} user - user object with name, id, time, date, month, year, and if user is new to server
+ * @param {Object} u - user object with name, id, time, date, month, year, and if user is new to server
  */
 function userConnected(u) {
   logUser(db, u).then(user => {
@@ -60,21 +87,23 @@ function userConnected(u) {
 /**
  * callback for when a player leaves server
  *
- * @param {Object} user - user object with name, id, time, date, month, year, and if user is new to server
+ * @param {Object} u - user object with name, id, time, date, month, year, and if user is new to server
  */
-function userDisconnected(user) {
-
+function userDisconnected(u) {
+  //...
 }
 
 /**
  * callback for when a round / map has ended
  */
 function mapEnd() {
-  appData.reset();
-  appData.cacheDemos();
-  parseLogs().then(seconds => {
-    print(`Log parser complete in ` + `${seconds} seconds`.cyan);
-  }).catch(errorHandler);
+  appData.reset().then(m => {
+    print(m);
+    appData.cacheDemos();
+    parseLogs().then(seconds => {
+      print(`Log parser complete in ` + `${seconds} seconds`.cyan);
+    }).catch(errorHandler);
+  });
 }
 
 /**
@@ -141,7 +170,7 @@ function statsLoop() {
 }
 
 /**
- * parse folder of logs 1 line @ a time.
+ * parse folder of logs 1 line @ a time. dumping each line into the scanner
  */
 function parseLogs() {
   return new Promise((resolve, reject) => {
@@ -192,7 +221,7 @@ function fourohfour(req, res) {
 /**
  * cleanup files on first @ 5:00am
  */
-var j = schedule.scheduleJob('0 5 1 * *', appData.runCleanup);
+schedule.scheduleJob('0 5 1 * *', appData.runCleanup);
 
 app.use(compression());
 app.set('trust proxy', true);
@@ -200,6 +229,9 @@ app.disable('x-powered-by');
 
 /**
  * route for WebSocket
+ * @function
+ * @name api/
+ * @returns {Array} websocket pipeline
  */
 app.ws('/', ws => {
   socket = ws;
@@ -208,36 +240,62 @@ app.ws('/', ws => {
 
 /**
  * route for gettings the status of the game server
+ * @function
+ * @name api/status
+ * @returns {Object} game server rcon status response
  */
 app.get('/status', (req, res) => {
+  who(req, `is viewing ` + '/status'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
   res.send(appData.getStatus());
 });
 
 /**
- * authorize stream upload
- *
+ * authorize stream for hoedowntv
+ * @function
+ * @name api/auth
  * @param {String} req.query.name - the name of the stream
  * @param {String} req.query.k - the streams auth key
  * 
  * @returns {String} ok: authorized, fail: failed to authorize
  */
-app.get('/auth', (req, res) => {
-  var t = new Timer();
-  who(req, `is requesting stream authorization`);
-  var name = req.query.name;
-  appData.authorize(db, name, req.query.k).then(authorized => {
-    if (!authorized) {
-      who(req, `failed to authorize for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
-      return res.status(404).send('fail');
-    }
-    who(req, `was successfully authorized for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
-    res.send('ok');
-  }).catch(errorHandler);
+app.get('/auth', oneOf([
+  check('name').exists().escape().stripLow(),
+  check('k').exists().escape().stripLow()
+]), (req, res) => {
+  try {
+    validationResult(req).throw();
+    var t = new Timer();
+    who(req, `is requesting stream authorization`);
+    var name = req.query.name;
+    appData.authorize(db, name, req.query.k).then(authorized => {
+      if (!authorized) {
+        who(req, `failed to authorize for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+        return res.status(401).json({
+          status: 401,
+          authorized: authorized
+        });
+      }
+      who(req, `was successfully authorized for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+      res.status(200).json({
+        status: 200,
+        authorized: authorized
+      });
+    }).catch(e => {
+      who(req, `failed to authorize for streaming: ${e} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+      return res.status(401).json({
+        status: 401,
+        authorized: false
+      });
+    });
+  } catch (err) {
+    fourohfour(req, res);
+  }
 });
 
 /**
  * route for gettings player stats
- * 
+ * @function
+ * @name api/stats
  * @returns {Array} stats top players list, server wide weapons list, # of total players, list of banned players, time of generation
  */
 app.get('/stats', (req, res) => {
@@ -307,7 +365,9 @@ app.get('/playerList', (req, res) => {
  * 
  * @returns {Array} list of players from the given date
  */
-app.get('/newPlayers/:date', (req, res) => {
+app.get('/newPlayers/:date', oneOf([
+  check('date').escape()
+]), (req, res) => {
   var t = new Timer();
   var date = req.params.date;
   appData.getNewUsers(db, date).then(users => {
@@ -423,7 +483,7 @@ app.get('/cvarlist', (req, res) => {
 app.get('*', fourohfour);
 
 /**
- * Go Live!!
+ * express server instance listening on config.port
  */
 var server = app.listen(config.port, _ => mongoConnect().then(database => {
   db = database;

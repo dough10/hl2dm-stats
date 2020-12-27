@@ -3,5 +3,6 @@
 /node_modules/
 /IDcache/
 /.vscode/
+/old-stats/
 config-win.json
 hoedown.log

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node api.js",
     "pull": "git pull",
-    "add-streamkey": "node modules/streamKey.js"
+    "add-streamkey": "node modules/streamKey.js",
+    "docs": "node modules/document.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "colors": "^1.4.0",
     "compression": "^1.7.4",
     "express": "^4.17.1",
+    "express-validator": "^6.9.0",
     "express-ws": "^4.0.0",
     "figlet": "^1.5.0",
     "gamedig": "^2.0.23",
@@ -36,6 +38,8 @@
     "steamid": "^1.1.3"
   },
   "devDependencies": {
+    "jsdoc-to-markdown": "^6.0.1",
+    "mustache": "^4.1.0",
     "nodemon": "^2.0.6"
   }
 }

@@ -1,11 +1,18 @@
 /**
- * data module.
- * @module modules/data-model
+ * Class to hold and manipulate the app data
+ * 
+ * @module data-model
+ * @requires geoip-lite
  */
 
+ /** geoip import */
 const geoip = require('geoip-lite');
+const Timer = require('../Timer/Timer.js');
 
-
+/** 
+ * get the length / size of a object
+ * @returns {Number} count of items in the object
+ */
 Object.size = obj => {
   var size = 0, key;
   for (key in obj) {
@@ -21,6 +28,8 @@ Object.size = obj => {
  * @param {String} id - player steamID
  * @param {Number} time - new Date().getTime() output
  * @param {String} ip - users ip address
+ * 
+ * @returns {Object} object with the passed in data and some 0 values
  */
 function playerObj(name, id, time, ip) {
   return {
@@ -41,7 +50,9 @@ function playerObj(name, id, time, ip) {
 }
 
 /**
- * returns defualt weapon object valuse
+ * returns defualt weapon object
+ * 
+ * @returns {Object} weapon object
  */
 function weaponObj() {
   return {
@@ -67,6 +78,8 @@ function weaponObj() {
  *
  * @param {Number} small - small #
  * @param {Number} big - big #
+ * 
+ * @return {Number} precentage
  */
 function calculatePrecent(small, big) {
   return Math.round((small / big) * 100);
@@ -76,7 +89,9 @@ function calculatePrecent(small, big) {
  * calculates weapon stats values ie shots per kill, average damage per hit, headshot %, and more
  *
  * @param {String} weapon.name - name of the weapon
- * @param {String} weapon - stats associated with the named weapon
+ * @param {Object} weapon - stats associated with the named weapon
+ * 
+ * @return {Array} weapon stats
  */
 function calculateWeaponStats(weaponsName, weapon) {
   var shots = weapon.shots || 0;
@@ -108,12 +123,14 @@ function calculateWeaponStats(weaponsName, weapon) {
 /**
  * remove weapon specific data from user object and place it in it's own array
  *
- * @param {Object} user - a user object
+ * @param {Object} user - user object
+ * 
+ * @returns {Array} array of weapons sorted by kill count
  */
 function sortWeapons(user) {
   var sortArr = [];
   for (var weapon in user) {
-    if (require('./weaponsCheck.js')(weapon)) {
+    if (require('../weaponsCheck.js')(weapon)) {
       if (user[weapon].kills !== 0) {
         sortArr.push(calculateWeaponStats(weapon, user[weapon]));
       }
@@ -130,7 +147,7 @@ function sortWeapons(user) {
 }
 
 /**
- * merger all physics, physbox & world kills to physics kills 
+ * merge all physics kills, physbox & world kills to physics kills 
  *
  * @param {Object} user - a user object
  */
@@ -161,11 +178,11 @@ function mergePhysicsKills(user) {
 
 
 /**
- *  DATA!!!!!!
+ *  Class to hold and manipulate the app data
  */
-module.exports = class Data {
+class Data {
+
   /**
-   * Data
    * @constructor
    */
   constructor() {
@@ -173,16 +190,19 @@ module.exports = class Data {
     this.bannedUsers = {};          // object of players who have been banned
     this.totalPlayers = 0;          // total # of players to have joined the server / been added to this.users object
     this.weapons = {};              // server wide weapon data not specific to any player
-    this.demos = [];                // {Array} array of demo Files
+    this.demos = [];                // array of demo Files
     this.gameStatus = {};
     this.playerTimes = {};
     // imported function
-    this.getNewUsers = require('./getNewUsers.js');
-    this.getReturnUsers = require('./getReturnUsers.js');
-    this.authorize = require('./auth.js');
+    this.getNewUsers = require('../getNewUsers.js');
+    this.getReturnUsers = require('../getReturnUsers.js');
+    this.authorize = require('../auth/auth.js');
   }
+
   /**
    * gets the current status of gameserver
+   * 
+   * @returns {Object} game server status
    */
   getStatus() {
     return this.gameStatus;
@@ -191,39 +211,48 @@ module.exports = class Data {
   /**
    * update game server status
    * 
-   * @param {Object / String} status - the game server status from Gamedig 
+   * @param {Object} status - set the  game server status from Gamedig 
    */
   updateStatus(status) {
     this.gameStatus = status;
   }
 
   /**
-   * reset data objects
+   * reset data model
+   * 
+   * @returns {Promise<String>} alert message notifying the change to data
    */
   reset() {
-    this.users = {};
-    this.bannedUsers = {};
-    this.totalPlayers = 0;
-    this.weapons = {};
-    this.demos = [];
-    console.log(`${new Date().toLocaleString().yellow} - Data model reset`);
+    return new Promise((resolve, reject) => {
+      this.users = {};
+      this.bannedUsers = {};
+      this.totalPlayers = 0;
+      this.weapons = {};
+      this.demos = [];
+      resolve(`Data model reset`);
+    });
   }
 
   /**
-   * player has connected to thje server
+   * a player has connected to the game server
    *
-   * @param {Number} time - time the suicide happened
-   * @param {String} id - steamid
-   * @param {String} name - player name
-   * @param {String} ip - ip address of the connected user
+   * @param {Number} time - time the connection happened
+   * @param {String} id - steamid3 of the connecting player
+   * @param {String} name - player name of the connection player
+   * @param {String} ip - ip address of the connection player
    * 
    * @returns {Boolean} true: new player, false: been bere before
    */
   playerConnect(time, id, name, ip) {
+    this.playerTimes[id] = new Timer(name);
     var newUser = false;
     if (!this.users[id]) {
       this.users[id] = playerObj(name, id, time, ip);
       newUser = true;
+    }
+    if (!this.users[id].ip) {
+      this.users[id].ip = ip;
+      this.users[id].geo = geoip.lookup(ip);
     }
     if (time >= this.users[id].updated) {
       // update address
@@ -235,10 +264,28 @@ module.exports = class Data {
     return newUser;
   }
 
-  /**
-   * creates a array of players with kills greater than or equal to 100
+    /**
+   * a player has connected to the game server
+   *
+   * @param {String} id - steamid3 of the connecting player
    * 
-   * @returns {Array} list of players with kills greater than or equal to 100
+   * @returns {Promise<String>} timer object string
+   */
+  playerDisconnect(id) {
+    return new Promise((resolve, reject) => {
+      var time;
+      if (this.playerTimes[id]) {
+        time = this.playerTimes[id].endString();
+        delete this.playerTimes[id];
+      }
+       resolve(time);
+    });
+  }
+
+  /**
+   * creates a array of players with greater than or equal to 100 kills
+   * 
+   * @returns {Array} list of players and their statistics
    */
   generateTop() {
     var arr = [];
@@ -264,7 +311,7 @@ module.exports = class Data {
   /**
    * creates a array of weapon data
    * 
-   * @returns {Array} returns list of weapons sorted by kill count
+   * @returns {Array} list of weapons sorted by kill count
    */
   generateWeapons() {
     let obj = { ... this.weapons };
@@ -274,6 +321,8 @@ module.exports = class Data {
 
   /**
    * creates a array of players who have been banned
+   * 
+   * @returns {Array} list of players
    */
   generateBannedPlayerList() {
     var arr = [];
@@ -287,7 +336,9 @@ module.exports = class Data {
   }
 
   /**
-   * creates a obj of a individual players stats
+   * creates a object of a individual players stats
+   * 
+   * @returns {Object} players statistis 
    */
   generatePlayerStats(playerId) {
     for (var u in this.users) {
@@ -298,13 +349,15 @@ module.exports = class Data {
         return obj;
       }
     }
-    return false;
+    return;
   }
 
   /**
-   * returns the player name of the given ip address
+   * returns the player name associated with the passed in ip address
    * 
-   * @param {String} ip - ip address from Express
+   * @param {String} ip - ip address from Express req.ip
+   * 
+   * @returns {String} name of a player, or the passed in ip address 
    */
   who(ip) {
     var i = ip;
@@ -318,7 +371,7 @@ module.exports = class Data {
   }
 
   /**
-   * calculates stats when a kill takes place
+   * calculates player stats when a kill takes place
    *
    * @param {Number} time - time the kill happened
    * @param {Object} killer - player details
@@ -383,11 +436,11 @@ module.exports = class Data {
   }
 
   /**
-   * calculates stats when a suicide takes place
+   * calculates players stats when a suicide takes place
    *
    * @param {Number} time - time the suicide happened
-   * @param {String} id - steamid
-   * @param {String} name - player name
+   * @param {String} id - steamid3 of the player
+   * @param {String} name - players name
    * @param {String} weapon - name of the weapon used
    */
   addSuicide(time, id, name, weapon) {
@@ -416,7 +469,7 @@ module.exports = class Data {
    * calculates stats when a headshot takes place
    *
    * @param {Number} time - time the headshot happened
-   * @param {String} id - steamid
+   * @param {String} id - steamid3 of the player
    * @param {String} name - player name
    * @param {String} weapon - name of the weapon used
    */
@@ -445,7 +498,7 @@ module.exports = class Data {
   /**
    * add player to the banned list
    *
-   * @param {String} id - steamid
+   * @param {String} id - steamid3 of the player
    */
   addBanned(id) {
     if (!this.users[id]) {
@@ -463,7 +516,7 @@ module.exports = class Data {
    * add change to user object
    *
    * @param {Number} time - time the headshot happened
-   * @param {String} id - steamid
+   * @param {String} id - steamid3 of the player
    * @param {String} name - player name
    * @param {String} said - chat line with timestamp
    */
@@ -484,7 +537,7 @@ module.exports = class Data {
    * add weapon stats to player object
    *
    * @param {Number} time - time the headshot happened
-   * @param {String} id - steamid
+   * @param {String} id - steamid3 of the player
    * @param {String} name - player name
    * @param {Object} weapon - object of weapn data
    */
@@ -531,7 +584,7 @@ module.exports = class Data {
    * add weapon stats to player object
    *
    * @param {Number} time - time the headshot happened
-   * @param {String} id - steamid
+   * @param {String} id - steamid3 of the player
    * @param {String} name - player name
    * @param {object} weapon - object of weapn data
    */
@@ -563,23 +616,28 @@ module.exports = class Data {
 
   /**
    * caches list of avaliable demo files
+   * 
+   * @return {Promise<Array>} list of demos file avaliable to download
    */
   cacheDemos() {
-    require('./cacheDemos.js')().then(demos => {
+    require('../cacheDemos/cacheDemos.js')().then(demos => {
       this.demos = demos;
     });
   }
 
   /**
-   * end of month file cleanup process
+   * runs end of month file cleanup process
    */
   runCleanup() {
-    require('./fileCleanup.js')(
+    require('../fileCleanup/fileCleanup')(
       this.generateTop(), 
       this.generateWeapons(), 
       this.totalPlayers, 
       this.generateBannedPlayerList(), 
       new Date().getTime()
-    )
+    );
   }
 } 
+
+
+module.exports = Data;
