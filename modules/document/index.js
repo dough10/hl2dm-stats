@@ -4,7 +4,8 @@ const files = [
   'modules/Timer/Timer',
   'modules/data-model/data-model',
   'modules/cacheDemos/cacheDemos',
-  'modules/fileCleanup/fileCleanup'
+  'modules/fileCleanup/fileCleanup',
+  'modules/lineScanner/lineScanner'
 ];
 
 const jsdoc2md = require('jsdoc-to-markdown');
@@ -44,7 +45,16 @@ function dependencies() {
   var dep = pack.dependencies;
   var out = '## Dependencies\n\n';
   for (var item in dep) {
-    out = out + `${item}: ${dep[item]}\n`;
+    out = out + `- ${item}: ${dep[item]}\n`;
+  }
+  return out;
+}
+
+function devDependencies() {
+  var dep = pack.devDependencies;
+  var out = '## Dev Dependencies\n\n';
+  for (var item in dep) {
+    out = out + `- ${item}: ${dep[item]}\n`;
   }
   return out;
 }
@@ -61,4 +71,8 @@ for (var i = 0; i < files.length; i++) {
   }
 }
 
-writeFile('README.md', head + out + '\n' + foot + '\n' + dependencies()).then(console.log);
+function hulkSmash() {
+  return head + out + '\n' + foot + '\n' + dependencies() + '\n' + devDependencies();
+}
+
+writeFile('README.md', hulkSmash()).then(console.log);

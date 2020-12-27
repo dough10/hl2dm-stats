@@ -1,10 +1,15 @@
-const SteamID = require('steamid');                       // work with steamid's
-const isWeapon = require('./weaponsCheck.js');
-const print = require('./printer.js');
+/**
+ * @module modules/lineScanner
+ * @requires steamid
+ * @requires weaponsCheck.js
+ * @requires printer.js
+ */
+const SteamID = require('steamid');
+const isWeapon = require('../weaponsCheck.js');
+const print = require('../printer.js');
 
 /**
  * check if ip  address is valid
- *
  * @param {String} ip - ip address
  * 
  * @returns {Boolean} true: validated, false: failed
@@ -14,8 +19,7 @@ function validateIPaddress(ip) {
 }
 
 /**
- * scans the line for landmarks in order to get usable strings of data
- *
+ * scans the line for file start
  * @param {Array} line - one line of the log file being parsed
  * 
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
@@ -30,8 +34,7 @@ function isFileStart(word) {
 }
 
 /**
- * scans the line for landmarks in order to get usable strings of data
- *
+ * scans the line for file end
  * @param {Array} line - one line of the log file being parsed
  * 
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
@@ -47,8 +50,9 @@ function isFileEnd(word) {
 
 /**
  * returns the player name string
- *
  * @param {String} word - player name string
+ * 
+ * @returns {String} players name
  */
 function getName(word) {
   if (!word) {
@@ -65,8 +69,9 @@ function getName(word) {
 
 /**
  * returns the player steamID in format 2
- *
  * @param {String} word - player name string
+ * 
+ * @returns {String} players steamid in steamid2 format
  */
 function getID2(word) {
   if (!word) {
@@ -88,22 +93,21 @@ function getID2(word) {
 
 /**
  * returns the player steamID in format 3
- *
  * @param {String} word - player name string
  * 
- * @returns {String} returns players SteamID3 number
+ * @returns {String} returns players SteamID in steamid3 format without [U:1:XXXXXXXXX] jsut the #s
  */
 function getID3(word) {
   if (!word) {
     return false;
   }
-  const u = word.search(/U:[0-1]:/);
+  let u = word.search(/U:[0-1]:/);
   if (u < 0) {
     return false;
   }
-  const start = u + 4;
+  let start = u + 4;
   word = word.substring(start)
-  const end = word.search(']');
+  let end = word.search(']');
   let str = '';
   for (var i = 0; i < end; i++) {
     str = str + word[i];
@@ -113,7 +117,6 @@ function getID3(word) {
 
 /**
  * if a string of text a time string
- *
  * @param {String} str - player name string
  * 
  * @returns {Boolean} true: string is a time string, false: is not time string
@@ -124,7 +127,6 @@ function isTime(str) {
 
 /**
  * builds a name string if name was broken by .split()
- *
  * @param {Array} line - one line from a log file broken at spaces
  * @param {Number} end - index point of the end of the name string
  * 
@@ -149,11 +151,10 @@ function buildKillerNameString(line, end)  {
 
 /**
  * builds a name string if name was broken by .split()
- *
  * @param {Array} line - one line from a log file broken @ spaces
  * @param {Number} start - index point of the start of the name string
  * 
- * @returns {String} returns killed player name
+ * @returns {String} returns killed player name string 
  */
 function buildKilledNameString(line, start) {
   var end = 7;
@@ -170,8 +171,7 @@ function buildKilledNameString(line, start) {
 }
 
 /**
- * scans the line for landmarks in order to get usable strings of data
- *
+ * scans the line for player kill
  * @param {Array} line - one line of the log file being parsed
  * 
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
@@ -186,8 +186,7 @@ function lineIsKill(line) {
 }
 
 /**
- * scans the line for landmarks in order to get usable strings of data
- *
+ * scans the line for player connection
  * @param {Array} line - one line of the log file being parsed
  * 
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
@@ -202,8 +201,7 @@ function lineIsConnect(line) {
 }
 
 /**
- * scans the line for landmarks in order to get usable strings of data
- *
+ * scans the line for suicide
  * @param {Array} line - one line of the log file being parsed
  * 
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
@@ -218,8 +216,7 @@ function lineIsSuicide(line) {
 }
 
 /**
- * scans the line for landmarks in order to get usable strings of data
- *
+ * scans the line for chat
  * @param {Array} line - one line of the log file being parsed
  * 
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
@@ -234,8 +231,7 @@ function lineIsChat(line) {
 }
 
 /**
- * scans the line for landmarks in order to get usable strings of data
- *
+ * scans the line for headshot
  * @param {Array} line - one line of the log file being parsed
  * 
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
@@ -250,8 +246,7 @@ function lineIsHeadshot(line) {
 }
 
 /**
- * scans the line for landmarks in order to get usable strings of data
- *
+ * scans the line for weaponstats
  * @param {Array} line - one line of the log file being parsed
  * 
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
@@ -266,8 +261,7 @@ function lineIsStats(line) {
 }
 
 /**
- * scans the line for landmarks in order to get usable strings of data
- *
+ * scans the line for weaponstats2
  * @param {Array} line - one line of the log file being parsed
  * 
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
@@ -283,8 +277,7 @@ function lineIsStats2(line) {
 
 
 /**
- * scans the line for landmarks in order to get usable strings of data
- *
+ * scans the line for console message
  * @param {Array} line - one line of the log file being parsed
  * 
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
@@ -300,8 +293,7 @@ function lineIsConsole(line) {
 }
 
 /**
- * scans the line for landmarks in order to get usable strings of data
- *
+ * scans the line for ban
  * @param {Array} line - one line of the log file being parsed
  * 
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
@@ -316,8 +308,7 @@ function playerIsBanned(line) {
 }
 
 /**
- * scans the line for landmarks in order to get usable strings of data
- *
+ * scans the line for player disconnect
  * @param {Array} line - one line of the log file being parsed
  * 
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
@@ -332,8 +323,7 @@ function playerHasDisconnected(line) {
 }
 
 /**
- * scans the line for landmarks in order to get usable strings of data
- *
+ * scans the line for time
  * @param {Array} line - one line of the log file being parsed
  * 
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
@@ -351,15 +341,15 @@ var startDebounceTime = 0;
 var endDebounceTime = 0;
 
 /**
- * scans the line for landmarks in order to get usable strings of data
+ * scans the line for usable data for the data-model
  *
- * @param {Array} line - one line of the log file being parsed
- * @param {Class} dataModel - data!!!!!!!
- * @param {Function} onJoin - callback when player joins server (to be used to Toast?)
- * @param {Function} onDisconnect - callback when player leaves server (to be used to Toast?)
- * @param {Function} onMapStart - callback when the map begins
- * @param {Function} onMapEnd - callback when the map ends
- * @param {Boolean} loggingEnabled - log to console or not. (used to avoid spam when scanning logs while still getting data from realtime to log to console)
+ * @param {Array} line - one line of the log file being parsed split at spaces
+ * @param {Class} dataModel - @see modules/data-model/data-model-doc.md
+ * @param {Function} onJoin - callback when player joins server @see api-doc.md#module_api..userConnected
+ * @param {Function} onDisconnect - callback when player leaves server @see api-doc.md#module_api..userDisconnected
+ * @param {Function} onMapStart - callback when the map begins @see api-doc.md#apimapstart
+ * @param {Function} onMapEnd - callback when the map ends @see api-doc.md#apimapend
+ * @param {Boolean} loggingEnabled - log to console. (used to avoid spam when scanning logs when getting data from realtime from rcon logs)
  */
 function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, loggingEnabled) {
   var word  = line.split(' ');  // array

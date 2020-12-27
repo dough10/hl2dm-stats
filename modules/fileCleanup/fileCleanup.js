@@ -1,28 +1,31 @@
-const path = require('path');                             // merger file / url names
-const fs = require('fs');                                 // work with the file system
-var config = require('./loadConfig.js')();                   // config file location
-const child_process = require("child_process");           // system peocesses
-const logFolder = path.join(config.gameServerDir, 'logs');// game server log location
-const colors = require('colors');                         // colorize text
-
 /**
- * A class for timing duration of things
+ *  make a zip and clean up previous months files 
+ * @module modules/fileCleanup
+ * @requires path
+ * @requires fs
+ * @requires modules/loadConfig.js
+ * @requires child_process
+ * @requires colors
+ * @requires modules/Timer
+ * @requires modules/printer.js
  */
-const Timer = require(path.join(__dirname, 'Timer.js'));  // time things
 
-/**
- * log message to console with time stamp
- *
- * @param {String} message - message to be printed
- */
+const path = require('path');
+const fs = require('fs');
+var config = require('./loadConfig.js')();
+const child_process = require("child_process");
+const logFolder = path.join(config.gameServerDir, 'logs');
+const colors = require('colors');
+const Timer = require('./Timer.js');  // time things
 const print = require(path.join(__dirname, 'printer.js'));
 
 var numFiles = 0;                                         // running total of files deleted
 
 /**
  * saves top data before log clear
- *
  * @param {Number} lastMonth - new Date() output for the time cleanup() was run
+ * 
+ * @returns {Promise<String>} lastmonth time string
  */
 function saveTop(lastMonth, top, weapons, totalPlayers, bannedPlayers, lastUpdate) {
   return new Promise((resolve, reject) => {
@@ -54,8 +57,9 @@ function saveTop(lastMonth, top, weapons, totalPlayers, bannedPlayers, lastUpdat
 
 /**
  * zip log files before cleanUp deletes them
- *
  * @param {Number} lastMonth - new Date() output for the time cleanup() was run
+ * 
+ * @returns {Promise<String>} lastmonth time string
  */
 function zipLogs(lastMonth) {
   return new Promise((resolve, reject) => {
@@ -80,8 +84,9 @@ function zipLogs(lastMonth) {
 
 /**
  * zip demo files before cleanUp deletes them
- * 
  * @param {Number} lastMonth - new Date() output for the time cleanup() was run
+ * 
+ * @returns {Promise<String>} lastmonth time string
  */
 function zipDemos(lastMonth) {
   return new Promise((resolve, reject) => {
@@ -106,6 +111,8 @@ function zipDemos(lastMonth) {
 
 /**
  * remove all log files from logs folder
+ * 
+ * @returns {Promise}
  */
 function deleteLogs() {
   return new Promise((resolve, reject) => {
@@ -127,6 +134,8 @@ function deleteLogs() {
 
 /**
  * remove all demo files from game folder
+ * 
+ * @returns {Promise}
  */
 function deleteDemos() {
   return new Promise((resolve, reject) => {
@@ -150,6 +159,13 @@ function deleteDemos() {
 
 /**
  * end of month file cleanup process
+ * @param {Array} top - over 100 kills by kdr
+ * @param {Array} weapons - weapon stat data
+ * @param {Number} totalPlayers - count of players
+ * @param {Array} bannedPlayers - list of banned players
+ * @param {Number} lastUpdate - time string
+ * 
+ * @returns {Promise}
  */
 function cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate) {
   return new Promise((resolve, reject) => {

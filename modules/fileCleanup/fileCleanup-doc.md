@@ -1,102 +1,78 @@
-## Constants
+<a name="module_modules/fileCleanup"></a>
 
-<dl>
-<dt><a href="#Timer">Timer</a></dt>
-<dd><p>A class for timing duration of things</p>
-</dd>
-<dt><a href="#print">print</a></dt>
-<dd><p>log message to console with time stamp</p>
-</dd>
-</dl>
+## modules/fileCleanup
+make a zip and clean up previous months files
 
-## Functions
+**Requires**: <code>module:path</code>, <code>module:fs</code>, <code>module:modules/loadConfig.js</code>, <code>module:child\_process</code>, <code>module:colors</code>, <code>module:modules/Timer</code>, <code>module:modules/printer.js</code>  
 
-<dl>
-<dt><a href="#saveTop">saveTop(lastMonth)</a></dt>
-<dd><p>saves top data before log clear</p>
-</dd>
-<dt><a href="#zipLogs">zipLogs(lastMonth)</a></dt>
-<dd><p>zip log files before cleanUp deletes them</p>
-</dd>
-<dt><a href="#zipDemos">zipDemos(lastMonth)</a></dt>
-<dd><p>zip demo files before cleanUp deletes them</p>
-</dd>
-<dt><a href="#deleteLogs">deleteLogs()</a></dt>
-<dd><p>remove all log files from logs folder</p>
-</dd>
-<dt><a href="#deleteDemos">deleteDemos()</a></dt>
-<dd><p>remove all demo files from game folder</p>
-</dd>
-<dt><a href="#cleanUp">cleanUp()</a></dt>
-<dd><p>end of month file cleanup process</p>
-</dd>
-</dl>
+* [modules/fileCleanup](#module_modules/fileCleanup)
+    * [~saveTop(lastMonth)](#module_modules/fileCleanup..saveTop) ⇒ <code>Promise.&lt;String&gt;</code>
+    * [~zipLogs(lastMonth)](#module_modules/fileCleanup..zipLogs) ⇒ <code>Promise.&lt;String&gt;</code>
+    * [~zipDemos(lastMonth)](#module_modules/fileCleanup..zipDemos) ⇒ <code>Promise.&lt;String&gt;</code>
+    * [~deleteLogs()](#module_modules/fileCleanup..deleteLogs) ⇒ <code>Promise</code>
+    * [~deleteDemos()](#module_modules/fileCleanup..deleteDemos) ⇒ <code>Promise</code>
+    * [~cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate)](#module_modules/fileCleanup..cleanUp) ⇒ <code>Promise</code>
 
-<a name="Timer"></a>
+<a name="module_modules/fileCleanup..saveTop"></a>
 
-## Timer
-A class for timing duration of things
-
-**Kind**: global constant  
-<a name="print"></a>
-
-## print
-log message to console with time stamp
-
-**Kind**: global constant  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| message | <code>String</code> | message to be printed |
-
-<a name="saveTop"></a>
-
-## saveTop(lastMonth)
+### modules/fileCleanup~saveTop(lastMonth) ⇒ <code>Promise.&lt;String&gt;</code>
 saves top data before log clear
 
-**Kind**: global function  
+**Kind**: inner method of [<code>modules/fileCleanup</code>](#module_modules/fileCleanup)  
+**Returns**: <code>Promise.&lt;String&gt;</code> - lastmonth time string  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | lastMonth | <code>Number</code> | new Date() output for the time cleanup() was run |
 
-<a name="zipLogs"></a>
+<a name="module_modules/fileCleanup..zipLogs"></a>
 
-## zipLogs(lastMonth)
+### modules/fileCleanup~zipLogs(lastMonth) ⇒ <code>Promise.&lt;String&gt;</code>
 zip log files before cleanUp deletes them
 
-**Kind**: global function  
+**Kind**: inner method of [<code>modules/fileCleanup</code>](#module_modules/fileCleanup)  
+**Returns**: <code>Promise.&lt;String&gt;</code> - lastmonth time string  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | lastMonth | <code>Number</code> | new Date() output for the time cleanup() was run |
 
-<a name="zipDemos"></a>
+<a name="module_modules/fileCleanup..zipDemos"></a>
 
-## zipDemos(lastMonth)
+### modules/fileCleanup~zipDemos(lastMonth) ⇒ <code>Promise.&lt;String&gt;</code>
 zip demo files before cleanUp deletes them
 
-**Kind**: global function  
+**Kind**: inner method of [<code>modules/fileCleanup</code>](#module_modules/fileCleanup)  
+**Returns**: <code>Promise.&lt;String&gt;</code> - lastmonth time string  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | lastMonth | <code>Number</code> | new Date() output for the time cleanup() was run |
 
-<a name="deleteLogs"></a>
+<a name="module_modules/fileCleanup..deleteLogs"></a>
 
-## deleteLogs()
+### modules/fileCleanup~deleteLogs() ⇒ <code>Promise</code>
 remove all log files from logs folder
 
-**Kind**: global function  
-<a name="deleteDemos"></a>
+**Kind**: inner method of [<code>modules/fileCleanup</code>](#module_modules/fileCleanup)  
+<a name="module_modules/fileCleanup..deleteDemos"></a>
 
-## deleteDemos()
+### modules/fileCleanup~deleteDemos() ⇒ <code>Promise</code>
 remove all demo files from game folder
 
-**Kind**: global function  
-<a name="cleanUp"></a>
+**Kind**: inner method of [<code>modules/fileCleanup</code>](#module_modules/fileCleanup)  
+<a name="module_modules/fileCleanup..cleanUp"></a>
 
-## cleanUp()
+### modules/fileCleanup~cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate) ⇒ <code>Promise</code>
 end of month file cleanup process
 
-**Kind**: global function  
+**Kind**: inner method of [<code>modules/fileCleanup</code>](#module_modules/fileCleanup)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| top | <code>Array</code> | over 100 kills by kdr |
+| weapons | <code>Array</code> | weapon stat data |
+| totalPlayers | <code>Number</code> | count of players |
+| bannedPlayers | <code>Array</code> | list of banned players |
+| lastUpdate | <code>Number</code> | time string |
+

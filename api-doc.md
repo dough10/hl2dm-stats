@@ -76,15 +76,13 @@ express server instance listening on the port from config.json
 <a name="module_api..scanner"></a>
 
 ### api~scanner
-reads log one line at a time looking for game events
-
 **Kind**: inner constant of [<code>api</code>](#module_api)  
+**See**: modules/lineScanner/lineScanner-doc.md  
 <a name="module_api..Datamodel"></a>
 
 ### api~Datamodel
-data - this data has Class ;)
-
 **Kind**: inner constant of [<code>api</code>](#module_api)  
+**See**: modules/data-model/data-model-doc.md  
 <a name="module_api..logUser"></a>
 
 ### api~logUser

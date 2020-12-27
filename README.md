@@ -14,6 +14,7 @@ Requires Sourcemod and Superlogs Sourcemod plugin for weapon accuacy stat tracki
   - [modules&#x2F;data-model&#x2F;data-model-doc.md](modules&#x2F;data-model&#x2F;data-model-doc.md)
   - [modules&#x2F;cacheDemos&#x2F;cacheDemos-doc.md](modules&#x2F;cacheDemos&#x2F;cacheDemos-doc.md)
   - [modules&#x2F;fileCleanup&#x2F;fileCleanup-doc.md](modules&#x2F;fileCleanup&#x2F;fileCleanup-doc.md)
+  - [modules&#x2F;lineScanner&#x2F;lineScanner-doc.md](modules&#x2F;lineScanner&#x2F;lineScanner-doc.md)
 
 ## Install
 
@@ -31,19 +32,24 @@ avaliable from <https://github.com/dough10/hl2dm-stats-ui>
 
 ## Dependencies
 
-bcrypt: ^5.0.0
-clear: ^0.1.0
-colors: ^1.4.0
-compression: ^1.7.4
-express: ^4.17.1
-express-validator: ^6.9.0
-express-ws: ^4.0.0
-figlet: ^1.5.0
-gamedig: ^2.0.23
-geoip-lite: ^1.4.2
-mongodb: ^3.6.3
-node-schedule: ^1.3.2
-readline: ^1.3.0
-srcds-log-receiver: ^1.0.2
-srcds-rcon: ^2.2.1
-steamid: ^1.1.3
+- bcrypt: ^5.0.0
+- clear: ^0.1.0
+- colors: ^1.4.0
+- compression: ^1.7.4
+- express: ^4.17.1
+- express-validator: ^6.9.0
+- express-ws: ^4.0.0
+- figlet: ^1.5.0
+- gamedig: ^2.0.23
+- geoip-lite: ^1.4.2
+- mongodb: ^3.6.3
+- node-schedule: ^1.3.2
+- readline: ^1.3.0
+- srcds-log-receiver: ^1.0.2
+- srcds-rcon: ^2.2.1
+- steamid: ^1.1.3
+
+## Dev Dependencies
+
+- jsdoc-to-markdown: ^6.0.1
+- mustache: ^4.1.0

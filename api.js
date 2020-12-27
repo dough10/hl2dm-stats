@@ -14,9 +14,9 @@
  * @requires colors
  */
 
-/** reads log one line at a time looking for game events */
-const scanner = require('./modules/lineScanner.js');
-/** data - this data has Class ;) */
+/** @see modules/lineScanner/lineScanner-doc.md */
+const scanner = require('./modules/lineScanner/lineScanner.js');
+/** @see modules/data-model/data-model-doc.md */
 const Datamodel = require('./modules/data-model/data-model.js');
 /** logs a user connection to a mongodb session */
 const logUser = require('./modules/logUser.js');
