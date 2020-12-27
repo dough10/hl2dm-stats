@@ -1,5 +1,5 @@
 .vscode
-tests
+test
 node_modules
 npm-debug.log
 *.md
