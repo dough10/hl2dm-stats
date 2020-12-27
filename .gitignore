@@ -6,3 +6,4 @@
 /old-stats/
 config-win.json
 /test/
+.jshintrc

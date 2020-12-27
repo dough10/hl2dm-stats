@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 const files = [
   'api',
   'modules/auth/auth',

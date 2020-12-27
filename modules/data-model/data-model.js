@@ -1,3 +1,5 @@
+/*jshint esversion: 9 */
+
 /**
  * Class to hold and manipulate the app data
  * 
@@ -173,7 +175,7 @@ function mergePhysicsKills(user) {
   delete user.physbox;
   delete user.world;
   if (user.physics.kills === 0) {
-    delete user.physics
+    delete user.physics;
   }
 }
 

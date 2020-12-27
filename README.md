@@ -52,4 +52,5 @@ avaliable from <https://github.com/dough10/hl2dm-stats-ui>
 ## Dev Dependencies
 
 - jsdoc-to-markdown: ^6.0.1
+- jshint: ^2.12.0
 - mustache: ^4.1.0

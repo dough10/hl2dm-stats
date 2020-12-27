@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /**
  * @module modules/cacheDemos
  * @requires path
@@ -24,8 +23,8 @@ const Timer = require('../Timer/Timer.js');
  * @returns {String} date file was modified
  */
 function createdDate(file) {
-  const stats = fs.statSync(file)
-  return stats.mtime
+  const stats = fs.statSync(file);
+  return stats.mtime;
 }
 
 /**
@@ -36,9 +35,9 @@ function createdDate(file) {
  * @returns {Number} file size in bytes
  */
 function getFilesizeInBytes(filename) {
-  var stats = fs.statSync(filename)
-  var fileSizeInBytes = stats["size"]
-  return fileSizeInBytes
+  var stats = fs.statSync(filename);
+  var fileSizeInBytes = stats.size;
+  return fileSizeInBytes;
 }
 
 /**
@@ -98,7 +97,7 @@ function cacheDemos() {
     getDemos().then(demos => {
       for (var i = 0; i < demos.length; i++) {
         if (i !== demos.length - 1) {
-          var filepath = path.join(config.gameServerDir, demos[i])
+          var filepath = path.join(config.gameServerDir, demos[i]);
           arr.push([
             demos[i],
             bytesToSize(getFilesizeInBytes(filepath)),
@@ -110,7 +109,7 @@ function cacheDemos() {
       resolve(arr);
       print(`demo file list cached ` + `${t.end()[2]} seconds`.cyan + ` to complete`);
     }).catch(reject);
-  })
+  });
 }
 
 module.exports = cacheDemos;

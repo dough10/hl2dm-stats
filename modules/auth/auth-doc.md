@@ -30,6 +30,14 @@ authorize
 | name | <code>String</code> | the name of the stream / user |
 | pass | <code>String</code> | the streams auth key / password |
 
+**Example** *(Example usage of auth function.)*  
+```js
+// returns true | false;
+auth(mongoDB-connection, 'registeredUser', 'supersecurepassword').then(authorized => {
+  if (!authorized) return 'fail';
+  return 'allowed';
+})
+```
 <a name="module_modules/auth..Token"></a>
 
 ### modules/auth~Token

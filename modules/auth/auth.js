@@ -21,8 +21,14 @@ const bcrypt = require('bcrypt');
  * @param {String} name - the name of the stream / user
  * @param {String} pass - the streams auth key / password
  * 
- * 
  * @returns {Promise<Token>} promise to a token
+ * 
+ * @example  <caption>Example usage of auth function.</caption>
+ * // returns true | false;
+ * auth(mongoDB-connection, 'registeredUser', 'supersecurepassword').then(authorized => {
+ *   if (!authorized) return 'fail';
+ *   return 'allowed';
+ * })
  */
 function auth(db, name, pass) {
   return new Promise((resolve, reject) => {

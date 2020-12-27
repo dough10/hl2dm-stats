@@ -107,7 +107,7 @@ function zipDemos(lastMonth) {
     print(`Zippin demos complete: ${t.endString()} time to complete`);
     print(`Demos saved as ` + `${filename}`.green);
     resolve(lastMonth);
-  })
+  });
 }
 
 /**
