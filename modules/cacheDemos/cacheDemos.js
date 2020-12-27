@@ -1,16 +1,18 @@
 #!/usr/bin/env node
-var config = require('./loadConfig.js')();                     // config file location
+const config = require('../loadConfig.js')();                     // config file location
 const path = require('path');                             // merger file / url names
 const fs = require('fs');                                 // work with the file system
 const colors = require('colors');                         // colorize text
-const print = require(path.join(__dirname, 'printer.js'));
-const Timer = require(path.join(__dirname, 'Timer', 'Timer.js'));
+const print = require('../printer.js');
+const Timer = require('../Timer/Timer.js');
 
 
 /**
  * returns created date of a file
  *
  * @param {String} file - path to the file
+ * 
+ * @returns {String} date file was modified
  */
 function createdDate(file) {
   const stats = fs.statSync(file)
@@ -21,6 +23,8 @@ function createdDate(file) {
  * returns file size in bytes
  *
  * @param {String} filename - file path
+ * 
+ * @returns {Number} file size in bytes
  */
 function getFilesizeInBytes(filename) {
   var stats = fs.statSync(filename)
@@ -29,9 +33,11 @@ function getFilesizeInBytes(filename) {
 }
 
 /**
- * makes bytes readable
+ * converts bytes to a readable string
  *
  * @param {Number} bytes - file size yay
+ * 
+ * @returns {String} readable file suze
  */
 function bytesToSize(bytes) {
    var sizes = [
@@ -50,6 +56,8 @@ function bytesToSize(bytes) {
 
 /**
  * returns array of demo files from game server dir
+ * 
+ * @returns {Promise<Arrray>} list of demo files
  */
 function getDemos() {
   return new Promise((resolve, reject) => {
@@ -71,6 +79,8 @@ function getDemos() {
 
 /**
  * caches list of avaliable demo files
+ * 
+ * @returns {Promise<Array>} list of files with readable date and file size
  */
 function cacheDemos() {
   return new Promise((resolve, reject) => {

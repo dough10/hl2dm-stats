@@ -15,11 +15,3 @@ Requires Sourcemod and Superlogs Sourcemod plugin for weapon accuacy stat tracki
 ## UI
 
 avaliable from <https://github.com/dough10/hl2dm-stats-ui>
-
-## Documentation
-
-- api.md
-  - modules&#x2F;auth&#x2F;auth.md
-  - modules&#x2F;data-model&#x2F;data-model.md
-  - modules&#x2F;Timer&#x2F;Timer.md
-  - modules&#x2F;cacheDemos&#x2F;cacheDemos.md

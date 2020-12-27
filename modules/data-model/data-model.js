@@ -620,7 +620,7 @@ class Data {
    * @return {Promise<Array>} list of demos file avaliable to download
    */
   cacheDemos() {
-    require('../cacheDemos.js')().then(demos => {
+    require('../cacheDemos/cacheDemos.js')().then(demos => {
       this.demos = demos;
     });
   }

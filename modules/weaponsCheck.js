@@ -3,6 +3,8 @@
  * checks if weapon selection is a valid weapon name
  *
  * @param {String} weapon - name of a weapon
+ * 
+ * @returns {Boolean} true: is a weapon name, false: is not a weapon name
  */
 function isWeapon(weapon) {
   var w = [
