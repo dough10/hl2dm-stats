@@ -629,7 +629,7 @@ class Data {
    * runs end of month file cleanup process
    */
   runCleanup() {
-    require('../fileCleanup.js')(
+    require('../fileCleanup/fileCleanup')(
       this.generateTop(), 
       this.generateWeapons(), 
       this.totalPlayers, 

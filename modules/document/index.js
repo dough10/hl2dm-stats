@@ -1,20 +1,22 @@
-const jsdoc2md = require('jsdoc-to-markdown');
-const fs = require('fs'); 
-const {render} = require('mustache');
-
-const head = fs.readFileSync('./modules/document/head.md').toString();
-
-const parent = `- [{{file}}-doc.md]({{file}}-doc.md)\n`;
-const child = `  - [{{file}}-doc.md]({{file}}-doc.md)\n`;
-
-// file names without extensions ie. .js, .html
 const files = [
   'api',
   'modules/auth/auth',
-  'modules/data-model/data-model',
   'modules/Timer/Timer',
-  'modules/cacheDemos/cacheDemos'
+  'modules/data-model/data-model',
+  'modules/cacheDemos/cacheDemos',
+  'modules/fileCleanup/fileCleanup'
 ];
+
+
+
+
+const jsdoc2md = require('jsdoc-to-markdown');
+const fs = require('fs'); 
+const {render} = require('mustache');
+const head = fs.readFileSync('./modules/document/head.md').toString();
+const foot = fs.readFileSync('./modules/document/foot.md').toString();
+const parent = `- [{{file}}-doc.md]({{file}}-doc.md)\n`;
+const child = `  - [{{file}}-doc.md]({{file}}-doc.md)\n`;
 
 var out = '\n## Documentation\n\n';
 
@@ -52,4 +54,4 @@ for (var i = 0; i < files.length; i++) {
   }
 }
 
-writeFile('README.md', head + out);
+writeFile('README.md', head + out + '\n' + foot).then(console.log);
