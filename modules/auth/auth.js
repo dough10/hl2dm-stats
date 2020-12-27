@@ -9,8 +9,8 @@ const bcrypt = require('bcrypt');
 
 /**
  * @typedef Token
- * @property {bool} valid True if the token is valid.
- * @property {Object} match - user info.
+ * @property {bool} match False if the token is invalid.
+ * @property {JSON} match - user info.
  */
 
 /**

@@ -7,9 +7,6 @@ const files = [
   'modules/fileCleanup/fileCleanup'
 ];
 
-
-
-
 const jsdoc2md = require('jsdoc-to-markdown');
 const fs = require('fs'); 
 const {render} = require('mustache');
@@ -17,6 +14,7 @@ const head = fs.readFileSync('./modules/document/head.md').toString();
 const foot = fs.readFileSync('./modules/document/foot.md').toString();
 const parent = `- [{{file}}-doc.md]({{file}}-doc.md)\n`;
 const child = `  - [{{file}}-doc.md]({{file}}-doc.md)\n`;
+const pack = require('../../package.json');
 
 var out = '\n## Documentation\n\n';
 
@@ -34,7 +32,6 @@ function writeFile(name, md) {
   });
 }
 
-
 function renderDoc(filename) {
   jsdoc2md.render({ 
     files: `${filename}.js`
@@ -43,10 +40,20 @@ function renderDoc(filename) {
   });
 }
 
+function dependencies() {
+  var dep = pack.dependencies;
+  var out = '## Dependencies\n\n';
+  for (var item in dep) {
+    out = out + `${item}: ${dep[item]}\n`;
+  }
+  return out;
+}
 
 for (var i = 0; i < files.length; i++) {
   renderDoc(files[i]);
-  var obj = {file: files[i]};
+  var obj = {
+    file: files[i]
+  };
   if (i === 0) {
     out = out + render(parent, obj);
   } else {
@@ -54,4 +61,4 @@ for (var i = 0; i < files.length; i++) {
   }
 }
 
-writeFile('README.md', head + out + '\n' + foot).then(console.log);
+writeFile('README.md', head + out + '\n' + foot + '\n' + dependencies()).then(console.log);

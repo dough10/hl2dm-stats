@@ -1,5 +1,6 @@
 #! /usr/bin/env node
 /**
+ * @module api
  * @requires fs
  * @requires readline
  * @requires compression
@@ -45,8 +46,14 @@ const colors = require('colors');
 const config = require('./modules/loadConfig.js')();
 const logFolder = path.join(config.gameServerDir, 'logs');
 
-
+/**
+ * mongoDB connection object
+ */
 var db;
+
+/**
+ * WebSocket connection object
+ */
 var socket;
 
 init(logFolder);
@@ -54,7 +61,8 @@ init(logFolder);
 /**
  *  application data model
  * 
- *  contains variables users, bannedUsers, totalPlayers, weapons, demos & playerTimer
+ *  contains variables users, bannedUsers, totalPlayers, weapons, demos & playerTimer & methods to modify that data
+ * @see modules/data-model/data-model.md#module_data-model..Data
  * 
  */
 var appData = new Datamodel();
@@ -66,8 +74,8 @@ var receiver = new logReceiver.LogReceiver();
 
 /**
  *  throw a error message stopping app when something breaks
+ * 
  * @param {Object} e - error object
- * @throws error message
  */
 function errorHandler(e) {
   console.error(e);
@@ -75,8 +83,10 @@ function errorHandler(e) {
 
 /**
  * callback for when a player joins server
- *
+ * 
  * @param {Object} u - user object with name, id, time, date, month, year, and if user is new to server
+ * @async
+ * @callback
  */
 function userConnected(u) {
   logUser(db, u).then(user => {
@@ -86,8 +96,9 @@ function userConnected(u) {
 
 /**
  * callback for when a player leaves server
- *
+ * 
  * @param {Object} u - user object with name, id, time, date, month, year, and if user is new to server
+ * @callback
  */
 function userDisconnected(u) {
   //...
@@ -95,6 +106,8 @@ function userDisconnected(u) {
 
 /**
  * callback for when a round / map has ended
+ * @async
+ * @callback
  */
 function mapEnd() {
   appData.reset().then(m => {
@@ -108,25 +121,38 @@ function mapEnd() {
 
 /**
  * callback for when a round / map has started
+ * 
+ * @callback
  */
 function mapStart(logId) {
 
 }
 
 /**
- * print out player name when a known ip views page
+ * prints out the players name when a known ip views a page or makes a request
  *
- * @param {String} ip - ip addres of the user
- * @param {String} message - message string
+ * @param {String} ip - ip addres of the user viewing a page or making a request
+ * @param {String} message - the rest of the message
+ * 
+ * @see modules/data-model/data-model-doc.md#module_data-model..Data+who
  */
 function who(req, message) {
   print(`${appData.who(req.ip).grey} ${message}`);
 }
 
 /**
+ * @typedef MonthData
+ * @property {Array} files - list of months.
+ * @property {Array} Data - players stats for the passed in month.
+ */
+
+
+/**
  * grabs stats object from json file for a given month
  *
- * @param {Number} month - number of the month 0 - 11
+ * @param {Number} month - number of the month 0 - 11 *optional
+ * @async
+ * @returns {Promise<MonthData>} 
  */
 function getOldStatsList(month) {
   return new Promise((resolve, reject) => {
@@ -154,7 +180,12 @@ function getOldStatsList(month) {
 }
 
 /**
+ * loops to get Gamedig data for game server
  * 
+ * @async
+ * @callback
+ * @see modules/gameSeverStatus.js
+ * @see modules/data-model/data-model-doc.md#module_data-model..Data+updateStatus
  */
 function statsLoop() {
   setTimeout(statsLoop, 5000);
@@ -171,6 +202,10 @@ function statsLoop() {
 
 /**
  * parse folder of logs 1 line @ a time. dumping each line into the scanner
+ * 
+ * @see modules/lineScanner.js
+ * 
+ * @returns {Promise<String>} duration to complete task
  */
 function parseLogs() {
   return new Promise((resolve, reject) => {
@@ -207,6 +242,8 @@ function parseLogs() {
 
 /**
  * 404 page
+ * 
+ * @returns {HTML} 404 
  */
 function fourohfour(req, res) {
   var reqadd = {
@@ -218,8 +255,19 @@ function fourohfour(req, res) {
   res.status(404).sendFile(path.join(__dirname, 'assets', '404.html'));
 }
 
+function fiveHundred() {
+  var reqadd = {
+    protocol: req.protocol,
+    host:req.get('host'),
+    pathname:req.originalUrl
+  };
+  who(req, `requested ` + `${url.format(reqadd)}`.green + ` got ` + `error 500! ╭∩╮(︶︿︶)╭∩╮`.red);
+  res.status(500).sendFile(path.join(__dirname, 'assets', '500.html'));
+}
+
 /**
  * cleanup files on first @ 5:00am
+ * @see modules/data-model/data-model-doc.md#module_data-model..Data+runCleanup
  */
 schedule.scheduleJob('0 5 1 * *', appData.runCleanup);
 
@@ -230,8 +278,8 @@ app.disable('x-powered-by');
 /**
  * route for WebSocket
  * @function
- * @name api/
- * @returns {Array} websocket pipeline
+ * @name /
+ * @returns {JSON} websocket pipeline
  */
 app.ws('/', ws => {
   socket = ws;
@@ -241,8 +289,8 @@ app.ws('/', ws => {
 /**
  * route for gettings the status of the game server
  * @function
- * @name api/status
- * @returns {Object} game server rcon status response
+ * @name /status
+ * @returns {JSON} game server rcon status response
  */
 app.get('/status', (req, res) => {
   who(req, `is viewing ` + '/status'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
@@ -252,11 +300,11 @@ app.get('/status', (req, res) => {
 /**
  * authorize stream for hoedowntv
  * @function
- * @name api/auth
+ * @name /auth
  * @param {String} req.query.name - the name of the stream
  * @param {String} req.query.k - the streams auth key
  * 
- * @returns {String} ok: authorized, fail: failed to authorize
+ * @returns {JSON} ok: authorized, fail: failed to authorize
  */
 app.get('/auth', oneOf([
   check('name').exists().escape().stripLow(),
@@ -295,8 +343,9 @@ app.get('/auth', oneOf([
 /**
  * route for gettings player stats
  * @function
- * @name api/stats
- * @returns {Array} stats top players list, server wide weapons list, # of total players, list of banned players, time of generation
+ * @name /stats
+ * 
+ * @returns {JSON} stats top players list, server wide weapons list, # of total players, list of banned players, time of generation
  */
 app.get('/stats', (req, res) => {
   var t = new Timer();
@@ -311,9 +360,11 @@ app.get('/stats', (req, res) => {
 });
 
 /**
- * route for getting a list of svaliable old months data
+ * route for getting a list of avaliable data for prevoius months
+ * @function
+ * @name /old-months
  * 
- * @returns {Array} list of months with stats history
+ * @returns {JSON | HTML} list of months with stats history | 500
  */
 app.get('/old-months', (req, res) => {
   var t = new Timer();
@@ -321,14 +372,17 @@ app.get('/old-months', (req, res) => {
     who(req, `is viewing ` + '/old-months'.green + ' data' + ` ${t.end()[2]} seconds`.cyan + ` response time`);
     res.send(stats);
   }).catch(e => {
-    fourohfour(req, res);
+    fiveHundred(req, res);
   });
 });
 
 /**
  * route for getting a old months stats data
+ * @function
+ * @name /old-stats/:month
+ * @param {Number} req.query.month - index number of the months data
  * 
- * @returns {Array} statistics from a previous month
+ * @returns {JSON | HTML} statistics from a previous month | 500
  */
 app.get('/old-stats/:month', (req, res) => {
   var t = new Timer();
@@ -336,14 +390,16 @@ app.get('/old-stats/:month', (req, res) => {
     who(req, `is viewing ` + '/old-stats'.green + ' data for ' + `${monthName(req.params.month).yellow}` + ` ${t.end()[2]} seconds`.cyan + ` response time`);
     res.send(stats);
   }).catch(e => {
-    fourohfour(req, res);
+    fiveHundred(req, res);
   });
 });
 
 /**
- * route for getting app players who has played in server
+ * route for getting list of all players who has played in server
+ * @function
+ * @name /playerList
  * 
- * @returns {Array} list of all players to join server
+ * @returns {JSON} list of all players to join server
  */
 app.get('/playerList', (req, res) => {
   var t = new Timer();
@@ -360,10 +416,11 @@ app.get('/playerList', (req, res) => {
 
 /**
  * return array of new users
- *
- * @param {Number} req.params.date - date of this month you want to view user for 0 = today
+ * @function
+ * @name /newPlayers/:date
+ * @param {Number} req.params.date - date of the month you want to view users for 0 = today
  * 
- * @returns {Array} list of players from the given date
+ * @returns {JSON} list of players from the given date
  */
 app.get('/newPlayers/:date', oneOf([
   check('date').escape()
@@ -376,12 +433,15 @@ app.get('/newPlayers/:date', oneOf([
     }
     who(req, `is viewing ` + `/newPlayers/${date}`.green + ` data on ` + `${monthName(new Date().getMonth())} ${suffix(date)} `.yellow + `${users.length} new players`.grey + ` ${t.end()[2]} seconds`.cyan + ` response time`);
     res.send(users);
+  }).catch(e => {
+    fiveHundred(req, res);
   });
 });
 
 /**
  * return array of return users
- *
+ * @function
+ * @name /returnPlayer/:date
  * @param {Number} req.params.date - date of this month you want to view user for 0 = today
  * 
  * @returns {Array} list of players from the given date
@@ -395,11 +455,18 @@ app.get('/returnPlayers/:date', (req, res) => {
     }
     who(req, `is viewing ` + `/returnPlayers/${date}`.green + ` data on ` + `${monthName(new Date().getMonth())} ${suffix(date)} `.yellow + `${users.length} new players`.grey + ` ${t.end()[2]} seconds`.cyan + ` response time`);
     res.send(users);
+  }).catch(e => {
+    fiveHundred(req, res);
   });
 });
 
 /**
  * route for gettings a individual players stats
+ * @function
+ * @name /playerStats/:id
+ * @param {Number} req.params.id - steamid3 of the player
+ * 
+ * @returns {JSON | HTML} players stat data | 404 
  */
 app.get('/playerStats/:id', (req, res) => {
   var t = new Timer();
@@ -414,7 +481,12 @@ app.get('/playerStats/:id', (req, res) => {
 });
 
 /**
- * route for downloading current months demo file
+ * route for downloading a demo file
+ * @function
+ * @name /download/:file
+ * @param {String} file - file name requested for download
+ * 
+ * @returns {File | HTML} .dem file | 404
  */
 app.get('/download/:file', (req, res) => {
   var t = new Timer();
@@ -429,6 +501,11 @@ app.get('/download/:file', (req, res) => {
 
 /**
  * route for downloading a previous months logs zip files
+ * @function
+ * @name /download/logs-zip/:file
+ * @param {String} file - filename requested for download
+ * 
+ * @returns {File | HTML}  .zip file | 404
  */
 app.get('/download/logs-zip/:file', (req, res) => {
   var t = new Timer();
@@ -443,6 +520,11 @@ app.get('/download/logs-zip/:file', (req, res) => {
 
 /**
  * route for downloading a previous months demo zip files
+ * @function
+ * @name /download/demos-zip/:file
+ * @param {String} file - filename requested for download
+ * 
+ * @returns {File | HTML}  .zip file | 404
  */
 app.get('/download/demos-zip/:file', (req, res) => {
   var t = new Timer();
@@ -457,6 +539,10 @@ app.get('/download/demos-zip/:file', (req, res) => {
 
 /**
  * route to get list of demo recording on the server
+ * @function
+ * @name /demos
+ * 
+ * @returns {JSON} list of demo files
  */
 app.get('/demos', (req, res) => {
   var t = new Timer();
@@ -466,6 +552,10 @@ app.get('/demos', (req, res) => {
 
 /**
  * route to get list of hl2dm server cvar's
+ * @function
+ * @name /cvarlist
+ * 
+ * @returns {Text} list of cvar commands 
  */
 app.get('/cvarlist', (req, res) => {
   var t = new Timer();
@@ -477,13 +567,10 @@ app.get('/cvarlist', (req, res) => {
   who(req, `is viewing ` + '/cvarlist'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
 });
 
-/**
- * 404
- */
 app.get('*', fourohfour);
 
 /**
- * express server instance listening on config.port
+ * express server instance listening on the port from config.json
  */
 var server = app.listen(config.port, _ => mongoConnect().then(database => {
   db = database;

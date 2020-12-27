@@ -262,6 +262,7 @@ caches list of avaliable demo files
 runs end of month file cleanup process
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
+**See**: modules/fileCleanup/fileCleanup-doc.md  
 <a name="module_data-model..geoip"></a>
 
 ### data-model~geoip

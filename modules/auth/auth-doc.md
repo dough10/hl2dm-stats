@@ -38,6 +38,6 @@ authorize
 
 | Name | Type | Description |
 | --- | --- | --- |
-| valid | <code>bool</code> | True if the token is valid. |
-| match | <code>Object</code> | user info. |
+| match | <code>bool</code> | False if the token is invalid. |
+| match | <code>JSON</code> | user info. |
 

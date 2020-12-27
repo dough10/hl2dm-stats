@@ -627,6 +627,7 @@ class Data {
 
   /**
    * runs end of month file cleanup process
+   * @see modules/fileCleanup/fileCleanup-doc.md
    */
   runCleanup() {
     require('../fileCleanup/fileCleanup')(
