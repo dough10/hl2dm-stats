@@ -74,6 +74,9 @@
 <dt><a href="#api/status">api/status()</a> ⇒ <code>Object</code></dt>
 <dd><p>route for gettings the status of the game server</p>
 </dd>
+<dt><a href="#api/auth">api/auth()</a> ⇒ <code>String</code></dt>
+<dd><p>authorize stream for hoedowntv</p>
+</dd>
 <dt><a href="#api/stats">api/stats()</a> ⇒ <code>Array</code></dt>
 <dd><p>route for gettings player stats</p>
 </dd>
@@ -235,6 +238,19 @@ route for gettings the status of the game server
 
 **Kind**: global function  
 **Returns**: <code>Object</code> - game server rcon status response  
+<a name="api/auth"></a>
+
+## api/auth() ⇒ <code>String</code>
+authorize stream for hoedowntv
+
+**Kind**: global function  
+**Returns**: <code>String</code> - ok: authorized, fail: failed to authorize  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| req.query.name | <code>String</code> | the name of the stream |
+| req.query.k | <code>String</code> | the streams auth key |
+
 <a name="api/stats"></a>
 
 ## api/stats() ⇒ <code>Array</code>

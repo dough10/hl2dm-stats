@@ -9,6 +9,7 @@
  * @requires url
  * @requires srcds-log-receiver
  * @requires expresss-ws
+ * @requires express-validator
  * @requires colors
  */
 
@@ -37,7 +38,9 @@ const path = require('path');
 const url = require('url');
 const logReceiver = require("srcds-log-receiver");
 const app = express();   
-const expressWs = require('express-ws')(app); 
+const expressWs = require('express-ws')(app);
+/** input validation */
+const { check, oneOf, validationResult } = require('express-validator');
 const colors = require('colors'); 
 const config = require('./modules/loadConfig.js')();
 const logFolder = path.join(config.gameServerDir, 'logs');
@@ -67,7 +70,7 @@ var receiver = new logReceiver.LogReceiver();
  * @throws error message
  */
 function errorHandler(e) {
-  throw new Error(e.messgae);
+  console.error(e);
 }
 
 /**
@@ -247,25 +250,46 @@ app.get('/status', (req, res) => {
 });
 
 /**
- * authorize stream upload
- *
+ * authorize stream for hoedowntv
+ * @function
+ * @name api/auth
  * @param {String} req.query.name - the name of the stream
  * @param {String} req.query.k - the streams auth key
  * 
  * @returns {String} ok: authorized, fail: failed to authorize
  */
-app.get('/auth', (req, res) => {
-  var t = new Timer();
-  who(req, `is requesting stream authorization`);
-  var name = req.query.name;
-  appData.authorize(db, name, req.query.k).then(authorized => {
-    if (!authorized) {
-      who(req, `failed to authorize for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
-      return res.status(404).send('fail');
-    }
-    who(req, `was successfully authorized for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
-    res.send('ok');
-  }).catch(errorHandler);
+app.get('/auth', oneOf([
+  check('name').exists().escape().stripLow(),
+  check('k').exists().escape().stripLow()
+]), (req, res) => {
+  try {
+    validationResult(req).throw();
+    var t = new Timer();
+    who(req, `is requesting stream authorization`);
+    var name = req.query.name;
+    appData.authorize(db, name, req.query.k).then(authorized => {
+      if (!authorized) {
+        who(req, `failed to authorize for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+        return res.status(401).json({
+          status: 401,
+          authorized: authorized
+        });
+      }
+      who(req, `was successfully authorized for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+      res.status(200).json({
+        status: 200,
+        authorized: authorized
+      });
+    }).catch(e => {
+      who(req, `failed to authorize for streaming: ${e} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+      return res.status(401).json({
+        status: 401,
+        authorized: false
+      });
+    });
+  } catch (err) {
+    fourohfour(req, res);
+  }
 });
 
 /**
@@ -341,7 +365,9 @@ app.get('/playerList', (req, res) => {
  * 
  * @returns {Array} list of players from the given date
  */
-app.get('/newPlayers/:date', (req, res) => {
+app.get('/newPlayers/:date', oneOf([
+  check('date').escape()
+]), (req, res) => {
   var t = new Timer();
   var date = req.params.date;
   appData.getNewUsers(db, date).then(users => {
