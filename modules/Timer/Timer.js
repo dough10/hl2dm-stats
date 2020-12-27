@@ -2,6 +2,13 @@
  * @module modules/Timer
  * @requires colors
  * @exports Timer
+ * 
+ * @example <caption>Example usage of Timer class.</caption>
+ * var Timer = require('modules/Timer/Timer);
+ * var t = new Timer('thing');
+ * // do stuff you want to see how long it will take
+ * console.log(t.endString());
+ * 
  */
 
  /** colorize text */

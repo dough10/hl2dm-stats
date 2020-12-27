@@ -2,6 +2,13 @@
 
 ## modules/Timer
 **Requires**: <code>module:colors</code>  
+**Example** *(Example usage of Timer class.)*  
+```js
+var Timer = require('modules/Timer/Timer);
+var t = new Timer('thing');
+// do stuff you want to see how long it will take
+console.log(t.endString());
+```
 
 * [modules/Timer](#module_modules/Timer)
     * [~Timer](#module_modules/Timer..Timer)

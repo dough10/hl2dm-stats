@@ -4,6 +4,13 @@
 make a zip and clean up previous months files
 
 **Requires**: <code>module:path</code>, <code>module:fs</code>, <code>module:modules/loadConfig.js</code>, <code>module:child\_process</code>, <code>module:colors</code>, <code>module:modules/Timer</code>, <code>module:modules/printer.js</code>  
+**Example** *(Example usage of cleanUp() function.)*  
+```js
+var cleanUp = require('modules/fileCleanup/fileCleanup);
+cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate).then(_ => {
+ // cleanup complete
+});
+```
 
 * [modules/fileCleanup](#module_modules/fileCleanup)
     * [~saveTop(lastMonth)](#module_modules/fileCleanup..saveTop) ⇒ <code>Promise.&lt;String&gt;</code>

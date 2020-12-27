@@ -6,6 +6,12 @@
  * @module data-model
  * @requires geoip-lite
  * @exports Data
+ * 
+ * @example <caption>Example usage of Data class.</caption>
+ * var Datamodel = require('modules/data-model/data-model);
+ * var appData = new Datamodel();
+ * // call some functions
+ * 
  */
 
  /** geoip import */
@@ -206,6 +212,10 @@ class Data {
    * gets the current status of gameserver
    * 
    * @returns {Object} game server status
+   * 
+   * @example <caption>Example usage of getStatus() function.</caption>
+   * var status = appData.getStatus();
+   * 
    */
   getStatus() {
     return this.gameStatus;
@@ -215,6 +225,12 @@ class Data {
    * update game server status
    * 
    * @param {Object} status - set the  game server status from Gamedig 
+   * 
+   * @example <caption>Example usage of updateStatus() function.</caption>
+   * appData.updateStatus({
+   *  // game server status object
+   * });
+   * 
    */
   updateStatus(status) {
     this.gameStatus = status;

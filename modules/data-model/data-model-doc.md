@@ -4,6 +4,12 @@
 Class to hold and manipulate the app data
 
 **Requires**: <code>module:geoip-lite</code>  
+**Example** *(Example usage of Data class.)*  
+```js
+var Datamodel = require('modules/data-model/data-model);
+var appData = new Datamodel();
+// call some functions
+```
 
 * [data-model](#module_data-model)
     * [~Data](#module_data-model..Data)
@@ -69,6 +75,10 @@ gets the current status of gameserver
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
 **Returns**: <code>Object</code> - game server status  
+**Example** *(Example usage of getStatus() function.)*  
+```js
+var status = appData.getStatus();
+```
 <a name="module_data-model..Data+updateStatus"></a>
 
 #### data.updateStatus(status)
@@ -80,6 +90,12 @@ update game server status
 | --- | --- | --- |
 | status | <code>Object</code> | set the  game server status from Gamedig |
 
+**Example** *(Example usage of updateStatus() function.)*  
+```js
+appData.updateStatus({
+ // game server status object
+});
+```
 <a name="module_data-model..Data+reset"></a>
 
 #### data.reset() ⇒ <code>Promise.&lt;String&gt;</code>

@@ -9,6 +9,12 @@
  * @requires modules/Timer
  * @requires modules/printer.js
  * @exports cleanUp
+ * 
+ * @example <caption>Example usage of cleanUp() function.</caption>
+ * var cleanUp = require('modules/fileCleanup/fileCleanup);
+ * cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate).then(_ => {
+ *  // cleanup complete
+ * });
  */
 
 const path = require('path');
