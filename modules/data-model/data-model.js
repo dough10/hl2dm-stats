@@ -572,7 +572,7 @@ class Data {
    *
    * @param {String} id - steamid3 of the player
    * 
-   * @returns {JSON Object} player object
+   * @returns {JSON} player object
    * 
    * @example <caption>Example usage of addBanned() function.</caption>
    * var player = appData.addBanned('374586912');

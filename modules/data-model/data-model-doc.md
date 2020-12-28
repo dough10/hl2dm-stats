@@ -26,7 +26,7 @@ var appData = new Datamodel();
         * [.addKill(time, killer, killed, weapon)](#module_data-model..Data+addKill)
         * [.addSuicide(time, id, name, weapon)](#module_data-model..Data+addSuicide)
         * [.addHeadshot(time, id, name, weapon)](#module_data-model..Data+addHeadshot)
-        * [.addBanned(id)](#module_data-model..Data+addBanned) ⇒ <code>Object</code>
+        * [.addBanned(id)](#module_data-model..Data+addBanned) ⇒ <code>JSON</code>
         * [.addChat(time, id, name, said)](#module_data-model..Data+addChat)
         * [.addWeaponStats(time, id, name, weapon)](#module_data-model..Data+addWeaponStats)
         * [.addWeaponStats2(time, id, name, weapon)](#module_data-model..Data+addWeaponStats2)
@@ -61,7 +61,7 @@ Class to hold and manipulate the app data
     * [.addKill(time, killer, killed, weapon)](#module_data-model..Data+addKill)
     * [.addSuicide(time, id, name, weapon)](#module_data-model..Data+addSuicide)
     * [.addHeadshot(time, id, name, weapon)](#module_data-model..Data+addHeadshot)
-    * [.addBanned(id)](#module_data-model..Data+addBanned) ⇒ <code>Object</code>
+    * [.addBanned(id)](#module_data-model..Data+addBanned) ⇒ <code>JSON</code>
     * [.addChat(time, id, name, said)](#module_data-model..Data+addChat)
     * [.addWeaponStats(time, id, name, weapon)](#module_data-model..Data+addWeaponStats)
     * [.addWeaponStats2(time, id, name, weapon)](#module_data-model..Data+addWeaponStats2)
@@ -244,7 +244,7 @@ calculates players stats when a suicide takes place
 
 **Example** *(Example usage of addSuicide() function.)*  
 ```js
-appData.addSuicide(1609123414390, 374586912, 'bob', '357');
+appData.addSuicide(1609123414390, '374586912', 'bob', '357');
 ```
 <a name="module_data-model..Data+addHeadshot"></a>
 
@@ -260,18 +260,26 @@ calculates stats when a headshot takes place
 | name | <code>String</code> | player name |
 | weapon | <code>String</code> | name of the weapon used |
 
+**Example** *(Example usage of addHeadshot() function.)*  
+```js
+appData.addHeadshot(1609123414390, '374586912', 'bob'):
+```
 <a name="module_data-model..Data+addBanned"></a>
 
-#### data.addBanned(id) ⇒ <code>Object</code>
+#### data.addBanned(id) ⇒ <code>JSON</code>
 add player to the banned list
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
-**Returns**: <code>Object</code> - player object  
+**Returns**: <code>JSON</code> - player object  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | id | <code>String</code> | steamid3 of the player |
 
+**Example** *(Example usage of addBanned() function.)*  
+```js
+var player = appData.addBanned('374586912');
+```
 <a name="module_data-model..Data+addChat"></a>
 
 #### data.addChat(time, id, name, said)
@@ -286,6 +294,10 @@ add change to user object
 | name | <code>String</code> | player name |
 | said | <code>String</code> | chat line with timestamp |
 
+**Example** *(Example usage of addChat() function.)*  
+```js
+appData.addChat(1609123414390, '374586912', 'bob', 'nice shot!');
+```
 <a name="module_data-model..Data+addWeaponStats"></a>
 
 #### data.addWeaponStats(time, id, name, weapon)
@@ -300,6 +312,10 @@ add weapon stats to player object
 | name | <code>String</code> | player name |
 | weapon | <code>Object</code> | object of weapn data |
 
+**Example** *(Example usage of addWeaponStats() function.)*  
+```js
+appData.addWeaponStats(1609123414390, '374586912', 'bob', '357');
+```
 <a name="module_data-model..Data+addWeaponStats2"></a>
 
 #### data.addWeaponStats2(time, id, name, weapon)
@@ -314,6 +330,10 @@ add weapon stats to player object
 | name | <code>String</code> | player name |
 | weapon | <code>object</code> | object of weapn data |
 
+**Example** *(Example usage of addWeaponStats2() function.)*  
+```js
+appData.addWeaponStats2(1609123414390, '374586912', 'bob', '357');
+```
 <a name="module_data-model..Data+cacheDemos"></a>
 
 #### data.cacheDemos() ⇒ <code>Promise.&lt;Array&gt;</code>
@@ -321,6 +341,10 @@ caches list of avaliable demo files
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
 **Returns**: <code>Promise.&lt;Array&gt;</code> - list of demos file avaliable to download  
+**Example** *(Example usage of cacheDemos() function.)*  
+```js
+appData.cacheDemos();
+```
 <a name="module_data-model..Data+runCleanup"></a>
 
 #### data.runCleanup()
@@ -328,6 +352,10 @@ runs end of month file cleanup process
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
 **See**: modules/fileCleanup/fileCleanup-doc.md  
+**Example** *(Example usage of runCleanup() function.)*  
+```js
+appData.runCleanup();
+```
 <a name="module_data-model..geoip"></a>
 
 ### data-model~geoip
@@ -349,6 +377,10 @@ returns a player object
 | time | <code>Number</code> | new Date().getTime() output |
 | ip | <code>String</code> | users ip address |
 
+**Example** *(Example usage of playerObj() function.)*  
+```js
+var bob = playerObj('bob', '374586912', 1609123414390, '25.65.8.357');
+```
 <a name="module_data-model..weaponObj"></a>
 
 ### data-model~weaponObj() ⇒ <code>Object</code>
@@ -356,6 +388,11 @@ returns defualt weapon object
 
 **Kind**: inner method of [<code>data-model</code>](#module_data-model)  
 **Returns**: <code>Object</code> - weapon object  
+**Example** *(Example usage of weaponObj() function.)*  
+```js
+var bob = playerObj('bob', '374586912', 1609123414390, '25.65.8.357');
+bob['357'] = weaponObj();
+```
 <a name="module_data-model..calculatePrecent"></a>
 
 ### data-model~calculatePrecent(small, big) ⇒ <code>Number</code>
@@ -369,6 +406,11 @@ returns % value
 | small | <code>Number</code> | small # |
 | big | <code>Number</code> | big # |
 
+**Example** *(Example usage of calculatePrecent() function.)*  
+```js
+// returns 60
+var precent = calculatePrecent(60, 100);
+```
 <a name="module_data-model..calculateWeaponStats"></a>
 
 ### data-model~calculateWeaponStats(weapon) ⇒ <code>Array</code>
