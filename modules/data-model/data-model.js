@@ -320,6 +320,9 @@ class Data {
    * creates a array of players with greater than or equal to 100 kills
    * 
    * @returns {Array} list of players and their statistics
+   * 
+   * @example <caption>Example usage of generateTop() function.</caption>
+   * var top = appData.generateTop();
    */
   generateTop() {
     var arr = [];
@@ -346,6 +349,9 @@ class Data {
    * creates a array of weapon data
    * 
    * @returns {Array} list of weapons sorted by kill count
+   * 
+   * @example <caption>Example usage of generateWeapons() function.</caption>
+   * var weaponsData = appData.generateWeapons();
    */
   generateWeapons() {
     let obj = { ... this.weapons };
@@ -357,6 +363,9 @@ class Data {
    * creates a array of players who have been banned
    * 
    * @returns {Array} list of players
+   * 
+   * @example <caption>Example usage of generateBannedPlayerList() function.</caption>
+   * var bannedPlayers = appData.generateBannedPlayerList(); 
    */
   generateBannedPlayerList() {
     var arr = [];
@@ -373,6 +382,9 @@ class Data {
    * creates a object of a individual players stats
    * 
    * @returns {Object} players statistis 
+   * 
+   * @example <caption>Example usage of generatePlayerStats() function.</caption>
+   * var playerStats = appData.generatePlayerStats();
    */
   generatePlayerStats(playerId) {
     for (var u in this.users) {
@@ -392,6 +404,9 @@ class Data {
    * @param {String} ip - ip address from Express req.ip
    * 
    * @returns {String} name of a player, or the passed in ip address 
+   * 
+   * @example <caption>Example usage of who() function.</caption>
+   * var who = appData.who();
    */
   who(ip) {
     var i = ip;
@@ -411,6 +426,9 @@ class Data {
    * @param {Object} killer - player details
    * @param {Object} killed - player details
    * @param {String} weapon - name of the weapon used
+   * 
+   * @example <caption>Example usage of addKill() function.</caption>
+   * appData.addKill(1609123414390, {...}, {...}, '357');
    */
   addKill(time, killer, killed, weapon) {
 
@@ -476,6 +494,9 @@ class Data {
    * @param {String} id - steamid3 of the player
    * @param {String} name - players name
    * @param {String} weapon - name of the weapon used
+   * 
+   * @example <caption>Example usage of addSuicide() function.</caption>
+   * appData.addSuicide(1609123414390, 374586912, 'bob', '357');
    */
   addSuicide(time, id, name, weapon) {
     if (!this.users[id]) {

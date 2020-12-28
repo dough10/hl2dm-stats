@@ -157,6 +157,10 @@ creates a array of players with greater than or equal to 100 kills
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
 **Returns**: <code>Array</code> - list of players and their statistics  
+**Example** *(Example usage of generateTop() function.)*  
+```js
+var top = appData.generateTop();
+```
 <a name="module_data-model..Data+generateWeapons"></a>
 
 #### data.generateWeapons() ⇒ <code>Array</code>
@@ -164,6 +168,10 @@ creates a array of weapon data
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
 **Returns**: <code>Array</code> - list of weapons sorted by kill count  
+**Example** *(Example usage of generateWeapons() function.)*  
+```js
+var weaponsData = appData.generateWeapons();
+```
 <a name="module_data-model..Data+generateBannedPlayerList"></a>
 
 #### data.generateBannedPlayerList() ⇒ <code>Array</code>
@@ -171,6 +179,10 @@ creates a array of players who have been banned
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
 **Returns**: <code>Array</code> - list of players  
+**Example** *(Example usage of generateBannedPlayerList() function.)*  
+```js
+var bannedPlayers = appData.generateBannedPlayerList(); 
+```
 <a name="module_data-model..Data+generatePlayerStats"></a>
 
 #### data.generatePlayerStats() ⇒ <code>Object</code>
@@ -178,6 +190,10 @@ creates a object of a individual players stats
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
 **Returns**: <code>Object</code> - players statistis  
+**Example** *(Example usage of generatePlayerStats() function.)*  
+```js
+var playerStats = appData.generatePlayerStats();
+```
 <a name="module_data-model..Data+who"></a>
 
 #### data.who(ip) ⇒ <code>String</code>
@@ -190,6 +206,10 @@ returns the player name associated with the passed in ip address
 | --- | --- | --- |
 | ip | <code>String</code> | ip address from Express req.ip |
 
+**Example** *(Example usage of who() function.)*  
+```js
+var who = appData.who();
+```
 <a name="module_data-model..Data+addKill"></a>
 
 #### data.addKill(time, killer, killed, weapon)
@@ -204,6 +224,10 @@ calculates player stats when a kill takes place
 | killed | <code>Object</code> | player details |
 | weapon | <code>String</code> | name of the weapon used |
 
+**Example** *(Example usage of addKill() function.)*  
+```js
+appData.addKill(1609123414390, {...}, {...}, '357');
+```
 <a name="module_data-model..Data+addSuicide"></a>
 
 #### data.addSuicide(time, id, name, weapon)
@@ -218,6 +242,10 @@ calculates players stats when a suicide takes place
 | name | <code>String</code> | players name |
 | weapon | <code>String</code> | name of the weapon used |
 
+**Example** *(Example usage of addSuicide() function.)*  
+```js
+appData.addSuicide(1609123414390, 374586912, 'bob', '357');
+```
 <a name="module_data-model..Data+addHeadshot"></a>
 
 #### data.addHeadshot(time, id, name, weapon)
