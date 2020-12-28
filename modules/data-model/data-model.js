@@ -7,17 +7,15 @@
  * @author Jimmy Doughten <https://github.com/dough10>
  * @requires geoip-lite
  * @exports Data
- * 
  * @example <caption>Example usage of Data class.</caption>
  * var Datamodel = require('modules/data-model/data-model');
  * var appData = new Datamodel();
  * // call some functions
- * 
  */
 
  /** geoip database */
 const geoip = require('geoip-lite');
-/** Timer module @see <a href=modules/Timer/Timer-doc.md>Timer-doc.md</a> */
+/** Timer module @see <a href=../modules/Timer/Timer-doc.md>Timer-doc.md</a> */
 const Timer = require('../Timer/Timer.js');
 
 /** 
@@ -261,6 +259,7 @@ class Data {
 
   /**
    * @constructor
+   * 
    * @returns {void} Nothing
    */
   constructor() {
