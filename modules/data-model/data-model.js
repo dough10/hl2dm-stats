@@ -215,7 +215,6 @@ class Data {
    * 
    * @example <caption>Example usage of getStatus() function.</caption>
    * var status = appData.getStatus();
-   * 
    */
   getStatus() {
     return this.gameStatus;
@@ -230,7 +229,6 @@ class Data {
    * appData.updateStatus({
    *  // game server status object
    * });
-   * 
    */
   updateStatus(status) {
     this.gameStatus = status;
@@ -240,6 +238,11 @@ class Data {
    * reset data model
    * 
    * @returns {Promise<String>} alert message notifying the change to data
+   * 
+   * @example <caption>Example usage of reset() function.</caption>
+   * appData.reset().then(_ => {
+   *   // data has been reset
+   * });
    */
   reset() {
     return new Promise((resolve, reject) => {
@@ -261,6 +264,13 @@ class Data {
    * @param {String} ip - ip address of the connection player
    * 
    * @returns {Boolean} true: new player, false: been bere before
+   * 
+   * @example <caption>Example usage of playerConnect() function.</caption>
+   * var newUser = appData.playerConnect(time, id, name, ip);
+   * if (!newUser) {
+   *   // do a thing
+   * }
+   * // do something else
    */
   playerConnect(time, id, name, ip) {
     this.playerTimes[id] = new Timer(name);
@@ -289,6 +299,11 @@ class Data {
    * @param {String} id - steamid3 of the connecting player
    * 
    * @returns {Promise<String>} timer object string
+   * 
+   * @example <caption>Example usage of playerDisconnect() function.</caption>
+   * appData.playerDisconnect(id).then(timeOnline => {
+   *    // timeOnline = players time online
+   * });
    */
   playerDisconnect(id) {
     return new Promise((resolve, reject) => {

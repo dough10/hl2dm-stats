@@ -103,6 +103,12 @@ reset data model
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
 **Returns**: <code>Promise.&lt;String&gt;</code> - alert message notifying the change to data  
+**Example** *(Example usage of reset() function.)*  
+```js
+appData.reset().then(_ => {
+  // data has been reset
+});
+```
 <a name="module_data-model..Data+playerConnect"></a>
 
 #### data.playerConnect(time, id, name, ip) ⇒ <code>Boolean</code>
@@ -118,6 +124,14 @@ a player has connected to the game server
 | name | <code>String</code> | player name of the connection player |
 | ip | <code>String</code> | ip address of the connection player |
 
+**Example** *(Example usage of playerConnect() function.)*  
+```js
+var newUser = appData.playerConnect(time, id, name, ip);
+if (!newUser) {
+  // do a thing
+}
+// do something else
+```
 <a name="module_data-model..Data+playerDisconnect"></a>
 
 #### data.playerDisconnect(id) ⇒ <code>Promise.&lt;String&gt;</code>
@@ -130,6 +144,12 @@ a player has connected to the game server
 | --- | --- | --- |
 | id | <code>String</code> | steamid3 of the connecting player |
 
+**Example** *(Example usage of playerDisconnect() function.)*  
+```js
+appData.playerDisconnect(id).then(timeOnline => {
+   // timeOnline = players time online
+});
+```
 <a name="module_data-model..Data+generateTop"></a>
 
 #### data.generateTop() ⇒ <code>Array</code>
