@@ -21,6 +21,9 @@ const Timer = require('../Timer/Timer.js');
 /** 
  * get the length / size of a object
  * @returns {Number} count of items in the object
+ * 
+ * @example <caption>Example usage of Object.size() function.</caption>
+ * var totalPlayers = Object.size(users); 
  */
 Object.size = obj => {
   var size = 0, key;
@@ -39,6 +42,9 @@ Object.size = obj => {
  * @param {String} ip - users ip address
  * 
  * @returns {Object} object with the passed in data and some 0 values
+ * 
+ * @example <caption>Example usage of playerObj() function.</caption>
+ * var bob = playerObj('bob', '374586912', 1609123414390, '25.65.8.357');
  */
 function playerObj(name, id, time, ip) {
   return {
@@ -62,6 +68,10 @@ function playerObj(name, id, time, ip) {
  * returns defualt weapon object
  * 
  * @returns {Object} weapon object
+ * 
+ * @example <caption>Example usage of weaponObj() function.</caption>
+ * var bob = playerObj('bob', '374586912', 1609123414390, '25.65.8.357');
+ * bob['357'] = weaponObj();
  */
 function weaponObj() {
   return {
@@ -89,6 +99,10 @@ function weaponObj() {
  * @param {Number} big - big #
  * 
  * @return {Number} precentage
+ * 
+ * @example <caption>Example usage of calculatePrecent() function.</caption>
+ * // returns 60
+ * var precent = calculatePrecent(60, 100);
  */
 function calculatePrecent(small, big) {
   return Math.round((small / big) * 100);
@@ -496,7 +510,7 @@ class Data {
    * @param {String} weapon - name of the weapon used
    * 
    * @example <caption>Example usage of addSuicide() function.</caption>
-   * appData.addSuicide(1609123414390, 374586912, 'bob', '357');
+   * appData.addSuicide(1609123414390, '374586912', 'bob', '357');
    */
   addSuicide(time, id, name, weapon) {
     if (!this.users[id]) {
@@ -527,6 +541,9 @@ class Data {
    * @param {String} id - steamid3 of the player
    * @param {String} name - player name
    * @param {String} weapon - name of the weapon used
+   * 
+   * @example <caption>Example usage of addHeadshot() function.</caption>
+   * appData.addHeadshot(1609123414390, '374586912', 'bob'):
    */
   addHeadshot(time, id, name) {
     if (!this.users[id]) {
@@ -555,7 +572,10 @@ class Data {
    *
    * @param {String} id - steamid3 of the player
    * 
-   * @returns {Object} player object
+   * @returns {JSON Object} player object
+   * 
+   * @example <caption>Example usage of addBanned() function.</caption>
+   * var player = appData.addBanned('374586912');
    */
   addBanned(id) {
     if (!this.users[id]) {
@@ -586,6 +606,9 @@ class Data {
    * @param {String} id - steamid3 of the player
    * @param {String} name - player name
    * @param {String} said - chat line with timestamp
+   * 
+   * @example <caption>Example usage of addChat() function.</caption>
+   * appData.addChat(1609123414390, '374586912', 'bob', 'nice shot!');
    */
   addChat(time, id, name, said) {
     // create user object if it doesn't exist
@@ -607,6 +630,9 @@ class Data {
    * @param {String} id - steamid3 of the player
    * @param {String} name - player name
    * @param {Object} weapon - object of weapn data
+   * 
+   * @example <caption>Example usage of addWeaponStats() function.</caption>
+   * appData.addWeaponStats(1609123414390, '374586912', 'bob', '357');
    */
   addWeaponStats(time, id, name, weapon) {
     if (!this.users[id]) {
@@ -654,6 +680,9 @@ class Data {
    * @param {String} id - steamid3 of the player
    * @param {String} name - player name
    * @param {object} weapon - object of weapn data
+   * 
+   * @example <caption>Example usage of addWeaponStats2() function.</caption>
+   * appData.addWeaponStats2(1609123414390, '374586912', 'bob', '357');
    */
   addWeaponStats2(time, id, name, weapon) {
     if (!this.users[id]) {
@@ -685,6 +714,9 @@ class Data {
    * caches list of avaliable demo files
    * 
    * @return {Promise<Array>} list of demos file avaliable to download
+   * 
+   * @example <caption>Example usage of cacheDemos() function.</caption>
+   * appData.cacheDemos();
    */
   cacheDemos() {
     require('../cacheDemos/cacheDemos.js')().then(demos => {
@@ -695,6 +727,9 @@ class Data {
   /**
    * runs end of month file cleanup process
    * @see modules/fileCleanup/fileCleanup-doc.md
+   * 
+   * @example <caption>Example usage of runCleanup() function.</caption>
+   * appData.runCleanup();
    */
   runCleanup() {
     require('../fileCleanup/fileCleanup')(

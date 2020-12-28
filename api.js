@@ -188,6 +188,7 @@ function getOldStatsList(month) {
           return resolve(data);
         }
       }
+      reject();
     });
   });
 }
