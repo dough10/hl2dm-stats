@@ -274,7 +274,7 @@ function fourohfour(req, res) {
  * 
  * @returns {HTML} 500
  */
-function fiveHundred() {
+function fiveHundred(req, res) {
   var reqadd = {
     protocol: req.protocol,
     host:req.get('host'),
