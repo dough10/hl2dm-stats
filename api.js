@@ -185,10 +185,9 @@ function getOldStatsList(month) {
         var fileMonth = new Date(Number(date)).getMonth();
         if (fileMonth === month) {
           var data = require(`${__dirname}/old-top/${files[i]}`);
-          resolve(data);
+          return resolve(data);
         }
       }
-      reject();
     });
   });
 }
