@@ -2,20 +2,22 @@
 
 /**
  * Class to hold and manipulate the app data
- * 
+ * @fileOverview data Class 
  * @module data-model
+ * @author Jimmy Doughten <https://github.com/dough10>
  * @requires geoip-lite
  * @exports Data
  * 
  * @example <caption>Example usage of Data class.</caption>
- * var Datamodel = require('modules/data-model/data-model);
+ * var Datamodel = require('modules/data-model/data-model');
  * var appData = new Datamodel();
  * // call some functions
  * 
  */
 
- /** geoip import */
+ /** geoip database */
 const geoip = require('geoip-lite');
+/** Timer module @see <a href=modules/Timer/Timer-doc.md>Timer-doc.md</a> */
 const Timer = require('../Timer/Timer.js');
 
 /** 
@@ -45,6 +47,21 @@ Object.size = obj => {
  * 
  * @example <caption>Example usage of playerObj() function.</caption>
  * var bob = playerObj('bob', '374586912', 1609123414390, '25.65.8.357');
+ * // console.log(bob) = {
+ * //   name: 'bob',
+ * //   id: '374586912',
+ * //   ip: '25.65.8.357',
+ * //   geo: [object Object],
+ * //   kills: 0,
+ * //   deaths: 0,
+ * //   kdr: 0,
+ * //   banned: false,
+ * //   suicide: {
+ * //     count:0
+ * //   },
+ * //   updated: 1609123414390,
+ * //   chat: []
+ * // }
  */
 function playerObj(name, id, time, ip) {
   return {
@@ -72,6 +89,22 @@ function playerObj(name, id, time, ip) {
  * @example <caption>Example usage of weaponObj() function.</caption>
  * var bob = playerObj('bob', '374586912', 1609123414390, '25.65.8.357');
  * bob['357'] = weaponObj();
+ * // console.log(bob['357']) = {
+ * //     kills: 0,
+ * //     shots: 0,
+ * //     hits: 0,
+ * //     headshots: 0,
+ * //     head: 0,
+ * //     chest: 0,
+ * //     stomach: 0,
+ * //     leftarm: 0,
+ * //     rightarm: 0,
+ * //     leftleg: 0,
+ * //     rightleg:0,
+ * //     damage:0,
+ * //     hss:0,
+ * //     lss:9999
+ * //   }
  */
 function weaponObj() {
   return {
@@ -98,11 +131,11 @@ function weaponObj() {
  * @param {Number} small - small #
  * @param {Number} big - big #
  * 
- * @return {Number} precentage
+ * @returns {Number} precentage
  * 
  * @example <caption>Example usage of calculatePrecent() function.</caption>
- * // returns 60
  * var precent = calculatePrecent(60, 100);
+ * // console.log(precent) = 60
  */
 function calculatePrecent(small, big) {
   return Math.round((small / big) * 100);
@@ -114,7 +147,13 @@ function calculatePrecent(small, big) {
  * @param {String} weapon.name - name of the weapon
  * @param {Object} weapon - stats associated with the named weapon
  * 
- * @return {Array} weapon stats
+ * @returns {Array} weapon stats
+ * 
+ * @example <caption>Example usage of calculateWeaponStats() function.</caption>
+ * var bob = playerObj('bob', '374586912', 1609123414390, '25.65.8.357');
+ * bob['357'] = weaponObj();
+ * bob.weapons['357'] = calculateWeaponStats('357', bob['357']);
+ * delete bob['357'];
  */
 function calculateWeaponStats(weaponsName, weapon) {
   var shots = weapon.shots || 0;
@@ -149,6 +188,12 @@ function calculateWeaponStats(weaponsName, weapon) {
  * @param {Object} user - user object
  * 
  * @returns {Array} array of weapons sorted by kill count
+ * 
+ * @example <caption>Example usage of sortWeapons() function.</caption>
+ * var bob = playerObj('bob', '374586912', 1609123414390, '25.65.8.357');
+ * bob['357'] = weaponObj();
+ * // got some kills 
+ * bob.weapons = sortWeapons();
  */
 function sortWeapons(user) {
   var sortArr = [];
@@ -173,6 +218,14 @@ function sortWeapons(user) {
  * merge all physics kills, physbox & world kills to physics kills 
  *
  * @param {Object} user - a user object
+ * 
+ * @returns {void} Nothing
+ * 
+ * @example <caption>Example usage of sortWeapons() function.</caption>
+ * var bob = playerObj('bob', '374586912', 1609123414390, '25.65.8.357');
+ * bob['357'] = weaponObj();
+ * mergePhysicsKills(bob);
+ * bob.weapons = sortWeapons();
  */
 function mergePhysicsKills(user) {
   // merge physics kills
@@ -201,12 +254,14 @@ function mergePhysicsKills(user) {
 
 
 /**
- *  Class to hold and manipulate the app data
+ * Class to hold and manipulate the app data
+ * @class
  */
 class Data {
 
   /**
    * @constructor
+   * @returns {void} Nothing
    */
   constructor() {
     this.users = {};                // object of all users and their data
@@ -223,7 +278,7 @@ class Data {
   }
 
   /**
-   * gets the current status of gameserver
+   * gets the status stored for the gameserver
    * 
    * @returns {Object} game server status
    * 
@@ -235,9 +290,11 @@ class Data {
   }
 
   /**
-   * update game server status
+   * update stored gameserver status
    * 
    * @param {Object} status - set the  game server status from Gamedig 
+   * 
+   * @returns {void} Nothing
    * 
    * @example <caption>Example usage of updateStatus() function.</caption>
    * appData.updateStatus({
@@ -254,8 +311,8 @@ class Data {
    * @returns {Promise<String>} alert message notifying the change to data
    * 
    * @example <caption>Example usage of reset() function.</caption>
-   * appData.reset().then(_ => {
-   *   // data has been reset
+   * appData.reset().then(resetString => {
+   * // console.log(resetString) = `Data model reset`
    * });
    */
   reset() {
@@ -277,7 +334,7 @@ class Data {
    * @param {String} name - player name of the connection player
    * @param {String} ip - ip address of the connection player
    * 
-   * @returns {Boolean} true: new player, false: been bere before
+   * @returns {Boolean} true: new for a player, false: if they have been here before
    * 
    * @example <caption>Example usage of playerConnect() function.</caption>
    * var newUser = appData.playerConnect(time, id, name, ip);
@@ -307,7 +364,7 @@ class Data {
     return newUser;
   }
 
-    /**
+  /**
    * a player has connected to the game server
    *
    * @param {String} id - steamid3 of the connecting player
@@ -316,7 +373,7 @@ class Data {
    * 
    * @example <caption>Example usage of playerDisconnect() function.</caption>
    * appData.playerDisconnect(id).then(timeOnline => {
-   *    // timeOnline = players time online
+   * // console.log(timeOnline) = '0 hours 10 minutes 15.347 seconds'
    * });
    */
   playerDisconnect(id) {
@@ -337,6 +394,10 @@ class Data {
    * 
    * @example <caption>Example usage of generateTop() function.</caption>
    * var top = appData.generateTop();
+   * // console.log(top) = [
+   * //   { .. player },
+   * //   { .. another player }
+   * // ]
    */
   generateTop() {
     var arr = [];
@@ -441,6 +502,8 @@ class Data {
    * @param {Object} killed - player details
    * @param {String} weapon - name of the weapon used
    * 
+   * @returns {void} Nothing
+   * 
    * @example <caption>Example usage of addKill() function.</caption>
    * appData.addKill(1609123414390, {...}, {...}, '357');
    */
@@ -509,6 +572,8 @@ class Data {
    * @param {String} name - players name
    * @param {String} weapon - name of the weapon used
    * 
+   * @returns {void} Nothing
+   * 
    * @example <caption>Example usage of addSuicide() function.</caption>
    * appData.addSuicide(1609123414390, '374586912', 'bob', '357');
    */
@@ -541,6 +606,8 @@ class Data {
    * @param {String} id - steamid3 of the player
    * @param {String} name - player name
    * @param {String} weapon - name of the weapon used
+   * 
+   * @returns {void} Nothing
    * 
    * @example <caption>Example usage of addHeadshot() function.</caption>
    * appData.addHeadshot(1609123414390, '374586912', 'bob'):
@@ -607,6 +674,8 @@ class Data {
    * @param {String} name - player name
    * @param {String} said - chat line with timestamp
    * 
+   * @returns {void} Nothing
+   * 
    * @example <caption>Example usage of addChat() function.</caption>
    * appData.addChat(1609123414390, '374586912', 'bob', 'nice shot!');
    */
@@ -631,8 +700,10 @@ class Data {
    * @param {String} name - player name
    * @param {Object} weapon - object of weapn data
    * 
+   * @returns {void} Nothing
+   * 
    * @example <caption>Example usage of addWeaponStats() function.</caption>
-   * appData.addWeaponStats(1609123414390, '374586912', 'bob', '357');
+   * appData.addWeaponStats(1609123414390, '374586912', 'bob', {name: '357' ... });
    */
   addWeaponStats(time, id, name, weapon) {
     if (!this.users[id]) {
@@ -681,8 +752,10 @@ class Data {
    * @param {String} name - player name
    * @param {object} weapon - object of weapn data
    * 
+   * @returns {void} Nothing
+   * 
    * @example <caption>Example usage of addWeaponStats2() function.</caption>
-   * appData.addWeaponStats2(1609123414390, '374586912', 'bob', '357');
+   * appData.addWeaponStats2(1609123414390, '374586912', 'bob', {name: '357' ... });
    */
   addWeaponStats2(time, id, name, weapon) {
     if (!this.users[id]) {
@@ -713,7 +786,9 @@ class Data {
   /**
    * caches list of avaliable demo files
    * 
-   * @return {Promise<Array>} list of demos file avaliable to download
+   * @async
+   * 
+   * @returns {void} Nothing
    * 
    * @example <caption>Example usage of cacheDemos() function.</caption>
    * appData.cacheDemos();
@@ -726,7 +801,9 @@ class Data {
 
   /**
    * runs end of month file cleanup process
-   * @see modules/fileCleanup/fileCleanup-doc.md
+   * @see <a href=modules/fileCleanup/fileCleanup-doc.md>fileCleanup-doc.md</a>
+   * 
+   * @returns {void} Nothing
    * 
    * @example <caption>Example usage of runCleanup() function.</caption>
    * appData.runCleanup();

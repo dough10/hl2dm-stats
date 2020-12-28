@@ -1,12 +1,13 @@
 <a name="module_data-model"></a>
 
 ## data-model
-Class to hold and manipulate the app data
+data Class
 
 **Requires**: <code>module:geoip-lite</code>  
+**Author**: Jimmy Doughten <https://github.com/dough10>  
 **Example** *(Example usage of Data class.)*  
 ```js
-var Datamodel = require('modules/data-model/data-model);
+var Datamodel = require('modules/data-model/data-model');
 var appData = new Datamodel();
 // call some functions
 ```
@@ -14,7 +15,7 @@ var appData = new Datamodel();
 * [data-model](#module_data-model)
     * [~Data](#module_data-model..Data)
         * [.getStatus()](#module_data-model..Data+getStatus) ⇒ <code>Object</code>
-        * [.updateStatus(status)](#module_data-model..Data+updateStatus)
+        * [.updateStatus(status)](#module_data-model..Data+updateStatus) ⇒ <code>void</code>
         * [.reset()](#module_data-model..Data+reset) ⇒ <code>Promise.&lt;String&gt;</code>
         * [.playerConnect(time, id, name, ip)](#module_data-model..Data+playerConnect) ⇒ <code>Boolean</code>
         * [.playerDisconnect(id)](#module_data-model..Data+playerDisconnect) ⇒ <code>Promise.&lt;String&gt;</code>
@@ -23,22 +24,23 @@ var appData = new Datamodel();
         * [.generateBannedPlayerList()](#module_data-model..Data+generateBannedPlayerList) ⇒ <code>Array</code>
         * [.generatePlayerStats()](#module_data-model..Data+generatePlayerStats) ⇒ <code>Object</code>
         * [.who(ip)](#module_data-model..Data+who) ⇒ <code>String</code>
-        * [.addKill(time, killer, killed, weapon)](#module_data-model..Data+addKill)
-        * [.addSuicide(time, id, name, weapon)](#module_data-model..Data+addSuicide)
-        * [.addHeadshot(time, id, name, weapon)](#module_data-model..Data+addHeadshot)
+        * [.addKill(time, killer, killed, weapon)](#module_data-model..Data+addKill) ⇒ <code>void</code>
+        * [.addSuicide(time, id, name, weapon)](#module_data-model..Data+addSuicide) ⇒ <code>void</code>
+        * [.addHeadshot(time, id, name, weapon)](#module_data-model..Data+addHeadshot) ⇒ <code>void</code>
         * [.addBanned(id)](#module_data-model..Data+addBanned) ⇒ <code>JSON</code>
-        * [.addChat(time, id, name, said)](#module_data-model..Data+addChat)
-        * [.addWeaponStats(time, id, name, weapon)](#module_data-model..Data+addWeaponStats)
-        * [.addWeaponStats2(time, id, name, weapon)](#module_data-model..Data+addWeaponStats2)
-        * [.cacheDemos()](#module_data-model..Data+cacheDemos) ⇒ <code>Promise.&lt;Array&gt;</code>
-        * [.runCleanup()](#module_data-model..Data+runCleanup)
+        * [.addChat(time, id, name, said)](#module_data-model..Data+addChat) ⇒ <code>void</code>
+        * [.addWeaponStats(time, id, name, weapon)](#module_data-model..Data+addWeaponStats) ⇒ <code>void</code>
+        * [.addWeaponStats2(time, id, name, weapon)](#module_data-model..Data+addWeaponStats2) ⇒ <code>void</code>
+        * [.cacheDemos()](#module_data-model..Data+cacheDemos) ⇒ <code>void</code>
+        * [.runCleanup()](#module_data-model..Data+runCleanup) ⇒ <code>void</code>
     * [~geoip](#module_data-model..geoip)
+    * [~Timer](#module_data-model..Timer)
     * [~playerObj(name, id, time, ip)](#module_data-model..playerObj) ⇒ <code>Object</code>
     * [~weaponObj()](#module_data-model..weaponObj) ⇒ <code>Object</code>
     * [~calculatePrecent(small, big)](#module_data-model..calculatePrecent) ⇒ <code>Number</code>
     * [~calculateWeaponStats(weapon)](#module_data-model..calculateWeaponStats) ⇒ <code>Array</code>
     * [~sortWeapons(user)](#module_data-model..sortWeapons) ⇒ <code>Array</code>
-    * [~mergePhysicsKills(user)](#module_data-model..mergePhysicsKills)
+    * [~mergePhysicsKills(user)](#module_data-model..mergePhysicsKills) ⇒ <code>void</code>
 
 <a name="module_data-model..Data"></a>
 
@@ -49,7 +51,7 @@ Class to hold and manipulate the app data
 
 * [~Data](#module_data-model..Data)
     * [.getStatus()](#module_data-model..Data+getStatus) ⇒ <code>Object</code>
-    * [.updateStatus(status)](#module_data-model..Data+updateStatus)
+    * [.updateStatus(status)](#module_data-model..Data+updateStatus) ⇒ <code>void</code>
     * [.reset()](#module_data-model..Data+reset) ⇒ <code>Promise.&lt;String&gt;</code>
     * [.playerConnect(time, id, name, ip)](#module_data-model..Data+playerConnect) ⇒ <code>Boolean</code>
     * [.playerDisconnect(id)](#module_data-model..Data+playerDisconnect) ⇒ <code>Promise.&lt;String&gt;</code>
@@ -58,20 +60,20 @@ Class to hold and manipulate the app data
     * [.generateBannedPlayerList()](#module_data-model..Data+generateBannedPlayerList) ⇒ <code>Array</code>
     * [.generatePlayerStats()](#module_data-model..Data+generatePlayerStats) ⇒ <code>Object</code>
     * [.who(ip)](#module_data-model..Data+who) ⇒ <code>String</code>
-    * [.addKill(time, killer, killed, weapon)](#module_data-model..Data+addKill)
-    * [.addSuicide(time, id, name, weapon)](#module_data-model..Data+addSuicide)
-    * [.addHeadshot(time, id, name, weapon)](#module_data-model..Data+addHeadshot)
+    * [.addKill(time, killer, killed, weapon)](#module_data-model..Data+addKill) ⇒ <code>void</code>
+    * [.addSuicide(time, id, name, weapon)](#module_data-model..Data+addSuicide) ⇒ <code>void</code>
+    * [.addHeadshot(time, id, name, weapon)](#module_data-model..Data+addHeadshot) ⇒ <code>void</code>
     * [.addBanned(id)](#module_data-model..Data+addBanned) ⇒ <code>JSON</code>
-    * [.addChat(time, id, name, said)](#module_data-model..Data+addChat)
-    * [.addWeaponStats(time, id, name, weapon)](#module_data-model..Data+addWeaponStats)
-    * [.addWeaponStats2(time, id, name, weapon)](#module_data-model..Data+addWeaponStats2)
-    * [.cacheDemos()](#module_data-model..Data+cacheDemos) ⇒ <code>Promise.&lt;Array&gt;</code>
-    * [.runCleanup()](#module_data-model..Data+runCleanup)
+    * [.addChat(time, id, name, said)](#module_data-model..Data+addChat) ⇒ <code>void</code>
+    * [.addWeaponStats(time, id, name, weapon)](#module_data-model..Data+addWeaponStats) ⇒ <code>void</code>
+    * [.addWeaponStats2(time, id, name, weapon)](#module_data-model..Data+addWeaponStats2) ⇒ <code>void</code>
+    * [.cacheDemos()](#module_data-model..Data+cacheDemos) ⇒ <code>void</code>
+    * [.runCleanup()](#module_data-model..Data+runCleanup) ⇒ <code>void</code>
 
 <a name="module_data-model..Data+getStatus"></a>
 
 #### data.getStatus() ⇒ <code>Object</code>
-gets the current status of gameserver
+gets the status stored for the gameserver
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
 **Returns**: <code>Object</code> - game server status  
@@ -81,10 +83,11 @@ var status = appData.getStatus();
 ```
 <a name="module_data-model..Data+updateStatus"></a>
 
-#### data.updateStatus(status)
-update game server status
+#### data.updateStatus(status) ⇒ <code>void</code>
+update stored gameserver status
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
+**Returns**: <code>void</code> - Nothing  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -105,8 +108,8 @@ reset data model
 **Returns**: <code>Promise.&lt;String&gt;</code> - alert message notifying the change to data  
 **Example** *(Example usage of reset() function.)*  
 ```js
-appData.reset().then(_ => {
-  // data has been reset
+appData.reset().then(resetString => {
+// console.log(resetString) = `Data model reset`
 });
 ```
 <a name="module_data-model..Data+playerConnect"></a>
@@ -115,7 +118,7 @@ appData.reset().then(_ => {
 a player has connected to the game server
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
-**Returns**: <code>Boolean</code> - true: new player, false: been bere before  
+**Returns**: <code>Boolean</code> - true: new for a player, false: if they have been here before  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -147,7 +150,7 @@ a player has connected to the game server
 **Example** *(Example usage of playerDisconnect() function.)*  
 ```js
 appData.playerDisconnect(id).then(timeOnline => {
-   // timeOnline = players time online
+// console.log(timeOnline) = '0 hours 10 minutes 15.347 seconds'
 });
 ```
 <a name="module_data-model..Data+generateTop"></a>
@@ -160,6 +163,10 @@ creates a array of players with greater than or equal to 100 kills
 **Example** *(Example usage of generateTop() function.)*  
 ```js
 var top = appData.generateTop();
+// console.log(top) = [
+//   { .. player },
+//   { .. another player }
+// ]
 ```
 <a name="module_data-model..Data+generateWeapons"></a>
 
@@ -212,10 +219,11 @@ var who = appData.who();
 ```
 <a name="module_data-model..Data+addKill"></a>
 
-#### data.addKill(time, killer, killed, weapon)
+#### data.addKill(time, killer, killed, weapon) ⇒ <code>void</code>
 calculates player stats when a kill takes place
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
+**Returns**: <code>void</code> - Nothing  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -230,10 +238,11 @@ appData.addKill(1609123414390, {...}, {...}, '357');
 ```
 <a name="module_data-model..Data+addSuicide"></a>
 
-#### data.addSuicide(time, id, name, weapon)
+#### data.addSuicide(time, id, name, weapon) ⇒ <code>void</code>
 calculates players stats when a suicide takes place
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
+**Returns**: <code>void</code> - Nothing  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -248,10 +257,11 @@ appData.addSuicide(1609123414390, '374586912', 'bob', '357');
 ```
 <a name="module_data-model..Data+addHeadshot"></a>
 
-#### data.addHeadshot(time, id, name, weapon)
+#### data.addHeadshot(time, id, name, weapon) ⇒ <code>void</code>
 calculates stats when a headshot takes place
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
+**Returns**: <code>void</code> - Nothing  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -282,10 +292,11 @@ var player = appData.addBanned('374586912');
 ```
 <a name="module_data-model..Data+addChat"></a>
 
-#### data.addChat(time, id, name, said)
+#### data.addChat(time, id, name, said) ⇒ <code>void</code>
 add change to user object
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
+**Returns**: <code>void</code> - Nothing  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -300,10 +311,11 @@ appData.addChat(1609123414390, '374586912', 'bob', 'nice shot!');
 ```
 <a name="module_data-model..Data+addWeaponStats"></a>
 
-#### data.addWeaponStats(time, id, name, weapon)
+#### data.addWeaponStats(time, id, name, weapon) ⇒ <code>void</code>
 add weapon stats to player object
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
+**Returns**: <code>void</code> - Nothing  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -314,14 +326,15 @@ add weapon stats to player object
 
 **Example** *(Example usage of addWeaponStats() function.)*  
 ```js
-appData.addWeaponStats(1609123414390, '374586912', 'bob', '357');
+appData.addWeaponStats(1609123414390, '374586912', 'bob', {name: '357' ... });
 ```
 <a name="module_data-model..Data+addWeaponStats2"></a>
 
-#### data.addWeaponStats2(time, id, name, weapon)
+#### data.addWeaponStats2(time, id, name, weapon) ⇒ <code>void</code>
 add weapon stats to player object
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
+**Returns**: <code>void</code> - Nothing  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -332,26 +345,27 @@ add weapon stats to player object
 
 **Example** *(Example usage of addWeaponStats2() function.)*  
 ```js
-appData.addWeaponStats2(1609123414390, '374586912', 'bob', '357');
+appData.addWeaponStats2(1609123414390, '374586912', 'bob', {name: '357' ... });
 ```
 <a name="module_data-model..Data+cacheDemos"></a>
 
-#### data.cacheDemos() ⇒ <code>Promise.&lt;Array&gt;</code>
+#### data.cacheDemos() ⇒ <code>void</code>
 caches list of avaliable demo files
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
-**Returns**: <code>Promise.&lt;Array&gt;</code> - list of demos file avaliable to download  
+**Returns**: <code>void</code> - Nothing  
 **Example** *(Example usage of cacheDemos() function.)*  
 ```js
 appData.cacheDemos();
 ```
 <a name="module_data-model..Data+runCleanup"></a>
 
-#### data.runCleanup()
+#### data.runCleanup() ⇒ <code>void</code>
 runs end of month file cleanup process
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
-**See**: modules/fileCleanup/fileCleanup-doc.md  
+**Returns**: <code>void</code> - Nothing  
+**See**: <a href=modules/fileCleanup/fileCleanup-doc.md>fileCleanup-doc.md</a>  
 **Example** *(Example usage of runCleanup() function.)*  
 ```js
 appData.runCleanup();
@@ -359,7 +373,13 @@ appData.runCleanup();
 <a name="module_data-model..geoip"></a>
 
 ### data-model~geoip
-geoip import
+geoip database
+
+**Kind**: inner constant of [<code>data-model</code>](#module_data-model)  
+<a name="module_data-model..Timer"></a>
+
+### data-model~Timer
+Timer module @see <a href=modules/Timer/Timer-doc.md>Timer-doc.md</a>
 
 **Kind**: inner constant of [<code>data-model</code>](#module_data-model)  
 <a name="module_data-model..playerObj"></a>
@@ -380,6 +400,21 @@ returns a player object
 **Example** *(Example usage of playerObj() function.)*  
 ```js
 var bob = playerObj('bob', '374586912', 1609123414390, '25.65.8.357');
+// console.log(bob) = {
+//   name: 'bob',
+//   id: '374586912',
+//   ip: '25.65.8.357',
+//   geo: [object Object],
+//   kills: 0,
+//   deaths: 0,
+//   kdr: 0,
+//   banned: false,
+//   suicide: {
+//     count:0
+//   },
+//   updated: 1609123414390,
+//   chat: []
+// }
 ```
 <a name="module_data-model..weaponObj"></a>
 
@@ -392,6 +427,22 @@ returns defualt weapon object
 ```js
 var bob = playerObj('bob', '374586912', 1609123414390, '25.65.8.357');
 bob['357'] = weaponObj();
+// console.log(bob['357']) = {
+//     kills: 0,
+//     shots: 0,
+//     hits: 0,
+//     headshots: 0,
+//     head: 0,
+//     chest: 0,
+//     stomach: 0,
+//     leftarm: 0,
+//     rightarm: 0,
+//     leftleg: 0,
+//     rightleg:0,
+//     damage:0,
+//     hss:0,
+//     lss:9999
+//   }
 ```
 <a name="module_data-model..calculatePrecent"></a>
 
@@ -408,8 +459,8 @@ returns % value
 
 **Example** *(Example usage of calculatePrecent() function.)*  
 ```js
-// returns 60
 var precent = calculatePrecent(60, 100);
+// console.log(precent) = 60
 ```
 <a name="module_data-model..calculateWeaponStats"></a>
 
@@ -424,6 +475,13 @@ calculates weapon stats values ie shots per kill, average damage per hit, headsh
 | weapon.name | <code>String</code> | name of the weapon |
 | weapon | <code>Object</code> | stats associated with the named weapon |
 
+**Example** *(Example usage of calculateWeaponStats() function.)*  
+```js
+var bob = playerObj('bob', '374586912', 1609123414390, '25.65.8.357');
+bob['357'] = weaponObj();
+bob.weapons['357'] = calculateWeaponStats('357', bob['357']);
+delete bob['357'];
+```
 <a name="module_data-model..sortWeapons"></a>
 
 ### data-model~sortWeapons(user) ⇒ <code>Array</code>
@@ -436,14 +494,29 @@ remove weapon specific data from user object and place it in it's own array
 | --- | --- | --- |
 | user | <code>Object</code> | user object |
 
+**Example** *(Example usage of sortWeapons() function.)*  
+```js
+var bob = playerObj('bob', '374586912', 1609123414390, '25.65.8.357');
+bob['357'] = weaponObj();
+// got some kills 
+bob.weapons = sortWeapons();
+```
 <a name="module_data-model..mergePhysicsKills"></a>
 
-### data-model~mergePhysicsKills(user)
+### data-model~mergePhysicsKills(user) ⇒ <code>void</code>
 merge all physics kills, physbox & world kills to physics kills
 
 **Kind**: inner method of [<code>data-model</code>](#module_data-model)  
+**Returns**: <code>void</code> - Nothing  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | user | <code>Object</code> | a user object |
 
+**Example** *(Example usage of sortWeapons() function.)*  
+```js
+var bob = playerObj('bob', '374586912', 1609123414390, '25.65.8.357');
+bob['357'] = weaponObj();
+mergePhysicsKills(bob);
+bob.weapons = sortWeapons();
+```
