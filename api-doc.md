@@ -14,8 +14,8 @@
     * [~who(ip, message)](#module_api..who) ⇒ <code>Void</code>
     * [~getOldStatsList(month)](#module_api..getOldStatsList) ⇒ <code>Promise.&lt;Array&gt;</code>
     * [~parseLogs()](#module_api..parseLogs) ⇒ <code>Promise.&lt;String&gt;</code>
-    * [~fourohfour()](#module_api..fourohfour) ⇒ <code>HTML</code>
-    * [~fiveHundred()](#module_api..fiveHundred) ⇒ <code>HTML</code>
+    * [~fourohfour(req, res)](#module_api..fourohfour) ⇒ <code>HTML</code>
+    * [~fiveHundred(req, res)](#module_api..fiveHundred) ⇒ <code>HTML</code>
     * [~/()](#module_api../) ⇒ <code>JSON</code>
     * [~/status()](#module_api../status) ⇒ <code>JSON</code>
     * [~/auth()](#module_api../auth) ⇒ <code>JSON</code>
@@ -146,22 +146,34 @@ parseLogs().then(seconds => {
 ```
 <a name="module_api..fourohfour"></a>
 
-### api~fourohfour() ⇒ <code>HTML</code>
+### api~fourohfour(req, res) ⇒ <code>HTML</code>
 404 page
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
 **Returns**: <code>HTML</code> - 404  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| req | <code>Object</code> | express request object |
+| res | <code>Object</code> | express response object |
+
 **Example** *(Example usage of fourohfour() function.)*  
 ```js
 fourohfour(req, res);
 ```
 <a name="module_api..fiveHundred"></a>
 
-### api~fiveHundred() ⇒ <code>HTML</code>
+### api~fiveHundred(req, res) ⇒ <code>HTML</code>
 500 page
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
 **Returns**: <code>HTML</code> - 500  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| req | <code>Object</code> | express request object |
+| res | <code>Object</code> | express response object |
+
 **Example** *(Example usage of fiveHundred() function.)*  
 ```js
 fiveHundred(req, res);

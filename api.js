@@ -288,6 +288,8 @@ function parseLogs() {
 
 /**
  * 404 page
+ * @param {Object} req express request object
+ * @param {Object} res express response object
  * 
  * @returns {HTML} 404 
  * 
@@ -306,6 +308,8 @@ function fourohfour(req, res) {
 
 /**
  * 500 page
+ * @param {Object} req express request object
+ * @param {Object} res express response object
  * 
  * @returns {HTML} 500
  * 
