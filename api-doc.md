@@ -354,9 +354,9 @@ callback for when a player is banned
 | --- | --- | --- |
 | player | <code>Object</code> | user object of the banned player |
 
-**Example** *(Example usage of playerBanned() function.)*  
+**Example** *(Example usage of playerBan() function.)*  
 ```js
-scanner(.., .., .., .., playerBanned, .., ..);
+scanner(.., .., .., .., playerBan, .., ..);
 ```
 <a name="module_api..mapEnd"></a>
 

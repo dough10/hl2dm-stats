@@ -115,8 +115,8 @@ function userDisconnected(u) {
  * 
  * @param {Object} player user object of the banned player
  * 
- * @example <caption>Example usage of playerBanned() function.</caption>
- * scanner(.., .., .., .., playerBanned, .., ..);
+ * @example <caption>Example usage of playerBan() function.</caption>
+ * scanner(.., .., .., .., playerBan, .., ..);
  */
 function playerBan(player) {
   logBan(db, player).then(p => {
