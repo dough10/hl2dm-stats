@@ -334,7 +334,7 @@ class Data {
    * @returns {Boolean} true: new for a player, false: if they have been here before
    * 
    * @example <caption>Example usage of playerConnect() function.</caption>
-   * var newUser = appData.playerConnect(time, id, name, ip);
+   * var newUser = appData.playerConnect(1609123414390, '374586912', 'bob', '24.564.76.24);
    * if (!newUser) {
    *   // do a thing
    * }
@@ -478,7 +478,7 @@ class Data {
    * @returns {String} name of a player, or the passed in ip address 
    * 
    * @example <caption>Example usage of who() function.</caption>
-   * var who = appData.who(24.564.76.24);
+   * var who = appData.who('24.564.76.24');
    * // console.log(who) = 'bob'
    */
   who(ip) {

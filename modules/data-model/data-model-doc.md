@@ -127,7 +127,7 @@ a player has connected to the game server
 
 **Example** *(Example usage of playerConnect() function.)*  
 ```js
-var newUser = appData.playerConnect(time, id, name, ip);
+var newUser = appData.playerConnect(1609123414390, '374586912', 'bob', '24.564.76.24);
 if (!newUser) {
   // do a thing
 }
@@ -213,7 +213,7 @@ returns the player name associated with the passed in ip address
 
 **Example** *(Example usage of who() function.)*  
 ```js
-var who = appData.who(24.564.76.24);
+var who = appData.who('24.564.76.24');
 // console.log(who) = 'bob'
 ```
 <a name="module_data-model..Data+addKill"></a>
