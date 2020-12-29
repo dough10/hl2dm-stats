@@ -221,7 +221,9 @@ function getOldStatsList(month) {
  * @async
  * @callback
  * @see <a href=modules/gameSeverStatus.js>gameSeverStatus.js</a>
- * @see <a href=modules/data-model/data-model-doc.md#module_data-model..Data+updateStatus>data-model-doc.md</a>
+ * @see <a href=modules/data-model/data-model-doc.md#dataupdatestatusstatus--void>data-model-doc.md</a>
+ * 
+ * @return {Void} nothing
  * 
  * @example <caption>Example usage of statsLoop() function.</caption>
  * statsLoop(); // it will run every 5 seconds after being called

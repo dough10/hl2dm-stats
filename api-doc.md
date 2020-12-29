@@ -36,7 +36,7 @@
     * [~playerBan](#module_api..playerBan)
     * [~mapEnd](#module_api..mapEnd)
     * [~mapStart](#module_api..mapStart)
-    * [~statsLoop](#module_api..statsLoop)
+    * [~statsLoop](#module_api..statsLoop) ⇒ <code>Void</code>
 
 <a name="module_api..db"></a>
 
@@ -380,14 +380,15 @@ scanner(.., .., .., .., mapStart, .., ..);
 ```
 <a name="module_api..statsLoop"></a>
 
-### api~statsLoop
+### api~statsLoop ⇒ <code>Void</code>
 loops to get Gamedig data for game server
 
 **Kind**: inner typedef of [<code>api</code>](#module_api)  
+**Returns**: <code>Void</code> - nothing  
 **See**
 
 - <a href=modules/gameSeverStatus.js>gameSeverStatus.js</a>
-- <a href=modules/data-model/data-model-doc.md#module_data-model..Data+updateStatus>data-model-doc.md</a>
+- <a href=modules/data-model/data-model-doc.md#dataupdatestatusstatus--void>data-model-doc.md</a>
 
 **Example** *(Example usage of statsLoop() function.)*  
 ```js
