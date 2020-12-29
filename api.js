@@ -54,7 +54,7 @@ init(logFolder);
 
 /**
  * application data model
- * @see modules <a href=modules/data-model/data-model.md#module_data-model..Data>data-model.md#module_data-model..Data</a>
+ * @see modules <a href=modules/data-model/data-model.md#module_data-model..Data>data-model.md</a>
  * 
  * contains variables users, bannedUsers, totalPlayers, weapons, demos & playerTimer & methods to modify that data
  * 
@@ -155,7 +155,7 @@ function mapStart(logId) {
 
 /**
  * prints out the players name when a known ip views a page or makes a request
- * @see modules <a href=/data-model/data-model-doc.md#module_data-model..Data+who>data-model-doc.md#module_data-model..Data+who</a>
+ * @see modules <a href=modules/data-model/data-model-doc.md#module_data-model..Data+who>data-model-doc.md</a>
  *
  * @param {String} ip ip addres of the user viewing a page or making a request
  * @param {String} message the rest of the message
@@ -221,7 +221,7 @@ function getOldStatsList(month) {
  * @async
  * @callback
  * @see <a href=modules/gameSeverStatus.js>gameSeverStatus.js</a>
- * @see <a href=modules/data-model/data-model-doc.md#module_data-model..Data+updateStatus>data-model-doc.md#module_data-model..Data+updateStatus</a>
+ * @see <a href=modules/data-model/data-model-doc.md#module_data-model..Data+updateStatus>data-model-doc.md</a>
  * 
  * @example <caption>Example usage of statsLoop() function.</caption>
  * statsLoop(); // it will run every 5 seconds after being called
@@ -242,7 +242,7 @@ function statsLoop() {
 /**
  * parse folder of logs 1 line @ a time. dumping each line into the scanner
  * @async
- * @see <a href=modules/lineScanner.js>lineScanner.js</a>
+ * @see <a href=modules/lineScanner/lineScanner.js>lineScanner.js</a>
  * 
  * @returns {Promise<String>} duration for task to complete
  * 
@@ -322,7 +322,7 @@ function fiveHundred(req, res) {
 
 /**
  * cleanup files on first @ 5:00am
- * @see modules/data-model/data-model-doc.md#module_data-model..Data+runCleanup
+ * @see <a href=modules/data-model/data-model-doc.md#module_data-model..Data+runCleanup>data-model-doc.md</a>
  */
 schedule.scheduleJob('0 5 1 * *', appData.runCleanup);
 
@@ -356,7 +356,7 @@ app.get('/status', (req, res) => {
  * authorize
  * @function
  * @name /auth
- * @see modules/auth/auth-doc.md#module_modules/auth..auth
+ * @see <a href=modules/auth/auth-doc.md#module_modules/auth..auth>auth-doc.md</a>
  * @param {String} req.query.name - the name of the stream
  * @param {String} req.query.k - the streams auth key
  * 

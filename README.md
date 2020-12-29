@@ -1,4 +1,4 @@
-# hl2dm-stats V:1.1.1
+# hl2dm-stats V:1.1.2
 
 A logparser and stats calculator for HL2DM game servers. As seen at [Lo-g DeathMatch Hoedown](https://hl2dm.dough10.me). Parse logs to generate player stats. Stores the data in system memory for fast page response times. Logs player connections into mongodb in order to know who played when and who joined for the first time.
 

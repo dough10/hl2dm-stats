@@ -56,7 +56,7 @@ WebSocket connection object
 application data model
 
 **Kind**: inner property of [<code>api</code>](#module_api)  
-**See**: modules <a href=modules/data-model/data-model.md#module_data-model..Data>data-model.md#module_data-model..Data</a>contains variables users, bannedUsers, totalPlayers, weapons, demos & playerTimer & methods to modify that data  
+**See**: modules <a href=modules/data-model/data-model.md#module_data-model..Data>data-model.md</a>contains variables users, bannedUsers, totalPlayers, weapons, demos & playerTimer & methods to modify that data  
 <a name="module_api..receiver"></a>
 
 ### api~receiver
@@ -92,7 +92,7 @@ prints out the players name when a known ip views a page or makes a request
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
 **Returns**: <code>Void</code> - nothing  
-**See**: modules <a href=/data-model/data-model-doc.md#module_data-model..Data+who>data-model-doc.md#module_data-model..Data+who</a>  
+**See**: modules <a href=modules/data-model/data-model-doc.md#module_data-model..Data+who>data-model-doc.md</a>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -137,7 +137,7 @@ parse folder of logs 1 line @ a time. dumping each line into the scanner
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
 **Returns**: <code>Promise.&lt;String&gt;</code> - duration for task to complete  
-**See**: <a href=modules/lineScanner.js>lineScanner.js</a>  
+**See**: <a href=modules/lineScanner/lineScanner.js>lineScanner.js</a>  
 **Example** *(Example usage of parseLogs() function.)*  
 ```js
 parseLogs().then(seconds => {
@@ -187,7 +187,7 @@ authorize
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
 **Returns**: <code>JSON</code> - ok: authorized, fail: failed to authorize  
-**See**: modules/auth/auth-doc.md#module_modules/auth..auth  
+**See**: <a href=modules/auth/auth-doc.md#module_modules/auth..auth>auth-doc.md</a>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -387,7 +387,7 @@ loops to get Gamedig data for game server
 **See**
 
 - <a href=modules/gameSeverStatus.js>gameSeverStatus.js</a>
-- <a href=modules/data-model/data-model-doc.md#module_data-model..Data+updateStatus>data-model-doc.md#module_data-model..Data+updateStatus</a>
+- <a href=modules/data-model/data-model-doc.md#module_data-model..Data+updateStatus>data-model-doc.md</a>
 
 **Example** *(Example usage of statsLoop() function.)*  
 ```js
