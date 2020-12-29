@@ -1,11 +1,3 @@
-## Members
-
-<dl>
-<dt><a href="#files">files</a></dt>
-<dd><p>list of javascript files to process for docs without the file extension</p>
-</dd>
-</dl>
-
 ## Functions
 
 <dl>
@@ -29,12 +21,6 @@
 </dd>
 </dl>
 
-<a name="files"></a>
-
-## files
-list of javascript files to process for docs without the file extension
-
-**Kind**: global variable  
 <a name="writeFile"></a>
 
 ## writeFile(name, md) ⇒ <code>Promise.&lt;String&gt;</code>

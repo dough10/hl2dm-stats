@@ -360,10 +360,12 @@ app.get('/status', (req, res) => {
 });
 
 /**
- * authorize
+ * login system
  * @function
  * @name /auth
+ * 
  * @see <a href=modules/auth/auth-doc.md#module_modules/auth..auth>auth-doc.md</a>
+ * 
  * @param {String} req.query.name - the name of the stream
  * @param {String} req.query.k - the streams auth key
  * 

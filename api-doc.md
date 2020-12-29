@@ -199,7 +199,7 @@ route for gettings the status of the game server
 <a name="module_api../auth"></a>
 
 ### api~/auth() ⇒ <code>JSON</code>
-authorize
+login system
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
 **Returns**: <code>JSON</code> - ok: authorized, fail: failed to authorize  

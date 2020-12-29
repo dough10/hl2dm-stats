@@ -8,22 +8,6 @@ const jsdoc2md = require('jsdoc-to-markdown');
 const fs = require('fs');
 const pack = require('./package.json');
 
-
-/** 
- * list of javascript files to process for docs without the file extension
- */
-let files = [
-  'make-docs',
-  'api',
-  'modules/auth/auth',
-  'modules/Timer/Timer',
-  'modules/data-model/data-model',
-  'modules/cacheDemos/cacheDemos',
-  'modules/fileCleanup/fileCleanup',
-  'modules/lineScanner/lineScanner'
-];
-
-
 /**
  * save a file
  * @param {String} name filename
@@ -111,6 +95,7 @@ function devDependencies() {
  * var processedDocs = processDocs();
  */
 function processDocs() {
+  let files = require('./files.js');
   var output = '\n## Documentation\n\n';
   for (var i = 0; i < files.length; i++) {
     renderDoc(files[i]);
@@ -135,7 +120,7 @@ function processDocs() {
 function hulkSmash() {
   const head = fs.readFileSync('./assets/head.txt').toString();
   const foot = fs.readFileSync('./assets/foot.txt').toString();
-  return `# ${pack.name} V:${pack.version}\n` + head + processDocs() + '\n' + foot + '\n' + dependencies() + '\n' + devDependencies();
+  return `# ${pack.name} V:${pack.version}\n${head}${processDocs()}\n${foot}\n${dependencies()}\n${devDependencies()}`;
 }
 
 writeFile('README.md', hulkSmash()).then(console.log);
