@@ -479,6 +479,7 @@ class Data {
    * 
    * @example <caption>Example usage of who() function.</caption>
    * var who = appData.who(24.564.76.24);
+   * // console.log(who) = 'bob'
    */
   who(ip) {
     var i = ip;
