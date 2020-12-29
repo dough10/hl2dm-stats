@@ -326,10 +326,6 @@ function fiveHundred(req, res) {
   res.status(500).sendFile(path.join(__dirname, 'assets', '500.html'));
 }
 
-/**
- * cleanup files on first @ 5:00am
- * @see <a href=modules/data-model/data-model-doc.md#module_data-model..Data+runCleanup>data-model-doc.md</a>
- */
 schedule.scheduleJob('0 5 1 * *', appData.runCleanup);
 
 app.use(compression());
@@ -340,6 +336,7 @@ app.disable('x-powered-by');
  * route for WebSocket
  * @function
  * @name /
+ * 
  * @returns {JSON} websocket pipeline
  */
 app.ws('/', ws => {
@@ -351,6 +348,7 @@ app.ws('/', ws => {
  * route for gettings the status of the game server
  * @function
  * @name /status
+ * 
  * @returns {JSON} game server rcon status response
  */
 app.get('/status', (req, res) => {
