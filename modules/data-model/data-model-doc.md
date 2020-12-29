@@ -3,7 +3,7 @@
 ## data-model
 data Class
 
-**Requires**: <code>module:geoip-lite</code>  
+**Requires**: <code>module:geoip-lite</code>, <code>module:modules/Timer</code>  
 **Author**: Jimmy Doughten <https://github.com/dough10>  
 **Example** *(Example usage of Data class.)*  
 ```js
@@ -33,8 +33,6 @@ var appData = new Datamodel();
         * [.addWeaponStats2(time, id, name, weapon)](#module_data-model..Data+addWeaponStats2) ⇒ <code>void</code>
         * [.cacheDemos()](#module_data-model..Data+cacheDemos) ⇒ <code>void</code>
         * [.runCleanup()](#module_data-model..Data+runCleanup) ⇒ <code>void</code>
-    * [~geoip](#module_data-model..geoip)
-    * [~Timer](#module_data-model..Timer)
     * [~playerObj(name, id, time, ip)](#module_data-model..playerObj) ⇒ <code>Object</code>
     * [~weaponObj()](#module_data-model..weaponObj) ⇒ <code>Object</code>
     * [~calculatePrecent(small, big)](#module_data-model..calculatePrecent) ⇒ <code>Number</code>
@@ -229,7 +227,11 @@ calculates player stats when a kill takes place
 | --- | --- | --- |
 | time | <code>Number</code> | time the kill happened |
 | killer | <code>Object</code> | player details |
+| killer.id | <code>String</code> | steamid of the killer |
+| killer.name | <code>String</code> | name of the player who scored the kill |
 | killed | <code>Object</code> | player details |
+| killed.id | <code>String</code> | steamid of the killed player |
+| killed.name | <code>String</code> | name of the player killed |
 | weapon | <code>String</code> | name of the weapon used |
 
 **Example** *(Example usage of addKill() function.)*  
@@ -365,23 +367,11 @@ runs end of month file cleanup process
 
 **Kind**: instance method of [<code>Data</code>](#module_data-model..Data)  
 **Returns**: <code>void</code> - Nothing  
-**See**: <a href=modules/fileCleanup/fileCleanup-doc.md>fileCleanup-doc.md</a>  
+**See**: <a href=../fileCleanup/fileCleanup-doc.md>fileCleanup-doc.md</a>  
 **Example** *(Example usage of runCleanup() function.)*  
 ```js
 appData.runCleanup();
 ```
-<a name="module_data-model..geoip"></a>
-
-### data-model~geoip
-geoip database
-
-**Kind**: inner constant of [<code>data-model</code>](#module_data-model)  
-<a name="module_data-model..Timer"></a>
-
-### data-model~Timer
-Timer module @see <a href=../../modules/Timer/Timer-doc.md>Timer-doc.md</a>
-
-**Kind**: inner constant of [<code>data-model</code>](#module_data-model)  
 <a name="module_data-model..playerObj"></a>
 
 ### data-model~playerObj(name, id, time, ip) ⇒ <code>Object</code>

@@ -1,5 +1,5 @@
 /**
- * @file processes javascript files creating markdown documentation from comments
+ * @fileOverview processes javascript files creating markdown documentation from comments
  * @author Jimmy Doughten <https://github.com/dough10>
  * @requires fs
  * @requires jsdoc-to-markdown

@@ -1,6 +1,6 @@
 {
   "name": "hl2dm-stats",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Logparser and stats calculator for HL2DM game servers",
   "main": "api.js",
   "scripts": {

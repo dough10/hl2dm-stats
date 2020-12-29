@@ -12,8 +12,6 @@
  * // returns '0 hours 10 minutes 15.347 seconds'
  * 
  */
-
- /** color text */
 const colors = require('colors'); 
 
 

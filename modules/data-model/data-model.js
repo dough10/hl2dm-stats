@@ -6,16 +6,14 @@
  * @module data-model
  * @author Jimmy Doughten <https://github.com/dough10>
  * @requires geoip-lite
+ * @requires modules/Timer
  * @exports Data
  * @example <caption>Example usage of Data class.</caption>
  * var Datamodel = require('modules/data-model/data-model');
  * var appData = new Datamodel();
  * // call some functions
  */
-
- /** geoip database */
 const geoip = require('geoip-lite');
-/** Timer module @see <a href=../../modules/Timer/Timer-doc.md>Timer-doc.md</a> */
 const Timer = require('../Timer/Timer.js');
 
 /** 
@@ -496,10 +494,14 @@ class Data {
   /**
    * calculates player stats when a kill takes place
    *
-   * @param {Number} time - time the kill happened
-   * @param {Object} killer - player details
-   * @param {Object} killed - player details
-   * @param {String} weapon - name of the weapon used
+   * @param {Number} time time the kill happened
+   * @param {Object} killer player details
+   * @param {String} killer.id steamid of the killer
+   * @param {String} killer.name name of the player who scored the kill
+   * @param {Object} killed player details
+   * @param {String} killed.id steamid of the killed player
+   * @param {String} killed.name name of the player killed
+   * @param {String} weapon name of the weapon used
    * 
    * @returns {void} Nothing
    * 
@@ -800,7 +802,7 @@ class Data {
 
   /**
    * runs end of month file cleanup process
-   * @see <a href=modules/fileCleanup/fileCleanup-doc.md>fileCleanup-doc.md</a>
+   * @see <a href=../fileCleanup/fileCleanup-doc.md>fileCleanup-doc.md</a>
    * 
    * @returns {void} Nothing
    * 
