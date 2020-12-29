@@ -8,6 +8,7 @@ Requires Sourcemod and Superlogs Sourcemod plugin for weapon accuacy stat tracki
 
 ## Documentation
 
+- [make-docs-doc.md](make-docs-doc.md)
 - [api-doc.md](api-doc.md)
   - [modules/auth/auth-doc.md](modules/auth/auth-doc.md)
   - [modules/Timer/Timer-doc.md](modules/Timer/Timer-doc.md)

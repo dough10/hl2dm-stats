@@ -1,5 +1,6 @@
 /**
  * @module modules/lineScanner
+ * @author Jimmy Doughten <https://github.com/dough10>
  * @requires steamid
  * @requires weaponsCheck.js
  * @requires printer.js

@@ -2,12 +2,14 @@
 
 ## modules/Timer
 **Requires**: <code>module:colors</code>  
+**Author**: Jimmy Doughten <https://github.com/dough10>  
 **Example** *(Example usage of Timer class.)*  
 ```js
 var Timer = require('modules/Timer/Timer);
 var t = new Timer('thing');
 // do stuff you want to see how long it will take
 console.log(t.endString());
+// returns '0 hours 10 minutes 15.347 seconds'
 ```
 
 * [modules/Timer](#module_modules/Timer)
@@ -54,6 +56,6 @@ calls the end() method and formats into readable form
 <a name="module_modules/Timer..colors"></a>
 
 ### modules/Timer~colors
-colorize text
+color text
 
 **Kind**: inner constant of [<code>modules/Timer</code>](#module_modules/Timer)  

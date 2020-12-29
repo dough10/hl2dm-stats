@@ -7,7 +7,7 @@
     "dev": "node api.js",
     "pull": "git pull",
     "add-streamkey": "node modules/streamKey.js",
-    "docs": "node modules/document"
+    "docs": "node make-docs"
   },
   "repository": {
     "type": "git",

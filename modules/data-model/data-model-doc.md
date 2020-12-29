@@ -379,7 +379,7 @@ geoip database
 <a name="module_data-model..Timer"></a>
 
 ### data-model~Timer
-Timer module @see <a href=../modules/Timer/Timer-doc.md>Timer-doc.md</a>
+Timer module @see <a href=../../modules/Timer/Timer-doc.md>Timer-doc.md</a>
 
 **Kind**: inner constant of [<code>data-model</code>](#module_data-model)  
 <a name="module_data-model..playerObj"></a>

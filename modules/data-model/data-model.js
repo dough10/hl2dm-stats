@@ -15,7 +15,7 @@
 
  /** geoip database */
 const geoip = require('geoip-lite');
-/** Timer module @see <a href=../modules/Timer/Timer-doc.md>Timer-doc.md</a> */
+/** Timer module @see <a href=../../modules/Timer/Timer-doc.md>Timer-doc.md</a> */
 const Timer = require('../Timer/Timer.js');
 
 /** 
