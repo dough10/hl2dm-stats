@@ -478,7 +478,7 @@ class Data {
    * @returns {String} name of a player, or the passed in ip address 
    * 
    * @example <caption>Example usage of who() function.</caption>
-   * var who = appData.who();
+   * var who = appData.who(24.564.76.24);
    */
   who(ip) {
     var i = ip;

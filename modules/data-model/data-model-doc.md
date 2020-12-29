@@ -213,7 +213,7 @@ returns the player name associated with the passed in ip address
 
 **Example** *(Example usage of who() function.)*  
 ```js
-var who = appData.who();
+var who = appData.who(24.564.76.24);
 ```
 <a name="module_data-model..Data+addKill"></a>
 
