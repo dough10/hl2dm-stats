@@ -56,7 +56,7 @@ WebSocket connection object
 application data model
 
 **Kind**: inner property of [<code>api</code>](#module_api)  
-**See**: modules <a href=modules/data-model/data-model.md#module_data-model..Data>data-model.md</a>contains variables users, bannedUsers, totalPlayers, weapons, demos & playerTimer & methods to modify that data  
+**See**: modules <a href=modules/data-model/data-model-doc.md#module_data-model..Data>data-model-doc.md</a>contains variables users, bannedUsers, totalPlayers, weapons, demos & playerTimer & methods to modify that data  
 <a name="module_api..receiver"></a>
 
 ### api~receiver

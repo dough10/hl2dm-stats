@@ -54,7 +54,7 @@ init(logFolder);
 
 /**
  * application data model
- * @see modules <a href=modules/data-model/data-model.md#module_data-model..Data>data-model.md</a>
+ * @see modules <a href=modules/data-model/data-model-doc.md#module_data-model..Data>data-model-doc.md</a>
  * 
  * contains variables users, bannedUsers, totalPlayers, weapons, demos & playerTimer & methods to modify that data
  * 
