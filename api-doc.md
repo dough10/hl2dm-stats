@@ -185,6 +185,10 @@ route for WebSocket
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
 **Returns**: <code>JSON</code> - websocket pipeline  
+**Example** *(Example usage of / api endpoint.)*  
+```js
+var socket = new WebSocket('localhost:3000/);
+```
 <a name="module_api../status"></a>
 
 ### api~/status() ⇒ <code>JSON</code>

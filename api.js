@@ -338,6 +338,9 @@ app.disable('x-powered-by');
  * @name /
  * 
  * @returns {JSON} websocket pipeline
+ * 
+ * @example <caption>Example usage of / api endpoint.</caption>
+ * var socket = new WebSocket('localhost:3000/);
  */
 app.ws('/', ws => {
   socket = ws;
