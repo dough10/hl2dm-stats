@@ -353,6 +353,13 @@ app.ws('/', ws => {
  * @name /status
  * 
  * @returns {JSON} game server rcon status response
+ * 
+ * @example <caption>Example usage of /status api endpoint.</caption>
+ * fetch('localhost:3000/status').then(response => {
+ *   response.json().then(json => {
+ *     console.log(json); // game server status
+ *   })
+ * });
  */
 app.get('/status', (req, res) => {
   who(req, `is viewing ` + '/status'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
@@ -370,6 +377,7 @@ app.get('/status', (req, res) => {
  * @param {String} req.query.k - the streams auth key
  * 
  * @returns {JSON} ok: authorized, fail: failed to authorize
+ * 
  */
 app.get('/auth', oneOf([
   check('name').exists().escape().stripLow(),
@@ -411,6 +419,13 @@ app.get('/auth', oneOf([
  * @name /stats
  * 
  * @returns {JSON} stats top players list, server wide weapons list, # of total players, list of banned players, time of generation
+ * 
+ * @example <caption>Example usage of /stats api endpoint.</caption>
+ * fetch('localhost:3000/stats').then(response => {
+ *   response.json().then(json => {
+ *     console.log(json); // statistics
+ *   })
+ * });
  */
 app.get('/stats', (req, res) => {
   var t = new Timer();

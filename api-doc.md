@@ -196,6 +196,14 @@ route for gettings the status of the game server
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
 **Returns**: <code>JSON</code> - game server rcon status response  
+**Example** *(Example usage of /status api endpoint.)*  
+```js
+fetch('localhost:3000/status').then(response => {
+  response.json().then(json => {
+    console.log(json); // game server status
+  })
+});
+```
 <a name="module_api../auth"></a>
 
 ### api~/auth() ⇒ <code>JSON</code>
@@ -217,6 +225,14 @@ route for gettings player stats
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
 **Returns**: <code>JSON</code> - stats top players list, server wide weapons list, # of total players, list of banned players, time of generation  
+**Example** *(Example usage of /stats api endpoint.)*  
+```js
+fetch('localhost:3000/stats').then(response => {
+  response.json().then(json => {
+    console.log(json); // statistics
+  })
+});
+```
 <a name="module_api../old-months"></a>
 
 ### api~/old-months() ⇒ <code>JSON</code> \| <code>HTML</code>
