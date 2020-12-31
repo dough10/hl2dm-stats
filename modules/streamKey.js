@@ -34,7 +34,9 @@ function createUser(name, key) {
         key: hash 
       }, (err, res) => {
         if (err) throw err;
-        dbo.collection("stream-keys").findOne({name: name}, (err, result) => {
+        dbo.collection("stream-keys").findOne({
+          name: name
+        }, (err, result) => {
           db.close();
           if (err) throw err;
           console.log(result.key);

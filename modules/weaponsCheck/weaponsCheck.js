@@ -1,7 +1,8 @@
 
 /**
- * checks if weapon selection is a valid weapon name
+ * checks if given string is a valid weapon name
  * @module modules/weaponCheck
+ * @author Jimmy Doughten <https://github.com/dough10>
  * @exports isWeapon
  * 
  * @param {String} weapon - name of a weapon
