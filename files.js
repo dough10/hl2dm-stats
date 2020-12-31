@@ -9,5 +9,7 @@ module.exports = [
   'modules/lineScanner/lineScanner',
   'modules/getNewUsers/getNewUsers',
   'modules/getReturnUsers/getReturnUsers',
-  'modules/gameServerStatus/gameServerStatus'
+  'modules/gameServerStatus/gameServerStatus',
+  'modules/printer/printer',
+  'modules/month-name/month-name'
 ];

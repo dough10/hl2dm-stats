@@ -1,13 +1,13 @@
-<a name="module_gameServerStatus"></a>
+<a name="module_modules/gameServerStatus"></a>
 
-## gameServerStatus
+## modules/gameServerStatus
 **Requires**: <code>module:Gamedig</code>  
-<a name="module_gameServerStatus..gameServerStatus"></a>
+<a name="exp_module_modules/gameServerStatus--module.exports"></a>
 
-### gameServerStatus~gameServerStatus() ⇒ <code>Object</code>
+### module.exports() ⇒ <code>Object</code> ⏏
 get GameDig data from game server
 
-**Kind**: inner method of [<code>gameServerStatus</code>](#module_gameServerStatus)  
+**Kind**: Exported function  
 **Returns**: <code>Object</code> - gamedig server statsus object  
 **Example** *(Example usage of gameServerStatus module.)*  
 ```js

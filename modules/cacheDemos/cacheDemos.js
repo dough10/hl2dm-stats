@@ -11,7 +11,7 @@ const config = require('../loadConfig.js')();                     // config file
 const path = require('path');                             // merger file / url names
 const fs = require('fs');                                 // work with the file system
 const colors = require('colors');                         // colorize text
-const print = require('../printer.js');
+const print = require('../printer/printer.js');
 const Timer = require('../Timer/Timer.js');
 
 

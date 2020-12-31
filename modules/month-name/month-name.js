@@ -1,9 +1,14 @@
 /**
- * returns month name in string form
- *
+ * returns month name
+ * @module modules/monthName
+ * @exports monthName
+ * 
  * @param {Number} month - month number 0 - 11
  * 
  * @returns {String} month name
+ * 
+ * @example <caption>Example usage of monthName() function.</caption>
+ * monthName(2); = March
  */
 function monthName(month) {
     if (typeof month !== 'number') {

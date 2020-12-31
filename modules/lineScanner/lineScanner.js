@@ -8,7 +8,7 @@
  */
 const SteamID = require('steamid');
 const isWeapon = require('../weaponsCheck.js');
-const print = require('../printer.js');
+const print = require('../printer/printer.js');
 
 /**
  * check if ip  address is valid

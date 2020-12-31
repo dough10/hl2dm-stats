@@ -19,6 +19,8 @@ Requires Sourcemod and Superlogs Sourcemod plugin for weapon accuacy stat tracki
   - [modules/getNewUsers/getNewUsers-doc.md](modules/getNewUsers/getNewUsers-doc.md)
   - [modules/getReturnUsers/getReturnUsers-doc.md](modules/getReturnUsers/getReturnUsers-doc.md)
   - [modules/gameServerStatus/gameServerStatus-doc.md](modules/gameServerStatus/gameServerStatus-doc.md)
+  - [modules/printer/printer-doc.md](modules/printer/printer-doc.md)
+  - [modules/month-name/month-name-doc.md](modules/month-name/month-name-doc.md)
 
 ## Install
 
