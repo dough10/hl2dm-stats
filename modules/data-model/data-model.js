@@ -269,8 +269,8 @@ class Data {
     this.gameStatus = {};
     this.playerTimes = {};
     // imported function
-    this.getNewUsers = require('../getNewUsers.js');
-    this.getReturnUsers = require('../getReturnUsers.js');
+    this.getNewUsers = require('../getNewUsers/getNewUsers.js');
+    this.getReturnUsers = require('../getReturnUsers/getReturnUsers.js');
     this.authorize = require('../auth/auth.js');
   }
 
