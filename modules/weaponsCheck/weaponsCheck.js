@@ -2,6 +2,7 @@
 /**
  * checks if weapon selection is a valid weapon name
  * @module modules/weaponCheck
+ * @exports isWeapon
  * 
  * @param {String} weapon - name of a weapon
  * 
@@ -10,6 +11,11 @@
  * @example <caption>Example usage of isWeapon() function.</caption>
  * var mag = isWeapon('357');
  * // console.log(mag) = true
+ * // or 
+ * if (!isWeapon('357') {
+ *   return;
+ * }
+ * // it is a weapon name
  */
 function isWeapon(weapon) {
   var w = [

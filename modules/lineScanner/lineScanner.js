@@ -7,7 +7,7 @@
  * @exports scanLine 
  */
 const SteamID = require('steamid');
-const isWeapon = require('../weaponsCheck.js');
+const isWeapon = require('../weaponsCheck/weaponsCheck.js');
 const print = require('../printer/printer.js');
 
 /**

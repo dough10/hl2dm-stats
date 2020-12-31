@@ -1,3 +1,7 @@
+/**
+ * @module modules/streamKey
+ * @exports createUser
+ */
 const readline = require("readline");
 const rl = readline.createInterface({
   input: process.stdin,
@@ -7,7 +11,13 @@ const MongoClient = require('mongodb').MongoClient;
 const bcrypt = require('bcrypt');
 const dbURL = require('./loadConfig.js')().dbURL;
 
-
+/**
+ *  adds a user / stream name to the database
+ * @param {String} name name of the stream 
+ * @param {String} key authorization key
+ * 
+ * @returns {Void} nothing
+ */
 function createUser(name, key) {
   if (!name) throw Error("stream name is required");
   if (!key) throw Error("stream key is required");
@@ -24,7 +34,6 @@ function createUser(name, key) {
         key: hash 
       }, (err, res) => {
         if (err) throw err;
-        // console.log(res);
         dbo.collection("stream-keys").findOne({name: name}, (err, result) => {
           db.close();
           if (err) throw err;

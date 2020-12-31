@@ -194,7 +194,7 @@ function calculateWeaponStats(weaponsName, weapon) {
 function sortWeapons(user) {
   var sortArr = [];
   for (var weapon in user) {
-    if (require('../weaponsCheck.js')(weapon)) {
+    if (require('../weaponsCheck/weaponsCheck.js')(weapon)) {
       if (user[weapon].kills !== 0) {
         sortArr.push(calculateWeaponStats(weapon, user[weapon]));
       }

@@ -11,5 +11,6 @@ module.exports = [
   'modules/getReturnUsers/getReturnUsers',
   'modules/gameServerStatus/gameServerStatus',
   'modules/printer/printer',
-  'modules/month-name/month-name'
+  'modules/month-name/month-name',
+  'modules/weaponsCheck/weaponsCheck'
 ];
