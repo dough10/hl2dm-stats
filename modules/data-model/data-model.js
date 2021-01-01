@@ -811,13 +811,15 @@ class Data {
    * appData.runCleanup();
    */
   runCleanup() {
-    require('../fileCleanup/fileCleanup')(
-      this.generateTop(), 
-      this.generateWeapons(), 
-      this.totalPlayers, 
-      this.generateBannedPlayerList(), 
-      new Date().getTime()
-    );
+    return new Promise((resolve, reject) => {
+      require('../fileCleanup/fileCleanup')(
+        this.generateTop(), 
+        this.generateWeapons(), 
+        this.totalPlayers, 
+        this.generateBannedPlayerList(), 
+        new Date().getTime()
+      ).then(resolve);
+    });
   }
 } 
 
