@@ -12,12 +12,12 @@
  */
 const path = require('path');
 const fs = require('fs');
-var config = require('./loadConfig.js')();
+var config = require('../loadConfig.js')();
 const child_process = require("child_process");
 const logFolder = path.join(config.gameServerDir, 'logs');
 const colors = require('colors');
-const Timer = require('./Timer.js');  // time things
-const print = require(path.join(__dirname, 'printer.js'));
+const Timer = require('../Timer/Timer.js');  // time things
+const print = require('../printer/printer.js');
 var numFiles = 0;
 
 /**

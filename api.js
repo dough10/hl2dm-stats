@@ -329,6 +329,7 @@ function fiveHundred(req, res) {
 schedule.scheduleJob('0 5 1 * *', _ => {
   appData.runCleanup().then(appData.reset);
 });
+appData.runCleanup().then(appData.reset);
 
 app.use(compression());
 app.set('trust proxy', true);
