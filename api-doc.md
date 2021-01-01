@@ -31,6 +31,7 @@
     * [~/download/demos-zip/:file(file)](#module_api../download/demos-zip/_file) ⇒ <code>File</code> \| <code>HTML</code>
     * [~/demos()](#module_api../demos) ⇒ <code>JSON</code>
     * [~/cvarlist()](#module_api../cvarlist) ⇒ <code>Text</code>
+    * [~/admin()](#module_api../admin) ⇒ <code>HTML</code>
     * [~userConnected](#module_api..userConnected)
     * [~userDisconnected](#module_api..userDisconnected)
     * [~playerBan](#module_api..playerBan)
@@ -345,6 +346,13 @@ route to get list of hl2dm server cvar's
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
 **Returns**: <code>Text</code> - list of cvar commands  
+<a name="module_api../admin"></a>
+
+### api~/admin() ⇒ <code>HTML</code>
+admin portal
+
+**Kind**: inner method of [<code>api</code>](#module_api)  
+**Returns**: <code>HTML</code> - admin portal  
 <a name="module_api..userConnected"></a>
 
 ### api~userConnected

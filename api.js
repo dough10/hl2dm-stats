@@ -120,7 +120,7 @@ function userDisconnected(u) {
  */
 function playerBan(player) {
   logBan(db, player).then(p => {
-    if (p) print(`${player.name.grey} was saved to ban database`);
+    if (p && player.name) print(`${player.name.grey} was saved to ban database`);
   });
 }
 
@@ -647,6 +647,17 @@ app.get('/cvarlist', (req, res) => {
   }
   res.sendFile(`${__dirname}/assets/cvarlist.txt`);
   who(req, `is viewing ` + '/cvarlist'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+});
+
+/**
+ * admin portal
+ * @function
+ * @name /admin
+ * 
+ * @returns {HTML} admin portal
+ */
+app.get('/admin', (req, res) => {
+  
 });
 
 app.get('*', fourohfour);
