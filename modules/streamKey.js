@@ -9,7 +9,7 @@ const rl = readline.createInterface({
 });
 const MongoClient = require('mongodb').MongoClient;
 const bcrypt = require('bcrypt');
-const dbURL = require('./loadConfig.js')().dbURL;
+const dbURL = require('../loadConfig.js')().dbURL;
 
 /**
  *  adds a user / stream name to the database
