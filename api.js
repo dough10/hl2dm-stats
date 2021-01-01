@@ -120,7 +120,7 @@ function userDisconnected(u) {
  */
 function playerBan(player) {
   logBan(db, player).then(p => {
-    if (p && player.name) print(`${player.name.grey} was saved to ban database`);
+    if (p && p.name) print(`${p.name.grey} was saved to ban database`);
   });
 }
 
