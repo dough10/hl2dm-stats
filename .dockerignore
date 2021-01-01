@@ -1,8 +1,12 @@
 .vscode
 test
 node_modules
-npm-debug.log
 *.md
 modules/*/*.md
-push.sh
+assets/foot.txt
+assets/head.txt
+npm-debug.log
 incriment-version.js
+files.js
+make-docs.js
+push.sh
