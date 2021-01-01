@@ -326,7 +326,9 @@ function fiveHundred(req, res) {
   res.status(500).sendFile(path.join(__dirname, 'assets', '500.html'));
 }
 
-schedule.scheduleJob('0 5 1 * *', appData.runCleanup);
+schedule.scheduleJob('0 5 1 * *', _ => {
+  appData.runCleanup().then(appData.reset);
+});
 
 app.use(compression());
 app.set('trust proxy', true);
