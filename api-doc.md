@@ -2,6 +2,7 @@
 
 ## api
 **Requires**: <code>module:fs</code>, <code>module:readline</code>, <code>module:compression</code>, <code>module:express</code>, <code>module:node-schedule</code>, <code>module:path</code>, <code>module:url</code>, <code>module:srcds-log-receiver</code>, <code>module:expresss-ws</code>, <code>module:express-validator</code>, <code>module:colors</code>  
+**Author**: Jimmy Doughten <https://github.com/dough10>  
 
 * [api](#module_api)
     * [~db](#module_api..db)
@@ -9,18 +10,12 @@
     * [~appData](#module_api..appData)
     * [~receiver](#module_api..receiver)
     * [~server](#module_api..server)
-    * [~scanner](#module_api..scanner)
-    * [~Datamodel](#module_api..Datamodel)
-    * [~logUser](#module_api..logUser)
-    * [~print](#module_api..print)
-    * [~Timer](#module_api..Timer)
-    * [~monthName](#module_api..monthName)
-    * [~errorHandler(e)](#module_api..errorHandler)
-    * [~who(ip, message)](#module_api..who)
-    * [~getOldStatsList(month)](#module_api..getOldStatsList) ⇒ <code>Promise.&lt;MonthData&gt;</code>
+    * [~errorHandler(e)](#module_api..errorHandler) ⇒ <code>Void</code>
+    * [~who(ip, message)](#module_api..who) ⇒ <code>Void</code>
+    * [~getOldStatsList(month)](#module_api..getOldStatsList) ⇒ <code>Promise.&lt;Array&gt;</code>
     * [~parseLogs()](#module_api..parseLogs) ⇒ <code>Promise.&lt;String&gt;</code>
-    * [~fourohfour()](#module_api..fourohfour) ⇒ <code>HTML</code>
-    * [~fiveHundred()](#module_api..fiveHundred) ⇒ <code>HTML</code>
+    * [~fourohfour(req, res)](#module_api..fourohfour) ⇒ <code>HTML</code>
+    * [~fiveHundred(req, res)](#module_api..fiveHundred) ⇒ <code>HTML</code>
     * [~/()](#module_api../) ⇒ <code>JSON</code>
     * [~/status()](#module_api../status) ⇒ <code>JSON</code>
     * [~/auth()](#module_api../auth) ⇒ <code>JSON</code>
@@ -41,8 +36,7 @@
     * [~playerBan](#module_api..playerBan)
     * [~mapEnd](#module_api..mapEnd)
     * [~mapStart](#module_api..mapStart)
-    * [~MonthData](#module_api..MonthData)
-    * [~statsLoop](#module_api..statsLoop)
+    * [~statsLoop](#module_api..statsLoop) ⇒ <code>Void</code>
 
 <a name="module_api..db"></a>
 
@@ -59,10 +53,10 @@ WebSocket connection object
 <a name="module_api..appData"></a>
 
 ### api~appData
-application data model contains variables users, bannedUsers, totalPlayers, weapons, demos & playerTimer & methods to modify that data
+application data model
 
 **Kind**: inner property of [<code>api</code>](#module_api)  
-**See**: modules/data-model/data-model.md#module_data-model..Data  
+**See**: modules <a href=modules/data-model/data-model-doc.md#module_data-model..Data>data-model-doc.md</a>contains variables users, bannedUsers, totalPlayers, weapons, demos & playerTimer & methods to modify that data  
 <a name="module_api..receiver"></a>
 
 ### api~receiver
@@ -75,97 +69,115 @@ Recieve logs on UDP port# 9871
 express server instance listening on the port from config.json
 
 **Kind**: inner property of [<code>api</code>](#module_api)  
-<a name="module_api..scanner"></a>
-
-### api~scanner
-**Kind**: inner constant of [<code>api</code>](#module_api)  
-**See**: modules/lineScanner/lineScanner-doc.md  
-<a name="module_api..Datamodel"></a>
-
-### api~Datamodel
-**Kind**: inner constant of [<code>api</code>](#module_api)  
-**See**: modules/data-model/data-model-doc.md  
-<a name="module_api..logUser"></a>
-
-### api~logUser
-logs a user connection to a mongodb session
-
-**Kind**: inner constant of [<code>api</code>](#module_api)  
-<a name="module_api..print"></a>
-
-### api~print
-log line a to console with timestamp
-
-**Kind**: inner constant of [<code>api</code>](#module_api)  
-<a name="module_api..Timer"></a>
-
-### api~Timer
-time things
-
-**Kind**: inner constant of [<code>api</code>](#module_api)  
-<a name="module_api..monthName"></a>
-
-### api~monthName
-switch statement for month name
-
-**Kind**: inner constant of [<code>api</code>](#module_api)  
 <a name="module_api..errorHandler"></a>
 
-### api~errorHandler(e)
-throw a error message stopping app when something breaks
+### api~errorHandler(e) ⇒ <code>Void</code>
+prints error message to console
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
+**Returns**: <code>Void</code> - nothing  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | e | <code>Object</code> | error object |
 
+**Example** *(Example usage of errorHandler() function.)*  
+```js
+doStuff().then(doMoreStuff).catch(errorHandler);
+```
 <a name="module_api..who"></a>
 
-### api~who(ip, message)
+### api~who(ip, message) ⇒ <code>Void</code>
 prints out the players name when a known ip views a page or makes a request
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
-**See**: modules/data-model/data-model-doc.md#module_data-model..Data+who  
+**Returns**: <code>Void</code> - nothing  
+**See**: modules <a href=modules/data-model/data-model-doc.md#module_data-model..Data+who>data-model-doc.md</a>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | ip | <code>String</code> | ip addres of the user viewing a page or making a request |
 | message | <code>String</code> | the rest of the message |
 
+**Example** *(Example usage of who() function.)*  
+```js
+who(req, 'is online');
+```
 <a name="module_api..getOldStatsList"></a>
 
-### api~getOldStatsList(month) ⇒ <code>Promise.&lt;MonthData&gt;</code>
+### api~getOldStatsList(month) ⇒ <code>Promise.&lt;Array&gt;</code>
 grabs stats object from json file for a given month
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
+**Returns**: <code>Promise.&lt;Array&gt;</code> - list of months. / players stats for the passed in month  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| month | <code>Number</code> | number of the month 0 - 11 *optional |
+| month | <code>Number</code> | number of the month 0 - 11 **optional** |
 
+**Example** *(Example usage of getOldStatsList() function.)*  
+```js
+getOldStatsList().then(months => {
+// console.log(months); = [1609123414390.json]
+});
+getOldStatsList(11).then(month => {
+// console.log(month); = [
+//   [ over 100 kills sorted by KDR ],
+//   [ weapon data ],
+//   212, // player count
+//   [ banned players ],
+//   1609123414390 // time stats were generated
+//]
+});
+```
 <a name="module_api..parseLogs"></a>
 
 ### api~parseLogs() ⇒ <code>Promise.&lt;String&gt;</code>
 parse folder of logs 1 line @ a time. dumping each line into the scanner
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
-**Returns**: <code>Promise.&lt;String&gt;</code> - duration to complete task  
-**See**: modules/lineScanner.js  
+**Returns**: <code>Promise.&lt;String&gt;</code> - duration for task to complete  
+**See**: <a href=modules/lineScanner/lineScanner.js>lineScanner.js</a>  
+**Example** *(Example usage of parseLogs() function.)*  
+```js
+parseLogs().then(seconds => {
+//  print(`Log parser complete in ` + `${seconds} seconds`); = '12/28/2020, 9:28:55 PM - Log parser complete in 1.768 seconds'
+});
+```
 <a name="module_api..fourohfour"></a>
 
-### api~fourohfour() ⇒ <code>HTML</code>
+### api~fourohfour(req, res) ⇒ <code>HTML</code>
 404 page
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
 **Returns**: <code>HTML</code> - 404  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| req | <code>Object</code> | express request object |
+| res | <code>Object</code> | express response object |
+
+**Example** *(Example usage of fourohfour() function.)*  
+```js
+fourohfour(req, res);
+```
 <a name="module_api..fiveHundred"></a>
 
-### api~fiveHundred() ⇒ <code>HTML</code>
+### api~fiveHundred(req, res) ⇒ <code>HTML</code>
 500 page
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
 **Returns**: <code>HTML</code> - 500  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| req | <code>Object</code> | express request object |
+| res | <code>Object</code> | express response object |
+
+**Example** *(Example usage of fiveHundred() function.)*  
+```js
+fiveHundred(req, res);
+```
 <a name="module_api../"></a>
 
 ### api~/() ⇒ <code>JSON</code>
@@ -173,6 +185,10 @@ route for WebSocket
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
 **Returns**: <code>JSON</code> - websocket pipeline  
+**Example** *(Example usage of / api endpoint.)*  
+```js
+var socket = new WebSocket('localhost:3000/);
+```
 <a name="module_api../status"></a>
 
 ### api~/status() ⇒ <code>JSON</code>
@@ -180,14 +196,22 @@ route for gettings the status of the game server
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
 **Returns**: <code>JSON</code> - game server rcon status response  
+**Example** *(Example usage of /status api endpoint.)*  
+```js
+fetch('localhost:3000/status').then(response => {
+  response.json().then(json => {
+    console.log(json); // game server status
+  })
+});
+```
 <a name="module_api../auth"></a>
 
 ### api~/auth() ⇒ <code>JSON</code>
-authorize
+login system
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
 **Returns**: <code>JSON</code> - ok: authorized, fail: failed to authorize  
-**See**: modules/auth/auth-doc.md#module_modules/auth..auth  
+**See**: <a href=modules/auth/auth-doc.md#module_modules/auth..auth>auth-doc.md</a>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -201,6 +225,14 @@ route for gettings player stats
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
 **Returns**: <code>JSON</code> - stats top players list, server wide weapons list, # of total players, list of banned players, time of generation  
+**Example** *(Example usage of /stats api endpoint.)*  
+```js
+fetch('localhost:3000/stats').then(response => {
+  response.json().then(json => {
+    console.log(json); // statistics
+  })
+});
+```
 <a name="module_api../old-months"></a>
 
 ### api~/old-months() ⇒ <code>JSON</code> \| <code>HTML</code>
@@ -324,6 +356,10 @@ callback for when a player joins server
 | --- | --- | --- |
 | u | <code>Object</code> | user object with name, id, time, date, month, year, and if user is new to server |
 
+**Example** *(Example usage of userConnected() function.)*  
+```js
+scanner(.., .., .., .., userConnected, .., ..);
+```
 <a name="module_api..userDisconnected"></a>
 
 ### api~userDisconnected
@@ -335,6 +371,10 @@ callback for when a player leaves server
 | --- | --- | --- |
 | u | <code>Object</code> | user object with name, id, time, date, month, year, and if user is new to server |
 
+**Example** *(Example usage of userDisconnected() function.)*  
+```js
+scanner(.., .., .., .., userDisconnected, .., ..);
+```
 <a name="module_api..playerBan"></a>
 
 ### api~playerBan
@@ -346,37 +386,43 @@ callback for when a player is banned
 | --- | --- | --- |
 | player | <code>Object</code> | user object of the banned player |
 
+**Example** *(Example usage of playerBan() function.)*  
+```js
+scanner(.., .., .., .., playerBan, .., ..);
+```
 <a name="module_api..mapEnd"></a>
 
 ### api~mapEnd
 callback for when a round / map has ended
 
 **Kind**: inner typedef of [<code>api</code>](#module_api)  
+**Example** *(Example usage of mapEnd() function.)*  
+```js
+scanner(.., .., .., .., mapEnd, .., ..);
+```
 <a name="module_api..mapStart"></a>
 
 ### api~mapStart
 callback for when a round / map has started
 
 **Kind**: inner typedef of [<code>api</code>](#module_api)  
-<a name="module_api..MonthData"></a>
-
-### api~MonthData
-**Kind**: inner typedef of [<code>api</code>](#module_api)  
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| files | <code>Array</code> | list of months. |
-| Data | <code>Array</code> | players stats for the passed in month. |
-
+**Example** *(Example usage of mapStart() function.)*  
+```js
+scanner(.., .., .., .., mapStart, .., ..);
+```
 <a name="module_api..statsLoop"></a>
 
-### api~statsLoop
+### api~statsLoop ⇒ <code>Void</code>
 loops to get Gamedig data for game server
 
 **Kind**: inner typedef of [<code>api</code>](#module_api)  
+**Returns**: <code>Void</code> - nothing  
 **See**
 
-- modules/gameSeverStatus.js
-- modules/data-model/data-model-doc.md#module_data-model..Data+updateStatus
+- <a href=modules/gameSeverStatus.js>gameSeverStatus.js</a>
+- <a href=modules/data-model/data-model-doc.md#dataupdatestatusstatus--void>data-model-doc.md</a>
 
+**Example** *(Example usage of statsLoop() function.)*  
+```js
+statsLoop(); // it will run every 5 seconds after being called
+```

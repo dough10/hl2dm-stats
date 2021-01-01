@@ -1,10 +1,22 @@
 
 /**
- * checks if weapon selection is a valid weapon name
- *
+ * checks if given string is a valid weapon name
+ * @module modules/weaponCheck
+ * @author Jimmy Doughten <https://github.com/dough10>
+ * @exports isWeapon
+ * 
  * @param {String} weapon - name of a weapon
  * 
  * @returns {Boolean} true: is a weapon name, false: is not a weapon name
+ * 
+ * @example <caption>Example usage of isWeapon() function.</caption>
+ * var mag = isWeapon('357');
+ * // console.log(mag) = true
+ * // or 
+ * if (!isWeapon('357') {
+ *   return;
+ * }
+ * // it is a weapon name
  */
 function isWeapon(weapon) {
   var w = [

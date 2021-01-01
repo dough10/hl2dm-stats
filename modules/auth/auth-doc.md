@@ -4,17 +4,6 @@
 authorization module.
 
 **Requires**: <code>module:bcrypt</code>  
-
-* [modules/auth](#module_modules/auth)
-    * [~bcrypt](#module_modules/auth..bcrypt)
-    * [~auth(db, name, pass)](#module_modules/auth..auth) ⇒ <code>Promise.&lt;Boolean&gt;</code>
-
-<a name="module_modules/auth..bcrypt"></a>
-
-### modules/auth~bcrypt
-hashing password / auth keys
-
-**Kind**: inner constant of [<code>modules/auth</code>](#module_modules/auth)  
 <a name="module_modules/auth..auth"></a>
 
 ### modules/auth~auth(db, name, pass) ⇒ <code>Promise.&lt;Boolean&gt;</code>

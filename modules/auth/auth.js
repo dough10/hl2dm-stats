@@ -4,16 +4,14 @@
  * @requires bcrypt
  * @exports auth
  */
-
- /** hashing password / auth keys */
 const bcrypt = require('bcrypt');
 
 /**
  * authorize
  * @async
- * @param {Object} db - mongodb connection object
- * @param {String} name - the name of the stream / user
- * @param {String} pass - the streams auth key / password
+ * @param {Object} db mongodb connection object
+ * @param {String} name the name of the stream / user
+ * @param {String} pass the streams auth key / password
  * 
  * @returns {Promise<Boolean>} promise to a boolean.  true: authorized, false: not authorized
  * 

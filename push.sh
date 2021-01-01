@@ -1,5 +1,5 @@
 #!/bin/sh
-node modules/document
+node make-docs
 if [ "$2" == "+" ]
   then
     v=$(node modules/incriment-version.js);

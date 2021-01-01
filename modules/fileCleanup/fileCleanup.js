@@ -9,14 +9,7 @@
  * @requires modules/Timer
  * @requires modules/printer.js
  * @exports cleanUp
- * 
- * @example <caption>Example usage of cleanUp() function.</caption>
- * var cleanUp = require('modules/fileCleanup/fileCleanup);
- * cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate).then(_ => {
- *  // cleanup complete
- * });
  */
-
 const path = require('path');
 const fs = require('fs');
 var config = require('./loadConfig.js')();
@@ -25,14 +18,22 @@ const logFolder = path.join(config.gameServerDir, 'logs');
 const colors = require('colors');
 const Timer = require('./Timer.js');  // time things
 const print = require(path.join(__dirname, 'printer.js'));
-
-var numFiles = 0;                                         // running total of files deleted
+var numFiles = 0;
 
 /**
  * saves top data before log clear
  * @param {Number} lastMonth - new Date() output for the time cleanup() was run
+ * @param {Array} top - over 100 kills by kdr
+ * @param {Array} weapons - weapon stat data
+ * @param {Number} totalPlayers - count of players
+ * @param {Array} bannedPlayers - list of banned players
+ * @param {Number} lastUpdate - new Date() output
  * 
- * @returns {Promise<String>} lastmonth time string
+ * @returns {Promise<Number>} lastmonth time string
+ * @example <caption>Example usage of saveTop() function.</caption>
+ * saveTop(1609123414390, [ 'players with over 100 kills sorted by kdr'], [ 'weapons' ], 212, [ 'banned players' ], 1609123414390).then(time => {
+ * // time = 1609123414390
+ * });
  */
 function saveTop(lastMonth, top, weapons, totalPlayers, bannedPlayers, lastUpdate) {
   return new Promise((resolve, reject) => {
@@ -66,7 +67,12 @@ function saveTop(lastMonth, top, weapons, totalPlayers, bannedPlayers, lastUpdat
  * zip log files before cleanUp deletes them
  * @param {Number} lastMonth - new Date() output for the time cleanup() was run
  * 
- * @returns {Promise<String>} lastmonth time string
+ * @returns {Promise<Number>} lastmonth time string
+ * 
+ * @example <caption>Example usage of zipLogs() function.</caption>
+ * zipLogs(1609123414390).then(time => {
+ * // time = 1609123414390
+ * });
  */
 function zipLogs(lastMonth) {
   return new Promise((resolve, reject) => {
@@ -90,10 +96,15 @@ function zipLogs(lastMonth) {
 }
 
 /**
- * zip demo files before cleanUp deletes them
+ * will create a zip of all demo files in game server directory
  * @param {Number} lastMonth - new Date() output for the time cleanup() was run
  * 
- * @returns {Promise<String>} lastmonth time string
+ * @returns {Promise<Number>} lastmonth time string
+ * 
+ * @example <caption>Example usage of zipDemos() function.</caption>
+ * zipDemos(1609123414390).then(time => {
+ * // time = 1609123414390
+ * });
  */
 function zipDemos(lastMonth) {
   return new Promise((resolve, reject) => {
@@ -117,9 +128,13 @@ function zipDemos(lastMonth) {
 }
 
 /**
- * remove all log files from logs folder
+ * will remove all log files from logs folder **can not be undone**
  * 
- * @returns {Promise}
+ * @returns {Promise<Void>} nothing
+ * @example <caption>Example usage of deleteLogs() function.</caption>
+ * deleteLogs().then(_ => {
+ * // logs are gone!!
+ * });
  */
 function deleteLogs() {
   return new Promise((resolve, reject) => {
@@ -140,9 +155,14 @@ function deleteLogs() {
 }
 
 /**
- * remove all demo files from game folder
+ * will remove all demo files from game folder **can not be undone**
  * 
- * @returns {Promise}
+ * @returns {Promise<Void>} nothing
+ * 
+ * @example <caption>Example usage of deleteDemos() function.</caption>
+ * deleteDemos().then(_ => {
+ * // demos are gone!!
+ * });
  */
 function deleteDemos() {
   return new Promise((resolve, reject) => {
@@ -170,9 +190,14 @@ function deleteDemos() {
  * @param {Array} weapons - weapon stat data
  * @param {Number} totalPlayers - count of players
  * @param {Array} bannedPlayers - list of banned players
- * @param {Number} lastUpdate - time string
+ * @param {Number} lastUpdate - new Date() output
  * 
- * @returns {Promise}
+ * @returns {Promise<Void>} nothing
+ * 
+ * @example <caption>Example usage of cleanUp() function.</caption>
+ * cleanUp([ 'players with over 100 kills sorted by kdr'], [ 'weapons' ], 212, [ 'banned players' ], 1609123414390).then(_ => {
+ *  // cleanup complete
+ * });
  */
 function cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate) {
   return new Promise((resolve, reject) => {

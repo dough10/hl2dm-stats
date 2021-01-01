@@ -1,13 +1,14 @@
 /**
  * @module modules/lineScanner
+ * @author Jimmy Doughten <https://github.com/dough10>
  * @requires steamid
  * @requires weaponsCheck.js
  * @requires printer.js
  * @exports scanLine 
  */
 const SteamID = require('steamid');
-const isWeapon = require('../weaponsCheck.js');
-const print = require('../printer.js');
+const isWeapon = require('../weaponsCheck/weaponsCheck.js');
+const print = require('../printer/printer.js');
 
 /**
  * check if ip  address is valid

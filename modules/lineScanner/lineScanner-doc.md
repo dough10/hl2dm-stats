@@ -2,6 +2,7 @@
 
 ## modules/lineScanner
 **Requires**: <code>module:steamid</code>, <code>module:weaponsCheck.js</code>, <code>module:printer.js</code>  
+**Author**: Jimmy Doughten <https://github.com/dough10>  
 
 * [modules/lineScanner](#module_modules/lineScanner)
     * [~validateIPaddress(ip)](#module_modules/lineScanner..validateIPaddress) ⇒ <code>Boolean</code>

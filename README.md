@@ -1,4 +1,4 @@
-# hl2dm-stats V:1.1.1
+# hl2dm-stats V:1.1.2
 
 A logparser and stats calculator for HL2DM game servers. As seen at [Lo-g DeathMatch Hoedown](https://hl2dm.dough10.me). Parse logs to generate player stats. Stores the data in system memory for fast page response times. Logs player connections into mongodb in order to know who played when and who joined for the first time.
 
@@ -8,6 +8,7 @@ Requires Sourcemod and Superlogs Sourcemod plugin for weapon accuacy stat tracki
 
 ## Documentation
 
+- [make-docs-doc.md](make-docs-doc.md)
 - [api-doc.md](api-doc.md)
   - [modules/auth/auth-doc.md](modules/auth/auth-doc.md)
   - [modules/Timer/Timer-doc.md](modules/Timer/Timer-doc.md)
@@ -15,6 +16,12 @@ Requires Sourcemod and Superlogs Sourcemod plugin for weapon accuacy stat tracki
   - [modules/cacheDemos/cacheDemos-doc.md](modules/cacheDemos/cacheDemos-doc.md)
   - [modules/fileCleanup/fileCleanup-doc.md](modules/fileCleanup/fileCleanup-doc.md)
   - [modules/lineScanner/lineScanner-doc.md](modules/lineScanner/lineScanner-doc.md)
+  - [modules/getNewUsers/getNewUsers-doc.md](modules/getNewUsers/getNewUsers-doc.md)
+  - [modules/getReturnUsers/getReturnUsers-doc.md](modules/getReturnUsers/getReturnUsers-doc.md)
+  - [modules/gameServerStatus/gameServerStatus-doc.md](modules/gameServerStatus/gameServerStatus-doc.md)
+  - [modules/printer/printer-doc.md](modules/printer/printer-doc.md)
+  - [modules/month-name/month-name-doc.md](modules/month-name/month-name-doc.md)
+  - [modules/weaponsCheck/weaponsCheck-doc.md](modules/weaponsCheck/weaponsCheck-doc.md)
 
 ## Install
 

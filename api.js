@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 /**
  * @module api
+ * @author Jimmy Doughten <https://github.com/dough10>
  * @requires fs
  * @requires readline
  * @requires compression
@@ -13,21 +14,14 @@
  * @requires express-validator
  * @requires colors
  */
-
-/** @see modules/lineScanner/lineScanner-doc.md */
 const scanner = require('./modules/lineScanner/lineScanner.js');
-/** @see modules/data-model/data-model-doc.md */
 const Datamodel = require('./modules/data-model/data-model.js');
-/** logs a user connection to a mongodb session */
 const logUser = require('./modules/logUser.js');
 const logBan = require('./modules/logBan');
-/** log line a to console with timestamp */
-const print = require('./modules/printer.js');
-/** time things */
+const print = require('./modules/printer/printer.js');
 const Timer = require('./modules/Timer/Timer.js');
-/** switch statement for month name */
-const monthName = require('./modules/month-name.js');
-const gameServerStatus = require('./modules/gameServerStatus.js');
+const monthName = require('./modules/month-name/month-name.js');
+const gameServerStatus = require('./modules/gameServerStatus/gameServerStatus.js');
 const mongoConnect = require('./modules/mongo-connect.js');
 const init = require('./modules/init.js');
 const suffix = require('./modules/suffix.js');
@@ -41,7 +35,6 @@ const url = require('url');
 const logReceiver = require("srcds-log-receiver");
 const app = express();   
 const expressWs = require('express-ws')(app);
-/** input validation */
 const { check, oneOf, validationResult } = require('express-validator');
 const colors = require('colors'); 
 const config = require('./modules/loadConfig.js')();
@@ -60,10 +53,10 @@ var socket;
 init(logFolder);
 
 /**
- *  application data model
+ * application data model
+ * @see modules <a href=modules/data-model/data-model-doc.md#module_data-model..Data>data-model-doc.md</a>
  * 
- *  contains variables users, bannedUsers, totalPlayers, weapons, demos & playerTimer & methods to modify that data
- * @see modules/data-model/data-model.md#module_data-model..Data
+ * contains variables users, bannedUsers, totalPlayers, weapons, demos & playerTimer & methods to modify that data
  * 
  */
 var appData = new Datamodel();
@@ -74,9 +67,13 @@ var appData = new Datamodel();
 var receiver = new logReceiver.LogReceiver();
 
 /**
- *  throw a error message stopping app when something breaks
+ * prints error message to console
+ * @param {Object} e error object
  * 
- * @param {Object} e - error object
+ * @returns {Void} nothing
+ * 
+ * @example <caption>Example usage of errorHandler() function.</caption>
+ * doStuff().then(doMoreStuff).catch(errorHandler);
  */
 function errorHandler(e) {
   console.error(e);
@@ -84,10 +81,13 @@ function errorHandler(e) {
 
 /**
  * callback for when a player joins server
- * 
- * @param {Object} u - user object with name, id, time, date, month, year, and if user is new to server
  * @async
  * @callback
+ * 
+ * @param {Object} u user object with name, id, time, date, month, year, and if user is new to server
+ * 
+ * @example <caption>Example usage of userConnected() function.</caption>
+ * scanner(.., .., .., .., userConnected, .., ..);
  */
 function userConnected(u) {
   logUser(db, u).then(user => {
@@ -97,9 +97,12 @@ function userConnected(u) {
 
 /**
  * callback for when a player leaves server
+ * @callback 
  * 
- * @param {Object} u - user object with name, id, time, date, month, year, and if user is new to server
- * @callback
+ * @param {Object} u user object with name, id, time, date, month, year, and if user is new to server
+ * 
+ * @example <caption>Example usage of userDisconnected() function.</caption>
+ * scanner(.., .., .., .., userDisconnected, .., ..);
  */
 function userDisconnected(u) {
   //...
@@ -107,10 +110,13 @@ function userDisconnected(u) {
 
 /**
  * callback for when a player is banned
- * 
- * @param {Object} player - user object of the banned player
  * @callback
  * @async
+ * 
+ * @param {Object} player user object of the banned player
+ * 
+ * @example <caption>Example usage of playerBan() function.</caption>
+ * scanner(.., .., .., .., playerBan, .., ..);
  */
 function playerBan(player) {
   logBan(db, player).then(p => {
@@ -122,6 +128,9 @@ function playerBan(player) {
  * callback for when a round / map has ended
  * @async
  * @callback
+ * 
+ * @example <caption>Example usage of mapEnd() function.</caption>
+ * scanner(.., .., .., .., mapEnd, .., ..);
  */
 function mapEnd() {
   appData.reset().then(m => {
@@ -135,8 +144,10 @@ function mapEnd() {
 
 /**
  * callback for when a round / map has started
- * 
  * @callback
+ * 
+ * @example <caption>Example usage of mapStart() function.</caption>
+ * scanner(.., .., .., .., mapStart, .., ..);
  */
 function mapStart(logId) {
 
@@ -144,29 +155,41 @@ function mapStart(logId) {
 
 /**
  * prints out the players name when a known ip views a page or makes a request
+ * @see modules <a href=modules/data-model/data-model-doc.md#module_data-model..Data+who>data-model-doc.md</a>
  *
- * @param {String} ip - ip addres of the user viewing a page or making a request
- * @param {String} message - the rest of the message
+ * @param {String} ip ip addres of the user viewing a page or making a request
+ * @param {String} message the rest of the message
  * 
- * @see modules/data-model/data-model-doc.md#module_data-model..Data+who
+ * @returns {Void} nothing
+ * 
+ * @example <caption>Example usage of who() function.</caption>
+ * who(req, 'is online');
  */
 function who(req, message) {
   print(`${appData.who(req.ip).grey} ${message}`);
 }
 
 /**
- * @typedef MonthData
- * @property {Array} files - list of months.
- * @property {Array} Data - players stats for the passed in month.
- */
-
-
-/**
  * grabs stats object from json file for a given month
- *
- * @param {Number} month - number of the month 0 - 11 *optional
  * @async
- * @returns {Promise<MonthData>} 
+ *
+ * @param {Number} month number of the month 0 - 11 **optional**
+ * 
+ * @returns {Promise<Array>} list of months. / players stats for the passed in month
+ * 
+ * @example <caption>Example usage of getOldStatsList() function.</caption>
+ * getOldStatsList().then(months => {
+ * // console.log(months); = [1609123414390.json]
+ * });
+ * getOldStatsList(11).then(month => {
+ * // console.log(month); = [
+ * //   [ over 100 kills sorted by KDR ],
+ * //   [ weapon data ],
+ * //   212, // player count
+ * //   [ banned players ],
+ * //   1609123414390 // time stats were generated
+ * //]
+ * });
  */
 function getOldStatsList(month) {
   return new Promise((resolve, reject) => {
@@ -195,11 +218,15 @@ function getOldStatsList(month) {
 
 /**
  * loops to get Gamedig data for game server
- * 
  * @async
  * @callback
- * @see modules/gameSeverStatus.js
- * @see modules/data-model/data-model-doc.md#module_data-model..Data+updateStatus
+ * @see <a href=modules/gameSeverStatus.js>gameSeverStatus.js</a>
+ * @see <a href=modules/data-model/data-model-doc.md#dataupdatestatusstatus--void>data-model-doc.md</a>
+ * 
+ * @return {Void} nothing
+ * 
+ * @example <caption>Example usage of statsLoop() function.</caption>
+ * statsLoop(); // it will run every 5 seconds after being called
  */
 function statsLoop() {
   setTimeout(statsLoop, 5000);
@@ -216,10 +243,15 @@ function statsLoop() {
 
 /**
  * parse folder of logs 1 line @ a time. dumping each line into the scanner
+ * @async
+ * @see <a href=modules/lineScanner/lineScanner.js>lineScanner.js</a>
  * 
- * @see modules/lineScanner.js
+ * @returns {Promise<String>} duration for task to complete
  * 
- * @returns {Promise<String>} duration to complete task
+ * @example <caption>Example usage of parseLogs() function.</caption>
+ * parseLogs().then(seconds => {
+ * //  print(`Log parser complete in ` + `${seconds} seconds`); = '12/28/2020, 9:28:55 PM - Log parser complete in 1.768 seconds'
+ * });
  */
 function parseLogs() {
   return new Promise((resolve, reject) => {
@@ -256,8 +288,13 @@ function parseLogs() {
 
 /**
  * 404 page
+ * @param {Object} req express request object
+ * @param {Object} res express response object
  * 
  * @returns {HTML} 404 
+ * 
+ * @example <caption>Example usage of fourohfour() function.</caption>
+ * fourohfour(req, res);
  */
 function fourohfour(req, res) {
   var reqadd = {
@@ -271,8 +308,13 @@ function fourohfour(req, res) {
 
 /**
  * 500 page
+ * @param {Object} req express request object
+ * @param {Object} res express response object
  * 
  * @returns {HTML} 500
+ * 
+ * @example <caption>Example usage of fiveHundred() function.</caption>
+ * fiveHundred(req, res);
  */
 function fiveHundred(req, res) {
   var reqadd = {
@@ -280,15 +322,13 @@ function fiveHundred(req, res) {
     host:req.get('host'),
     pathname:req.originalUrl
   };
-  who(req, `requested ` + `${url.format(reqadd)}`.green + ` got ` + `error 500! ╭∩╮(︶︿︶)╭∩╮`.red);
+  who(req, `requested ` + `${url.format(reqadd)}`.green + ` got ` + `error 500! (╬ Ò﹏Ó)`.red);
   res.status(500).sendFile(path.join(__dirname, 'assets', '500.html'));
 }
 
-/**
- * cleanup files on first @ 5:00am
- * @see modules/data-model/data-model-doc.md#module_data-model..Data+runCleanup
- */
-schedule.scheduleJob('0 5 1 * *', appData.runCleanup);
+schedule.scheduleJob('0 5 1 * *', _ => {
+  appData.runCleanup().then(appData.reset);
+});
 
 app.use(compression());
 app.set('trust proxy', true);
@@ -298,7 +338,11 @@ app.disable('x-powered-by');
  * route for WebSocket
  * @function
  * @name /
+ * 
  * @returns {JSON} websocket pipeline
+ * 
+ * @example <caption>Example usage of / api endpoint.</caption>
+ * var socket = new WebSocket('localhost:3000/);
  */
 app.ws('/', ws => {
   socket = ws;
@@ -309,7 +353,15 @@ app.ws('/', ws => {
  * route for gettings the status of the game server
  * @function
  * @name /status
+ * 
  * @returns {JSON} game server rcon status response
+ * 
+ * @example <caption>Example usage of /status api endpoint.</caption>
+ * fetch('localhost:3000/status').then(response => {
+ *   response.json().then(json => {
+ *     console.log(json); // game server status
+ *   })
+ * });
  */
 app.get('/status', (req, res) => {
   who(req, `is viewing ` + '/status'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
@@ -317,14 +369,17 @@ app.get('/status', (req, res) => {
 });
 
 /**
- * authorize
+ * login system
  * @function
  * @name /auth
- * @see modules/auth/auth-doc.md#module_modules/auth..auth
+ * 
+ * @see <a href=modules/auth/auth-doc.md#module_modules/auth..auth>auth-doc.md</a>
+ * 
  * @param {String} req.query.name - the name of the stream
  * @param {String} req.query.k - the streams auth key
  * 
  * @returns {JSON} ok: authorized, fail: failed to authorize
+ * 
  */
 app.get('/auth', oneOf([
   check('name').exists().escape().stripLow(),
@@ -366,6 +421,13 @@ app.get('/auth', oneOf([
  * @name /stats
  * 
  * @returns {JSON} stats top players list, server wide weapons list, # of total players, list of banned players, time of generation
+ * 
+ * @example <caption>Example usage of /stats api endpoint.</caption>
+ * fetch('localhost:3000/stats').then(response => {
+ *   response.json().then(json => {
+ *     console.log(json); // statistics
+ *   })
+ * });
  */
 app.get('/stats', (req, res) => {
   var t = new Timer();
@@ -597,7 +659,7 @@ var server = app.listen(config.port, _ => mongoConnect().then(database => {
   console.log(`MongoDB connected. URL: ${config.dbURL.green}`);
   console.log('Endpoints active on port: ' + `${config.port}`.red);
   console.log('');
-  print('Online. ' + 'ᕦ(ò_óˇ)ᕤ'.red);
+  print('Online. ' + 'o( ❛ᴗ❛ )o'.red);
   statsLoop();
   appData.cacheDemos();
   parseLogs().then(seconds => {

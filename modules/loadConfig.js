@@ -1,5 +1,3 @@
-/*jshint esversion: 9 */
-
 const fs = require('fs'); 
 
 module.exports = () => {

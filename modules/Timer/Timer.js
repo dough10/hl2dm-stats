@@ -1,5 +1,6 @@
 /**
  * @module modules/Timer
+ * @author Jimmy Doughten <https://github.com/dough10>
  * @requires colors
  * @exports Timer
  * 
@@ -8,10 +9,9 @@
  * var t = new Timer('thing');
  * // do stuff you want to see how long it will take
  * console.log(t.endString());
+ * // returns '0 hours 10 minutes 15.347 seconds'
  * 
  */
-
- /** colorize text */
 const colors = require('colors'); 
 
 
@@ -19,6 +19,7 @@ const colors = require('colors');
  * Class for timing the duration of things
  */
 class Timer {
+  
   /**
    * @class
    * @param {String} title - name of the timer *optional*
@@ -31,6 +32,7 @@ class Timer {
     this.title = title;
     this.startTime = new Date().getTime();
   }
+
   /**
    * ends the timer
    * @returns {Array} [0]hours, [1]mins, [2]seconds, [3]title/name
@@ -49,6 +51,7 @@ class Timer {
       this.title
     ];
   }
+  
   /**
    * calls the end() method and formats into readable form
    * @returns {String} timer output
