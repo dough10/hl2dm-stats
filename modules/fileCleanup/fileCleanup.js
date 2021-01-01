@@ -12,7 +12,7 @@
  */
 const path = require('path');
 const fs = require('fs');
-var config = require('./loadConfig.js')();
+var config = require('../loadConfig.js')();
 const child_process = require("child_process");
 const logFolder = path.join(config.gameServerDir, 'logs');
 const colors = require('colors');
