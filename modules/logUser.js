@@ -10,7 +10,7 @@ function entryExists(db, data) {
       }
       resolve(result);
     });
-  })
+  });
 }
 
 function insertPlayer(db, data) {
@@ -30,7 +30,7 @@ function insertPlayer(db, data) {
         resolve(res);
       });
     });
-  })
+  });
 }
 
 
