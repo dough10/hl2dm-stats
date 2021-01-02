@@ -575,6 +575,13 @@ app.get('/returnPlayers/:date', (req, res) => {
  * @param {Number} req.params.id - steamid3 of the player
  * 
  * @returns {JSON | HTML} players stat data | 404 
+ * 
+ * @example <caption>Example usage of /playerStats/:id api endpoint.</caption>
+ * fetch('localhost:3000/playerStats/1025678454').then(response => {
+ *   response.json().then(json => {
+ *     console.log(json); // player statistics for player with the id 1025678454
+ *   });
+ * });
  */
 app.get('/playerStats/:id', (req, res) => {
   var t = new Timer();
@@ -595,6 +602,9 @@ app.get('/playerStats/:id', (req, res) => {
  * @param {String} file - file name requested for download
  * 
  * @returns {File | HTML} .dem file | 404
+ * 
+ * @example <caption>Example usage of /download/:file api endpoint.</caption>
+ * <a href="localhost:3000/download/auto-20210101-0649-dm_bellas_room_d1.dem"></a>
  */
 app.get('/download/:file', (req, res) => {
   var t = new Timer();
@@ -614,6 +624,9 @@ app.get('/download/:file', (req, res) => {
  * @param {String} file - filename requested for download
  * 
  * @returns {File | HTML}  .zip file | 404
+ * 
+ * @example <caption>Example usage of /download/logs-zip/:file api endpoint.</caption>
+ * <a href="localhost:3000/download/logs-zip/1609123414390.zip"></a>
  */
 app.get('/download/logs-zip/:file', (req, res) => {
   var t = new Timer();
@@ -633,6 +646,9 @@ app.get('/download/logs-zip/:file', (req, res) => {
  * @param {String} file - filename requested for download
  * 
  * @returns {File | HTML}  .zip file | 404
+ * 
+ * @example <caption>Example usage of /download/demos-zip/:file api endpoint.</caption>
+ * <a href="localhost:3000/download/demos-zip/1609123414390.zip"></a>
  */
 app.get('/download/demos-zip/:file', (req, res) => {
   var t = new Timer();
@@ -651,6 +667,13 @@ app.get('/download/demos-zip/:file', (req, res) => {
  * @name /demos
  * 
  * @returns {JSON} list of demo files
+ * 
+ * @example <caption>Example usage of /demos api endpoint.</caption>
+ * fetch('localhost:3000/demos').then(response => {
+ *   response.json().then(json => {
+ *     console.log(json); // list of demo files that can be downloaded
+ *   });
+ * });
  */
 app.get('/demos', (req, res) => {
   var t = new Timer();
@@ -664,6 +687,13 @@ app.get('/demos', (req, res) => {
  * @name /cvarlist
  * 
  * @returns {Text} list of cvar commands 
+ * 
+ * @example <caption>Example usage of /cvarlist api endpoint.</caption>
+ * fetch('localhost:3000/cvarlist').then(response => {
+ *   response.text().then(text => {
+ *     console.log(text); // list of srcds conosle commands
+ *   });
+ * });
  */
 app.get('/cvarlist', (req, res) => {
   var t = new Timer();
@@ -678,7 +708,7 @@ app.get('/cvarlist', (req, res) => {
 /**
  * admin portal
  * @function
- * @name /admin
+ * @name /admin *wip*
  * 
  * @returns {HTML} admin portal
  */
