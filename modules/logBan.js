@@ -85,6 +85,11 @@ function insertPlayer(db, data) {
   });
 }
 
+/**
+ * 
+ * @param {Object} db mongodb databsse object
+ * @param {Object} data data to be saved
+ */
 function makeEntry(db, data) {
   return new Promise((resolve, reject) => {
     entryExists(db, data).then(exists => {
@@ -116,7 +121,7 @@ function logBan(db, data) {
         delete u.month;
         delete u.year;
         delete u.new;
-        delete u._id
+        delete u._id;
         makeEntry(db, u).then(resolve).catch(reject);
       });
       return;

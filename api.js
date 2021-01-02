@@ -692,7 +692,3 @@ process.on('SIGTERM', _ => {
     console.log('Process terminated');
   });
 });
-
-
-
-
