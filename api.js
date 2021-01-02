@@ -656,9 +656,7 @@ app.get('/cvarlist', (req, res) => {
  * 
  * @returns {HTML} admin portal
  */
-app.get('/admin', (req, res) => {
-  
-});
+app.get('/admin', fiveHundred);
 
 app.get('*', fourohfour);
 
