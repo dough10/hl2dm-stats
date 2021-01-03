@@ -311,7 +311,7 @@ function fiveHundred(req, res) {
 }
 
 schedule.scheduleJob('0 5 1 * *', _ => {
-  appData.runCleanup().then(appData.reset);
+  appData.runCleanup(false).then(appData.reset);
 });
 
 app.use(compression());
@@ -708,7 +708,7 @@ app.get('/cvarlist', (req, res) => {
 /**
  * admin portal
  * @function
- * @name /admin *wip*
+ * @name /admin
  * 
  * @returns {HTML} admin portal
  */
@@ -728,15 +728,10 @@ var server = app.listen(config.port, _ => mongoConnect().then(database => {
   appData.cacheDemos();
   parseLogs().then(seconds => {
     print(`Log parser complete in ` + `${seconds} seconds`.cyan);
-
-    /**
-     * recieved log line / lines from server
-     */
     receiver.on("data", data => {
       if (data.isValid) scanner(data.message, appData, userConnected, userDisconnected, mapStart, mapEnd, playerBan, true);
     });
   }).catch(errorHandler);
-
 }));
 
 process.on('SIGTERM', _ => {

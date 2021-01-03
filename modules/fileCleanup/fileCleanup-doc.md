@@ -11,7 +11,7 @@ make a zip and clean up previous months files
     * [~zipDemos(lastMonth)](#module_modules/fileCleanup..zipDemos) ⇒ <code>Promise.&lt;Number&gt;</code>
     * [~deleteLogs()](#module_modules/fileCleanup..deleteLogs) ⇒ <code>Promise.&lt;Void&gt;</code>
     * [~deleteDemos()](#module_modules/fileCleanup..deleteDemos) ⇒ <code>Promise.&lt;Void&gt;</code>
-    * [~cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate)](#module_modules/fileCleanup..cleanUp) ⇒ <code>Promise.&lt;Void&gt;</code>
+    * [~cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate, testMode)](#module_modules/fileCleanup..cleanUp) ⇒ <code>Promise.&lt;Void&gt;</code>
 
 <a name="module_modules/fileCleanup..saveTop"></a>
 
@@ -100,7 +100,7 @@ deleteDemos().then(_ => {
 ```
 <a name="module_modules/fileCleanup..cleanUp"></a>
 
-### modules/fileCleanup~cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate) ⇒ <code>Promise.&lt;Void&gt;</code>
+### modules/fileCleanup~cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate, testMode) ⇒ <code>Promise.&lt;Void&gt;</code>
 end of month file cleanup process
 
 **Kind**: inner method of [<code>modules/fileCleanup</code>](#module_modules/fileCleanup)  
@@ -113,10 +113,11 @@ end of month file cleanup process
 | totalPlayers | <code>Number</code> | count of players |
 | bannedPlayers | <code>Array</code> | list of banned players |
 | lastUpdate | <code>Number</code> | new Date() output |
+| testMode | <code>Boolean</code> | true: will not delete log and demo files and will delete zip 15 seconds after deletings, false: will delete files and keep the generated zip |
 
 **Example** *(Example usage of cleanUp() function.)*  
 ```js
-cleanUp([ 'players with over 100 kills sorted by kdr'], [ 'weapons' ], 212, [ 'banned players' ], 1609123414390).then(_ => {
+cleanUp([ 'players with over 100 kills sorted by kdr'], [ 'weapons' ], 212, [ 'banned players' ], 1609123414390, false).then(_ => {
  // cleanup complete
 });
 ```

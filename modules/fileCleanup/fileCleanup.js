@@ -19,6 +19,7 @@ const colors = require('colors');
 const Timer = require('../Timer/Timer.js');  // time things
 const print = require('../printer/printer.js');
 var numFiles = 0;
+var testing = false;
 
 /**
  * saves top data before log clear
@@ -89,6 +90,12 @@ function zipLogs(lastMonth) {
       reject('Error saving Log Zip!! aka. Shits broke.');
       return;
     }
+    if (testing) {
+      print('cleanUp testMode will delete the generated zip file in 15 seconds'.red);
+      setTimeout(_ => {
+        fs.unlinkSync(filename);
+      }, 15000);
+    }
     print(`Zippin logs complete: ${t.endString()} time to complete`);
     print(`Logs saved as ` + `${filename}`.green);
     resolve(lastMonth);
@@ -121,6 +128,12 @@ function zipDemos(lastMonth) {
       reject('Error saving Demos Zip!! aka. Shits broke.');
       return;
     }
+    if (testing) {
+      print('cleanUp testMode will delete the generated zip file in 15 seconds'.red);
+      setTimeout(_ => {
+        fs.unlinkSync(filename);
+      }, 15000);
+    }
     print(`Zippin demos complete: ${t.endString()} time to complete`);
     print(`Demos saved as ` + `${filename}`.green);
     resolve(lastMonth);
@@ -146,7 +159,9 @@ function deleteLogs() {
       print(`Running log file clean up`);
       for (var i = 0; i < files.length; i++) {
         numFiles++;
-        // console.log(path.join(logFolder, files[i]));
+        if (testing) {
+          return console.log(path.join(logFolder, files[i]));
+        }
         fs.unlinkSync(path.join(logFolder, files[i]));
       }
       resolve();
@@ -175,7 +190,9 @@ function deleteDemos() {
       for (var i = 0; i < files.length; i++) {
         if (path.extname(files[i]) === '.dem') {
           numFiles++;
-          // console.log(path.join(config.gameServerDir, files[i]));
+          if (testing) {
+            return console.log(path.join(config.gameServerDir, files[i]));
+          }
           fs.unlinkSync(path.join(config.gameServerDir, files[i]));
         }
       }
@@ -191,16 +208,18 @@ function deleteDemos() {
  * @param {Number} totalPlayers - count of players
  * @param {Array} bannedPlayers - list of banned players
  * @param {Number} lastUpdate - new Date() output
+ * @param {Boolean} testMode true: will not delete log and demo files and will delete zip 15 seconds after deletings, false: will delete files and keep the generated zip 
  * 
  * @returns {Promise<Void>} nothing
  * 
  * @example <caption>Example usage of cleanUp() function.</caption>
- * cleanUp([ 'players with over 100 kills sorted by kdr'], [ 'weapons' ], 212, [ 'banned players' ], 1609123414390).then(_ => {
+ * cleanUp([ 'players with over 100 kills sorted by kdr'], [ 'weapons' ], 212, [ 'banned players' ], 1609123414390, false).then(_ => {
  *  // cleanup complete
  * });
  */
-function cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate) {
+function cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate, testMode) {
   return new Promise((resolve, reject) => {
+    testing = testMode;
     print(`Clean up started`);
     var now = new Date();
     var lastMonth = now.setMonth(now.getMonth() - 1);

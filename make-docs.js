@@ -97,7 +97,7 @@ function devDependencies() {
  * var processedDocs = processDocs();
  */
 function processDocs() {
-  let files = require('./files.js');
+  let files = require('./assets/files.js');
   var output = '\n## Documentation\n\n';
   for (var i = 0; i < files.length; i++) {
     renderDoc(files[i]);
