@@ -216,6 +216,7 @@ function statsLoop() {
       socket.send(JSON.stringify(status), e => {});
     }
   }).catch(e => {
+    errorHandler(e);
     serverStatus = 'offline';
   });
 }
@@ -343,8 +344,9 @@ app.ws('/', ws => {
  * });
  */
 app.get('/status', (req, res) => {
-  who(req, `is viewing ` + '/status'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+  var t = new Timer();
   res.send(appData.getStatus());
+  who(req, `is viewing ` + '/status'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
 });
 
 /**
