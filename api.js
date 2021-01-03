@@ -208,16 +208,24 @@ function getOldStatsList(month) {
  * @example <caption>Example usage of statsLoop() function.</caption>
  * statsLoop(); // it will run every 5 seconds after being called
  */
+var alerted = false;
 function statsLoop() {
   setTimeout(statsLoop, 5000);
   gameServerStatus().then(status => {
+    if (alreted) {
+      print(`server back online`);
+    }
     appData.updateStatus(status);
     if (socket) {
       socket.send(JSON.stringify(status), e => {});
     }
+    alerted = false;
   }).catch(e => {
-    print(`Got offline status from server`);
+    if (!alerted) {
+      print(`Got offline status from server`);
+    }
     serverStatus = 'offline';
+    alerted = true;
   });
 }
 
