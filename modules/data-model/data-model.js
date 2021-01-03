@@ -819,7 +819,7 @@ class Data {
         this.generateBannedPlayerList(), 
         new Date().getTime(),
         testMode
-      ).then(resolve);
+      ).then(resolve).catch(reject);
     });
   }
 } 

@@ -113,7 +113,7 @@ end of month file cleanup process
 | totalPlayers | <code>Number</code> | count of players |
 | bannedPlayers | <code>Array</code> | list of banned players |
 | lastUpdate | <code>Number</code> | new Date() output |
-| testMode | <code>Boolean</code> | true: will not delete log and demo files and will delete zip 15 seconds after deletings, false: will delete files and keep the generated zip |
+| testMode | <code>Boolean</code> | true: will NOT delete log and demo files and will delete zip 15 seconds after deletings, false: will delete files and keep the generated zip |
 
 **Example** *(Example usage of cleanUp() function.)*  
 ```js

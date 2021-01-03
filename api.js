@@ -41,14 +41,10 @@ const { check, oneOf, validationResult } = require('express-validator');
 const colors = require('colors'); 
 const config = require('./modules/loadConfig.js')();
 const logFolder = path.join(config.gameServerDir, 'logs');
-
-var db;
-
-var socket;
-
-var appData = new Datamodel();
-
 var receiver = new logReceiver.LogReceiver();
+var appData = new Datamodel();
+var db;
+var socket;
 
 /**
  * prints error message to console
@@ -60,7 +56,7 @@ var receiver = new logReceiver.LogReceiver();
  * doStuff().then(doMoreStuff).catch(errorHandler);
  */
 function errorHandler(e) {
-  console.error(e);
+  console.error(e.message.red);
 }
 
 /**
@@ -703,6 +699,25 @@ app.get('/cvarlist', (req, res) => {
   }
   res.sendFile(`${__dirname}/assets/cvarlist.txt`);
   who(req, `is viewing ` + '/cvarlist'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+});
+
+/**
+ * tests the file cleanup function that runs every month on the first @ 5 am
+ * @function
+ * @name /testCleanup
+ *
+ * @returns {Text} test start confirmation string
+ * 
+ * @example <caption>Example usage of /testCleanup api endpoint.</caption>
+ * fetch('localhost:3000/testCleanup').then(response => {
+ *   response.text().then(text => {
+ *     console.log(text); // 'cleanup test started'
+ *   });
+ * });
+ */
+app.get('/testCleanup', (req, res) => {
+  res.send('cleanup test started');
+  appData.runCleanup(true).catch(errorHandler);
 });
 
 /**
