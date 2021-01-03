@@ -19,6 +19,7 @@ const colors = require('colors');
 const Timer = require('../Timer/Timer.js');  // time things
 const print = require('../printer/printer.js');
 var numFiles = 0;
+var testing = false;
 
 /**
  * saves top data before log clear
@@ -37,7 +38,7 @@ var numFiles = 0;
  */
 function saveTop(lastMonth, top, weapons, totalPlayers, bannedPlayers, lastUpdate) {
   return new Promise((resolve, reject) => {
-    var folder = path.join(__dirname, `old-top`);
+    var folder = path.join(__dirname, '../..', `old-top`);
     if (!fs.existsSync(folder)){
       fs.mkdirSync(folder);
     }
@@ -56,6 +57,12 @@ function saveTop(lastMonth, top, weapons, totalPlayers, bannedPlayers, lastUpdat
       if (!fs.existsSync(filename)){
         reject('Error saving Top Data!! aka. Shits broke.');
         return;
+      }
+      if (testing) {
+        setTimeout(_ => {
+          fs.unlinkSync(filename);
+          print(`${filename} deleted by testMode`.red);
+        }, 15000);
       }
       print(`top player data saved to ` + filename.green);
       resolve(lastMonth);
@@ -82,12 +89,23 @@ function zipLogs(lastMonth) {
     }
     var t = new Timer();
     var filename = path.join(folder, `${lastMonth}.zip`);
-    child_process.execSync(`zip -r ${filename} *`, {
-      cwd: logFolder
-    });
+    try {
+      child_process.execSync(`zip -r ${filename} *`, {
+        cwd: logFolder
+      });
+    } catch (e) {
+      reject(e);
+      return;
+    }
     if (!fs.existsSync(filename)){
       reject('Error saving Log Zip!! aka. Shits broke.');
       return;
+    }
+    if (testing) {
+      setTimeout(_ => {
+        fs.unlinkSync(filename);
+        print(`${filename} deleted by testMode`.red);
+      }, 15000);
     }
     print(`Zippin logs complete: ${t.endString()} time to complete`);
     print(`Logs saved as ` + `${filename}`.green);
@@ -114,12 +132,23 @@ function zipDemos(lastMonth) {
     }
     var t = new Timer();
     var filename = path.join(folder, `${lastMonth}.zip`);
-    child_process.execSync(`zip -r ${filename} *.dem`, {
-      cwd: config.gameServerDir
-    });
+    try {
+      child_process.execSync(`zip -r ${filename} *.dem`, {
+        cwd: config.gameServerDir
+      });
+    } catch (e) {
+      reject(e);
+      return;
+    }
     if (!fs.existsSync(filename)){
       reject('Error saving Demos Zip!! aka. Shits broke.');
       return;
+    }
+    if (testing) {
+      setTimeout(_ => {
+        fs.unlinkSync(filename);
+        print(`${filename} deleted by testMode`.red);
+      }, 15000);
     }
     print(`Zippin demos complete: ${t.endString()} time to complete`);
     print(`Demos saved as ` + `${filename}`.green);
@@ -143,10 +172,16 @@ function deleteLogs() {
         reject('Unable to scan directory', err);
         return;
       }
-      print(`Running log file clean up`);
+      if (!testing) {
+        print(`Running log file clean up`);
+      } else {
+        print(`Logging log files that would be deleted`.red);
+      }
       for (var i = 0; i < files.length; i++) {
         numFiles++;
-        // console.log(path.join(logFolder, files[i]));
+        if (testing) {
+          return console.log(path.join(logFolder, files[i]));
+        }
         fs.unlinkSync(path.join(logFolder, files[i]));
       }
       resolve();
@@ -171,11 +206,17 @@ function deleteDemos() {
         reject('Unable to scan directory', err);
         return;
       }
-      print(`Running demo file clean up`);
+      if (!testing) {
+        print(`Running demo file clean up`);
+      } else {
+        print(`Logging demo files that would be deleted`.red);
+      }
       for (var i = 0; i < files.length; i++) {
         if (path.extname(files[i]) === '.dem') {
           numFiles++;
-          // console.log(path.join(config.gameServerDir, files[i]));
+          if (testing) {
+            return console.log(path.join(config.gameServerDir, files[i]));
+          }
           fs.unlinkSync(path.join(config.gameServerDir, files[i]));
         }
       }
@@ -191,17 +232,24 @@ function deleteDemos() {
  * @param {Number} totalPlayers - count of players
  * @param {Array} bannedPlayers - list of banned players
  * @param {Number} lastUpdate - new Date() output
+ * @param {Boolean} testMode true: will NOT delete log and demo files and will delete zip 15 seconds after deletings, false: will delete files and keep the generated zip 
  * 
  * @returns {Promise<Void>} nothing
  * 
  * @example <caption>Example usage of cleanUp() function.</caption>
- * cleanUp([ 'players with over 100 kills sorted by kdr'], [ 'weapons' ], 212, [ 'banned players' ], 1609123414390).then(_ => {
+ * cleanUp([ 'players with over 100 kills sorted by kdr'], [ 'weapons' ], 212, [ 'banned players' ], 1609123414390, false).then(_ => {
  *  // cleanup complete
  * });
  */
-function cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate) {
+function cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate, testMode) {
   return new Promise((resolve, reject) => {
-    print(`Clean up started`);
+    testing = testMode;
+    if (!testMode) {
+      print(`Clean up started`);
+    } else {
+      print('Clean up testMode started'.red);
+      print('testMode will auto delete any generated file 15 seconds after creation'.red);
+    }
     var now = new Date();
     var lastMonth = now.setMonth(now.getMonth() - 1);
     var time = new Timer();
@@ -211,7 +259,11 @@ function cleanUp(top, weapons, totalPlayers, bannedPlayers, lastUpdate) {
     .then(deleteLogs)
     .then(deleteDemos)
     .then(_ => {
-      print(`Clean up complete. ${numFiles} files processed and backed up.`);
+      if (!testMode) {
+        print(`Clean up complete. ${numFiles} files processed and backed up.`);
+      } else {
+        print(`Clean up testMode complete. ${numFiles} files processed.`.red);
+      }
       print(`Complete process took ${time.endString()}`);
       resolve();
     })

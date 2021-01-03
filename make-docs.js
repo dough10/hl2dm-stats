@@ -1,8 +1,10 @@
 /**
- * @fileOverview processes javascript files creating markdown documentation from comments
+ * @fileOverview processes javascript files creating markdown documentation from comments. Edit head.txt and foot.txt to customize the generated [README.md](./README.md) file
  * @author Jimmy Doughten <https://github.com/dough10>
+ * @exports make-doc.js
  * @requires fs
  * @requires jsdoc-to-markdown
+ * @requires package.json
  */
 const jsdoc2md = require('jsdoc-to-markdown');
 const fs = require('fs');
@@ -35,7 +37,7 @@ function writeFile(name, md) {
 }
 
 /**
- * renders a markdown document file from javascript comment
+ * renders a markdown document file from javascript comments
  * @param {String} filename name of the file being processed
  * 
  * @returns {Void} nothing
@@ -55,7 +57,7 @@ function renderDoc(filename) {
 }
 
 /**
- * output dependencies as a string
+ * output dependencies from package.json to markdown unindexed list
  * @returns {String} list of dependencies
  * 
  * @example <caption>Example usage of dependencies() function.</caption>
@@ -71,7 +73,7 @@ function dependencies() {
 }
 
 /**
- * output dev dependencies as a string
+ * output dev dependencies from package.json to markdown unindexed list
  * @returns {String} list of dev dependencies
  * 
  * @example <caption>Example usage of devDependencies() function.</caption>
@@ -95,7 +97,7 @@ function devDependencies() {
  * var processedDocs = processDocs();
  */
 function processDocs() {
-  let files = require('./files.js');
+  let files = require('./assets/files.js');
   var output = '\n## Documentation\n\n';
   for (var i = 0; i < files.length; i++) {
     renderDoc(files[i]);

@@ -1,32 +1,25 @@
-## Functions
+<a name="make-docs.module_js"></a>
 
-<dl>
-<dt><a href="#writeFile">writeFile(name, md)</a> ⇒ <code>Promise.&lt;String&gt;</code></dt>
-<dd><p>save a file</p>
-</dd>
-<dt><a href="#renderDoc">renderDoc(filename)</a> ⇒ <code>Void</code></dt>
-<dd><p>renders a markdown document file from javascript comment</p>
-</dd>
-<dt><a href="#dependencies">dependencies()</a> ⇒ <code>String</code></dt>
-<dd><p>output dependencies as a string</p>
-</dd>
-<dt><a href="#devDependencies">devDependencies()</a> ⇒ <code>String</code></dt>
-<dd><p>output dev dependencies as a string</p>
-</dd>
-<dt><a href="#processDocs">processDocs()</a> ⇒ <code>String</code></dt>
-<dd><p>parse through files array and generate docs.</p>
-</dd>
-<dt><a href="#hulkSmash">hulkSmash()</a> ⇒ <code>String</code></dt>
-<dd><p>call all functions and smash their outputs into 1 string</p>
-</dd>
-</dl>
+## make-docs.js
+processes javascript files creating markdown documentation from comments. Edit head.txt and foot.txt to customize the generated [README.md](./README.md) file
 
-<a name="writeFile"></a>
+**Requires**: <code>module:fs</code>, <code>module:jsdoc-to-markdown</code>, <code>module:package.json</code>  
+**Author**: Jimmy Doughten <https://github.com/dough10>  
 
-## writeFile(name, md) ⇒ <code>Promise.&lt;String&gt;</code>
+* [make-docs.js](#make-docs.module_js)
+    * [~writeFile(name, md)](#make-docs.module_js..writeFile) ⇒ <code>Promise.&lt;String&gt;</code>
+    * [~renderDoc(filename)](#make-docs.module_js..renderDoc) ⇒ <code>Void</code>
+    * [~dependencies()](#make-docs.module_js..dependencies) ⇒ <code>String</code>
+    * [~devDependencies()](#make-docs.module_js..devDependencies) ⇒ <code>String</code>
+    * [~processDocs()](#make-docs.module_js..processDocs) ⇒ <code>String</code>
+    * [~hulkSmash()](#make-docs.module_js..hulkSmash) ⇒ <code>String</code>
+
+<a name="make-docs.module_js..writeFile"></a>
+
+### make-docs.js~writeFile(name, md) ⇒ <code>Promise.&lt;String&gt;</code>
 save a file
 
-**Kind**: global function  
+**Kind**: inner method of [<code>make-docs.js</code>](#make-docs.module_js)  
 **Returns**: <code>Promise.&lt;String&gt;</code> - string confirming successful file save  
 
 | Param | Type | Description |
@@ -40,12 +33,12 @@ writeFile('awesomefile-doc.md', '# Awesome File').then(console.log);
 // returns `awesomefile-doc.md saved to disk`
 // awesomefile-doc.md contains '# Awesome File'
 ```
-<a name="renderDoc"></a>
+<a name="make-docs.module_js..renderDoc"></a>
 
-## renderDoc(filename) ⇒ <code>Void</code>
-renders a markdown document file from javascript comment
+### make-docs.js~renderDoc(filename) ⇒ <code>Void</code>
+renders a markdown document file from javascript comments
 
-**Kind**: global function  
+**Kind**: inner method of [<code>make-docs.js</code>](#make-docs.module_js)  
 **Returns**: <code>Void</code> - nothing  
 
 | Param | Type | Description |
@@ -56,45 +49,45 @@ renders a markdown document file from javascript comment
 ```js
 renderDoc('awesomefile.js');
 ```
-<a name="dependencies"></a>
+<a name="make-docs.module_js..dependencies"></a>
 
-## dependencies() ⇒ <code>String</code>
-output dependencies as a string
+### make-docs.js~dependencies() ⇒ <code>String</code>
+output dependencies from package.json to markdown unindexed list
 
-**Kind**: global function  
+**Kind**: inner method of [<code>make-docs.js</code>](#make-docs.module_js)  
 **Returns**: <code>String</code> - list of dependencies  
 **Example** *(Example usage of dependencies() function.)*  
 ```js
 var dep = dependencies();
 ```
-<a name="devDependencies"></a>
+<a name="make-docs.module_js..devDependencies"></a>
 
-## devDependencies() ⇒ <code>String</code>
-output dev dependencies as a string
+### make-docs.js~devDependencies() ⇒ <code>String</code>
+output dev dependencies from package.json to markdown unindexed list
 
-**Kind**: global function  
+**Kind**: inner method of [<code>make-docs.js</code>](#make-docs.module_js)  
 **Returns**: <code>String</code> - list of dev dependencies  
 **Example** *(Example usage of devDependencies() function.)*  
 ```js
 var dev = devDependencies();
 ```
-<a name="processDocs"></a>
+<a name="make-docs.module_js..processDocs"></a>
 
-## processDocs() ⇒ <code>String</code>
+### make-docs.js~processDocs() ⇒ <code>String</code>
 parse through files array and generate docs.
 
-**Kind**: global function  
+**Kind**: inner method of [<code>make-docs.js</code>](#make-docs.module_js)  
 **Returns**: <code>String</code> - list of files  
 **Example** *(Example usage of processDocs() function.)*  
 ```js
 var processedDocs = processDocs();
 ```
-<a name="hulkSmash"></a>
+<a name="make-docs.module_js..hulkSmash"></a>
 
-## hulkSmash() ⇒ <code>String</code>
+### make-docs.js~hulkSmash() ⇒ <code>String</code>
 call all functions and smash their outputs into 1 string
 
-**Kind**: global function  
+**Kind**: inner method of [<code>make-docs.js</code>](#make-docs.module_js)  
 **Returns**: <code>String</code> - README.md contents  
 **Example** *(Example usage of hulkSmash() function.)*  
 ```js

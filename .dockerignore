@@ -7,6 +7,6 @@ assets/foot.txt
 assets/head.txt
 npm-debug.log
 incriment-version.js
-files.js
+assets/files.js
 make-docs.js
 push.sh

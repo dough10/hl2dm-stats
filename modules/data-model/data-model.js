@@ -810,15 +810,16 @@ class Data {
    * @example <caption>Example usage of runCleanup() function.</caption>
    * appData.runCleanup();
    */
-  runCleanup() {
+  runCleanup(testMode) {
     return new Promise((resolve, reject) => {
       require('../fileCleanup/fileCleanup')(
         this.generateTop(), 
         this.generateWeapons(), 
         this.totalPlayers, 
         this.generateBannedPlayerList(), 
-        new Date().getTime()
-      ).then(resolve);
+        new Date().getTime(),
+        testMode
+      ).then(resolve).catch(reject);
     });
   }
 } 
