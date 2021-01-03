@@ -344,9 +344,7 @@ app.ws('/', ws => {
  * });
  */
 app.get('/status', (req, res) => {
-  var t = new Timer();
   res.send(appData.getStatus());
-  who(req, `is viewing ` + '/status'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
 });
 
 /**
