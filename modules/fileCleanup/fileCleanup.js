@@ -232,7 +232,7 @@ function deleteDemos() {
  * @param {Number} totalPlayers - count of players
  * @param {Array} bannedPlayers - list of banned players
  * @param {Number} lastUpdate - new Date() output
- * @param {Boolean} testMode true: will NOT delete log and demo files and will delete zip 15 seconds after deletings, false: will delete files and keep the generated zip 
+ * @param {Boolean} testMode true: will NOT delete log and demo files and will delete zip 15 seconds after generating, false: will delete files and keep the generated zip 
  * 
  * @returns {Promise<Void>} nothing
  * 
