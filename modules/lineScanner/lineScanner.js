@@ -166,7 +166,7 @@ function buildKilledNameString(line, start) {
     }
   }
   var name = '';
-  for (var i = start; i < end; i++) {
+  for (let i = start; i < end; i++) {
     name = `${name}${line[i]} `;
   }
   return name;
@@ -387,7 +387,7 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, o
     }
     // log chat
     var said = '';
-    for (var i = isChat + 1; i < word.length; i++) {
+    for (let i = isChat + 1; i < word.length; i++) {
       said = `${said}${word[i]} `;
     }
     dataModel.addChat(lineTime, id, name, `${new Date(lineTime).toLocaleString()} - ${said}`);
@@ -515,7 +515,7 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, o
     if (!name) {
       return;
     }
-    for (var i = 0; i < word.length; i++) {
+    for (let i = 0; i < word.length; i++) {
       word[i] = word[i].replace('"', '').replace('(', '').replace(')', '').replace('"', '');
     }
     var weaponName = word[isStats + 2];
@@ -540,10 +540,10 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, o
       return;
     }
     // clean up extra chars
-    for (var i = 0; i < word.length; i++) {
+    for (let i = 0; i < word.length; i++) {
       word[i] = word[i].replace('"', '').replace('(', '').replace(')', '').replace('"', '');
     }
-    var weaponName = word[isStats2 + 2];
+    let weaponName = word[isStats2 + 2];
     if (!isWeapon(weaponName)) {
       return;
     }
