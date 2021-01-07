@@ -1,4 +1,5 @@
 /**
+ * @fileOverview Class for timing the duration of things
  * @module modules/Timer
  * @author Jimmy Doughten <https://github.com/dough10>
  * @requires colors
@@ -9,15 +10,11 @@
  * var t = new Timer('thing');
  * // do stuff you want to see how long it will take
  * console.log(t.endString());
- * // returns '0 hours 10 minutes 15.347 seconds'
+ * // returns 'thing - 0 hours 10 minutes 15.347 seconds'
  * 
  */
 const colors = require('colors'); 
 
-
-/**
- * Class for timing the duration of things
- */
 class Timer {
   
   /**
@@ -58,7 +55,10 @@ class Timer {
    */
   endString() {
     var endTime = this.end();
-    return `${endTime[0]} hours ${endTime[1]} minutes ${endTime[2]} seconds`.cyan;
+    if (!title) {
+      return `${endTime[0]} hours ${endTime[1]} minutes ${endTime[2]} seconds`.cyan;
+    }
+    return `${title} - ${endTime[0]} hours ${endTime[1]} minutes ${endTime[2]} seconds`.cyan;
   }
 }
 

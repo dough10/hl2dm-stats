@@ -1,5 +1,5 @@
 /**
- * print strings to console with time stamp
+ * @fileOverview print strings to console with time stamp
  * @module modules/printer
  * @exports print
  * 

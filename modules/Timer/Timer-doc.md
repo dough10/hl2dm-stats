@@ -1,6 +1,8 @@
 <a name="module_modules/Timer"></a>
 
 ## modules/Timer
+Class for timing the duration of things
+
 **Requires**: <code>module:colors</code>  
 **Author**: Jimmy Doughten <https://github.com/dough10>  
 **Example** *(Example usage of Timer class.)*  
@@ -9,7 +11,7 @@ var Timer = require('modules/Timer/Timer);
 var t = new Timer('thing');
 // do stuff you want to see how long it will take
 console.log(t.endString());
-// returns '0 hours 10 minutes 15.347 seconds'
+// returns 'thing - 0 hours 10 minutes 15.347 seconds'
 ```
 
 * [modules/Timer](#module_modules/Timer)
@@ -21,8 +23,6 @@ console.log(t.endString());
 <a name="module_modules/Timer..Timer"></a>
 
 ### modules/Timer~Timer
-Class for timing the duration of things
-
 **Kind**: inner class of [<code>modules/Timer</code>](#module_modules/Timer)  
 
 * [~Timer](#module_modules/Timer..Timer)

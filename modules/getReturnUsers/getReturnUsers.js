@@ -1,5 +1,5 @@
 /**
- * returns a list of  new users from the date givin
+ * @fileOverview returns a list of  new users from the date givin
  * @author Jimmy Doughten <https://github.com/dough10>
  * @exports getReturnUsers
  * 
