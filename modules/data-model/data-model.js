@@ -1,7 +1,7 @@
 /*jshint esversion: 9 */
 
 /**
- * Class to hold and manipulate the app data
+ * @fileOverview Class to hold and manipulate the app data
  * @fileOverview data Class 
  * @module data-model
  * @author Jimmy Doughten <https://github.com/dough10>

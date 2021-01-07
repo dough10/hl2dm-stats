@@ -1,5 +1,5 @@
 /**
- * returns month name
+ * @fileOverview returns month name
  * @module modules/monthName
  * @exports monthName
  * 

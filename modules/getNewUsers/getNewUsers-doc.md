@@ -1,6 +1,6 @@
-<a name="module_getNewUsers"></a>
+<a name="getNewUsers.module_js"></a>
 
-## getNewUsers ⇒ <code>Promise.&lt;Array&gt;</code>
+## getNewUsers.js ⇒ <code>Promise.&lt;Array&gt;</code>
 returns a list of  new users from the date givin
 
 **Returns**: <code>Promise.&lt;Array&gt;</code> - list of new users on the give day  

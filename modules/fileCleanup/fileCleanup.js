@@ -1,5 +1,5 @@
 /**
- *  make a zip and clean up previous months files 
+ * @fileOverview make a zip and clean up previous months files 
  * @module modules/fileCleanup
  * @requires path
  * @requires fs

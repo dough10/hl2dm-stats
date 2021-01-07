@@ -9,7 +9,7 @@ const Gamedig = require('gamedig');                       // get data about game
 /**
  * get GameDig data from game server
  * 
- * @returns {Object} gamedig server statsus object
+ * @returns {Promise<Object>} gamedig server statsus object
  * 
  * @example <caption>Example usage of gameServerStatus module.</caption>
  * gameServerStatus().then(status => {
