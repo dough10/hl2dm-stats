@@ -1,12 +1,12 @@
 var influx = require('./influx-middle');
 var RCON = require('srcds-rcon');
-  /**
-   * run RCON stats and log response in influxdb to be graphed in grafana
-   * @class
-   */
+/**
+ * run RCON stats and log response in influxdb to be graphed in grafana
+ * @class
+ */
 class RconStats {
   /**
-   * setup Class data and callback for later use
+   * run RCON stats and log response in influxdb to be graphed in grafana
    * @constructor
    * 
    * @example <caption>Example usage of RconStats Class.</caption>
@@ -24,6 +24,7 @@ class RconStats {
     this.onStats = onStats;
     this.interval = 60000;
     this.db = "srcds_db";
+    this.ping();
   }
   /**
    * connects to the game server rcon

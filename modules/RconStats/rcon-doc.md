@@ -15,7 +15,7 @@ run RCON stats and log response in influxdb to be graphed in grafana
 <a name="new_RconStats_new"></a>
 
 ### new RconStats()
-setup Class data and callback for later use
+run RCON stats and log response in influxdb to be graphed in grafana
 
 **Example** *(Example usage of RconStats Class.)*  
 ```js
