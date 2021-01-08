@@ -16,7 +16,6 @@ const bcrypt = require('bcrypt');
  * @returns {Promise<Boolean>} promise to a boolean.  true: authorized, false: not authorized
  * 
  * @example  <caption>Example usage of auth function.</caption>
- * // returns true | false;
  * var auth = require('modules/auth/auth');
  * auth(mongoDB-connection, 'registeredUser', 'supersecurepassword').then(authorized => {
  *   if (!authorized) return 'fail';

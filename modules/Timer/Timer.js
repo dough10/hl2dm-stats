@@ -66,10 +66,10 @@ class Timer {
    */
   endString() {
     var endTime = this.end();
-    if (!title) {
+    if (!this.title) {
       return `${endTime[0]} hours ${endTime[1]} minutes ${endTime[2]} seconds`.cyan;
     }
-    return `${title} - ${endTime[0]} hours ${endTime[1]} minutes ${endTime[2]} seconds`.cyan;
+    return `${this.title} - ${endTime[0]} hours ${endTime[1]} minutes ${endTime[2]} seconds`.cyan;
   }
 }
 

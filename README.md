@@ -49,6 +49,7 @@ avaliable from <https://github.com/dough10/hl2dm-stats-ui>
 - figlet: ^1.5.0
 - gamedig: ^2.0.23
 - geoip-lite: ^1.4.2
+- influx: ^5.6.3
 - mongodb: ^3.6.3
 - node-schedule: ^1.3.2
 - readline: ^1.3.0
