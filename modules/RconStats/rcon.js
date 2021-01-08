@@ -36,8 +36,8 @@ class RconStats {
       for(var i = 0; i < stat.length; i++) { 
         stat[i] = Number(stat[i]); 
       }
-      console.log('stats: ' + stat);
-      // influx.dbInsert(stat, this.db);
+      // console.log('stats: ' + stat);
+      influx.dbInsert(stat, this.db);
       resolve(stat);
       this.rcon.disconnect();
     });
