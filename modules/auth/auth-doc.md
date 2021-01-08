@@ -20,7 +20,6 @@ authorize
 
 **Example** *(Example usage of auth function.)*  
 ```js
-// returns true | false;
 var auth = require('modules/auth/auth');
 auth(mongoDB-connection, 'registeredUser', 'supersecurepassword').then(authorized => {
   if (!authorized) return 'fail';

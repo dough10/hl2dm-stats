@@ -40,6 +40,7 @@ const expressWs = require('express-ws')(app);
 const { check, oneOf, validationResult } = require('express-validator');
 const colors = require('colors'); 
 const config = require('./modules/loadConfig.js')();
+const RconStats = require('./modules/RconStats/rcon.js');
 const logFolder = path.join(config.gameServerDir, 'logs');
 var receiver = new logReceiver.LogReceiver();
 var appData = new Datamodel();
@@ -739,11 +740,14 @@ var server = app.listen(config.port, _ => mongoConnect().then(database => {
   console.log('');
   print('Online. ' + 'o( ❛ᴗ❛ )o'.red);
   statsLoop();
+  new RconStats(config.gameServerHostname, process.env.RCONPW).ping();
   appData.cacheDemos();
   parseLogs().then(seconds => {
     print(`Log parser complete in ` + `${seconds} seconds`.cyan);
     receiver.on("data", data => {
-      if (data.isValid) scanner(data.message, appData, userConnected, userDisconnected, mapStart, mapEnd, playerBan, true);
+      if (data.isValid) {
+        scanner(data.message, appData, userConnected, userDisconnected, mapStart, mapEnd, playerBan, true);
+      }
     });
   }).catch(errorHandler);
 }));
