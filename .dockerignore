@@ -1,4 +1,6 @@
-.vscode
+.vscode/*/*
+.git/*/*
+hooks
 test
 node_modules
 *.md

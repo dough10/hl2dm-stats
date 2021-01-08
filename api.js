@@ -142,7 +142,7 @@ function mapStart(logId) {
  * new RconStats('127.0.0.1', 'supersecurepassword', rconStats).ping();
  */
 function rconStats(stats) {
-  if (socket) socket.send(JSON.stringify(stats));
+  if (socket) socket.send(JSON.stringify(stats), e => {});
 }
 
 /**
