@@ -1,7 +1,19 @@
 var influx = require('./influx-middle');
 var RCON = require('srcds-rcon');
-
+  /**
+   * run RCON stats and log response in influxdb to be graphed in grafana
+   * @class
+   */
 class RconStats {
+  /**
+   * setup Class data and callback for later use
+   * @constructor
+   * 
+   * @example <caption>Example usage of RconStats Class.</caption>
+   * new RconStats('127.0.0.1', 'suspersecurepassword', stats => {
+   * // stats object that was logged to database
+   * });
+   */
   constructor(address, password, onStats) {
     if (!address) return console.error('address required');
     if (!password) return console.error('password required');
@@ -13,17 +25,48 @@ class RconStats {
     this.interval = 60000;
     this.db = "srcds_db";
   }
-  connect() {
+  /**
+   * connects to the game server rcon
+   * 
+   * @returns {Promise<Void>} nothing
+   * 
+   * @example <caption>Example usage of _connect() function.</caption>
+   * RconStats._connect().then(_ => {
+   * // connected
+   * });
+   */
+  _connect() {
     return new Promise((resolve, reject) => {
       this.rcon.connect().then(resolve).catch(reject);
     });
   }
-  getStats() {
+
+  /**
+   * runs stats command
+   * 
+   * @returns {Promise<String>} rcon stats output
+   * 
+   * @example <caption>Example usage of _getStats() function.</caption>
+   * RconStats._getStats().then(res => {
+   * // res = stats output string
+   * });
+   */
+  _getStats() {
     return new Promise((resolve, reject) => {
       this.rcon.command('stats').then(resolve).catch(reject);
     });
   }
-  parseStats(response) {
+
+  /**
+   * get usable data from the response then loges it to database before passing it to the callback function
+   * @param {String} response 
+   * 
+   * @returns {CallableFunction<Object>} fires when stats are processed 
+   * 
+   * @example <caption>Example usage of _parseStats() function.</caption>
+   * RconStats._parseStats(res);
+   */
+  _parseStats(response) {
     if (!response) return reject();
     var stat = response.split('\n')[1].split(" ");
     // Remove blank spaces
@@ -42,13 +85,22 @@ class RconStats {
     this.rcon.disconnect();
     if (this.onStats) this.onStats(stat);
   }
+
+  /**
+   * loop to get data at a preset interval
+   * 
+   * @returns {Void} nothing
+   * 
+   * @example <caption>Example usage of ping() function.</caption>
+   * RconStats.ping();
+   */
   ping() {
     setTimeout(_ => {
       this.ping();
     }, this.interval);
-    this.connect()
-    .then(this.getStats.bind(this))
-    .then(this.parseStats.bind(this)).catch(console.error);
+    this._connect()
+    .then(this._getStats.bind(this))
+    .then(this._parseStats.bind(this)).catch(console.error);
   }
 }
 
