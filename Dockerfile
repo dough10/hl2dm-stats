@@ -21,4 +21,4 @@ COPY . .
 EXPOSE 3000/tcp
 EXPOSE 9871/udp
 
-CMD ["RCONPW=${RCONPW}" "node", "api.js" ]
+CMD ["node", "api.js" ]
