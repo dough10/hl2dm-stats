@@ -5,8 +5,17 @@
 3. install modules `npm install`
 4. configure geoip-lite `cd node_modules/geoip-lite && npm run-script updatedb license_key=your license key` get your key [here](https://support.maxmind.com/account-faq/license-keys/how-do-i-generate-a-license-key/)
 5. configure config.json to fit your filesystem and mongodb database `nano configs/config.json`
-6. run app `node api.js`
-7. if using authorization run `node modules/streamKey.js` to configure a user login
+6. run app `RCONPW=supersecurepassword node api.js` RCONPW = the rcon password of the srcds server
+7. if using authorization for /auth endpoint run `node modules/streamKey.js` to configure a user
+
+## Docker
+
+Alternativly you can install using docker 
+
+1. clone repo `git clone https://github.com/dough10/hl2dm-stats.git`
+2. cd into directory `cd hl2dm-stats`
+3. run `docker build -t hl2dm-stats --build-arg RCONPW="rcon password" --build-arg GEO_LICENSE="geo-lite license key" .`
+4. run the container `docker run -p 3000:3000 -p 9871:9871 -v 'path to hl2mp folder':/usr/src/app/hl2mp -v 'path to store json history':/usr/src/app/old-top -v 'path to save zip files':/usr/src/app/old-stats hl2dm-stats`
 
 ## UI
 

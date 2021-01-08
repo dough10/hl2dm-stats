@@ -141,7 +141,9 @@ function mapStart(logId) {
  * @example <caption>Example usage of rconStats() function.</caption>
  * new RconStats('127.0.0.1', 'supersecurepassword', rconStats).ping();
  */
-function rconStats(stats) {}
+function rconStats(stats) {
+  // push rcon stats to the admin UI
+}
 
 /**
  * prints out the players name when a known ip views a page or makes a request
