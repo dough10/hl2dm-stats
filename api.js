@@ -135,6 +135,15 @@ function mapStart(logId) {
 }
 
 /**
+ * callback server statistics
+ * @callback
+ * 
+ * @example <caption>Example usage of rconStats() function.</caption>
+ * new RconStats('127.0.0.1', 'supersecurepassword', rconStats).ping();
+ */
+function rconStats(stats) {}
+
+/**
  * prints out the players name when a known ip views a page or makes a request
  * @see modules <a href=modules/data-model/data-model-doc.md#module_data-model..Data+who>data-model-doc.md</a>
  *
@@ -740,7 +749,7 @@ var server = app.listen(config.port, _ => mongoConnect().then(database => {
   console.log('');
   print('Online. ' + 'o( ❛ᴗ❛ )o'.red);
   statsLoop();
-  new RconStats(config.gameServerHostname, process.env.RCONPW).ping();
+  new RconStats(config.gameServerHostname, process.env.RCONPW, rconStats).ping();
   appData.cacheDemos();
   parseLogs().then(seconds => {
     print(`Log parser complete in ` + `${seconds} seconds`.cyan);
