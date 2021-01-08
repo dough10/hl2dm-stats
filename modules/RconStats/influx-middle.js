@@ -1,7 +1,7 @@
 module.exports = {
 	dbInsert: function(stat, db) {
 		const Influx = require('influx');
-		
+
 		// Connect to the actual DB, and describe
 		// the type of data that we will be dumping
 		// into it.
@@ -11,19 +11,19 @@ module.exports = {
 			schema: [{
 				measurement: 'stats',
 				fields: {
-					cpu:		Influx.FieldType.FLOAT,
-					inKB:		Influx.FieldType.FLOAT,
-					outKB:		Influx.FieldType.FLOAT,
-					uptime:		Influx.FieldType.INTEGER,
-					map_changes:	Influx.FieldType.INTEGER,
-					fps: 		Influx.FieldType.FLOAT,
-					players:	Influx.FieldType.INTEGER,
-					connects:	Influx.FieldType.INTEGER
-				},
-				tags: [ 'game' ]
+				cpu:		Influx.FieldType.FLOAT,
+				inKB:		Influx.FieldType.FLOAT,
+				outKB:		Influx.FieldType.FLOAT,
+				uptime:		Influx.FieldType.INTEGER,
+				map_changes:	Influx.FieldType.INTEGER,
+				fps: 		Influx.FieldType.FLOAT,
+				players:	Influx.FieldType.INTEGER,
+				connects:	Influx.FieldType.INTEGER
+			},
+			tags: [ 'game' ]
 			}]
 		});
-		
+
 		// Ensure that the database that we want to
 		// connect to actually exists. 
 		influx.getDatabaseNames().then(names => { 
@@ -48,7 +48,6 @@ module.exports = {
 					players:	stat[6],
 					connects:	stat[7]
 				}	
-				
 			}]).catch(err => { 
 				console.error(`Something went wrong saving that record. ${err.stack}`); 
 			});

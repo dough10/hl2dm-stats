@@ -48,7 +48,7 @@ class RconStats {
     }, this.interval);
     this.connect()
     .then(this.getStats.bind(this))
-    .then(this.parseStats.bind(this));
+    .then(this.parseStats.bind(this)).catch(console.error);
   }
 }
 
