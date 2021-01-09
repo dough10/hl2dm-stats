@@ -223,28 +223,28 @@ function sortWeapons(user) {
  * mergePhysicsKills(bob);
  * bob.weapons = sortWeapons();
  */
-function mergePhysicsKills(user) {
+function mergePhysicsKills(u) {
   // merge physics kills
-  if (!user.physics) {
-    user.physics = {
+  if (!u.physics) {
+    u.physics = {
       kills: 0
     };
   }
-  if (!user.physbox) {
-    user.physbox = {
+  if (!u.physbox) {
+    u.physbox = {
       kills: 0
     };
   }
-  if (!user.world) {
-    user.world = {
+  if (!u.world) {
+    u.world = {
       kills: 0
     };
   }
-  user.physics.kills = (user.physics.kills + user.physbox.kills) + user.world.kills;
-  delete user.physbox;
-  delete user.world;
-  if (user.physics.kills === 0) {
-    delete user.physics;
+  u.physics.kills = (u.physics.kills + u.physbox.kills) + u.world.kills;
+  delete u.physbox;
+  delete u.world;
+  if (u.physics.kills === 0) {
+    delete u.physics;
   }
 }
 
@@ -402,7 +402,7 @@ class Data {
     for (var user in this.users) {
       // push non banned players with greater then or equal to 100 kills to "top" Array
       if (this.users[user].kills >= 100 && !this.users[user].banned) {
-        var obj = Object.assign({}, this.users[user]);
+        var obj = JSON.parse(JSON.stringify(this.users[user]));
         mergePhysicsKills(obj);
         obj.weapons = sortWeapons(obj);
         arr.push(obj);
@@ -426,7 +426,7 @@ class Data {
    * var weaponsData = appData.generateWeapons();
    */
   generateWeapons() {
-    let obj = Object.assign({}, this.weapons);
+    let obj = JSON.parse(JSON.stringify(this.weapons));
     mergePhysicsKills(obj);
     return sortWeapons(obj);
   }
@@ -442,7 +442,7 @@ class Data {
   generateBannedPlayerList() {
     var arr = [];
     for (var player in this.bannedUsers) {
-      var obj = Object.assign({}, this.bannedUsers[player]);
+      var obj = JSON.parse(JSON.stringify(this.bannedUsers[player]));
       mergePhysicsKills(obj);
       obj.weapons = sortWeapons(obj);
       arr.push(obj);
@@ -461,7 +461,7 @@ class Data {
   generatePlayerStats(playerId) {
     for (var u in this.users) {
       if (playerId === u) {
-        var obj = Object.assign({}, this.users[u]);
+        var obj = JSON.parse(JSON.stringify(this.users[u]));
         mergePhysicsKills(obj);
         obj.weapons = sortWeapons(obj);
         return obj;
@@ -657,7 +657,7 @@ class Data {
     this.users[id].banned = true;
     this.bannedUsers[id] = this.users[id];
     // data to be returned
-    var r = { ... this.bannedUsers[id] };
+    var r = JSON.parse(JSON.stringify(this.bannedUsers[id]));
     r.weapons = sortWeapons(r);
     delete r.weapons;
     delete r.banned;
