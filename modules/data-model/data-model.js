@@ -402,7 +402,7 @@ class Data {
     for (var user in this.users) {
       // push non banned players with greater then or equal to 100 kills to "top" Array
       if (this.users[user].kills >= 100 && !this.users[user].banned) {
-        var obj = { ... this.users[user] };
+        var obj = Object.assign({}, this.users[user]);
         mergePhysicsKills(obj);
         obj.weapons = sortWeapons(obj);
         arr.push(obj);
@@ -426,7 +426,7 @@ class Data {
    * var weaponsData = appData.generateWeapons();
    */
   generateWeapons() {
-    let obj = { ... this.weapons };
+    let obj = Object.assign({}, this.weapons);
     mergePhysicsKills(obj);
     return sortWeapons(obj);
   }
@@ -442,7 +442,7 @@ class Data {
   generateBannedPlayerList() {
     var arr = [];
     for (var player in this.bannedUsers) {
-      var obj = { ... this.bannedUsers[player] };
+      var obj = Object.assign({}, this.bannedUsers[player]);
       mergePhysicsKills(obj);
       obj.weapons = sortWeapons(obj);
       arr.push(obj);
@@ -461,7 +461,7 @@ class Data {
   generatePlayerStats(playerId) {
     for (var u in this.users) {
       if (playerId === u) {
-        var obj = { ... this.users[u] };
+        var obj = Object.assign({}, this.users[u]);
         mergePhysicsKills(obj);
         obj.weapons = sortWeapons(obj);
         return obj;
