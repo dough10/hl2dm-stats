@@ -403,10 +403,14 @@ class Data {
     for (var user in this.users) {
       // push non banned players with greater then or equal to 100 kills to "top" Array
       if (this.users[user].kills >= 100 && !this.users[user].banned) {
-        var obj = JSON.parse(JSON.stringify(this.users[user]));
-        mergePhysicsKills(obj);
-        obj.weapons = sortWeapons(obj);
-        arr.push(obj);
+        try {
+          var obj = JSON.parse(JSON.stringify(this.users[user]));
+          mergePhysicsKills(obj);
+          obj.weapons = sortWeapons(obj);
+          arr.push(obj);
+        } catch (e) {
+          throw e;
+        }
       }
     }
     // do the actual sorting
@@ -427,9 +431,13 @@ class Data {
    * var weaponsData = appData.generateWeapons();
    */
   generateWeapons() {
-    let obj = JSON.parse(JSON.stringify(this.weapons));
-    mergePhysicsKills(obj);
-    return sortWeapons(obj);
+    try {
+      let obj = JSON.parse(JSON.stringify(this.weapons));
+      mergePhysicsKills(obj);
+      return sortWeapons(obj);
+    } catch(e) {
+      throw e;
+    }
   }
 
   /**
@@ -443,10 +451,14 @@ class Data {
   generateBannedPlayerList() {
     var arr = [];
     for (var player in this.bannedUsers) {
-      var obj = JSON.parse(JSON.stringify(this.bannedUsers[player]));
-      mergePhysicsKills(obj);
-      obj.weapons = sortWeapons(obj);
-      arr.push(obj);
+      try {
+        var obj = JSON.parse(JSON.stringify(this.bannedUsers[player]));
+        mergePhysicsKills(obj);
+        obj.weapons = sortWeapons(obj);
+        arr.push(obj);
+      } catch(e) {
+        throw e;
+      }
     }
     return arr;
   }
@@ -462,10 +474,14 @@ class Data {
   generatePlayerStats(playerId) {
     for (var u in this.users) {
       if (playerId === u) {
-        var obj = JSON.parse(JSON.stringify(this.users[u]));
-        mergePhysicsKills(obj);
-        obj.weapons = sortWeapons(obj);
-        return obj;
+        try {
+          var obj = JSON.parse(JSON.stringify(this.users[u]));
+          mergePhysicsKills(obj);
+          obj.weapons = sortWeapons(obj);
+          return obj;
+        } catch(e) {
+          throw e;
+        }
       }
     }
     return;
@@ -658,15 +674,19 @@ class Data {
     this.users[id].banned = true;
     this.bannedUsers[id] = this.users[id];
     // data to be returned
-    var r = JSON.parse(JSON.stringify(this.bannedUsers[id]));
-    r.weapons = sortWeapons(r);
-    delete r.weapons;
-    delete r.banned;
-    delete r.kills;
-    delete r.deaths;
-    delete r.kdr;
-    delete r.suicide;
-    return r;
+    try {
+      var r = JSON.parse(JSON.stringify(this.bannedUsers[id]));
+      r.weapons = sortWeapons(r);
+      delete r.weapons;
+      delete r.banned;
+      delete r.kills;
+      delete r.deaths;
+      delete r.kdr;
+      delete r.suicide;
+      return r;
+    }  catch (e) {
+      throw e;
+    }
   }
 
   /**
