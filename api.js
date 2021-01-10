@@ -736,11 +736,13 @@ app.get('/testCleanup', (req, res) => {
 /**
  * admin portal
  * @function
- * @name /admin
+ * @name /dashboard
  * 
  * @returns {HTML} admin portal
  */
-app.get('/admin', fiveHundred);
+app.get('/dashboard', (req, res) => {
+  res.send(appData.rconStats);
+});
 
 app.get('*', fourohfour);
 
