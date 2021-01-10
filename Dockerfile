@@ -14,7 +14,7 @@ RUN npm install
 RUN cd node_modules/geoip-lite && npm run-script updatedb license_key=${GEO_LICENSE}
 
 RUN apt-get update
-RUN apt-get install zip nano
+RUN apt-get install zip vim
 
 COPY . .
 
