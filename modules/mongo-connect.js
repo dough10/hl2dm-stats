@@ -17,7 +17,7 @@ function connectMongo() {
       }
       resolve(db.db("hl2dm"));
     });
-  })
+  });
 }
 
 module.exports = connectMongo;

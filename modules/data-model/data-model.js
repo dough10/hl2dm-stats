@@ -268,6 +268,7 @@ class Data {
     this.demos = [];                // array of demo Files
     this.gameStatus = {};
     this.playerTimes = {};
+    this.rconStats = [];
     // imported function
     this.getNewUsers = require('../getNewUsers/getNewUsers.js');
     this.getReturnUsers = require('../getReturnUsers/getReturnUsers.js');

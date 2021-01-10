@@ -1,7 +1,7 @@
 var influx = require('./influx-middle');
 var RCON = require('srcds-rcon');
 /**
- * run RCON stats and log response in influxdb to be graphed in grafana
+ * push RCON stats to influx
  * @class
  */
 class RconStats {
@@ -22,7 +22,7 @@ class RconStats {
       password: password
     });
     this.onStats = onStats;
-    this.interval = 60000;
+    this.interval = 5000;
     this.db = "srcds_db";
     this.ping();
   }

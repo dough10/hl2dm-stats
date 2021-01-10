@@ -4,10 +4,10 @@ test
 node_modules
 *.md
 modules/*/*.md
+npm-debug.log
 assets/foot.txt
 assets/head.txt
-npm-debug.log
-incriment-version.js
 assets/files.js
+incriment-version.js
 make-docs.js
 push.sh

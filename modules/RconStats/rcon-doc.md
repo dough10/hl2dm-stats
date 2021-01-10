@@ -1,7 +1,7 @@
 <a name="RconStats"></a>
 
 ## RconStats
-run RCON stats and log response in influxdb to be graphed in grafana
+push RCON stats to influx
 
 **Kind**: global class  
 

@@ -142,6 +142,7 @@ function mapStart(logId) {
  * new RconStats('127.0.0.1', 'supersecurepassword', rconStats).ping();
  */
 function rconStats(stats) {
+  appData.rconStats = stats;
   if (socket) socket.send(JSON.stringify(stats), e => {});
 }
 
@@ -339,6 +340,7 @@ app.disable('x-powered-by');
 app.ws('/', ws => {
   socket = ws;
   socket.send(JSON.stringify(appData.getStatus()));
+  socket.send(JSON.stringify(appData.rconStats));
 });
 
 /**
