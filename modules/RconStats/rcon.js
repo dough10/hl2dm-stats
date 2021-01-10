@@ -22,7 +22,7 @@ class RconStats {
       password: password
     });
     this.onStats = onStats;
-    this.interval = 5000;
+    this.interval = 30000;
     this.db = "srcds_db";
     this.ping();
   }
