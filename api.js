@@ -46,6 +46,7 @@ var receiver = new logReceiver.LogReceiver();
 var appData = new Datamodel();
 var db;
 var socket;
+var dashboard;
 
 /**
  * prints error message to console
@@ -143,7 +144,7 @@ function mapStart(logId) {
  */
 function rconStats(stats) {
   appData.rconStats = stats;
-  if (socket) socket.send(JSON.stringify(stats), e => {});
+  if (dashboard) dashboard.send(JSON.stringify(stats), e => {});
 }
 
 /**
@@ -340,7 +341,6 @@ app.disable('x-powered-by');
 app.ws('/', ws => {
   socket = ws;
   socket.send(JSON.stringify(appData.getStatus()));
-  socket.send(JSON.stringify(appData.rconStats));
 });
 
 /**
@@ -740,8 +740,9 @@ app.get('/testCleanup', (req, res) => {
  * 
  * @returns {HTML} admin portal
  */
-app.get('/dashboard', (req, res) => {
-  res.send(appData.rconStats);
+app.ws('/dashboard', ws => {
+  dashboard = ws;
+  dashbaord.send(appData.rconStats);
 });
 
 app.get('*', fourohfour);
