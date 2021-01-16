@@ -17,14 +17,18 @@ class RconStats {
   constructor(address, password, onStats) {
     if (!address) return console.error('address required');
     if (!password) return console.error('password required');
-    this.rcon = RCON({
-      address: address,
-      password: password
-    });
-    this.onStats = onStats;
-    this.interval = 10000;
-    this.db = "srcds_db";
-    this.ping();
+    try {
+      this.rcon = RCON({
+        address: address,
+        password: password
+      });
+      this.onStats = onStats;
+      this.interval = 10000;
+      this.db = "srcds_db";
+      this.ping();
+    } catch(e) {
+      console.error(e.message);
+    }
   }
   /**
    * connects to the game server rcon
