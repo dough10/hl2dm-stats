@@ -342,7 +342,7 @@ class Data {
    * // do something else
    */
   playerConnect(time, id, name, ip) {
-    this.playerTimes[id] = new Timer(name);
+    this.playerTimes[id] = new Timer();
     var newUser = false;
     if (!this.users[id]) {
       this.users[id] = playerObj(name, id, time, ip);
@@ -378,10 +378,9 @@ class Data {
     return new Promise((resolve, reject) => {
       var time;
       if (this.playerTimes[id]) {
-        time = this.playerTimes[id].endString();
+        resolve(this.playerTimes[id].endString());
         delete this.playerTimes[id];
       }
-       resolve(time);
     });
   }
 
