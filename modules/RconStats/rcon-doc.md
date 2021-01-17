@@ -10,7 +10,7 @@ push RCON stats to influx
     * [._connect()](#RconStats+_connect) ⇒ <code>Promise.&lt;Void&gt;</code>
     * [._getStats()](#RconStats+_getStats) ⇒ <code>Promise.&lt;String&gt;</code>
     * [._parseStats(response)](#RconStats+_parseStats) ⇒ <code>CallableFunction.&lt;Object&gt;</code>
-    * [.ping()](#RconStats+ping) ⇒ <code>Void</code>
+    * [._ping()](#RconStats+_ping) ⇒ <code>Void</code>
 
 <a name="new_RconStats_new"></a>
 
@@ -65,14 +65,14 @@ get usable data from the response then loges it to database before passing it to
 ```js
 RconStats._parseStats(res);
 ```
-<a name="RconStats+ping"></a>
+<a name="RconStats+_ping"></a>
 
-### rconStats.ping() ⇒ <code>Void</code>
+### rconStats.\_ping() ⇒ <code>Void</code>
 loop to get data at a preset interval
 
 **Kind**: instance method of [<code>RconStats</code>](#RconStats)  
 **Returns**: <code>Void</code> - nothing  
-**Example** *(Example usage of ping() function.)*  
+**Example** *(Example usage of _ping() function.)*  
 ```js
-RconStats.ping();
+RconStats._ping();
 ```

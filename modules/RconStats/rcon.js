@@ -25,7 +25,7 @@ class RconStats {
       this.onStats = onStats;
       this.interval = 10000;
       this.db = "srcds_db";
-      this.ping();
+      this._ping();
     } catch(e) {
       console.error(e.message);
     }
@@ -96,12 +96,12 @@ class RconStats {
    * 
    * @returns {Void} nothing
    * 
-   * @example <caption>Example usage of ping() function.</caption>
-   * RconStats.ping();
+   * @example <caption>Example usage of _ping() function.</caption>
+   * RconStats._ping();
    */
-  ping() {
+  _ping() {
     setTimeout(_ => {
-      this.ping();
+      this._ping();
     }, this.interval);
     this._connect()
     .then(this._getStats.bind(this))
