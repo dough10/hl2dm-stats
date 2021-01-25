@@ -15,6 +15,7 @@
  * @requires expresss-ws
  * @requires express-validator
  * @requires colors
+ * @requires pug
  */
 const scanner = require('./modules/lineScanner/lineScanner.js');
 const Datamodel = require('./modules/data-model/data-model.js');
@@ -28,6 +29,7 @@ const mongoConnect = require('./modules/mongo-connect.js');
 const init = require('./modules/init.js');
 const suffix = require('./modules/suffix.js');
 const fs = require('fs');  
+const pug = require('pug');
 const readline = require('readline');
 const compression = require('compression'); 
 const express = require('express');
@@ -328,10 +330,24 @@ app.use(compression());
 app.set('trust proxy', true);
 app.disable('x-powered-by');
 
+app.use(express.static('admin-assets', { maxAge: ((1000 * 60) * 60) * 24 }));
+
+/**
+ * redirect to admin
+ * @function
+ * @name /
+ * 
+ * @returns {Void} redirect
+ */
+app.get('/', (req, res) => {
+  res.redirect('/admin');
+  who(req, `is being redirected to ` + '/admin'.green + ` portal`);
+});
+
 /**
  * route for WebSocket
  * @function
- * @name /
+ * @name / ws
  * 
  * @returns {JSON} websocket pipeline
  * 
@@ -388,30 +404,30 @@ app.get('/auth', oneOf([
   try {
     validationResult(req).throw();
     var t = new Timer();
-    who(req, `is requesting stream authorization`);
+    who(req, `is requesting authorization`);
     var name = req.query.name;
     appData.authorize(db, name, req.query.k).then(authorized => {
       if (!authorized) {
-        who(req, `failed to authorize for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+        who(req, `failed to authorize as id ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
         return res.status(401).json({
           status: 401,
           authorized: authorized
         });
       }
-      who(req, `was successfully authorized for streaming as streamid ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+      who(req, `was successfully authorized as id ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
       res.status(200).json({
         status: 200,
         authorized: authorized
       });
     }).catch(e => {
-      who(req, `failed to authorize for streaming: ${e} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+      who(req, `failed to authorize: ${e.message} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
       return res.status(401).json({
         status: 401,
         authorized: false
       });
     });
   } catch (err) {
-    fourohfour(req, res);
+    fiveHundred(req, res);
   }
 });
 
@@ -734,15 +750,31 @@ app.get('/testCleanup', (req, res) => {
 });
 
 /**
- * admin portal
+ * stats dashboard websocket
  * @function
  * @name /dashboard
  * 
- * @returns {HTML} admin portal
+ * @returns {JSON} RCON stats
  */
 app.ws('/dashboard', ws => {
   dashboard = ws;
   dashbaord.send(appData.rconStats);
+});
+
+/**
+ * admin portal
+ * @function
+ * @name /admin
+ * 
+ * @returns {HTML} admin page
+ */
+app.get('/admin', (req, res) => {
+  var t = new Timer();
+  res.send(pug.renderFile('./admin-assets/template.pug', {
+    title: 'Lo-g Hoedown Admin',
+    stats: appData.rconStats
+  }));
+  who(req, `is viewing ` + '/admin'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
 });
 
 app.get('*', fourohfour);

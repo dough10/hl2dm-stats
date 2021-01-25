@@ -1,0 +1,16 @@
+doctype html
+html
+  meta(charset='UTF-8')
+  title #{title}
+  link(rel='stylesheet', href='/admin.css')
+  body
+    div#loader
+    header
+    div.header-shadow
+    div.wrapper
+      div.card 
+        div#cpubox CPU: #{stats[0]}
+        div#playersbox Players: #{stats[6]}
+        div#fpsbox FPS: #{stats[5]}
+  body/
+  script(src='/admin.js')
