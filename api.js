@@ -40,7 +40,8 @@ const logReceiver = require("srcds-log-receiver");
 const app = express();   
 const expressWs = require('express-ws')(app);
 const { check, oneOf, validationResult } = require('express-validator');
-const colors = require('colors'); 
+const colors = require('colors');
+const blocked = require('blocked');
 const config = require('./modules/loadConfig.js')();
 const RconStats = require('./modules/RconStats/rcon.js');
 const logFolder = path.join(config.gameServerDir, 'logs');
@@ -49,6 +50,7 @@ var appData = new Datamodel();
 var db;
 var socket;
 var dashboard;
+
 
 /**
  * prints error message to console
@@ -802,7 +804,23 @@ var server = app.listen(config.port, _ => mongoConnect().then(database => {
 
 process.on('SIGTERM', _ => {
   // db.close();
+  let total = 0;
+  for (let i = 0; i < blockLog.length; i++) {
+    total += blockLog[i];
+  }
+  console.log(`Thread block for total ${total} ms`);
   server.close(_ => {
     console.log('Process terminated');
   });
+});
+
+let blockLog = [];
+
+blocked(ms => {
+  blockLog.push(ms);
+  console.log(`!!! >>> MAIN THREAD Blocked for ${ms}ms.`.red);
+}, {
+  threshold: 10, 
+  interval: 1000, 
+  trimFalsePositives:true
 });
