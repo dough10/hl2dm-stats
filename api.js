@@ -347,12 +347,12 @@ app.get('/', (req, res) => {
 /**
  * route for WebSocket
  * @function
- * @name / ws
+ * @name /
  * 
  * @returns {JSON} websocket pipeline
  * 
  * @example <caption>Example usage of / api endpoint.</caption>
- * var socket = new WebSocket('localhost:3000/);
+ * var socket = new WebSocket('http://localhost:3000/);
  */
 app.ws('/', ws => {
   socket = ws;
@@ -367,7 +367,7 @@ app.ws('/', ws => {
  * @returns {JSON} game server rcon status response
  * 
  * @example <caption>Example usage of /status api endpoint.</caption>
- * fetch('localhost:3000/status').then(response => {
+ * fetch('http://localhost:3000/status').then(response => {
  *   response.json().then(json => {
  *     console.log(json); // game server status
  *   });
@@ -390,7 +390,7 @@ app.get('/status', (req, res) => {
  * @returns {JSON} ok: authorized, fail: failed to authorize
  * 
  * @example <caption>Example usage of /auth api endpoint.</caption>
- * fetch('localhost:3000/auth?name=stream1&k=supersecurepassword').then(response => {
+ * fetch('http://localhost:3000/auth?name=stream1&k=supersecurepassword').then(response => {
  *   response.json().then(json => {
  *     console.log(json);  = {staus: 200 | 401, authorized: true | false}
  *   });
@@ -439,7 +439,7 @@ app.get('/auth', oneOf([
  * @returns {JSON} stats top players list, server wide weapons list, # of total players, list of banned players, time of generation
  * 
  * @example <caption>Example usage of /stats api endpoint.</caption>
- * fetch('localhost:3000/stats').then(response => {
+ * fetch('http://localhost:3000/stats').then(response => {
  *   response.json().then(json => {
  *     console.log(json); // player statistics
  *   });
@@ -465,7 +465,7 @@ app.get('/stats', (req, res) => {
  * @returns {JSON | HTML} list of months with stats history | 500
  * 
  * @example <caption>Example usage of /old-months api endpoint.</caption>
- * fetch('localhost:3000/old-months').then(response => {
+ * fetch('http://localhost:3000/old-months').then(response => {
  *   response.json().then(json => {
  *     console.log(json); // list of previous months that have player statistics
  *   });
@@ -490,7 +490,7 @@ app.get('/old-months', (req, res) => {
  * @returns {JSON | HTML} statistics from a previous month | 500
  * 
  * @example <caption>Example usage of /old-stats/:month api endpoint.</caption>
- * fetch('localhost:3000/old-stats/11').then(response => {
+ * fetch('http://localhost:3000/old-stats/11').then(response => {
  *   response.json().then(json => {
  *     console.log(json); // statistics for the month of December
  *   });
@@ -514,7 +514,7 @@ app.get('/old-stats/:month', (req, res) => {
  * @returns {JSON} list of all players to join server
  * 
  * @example <caption>Example usage of /playerList api endpoint.</caption>
- * fetch('localhost:3000/playerList').then(response => {
+ * fetch('http://localhost:3000/playerList').then(response => {
  *   response.json().then(json => {
  *     console.log(json); // list of plyaers that have joined the server
  *   });
@@ -542,7 +542,7 @@ app.get('/playerList', (req, res) => {
  * @returns {JSON} list of players from the given date
  * 
  * @example <caption>Example usage of /newPlayer/:date api endpoint.</caption>
- * fetch('localhost:3000/newPlayer/1').then(response => {
+ * fetch('http://localhost:3000/newPlayer/1').then(response => {
  *   response.json().then(json => {
  *     console.log(json); // list of players that played in the server for the first time on the first of the month
  *   });
@@ -573,7 +573,7 @@ app.get('/newPlayers/:date', oneOf([
  * @returns {Array} list of players from the given date
  * 
  * @example <caption>Example usage of /returnPlayer/:date api endpoint.</caption>
- * fetch('localhost:3000/returnPlayer/1').then(response => {
+ * fetch('http://localhost:3000/returnPlayer/1').then(response => {
  *   response.json().then(json => {
  *     console.log(json); // list of returning players that played in the server on the first of the month
  *   });
@@ -602,7 +602,7 @@ app.get('/returnPlayers/:date', (req, res) => {
  * @returns {JSON | HTML} players stat data | 404 
  * 
  * @example <caption>Example usage of /playerStats/:id api endpoint.</caption>
- * fetch('localhost:3000/playerStats/1025678454').then(response => {
+ * fetch('http://localhost:3000/playerStats/1025678454').then(response => {
  *   response.json().then(json => {
  *     console.log(json); // player statistics for player with the id 1025678454
  *   });
@@ -694,7 +694,7 @@ app.get('/download/demos-zip/:file', (req, res) => {
  * @returns {JSON} list of demo files
  * 
  * @example <caption>Example usage of /demos api endpoint.</caption>
- * fetch('localhost:3000/demos').then(response => {
+ * fetch('http://localhost:3000/demos').then(response => {
  *   response.json().then(json => {
  *     console.log(json); // list of demo files that can be downloaded
  *   });
@@ -714,7 +714,7 @@ app.get('/demos', (req, res) => {
  * @returns {Text} list of cvar commands 
  * 
  * @example <caption>Example usage of /cvarlist api endpoint.</caption>
- * fetch('localhost:3000/cvarlist').then(response => {
+ * fetch('http://localhost:3000/cvarlist').then(response => {
  *   response.text().then(text => {
  *     console.log(text); // list of srcds conosle commands
  *   });
@@ -738,7 +738,7 @@ app.get('/cvarlist', (req, res) => {
  * @returns {Text} test start confirmation string
  * 
  * @example <caption>Example usage of /testCleanup api endpoint.</caption>
- * fetch('localhost:3000/testCleanup').then(response => {
+ * fetch('http://localhost:3000/testCleanup').then(response => {
  *   response.text().then(text => {
  *     console.log(text); // 'cleanup test started'
  *   });
