@@ -285,7 +285,7 @@ function parseLogs() {
 }
 
 /**
- * convert milliceson to readable time string
+ * convert milliseconds to readable time string
  * @param {Number} ms time in milliseconds
  * 
  * @returns {String} readable time string

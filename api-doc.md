@@ -119,7 +119,7 @@ parseLogs().then(seconds => {
 <a name="module_api..readableTime"></a>
 
 ### api~readableTime(ms) ⇒ <code>String</code>
-convert milliceson to readable time string
+convert milliseconds to readable time string
 
 **Kind**: inner method of [<code>api</code>](#module_api)  
 **Returns**: <code>String</code> - readable time string  
