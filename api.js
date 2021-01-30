@@ -285,6 +285,24 @@ function parseLogs() {
 }
 
 /**
+ * convert milliceson to readable time string
+ * @param {Number} ms time in milliseconds
+ * 
+ * @returns {String} readable time string
+ * 
+ * @example <caption>Example usage of readableTime() function.</caption>
+ * var string = readableTime(67541983);
+ */
+function readableTime(ms) {
+  var seconds = ms / 1000;
+  var hours = parseInt( seconds / 3600 );
+  seconds = seconds % 3600;
+  var minutes = parseInt( seconds / 60 );
+  seconds = Number((seconds % 60).toFixed(3));
+  return `${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+}
+
+/**
  * 404 page
  * @param {Object} req express request object
  * @param {Object} res express response object
@@ -808,17 +826,26 @@ process.on('SIGTERM', _ => {
   for (let i = 0; i < blockLog.length; i++) {
     total += blockLog[i];
   }
-  console.log(`Thread block for total ${total} ms`);
+  console.log(`Thread block for total ${total.cyan}`);
   server.close(_ => {
     console.log('Process terminated');
   });
 });
 
+
 let blockLog = [];
+let timer;
 
 blocked(ms => {
   blockLog.push(ms);
-  console.log(`!!! >>> MAIN THREAD Blocked for ${ms}ms.`.red);
+  if (timer) clearTimeout(timer);
+  timer = setTimeout(_ => {
+    let total = 0;
+    for (let i = 0; i < blockLog.length; i++) {
+      total += blockLog[i];
+    }
+    console.log(`MAIN THREAD Blocked for ${readableTime(total).cyan}!!!`.red);
+  }, 5000);
 }, {
   threshold: 10, 
   interval: 1000, 
