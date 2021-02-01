@@ -343,7 +343,7 @@ function fiveHundred(req, res) {
 }
 
 schedule.scheduleJob('0 5 1 * *', _ => {
-  appData.runCleanup(false).then(appData.reset);
+  appData.runCleanup(false).then(appData.reset.bind(appData));
 });
 
 app.use(compression());
