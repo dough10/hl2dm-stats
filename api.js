@@ -826,7 +826,7 @@ process.on('SIGTERM', _ => {
   for (let i = 0; i < blockLog.length; i++) {
     total += blockLog[i];
   }
-  console.log(`Thread block for total ${total.cyan}`);
+  console.log(`Thread blocked for ${readableTime(total).cyan}`);
   server.close(_ => {
     console.log('Process terminated');
   });
