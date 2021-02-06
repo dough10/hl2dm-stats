@@ -838,7 +838,7 @@ let blockLog = [];
 let timer;
 
 function onBlocked(ms) {
-  console.log(`Thread blocked: ${ms}ms`.red)
+  console.log(`Thread blocked: ${ms}ms`.red);
   blockLog.push(ms);
   if (timer) clearTimeout(timer);
   timer = setTimeout(_ => {
