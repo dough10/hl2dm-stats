@@ -45,6 +45,7 @@ const blocked = require('blocked');
 const config = require('./modules/loadConfig.js')();
 const RconStats = require('./modules/RconStats/rcon.js');
 const logFolder = path.join(config.gameServerDir, 'logs');
+const startTime = new Date().getTime();
 var receiver = new logReceiver.LogReceiver();
 var appData = new Datamodel();
 var db;
@@ -836,7 +837,8 @@ process.on('SIGTERM', _ => {
 let blockLog = [];
 let timer;
 
-blocked(ms => {
+function onBlocked(ms) {
+  console.log(`Thread blocked: ${ms}ms`.red)
   blockLog.push(ms);
   if (timer) clearTimeout(timer);
   timer = setTimeout(_ => {
@@ -844,9 +846,13 @@ blocked(ms => {
     for (let i = 0; i < blockLog.length; i++) {
       total += blockLog[i];
     }
-    console.log(`MAIN THREAD Blocked for ${readableTime(total).cyan}!!!`.red);
-  }, 5000);
-}, {
+    let uptime = new Date().getTime() - startTime;
+    print(`Application uptime: ${readableTime(uptime).cyan}`);
+    console.log(`blocked for ${((total / uptime) * 100).toFixed(2)}% of uptime`.red);
+  }, 10000);
+}
+
+blocked(onBlocked, {
   threshold: 10, 
   interval: 1000, 
   trimFalsePositives:true
