@@ -837,6 +837,13 @@ process.on('SIGTERM', _ => {
 let blockLog = [];
 let timer;
 
+/**
+ * execued after main thread is blocked
+ * logs time in ms the thread was blocked / adds a total time and compares it to the current uptime
+ * @param {Number} ms milliseconds the thread was blocked.
+ * 
+ * @returns {Void} nothing
+ */
 function onBlocked(ms) {
   console.log(`Thread blocked: ${ms}ms`.red);
   blockLog.push(ms);

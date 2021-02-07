@@ -1,13 +1,12 @@
 #!/bin/sh
-node make-docs
+echo "$1, V: $v";
 if [ "$2" == "+" ]
   then
     v=$(node modules/incriment-version.js);
   else
     v=$(node -p "require('./package.json').version");
 fi
-# d=$(date +%s);
-echo "$1, V: $v";
+node make-docs
 git add .;
 git commit -m "$1, V: $v";
 git push;
