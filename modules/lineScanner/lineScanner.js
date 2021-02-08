@@ -15,6 +15,9 @@ const print = require('../printer/printer.js');
  * @param {String} ip - ip address
  * 
  * @returns {Boolean} true: validated, false: failed
+ * 
+ * @example <caption>Example usage of validateIPAddress() function.</caption>
+ * console.log(validateIPaddress('192.168.0.1')); = true
  */
 function validateIPaddress(ip) {
   return /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ip);

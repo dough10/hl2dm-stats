@@ -19,7 +19,7 @@
  */
 const scanner = require('./modules/lineScanner/lineScanner.js');
 const Datamodel = require('./modules/data-model/data-model.js');
-const logUser = require('./modules/logUser.js');
+const logUser = require('./modules/logUser/logUser.js');
 const logBan = require('./modules/logBan');
 const print = require('./modules/printer/printer.js');
 const Timer = require('./modules/Timer/Timer.js');

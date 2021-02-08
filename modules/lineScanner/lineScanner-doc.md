@@ -39,6 +39,10 @@ check if ip  address is valid
 | --- | --- | --- |
 | ip | <code>String</code> | ip address |
 
+**Example** *(Example usage of validateIPAddress() function.)*  
+```js
+console.log(validateIPaddress('192.168.0.1')); = true
+```
 <a name="module_modules/lineScanner..isFileStart"></a>
 
 ### modules/lineScanner~isFileStart(line) ⇒ <code>Boolean</code>

@@ -1,4 +1,16 @@
+/**
+ * @module modules/logUser
+ * @author Jimmy Doughten <https://github.com/dough10>
+ * @exports logUser
+ */
 
+/**
+ * checks mongodb instance to see if entry exists  
+ * @param {Object} db mongodb instance object
+ * @param {Object} data data object to be saved to the database
+ * 
+ * @returns {Promise<Object>} 
+ */
 function entryExists(db, data) {
   return new Promise((resolve, reject) => {
     db.collection("players").findOne({
@@ -13,6 +25,13 @@ function entryExists(db, data) {
   });
 }
 
+/**
+ * inserts object into mongodb instance
+ * @param {Object} db mongodb instance object
+ * @param {Object} data data object to be saved to the database
+ * 
+ * @returns {Promise<Object>} the saved entry
+ */
 function insertPlayer(db, data) {
   return new Promise((resolve, reject) => {
     db.collection("players").insertOne(data, err => {
@@ -33,7 +52,13 @@ function insertPlayer(db, data) {
   });
 }
 
-
+/**
+ * checks database to see if entry exists and if ti doesn't it will save the data
+ * @param {Object} db mongodb instance object
+ * @param {Object} data data object to be saved to the database
+ * 
+ * @returns {Promise<Void>} 
+ */
 function logUser(db, data) {
   return new Promise((resolve, reject) => {
     entryExists(db, data).then(exists => {

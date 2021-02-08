@@ -13,5 +13,6 @@ module.exports = [
   'modules/printer/printer',
   'modules/month-name/month-name',
   'modules/weaponsCheck/weaponsCheck',
-  'modules/RconStats/rcon'
+  'modules/RconStats/rcon',
+  'modules/logUser/logUser'
 ];
