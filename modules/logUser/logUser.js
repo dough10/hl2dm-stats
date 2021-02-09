@@ -9,7 +9,12 @@
  * @param {Object} db mongodb instance object
  * @param {Object} data data object to be saved to the database
  * 
- * @returns {Promise<Object>} 
+ * @returns {Promise<Object>}
+ * 
+ * @example <caption>Example usage of entryExists() function.</caption>
+ * entryExists(db, data).then(exists => {
+ *   console.log(exists);
+ * });
  */
 function entryExists(db, data) {
   return new Promise((resolve, reject) => {
@@ -31,6 +36,9 @@ function entryExists(db, data) {
  * @param {Object} data data object to be saved to the database
  * 
  * @returns {Promise<Object>} the saved entry
+ * 
+ * @example <caption>Example usage of insertPlayer() function.</caption>
+ * insertPlayer(db, data);
  */
 function insertPlayer(db, data) {
   return new Promise((resolve, reject) => {
@@ -57,7 +65,12 @@ function insertPlayer(db, data) {
  * @param {Object} db mongodb instance object
  * @param {Object} data data object to be saved to the database
  * 
- * @returns {Promise<Void>} 
+ * @returns {Promise<Void>}
+ * 
+ * @example <caption>Example usage of logUser() function.</caption>
+ * logUser(db, data).then(_ => {
+ *   
+ * });
  */
 function logUser(db, data) {
   return new Promise((resolve, reject) => {

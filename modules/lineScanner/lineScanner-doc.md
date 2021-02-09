@@ -55,6 +55,16 @@ scans the line for file start
 | --- | --- | --- |
 | line | <code>Array</code> | one line of the log file being parsed |
 
+**Example** *(Example usage of isFileStart() function.)*  
+```js
+isFileStart([
+  'list',
+  'of',
+  'words',
+  'to',
+  'check'
+]);
+```
 <a name="module_modules/lineScanner..isFileEnd"></a>
 
 ### modules/lineScanner~isFileEnd(line) ⇒ <code>Boolean</code>
@@ -67,6 +77,16 @@ scans the line for file end
 | --- | --- | --- |
 | line | <code>Array</code> | one line of the log file being parsed |
 
+**Example** *(Example usage of isFileEnd() function.)*  
+```js
+isFileEnd([
+  'list',
+  'of',
+  'words',
+  'to',
+  'check'
+]);
+```
 <a name="module_modules/lineScanner..getName"></a>
 
 ### modules/lineScanner~getName(word) ⇒ <code>String</code>
@@ -79,6 +99,16 @@ returns the player name string
 | --- | --- | --- |
 | word | <code>String</code> | player name string |
 
+**Example** *(Example usage of getName() function.)*  
+```js
+var name = getName([
+  'list',
+  'of',
+  'words',
+  'to',
+  'check'
+]);
+```
 <a name="module_modules/lineScanner..getID2"></a>
 
 ### modules/lineScanner~getID2(word) ⇒ <code>String</code>
@@ -91,25 +121,45 @@ returns the player steamID in format 2
 | --- | --- | --- |
 | word | <code>String</code> | player name string |
 
+**Example** *(Example usage of getID2() function.)*  
+```js
+var steamid = getID2([
+  'list',
+  'of',
+  'words',
+  'to',
+  'check'
+]);
+```
 <a name="module_modules/lineScanner..getID3"></a>
 
 ### modules/lineScanner~getID3(word) ⇒ <code>String</code>
 returns the player steamID in format 3
 
 **Kind**: inner method of [<code>modules/lineScanner</code>](#module_modules/lineScanner)  
-**Returns**: <code>String</code> - returns players SteamID in steamid3 format without [U:1:XXXXXXXXX] jsut the #s  
+**Returns**: <code>String</code> - returns players SteamID in steamid3 format without [U:1:XXXXXXXXX] jsut the numbers  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | word | <code>String</code> | player name string |
 
+**Example** *(Example usage of getID3() function.)*  
+```js
+var steamid = getID3([
+  'list',
+  'of',
+  'words',
+  'to',
+  'check'
+]);
+```
 <a name="module_modules/lineScanner..isTime"></a>
 
 ### modules/lineScanner~isTime(str) ⇒ <code>Boolean</code>
 if a string of text a time string
 
 **Kind**: inner method of [<code>modules/lineScanner</code>](#module_modules/lineScanner)  
-**Returns**: <code>Boolean</code> - true: string is a time string, false: is not time string  
+**Returns**: <code>Boolean</code> - true: string is a time string, false: is not time stringconsole.log(isTime('12:59:59'));  
 
 | Param | Type | Description |
 | --- | --- | --- |

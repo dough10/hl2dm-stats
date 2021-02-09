@@ -20,6 +20,12 @@ checks mongodb instance to see if entry exists
 | db | <code>Object</code> | mongodb instance object |
 | data | <code>Object</code> | data object to be saved to the database |
 
+**Example** *(Example usage of entryExists() function.)*  
+```js
+entryExists(db, data).then(exists => {
+  console.log(exists);
+});
+```
 <a name="module_modules/logUser..insertPlayer"></a>
 
 ### modules/logUser~insertPlayer(db, data) ⇒ <code>Promise.&lt;Object&gt;</code>
@@ -33,6 +39,10 @@ inserts object into mongodb instance
 | db | <code>Object</code> | mongodb instance object |
 | data | <code>Object</code> | data object to be saved to the database |
 
+**Example** *(Example usage of insertPlayer() function.)*  
+```js
+insertPlayer(db, data);
+```
 <a name="module_modules/logUser..logUser"></a>
 
 ### modules/logUser~logUser(db, data) ⇒ <code>Promise.&lt;Void&gt;</code>
@@ -45,3 +55,9 @@ checks database to see if entry exists and if ti doesn't it will save the data
 | db | <code>Object</code> | mongodb instance object |
 | data | <code>Object</code> | data object to be saved to the database |
 
+**Example** *(Example usage of logUser() function.)*  
+```js
+logUser(db, data).then(_ => {
+  
+});
+```

@@ -28,6 +28,15 @@ function validateIPaddress(ip) {
  * @param {Array} line - one line of the log file being parsed
  * 
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
+ * 
+ * @example <caption>Example usage of isFileStart() function.</caption>
+ * isFileStart([
+ *   'list',
+ *   'of',
+ *   'words',
+ *   'to',
+ *   'check'
+ * ]);
  */
 function isFileStart(word) {
   for (var i = 0 ; i < word.length; i++) {
@@ -43,6 +52,15 @@ function isFileStart(word) {
  * @param {Array} line - one line of the log file being parsed
  * 
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
+ * 
+ * @example <caption>Example usage of isFileEnd() function.</caption>
+ * isFileEnd([
+ *   'list',
+ *   'of',
+ *   'words',
+ *   'to',
+ *   'check'
+ * ]);
  */
 function isFileEnd(word) {
   for (var i = 0; i < word.length; i++) {
@@ -58,6 +76,15 @@ function isFileEnd(word) {
  * @param {String} word - player name string
  * 
  * @returns {String} players name
+ * 
+ * @example <caption>Example usage of getName() function.</caption>
+ * var name = getName([
+ *   'list',
+ *   'of',
+ *   'words',
+ *   'to',
+ *   'check'
+ * ]);
  */
 function getName(word) {
   if (!word) {
@@ -77,6 +104,15 @@ function getName(word) {
  * @param {String} word - player name string
  * 
  * @returns {String} players steamid in steamid2 format
+ * 
+ * @example <caption>Example usage of getID2() function.</caption>
+ * var steamid = getID2([
+ *   'list',
+ *   'of',
+ *   'words',
+ *   'to',
+ *   'check'
+ * ]);
  */
 function getID2(word) {
   if (!word) {
@@ -100,7 +136,16 @@ function getID2(word) {
  * returns the player steamID in format 3
  * @param {String} word - player name string
  * 
- * @returns {String} returns players SteamID in steamid3 format without [U:1:XXXXXXXXX] jsut the #s
+ * @returns {String} returns players SteamID in steamid3 format without [U:1:XXXXXXXXX] jsut the numbers
+ * 
+ * @example <caption>Example usage of getID3() function.</caption>
+ * var steamid = getID3([
+ *   'list',
+ *   'of',
+ *   'words',
+ *   'to',
+ *   'check'
+ * ]);
  */
 function getID3(word) {
   if (!word) {
@@ -125,6 +170,8 @@ function getID3(word) {
  * @param {String} str - player name string
  * 
  * @returns {Boolean} true: string is a time string, false: is not time string
+ * 
+ * console.log(isTime('12:59:59'));
  */
 function isTime(str) {
   return /^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d):$/.test(str);
