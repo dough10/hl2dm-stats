@@ -845,17 +845,17 @@ let timer;
  * @returns {Void} nothing
  */
 function onBlocked(ms) {
-  console.log(`Thread blocked: ${ms}ms`.red);
   blockLog.push(ms);
+  let total = 0;
+  for (let i = 0; i < blockLog.length; i++) {
+    total += blockLog[i];
+  }
+  print(`Thread blocked: ${ms}ms`.red);
   if (timer) clearTimeout(timer);
   timer = setTimeout(_ => {
-    let total = 0;
-    for (let i = 0; i < blockLog.length; i++) {
-      total += blockLog[i];
-    }
     let uptime = new Date().getTime() - startTime;
     print(`Application uptime: ${readableTime(uptime).cyan}`);
-    console.log(`blocked for ${((total / uptime) * 100).toFixed(2)}% of uptime`.red);
+    print(`blocked for total of ${total}ms / ${((total / uptime) * 100).toFixed(2)}% of uptime`.red);
   }, 10000);
 }
 
