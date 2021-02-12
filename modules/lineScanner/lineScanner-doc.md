@@ -25,7 +25,7 @@
     * [~playerIsBanned(line)](#module_modules/lineScanner..playerIsBanned) ⇒ <code>Boolean</code>
     * [~playerHasDisconnected(line)](#module_modules/lineScanner..playerHasDisconnected) ⇒ <code>Boolean</code>
     * [~getLineTime(line)](#module_modules/lineScanner..getLineTime) ⇒ <code>Boolean</code>
-    * [~scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, loggingEnabled)](#module_modules/lineScanner..scanLine)
+    * [~scanLine(line, onKill, onJoin, onDisconnect, onMapStart, onMapEnd, loggingEnabled)](#module_modules/lineScanner..scanLine)
 
 <a name="module_modules/lineScanner..validateIPaddress"></a>
 
@@ -325,15 +325,15 @@ scans the line for time
 
 <a name="module_modules/lineScanner..scanLine"></a>
 
-### modules/lineScanner~scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, loggingEnabled)
-scans the line for usable data for the data-model
+### modules/lineScanner~scanLine(line, onKill, onJoin, onDisconnect, onMapStart, onMapEnd, loggingEnabled)
+scans the line for usable data for the data-model   **update params**
 
 **Kind**: inner method of [<code>modules/lineScanner</code>](#module_modules/lineScanner)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | line | <code>Array</code> | one line of the log file being parsed split at spaces |
-| dataModel | <code>Class</code> | @link modules/data-model/data-model-doc.md |
+| onKill | <code>function</code> | - |
 | onJoin | <code>function</code> | callback when player joins server @link api-doc.md#module_api..userConnected |
 | onDisconnect | <code>function</code> | callback when player leaves server @link api-doc.md#module_api..userDisconnected |
 | onMapStart | <code>function</code> | callback when the map begins @link api-doc.md#apimapstart |

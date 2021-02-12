@@ -19,8 +19,6 @@
  */
 const scanner = require('./modules/lineScanner/lineScanner.js');
 const Datamodel = require('./modules/data-model/data-model.js');
-const logUser = require('./modules/logUser/logUser.js');
-const logBan = require('./modules/logBan');
 const print = require('./modules/printer/printer.js');
 const Timer = require('./modules/Timer/Timer.js');
 const monthName = require('./modules/month-name/month-name.js');
@@ -77,7 +75,8 @@ function errorHandler(e) {
  * scanner(.., .., .., .., userConnected, .., ..);
  */
 function userConnected(u) {
-  logUser(db, u).then(user => {
+  u.new = appData.playerConnect(u.time, u.id, u.name, u.ip);
+  appData.logUser(db, u).then(user => {
     if (user) print(`${user.name.grey} connection at ${new Date(user.time).toLocaleString().yellow} was logged into database`);
   }).catch(e => console.error(e.message));
 }
@@ -92,7 +91,8 @@ function userConnected(u) {
  * scanner(.., .., .., .., userDisconnected, .., ..);
  */
 function userDisconnected(u) {
-  //...
+  if (!isNaN(u.onlineFor)) print(`${u.name.gray} disconnected: ${readableTime(u.onlineFor)} online`);
+  appData.playerDisconnect(u.id);
 }
 
 /**
@@ -105,8 +105,9 @@ function userDisconnected(u) {
  * @example <caption>Example usage of playerBan() function.</caption>
  * scanner(.., .., .., .., playerBan, .., ..);
  */
-function playerBan(player) {
-  logBan(db, player).then(p => {
+function playerBan(id) {
+  let player = appData.addBanned(id);
+  appData.logBan(db, player).then(p => {
     if (p && p.name) print(`${p.name.grey} was saved to ban database`);
   });
 }
@@ -269,7 +270,19 @@ function parseLogs() {
             crlfDelay: Infinity
           });
           rl.on('line', line => {
-            scanner(line, appData, userConnected, userDisconnected, mapStart, mapEnd, playerBan, false);
+            scanner(
+              line, 
+              appData.addKill.bind(appData), 
+              appData.addChat.bind(appData), 
+              appData.addSuicide.bind(appData), 
+              appData.addHeadshot.bind(appData), 
+              userConnected, 
+              userDisconnected, 
+              mapStart, 
+              mapEnd, 
+              playerBan, 
+              false
+            );
           });
           rl.on('close', _ => {
             totalFiles--;
@@ -815,7 +828,19 @@ var server = app.listen(config.port, _ => mongoConnect().then(database => {
     print(`Log parser complete in ` + `${seconds} seconds`.cyan);
     receiver.on("data", data => {
       if (data.isValid) {
-        scanner(data.message, appData, userConnected, userDisconnected, mapStart, mapEnd, playerBan, true);
+        scanner(
+          data.message,
+          appData.addKill.bind(appData), 
+          appData.addChat.bind(appData), 
+          appData.addSuicide.bind(appData), 
+          appData.addHeadshot.bind(appData), 
+          userConnected, 
+          userDisconnected, 
+          mapStart, 
+          mapEnd, 
+          playerBan, 
+          true
+        );
       }
     });
   }).catch(errorHandler);

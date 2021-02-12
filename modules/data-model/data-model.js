@@ -267,12 +267,13 @@ class Data {
     this.weapons = {};              // server wide weapon data not specific to any player
     this.demos = [];                // array of demo Files
     this.gameStatus = {};
-    this.playerTimes = {};
     this.rconStats = [];
     // imported function
     this.getNewUsers = require('../getNewUsers/getNewUsers.js');
     this.getReturnUsers = require('../getReturnUsers/getReturnUsers.js');
     this.authorize = require('../auth/auth.js');
+    this.logUser = require('../logUser/logUser.js');
+    this.logBan = require('../logBan.js');
   }
 
   /**
@@ -342,7 +343,6 @@ class Data {
    * // do something else
    */
   playerConnect(time, id, name, ip) {
-    this.playerTimes[id] = new Timer();
     var newUser = false;
     if (!this.users[id]) {
       this.users[id] = playerObj(name, id, time, ip);
@@ -376,11 +376,7 @@ class Data {
    */
   playerDisconnect(id) {
     return new Promise((resolve, reject) => {
-      var time;
-      if (this.playerTimes[id]) {
-        resolve(this.playerTimes[id].endString());
-        delete this.playerTimes[id];
-      }
+      return ;
     });
   }
 

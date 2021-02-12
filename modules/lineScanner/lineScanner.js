@@ -9,6 +9,7 @@
 const SteamID = require('steamid');
 const isWeapon = require('../weaponsCheck/weaponsCheck.js');
 const print = require('../printer/printer.js');
+const playerTimes = {};
 
 /**
  * check if ip  address is valid
@@ -393,17 +394,17 @@ var startDebounceTime = 0;
 var endDebounceTime = 0;
 
 /**
- * scans the line for usable data for the data-model
+ * scans the line for usable data for the data-model   **update params**
  *
  * @param {Array} line - one line of the log file being parsed split at spaces
- * @param {Class} dataModel - @link modules/data-model/data-model-doc.md
+ * @param {Function} onKill - 
  * @param {Function} onJoin - callback when player joins server @link api-doc.md#module_api..userConnected
  * @param {Function} onDisconnect - callback when player leaves server @link api-doc.md#module_api..userDisconnected
  * @param {Function} onMapStart - callback when the map begins @link api-doc.md#apimapstart
  * @param {Function} onMapEnd - callback when the map ends @link api-doc.md#apimapend
  * @param {Boolean} loggingEnabled - log to console. (used to avoid spam when scanning logs when getting data from realtime from rcon logs)
  */
-function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, onBan, loggingEnabled) {
+function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onJoin, onDisconnect, onMapStart, onMapEnd, onBan, loggingEnabled) {
   var word  = line.split(' ');  // array
   var isKill = lineIsKill(word);
   var isConnect = lineIsConnect(word);
@@ -440,7 +441,7 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, o
     for (let i = isChat + 1; i < word.length; i++) {
       said = `${said}${word[i]} `;
     }
-    dataModel.addChat(lineTime, id, name, `${new Date(lineTime).toLocaleString()} - ${said}`);
+    if (onChat) onChat(lineTime, id, name, `${new Date(lineTime).toLocaleString()} - ${said}`);
     if (loggingEnabled) print(`${name.grey} said ${said.magenta}`);
   } else if (isBanned) {
     // important data
@@ -452,8 +453,7 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, o
       return;
     }
     // add the ban
-    var player = dataModel.addBanned(id);
-    if (onBan) onBan(player);
+    if (onBan) onBan(id);
   } else if (isConnect) {
     // get user details
     const nameString = buildKillerNameString(word, isConnect);
@@ -470,10 +470,9 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, o
     if (!validateIPaddress(ip) || ip === 'none') {
       return;
     }
-    var newUser = dataModel.playerConnect(lineTime, id, name, ip);
-    var constr = '';
-    if (newUser) {
-      constr = 'NEW USER! ';
+    if (loggingEnabled) {
+      playerTimes[id] = lineTime;
+      print(`${name.grey} connected with IP address: ${ip.grey}`);
     }
     if (onJoin) {
       onJoin({
@@ -483,16 +482,8 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, o
         time: lineTime,
         date: new Date(lineTime).getDate(),
         month: new Date(lineTime).getMonth(),
-        year: new Date(lineTime).getFullYear(),
-        new: newUser
+        year: new Date(lineTime).getFullYear()
       });
-    }
-    if (loggingEnabled) {
-      print(`${constr.red}${name.grey} connected with IP address: ${ip.grey}`);
-    }
-    // debugging line
-    if (!lineTime) {
-      console.log(line);
     }
   } else if (isKill) {
     // get players details
@@ -523,7 +514,7 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, o
     if (!isWeapon(weapon)) {
       return;
     }
-    dataModel.addKill(lineTime, killer, killed, weapon);
+    if (onKill) onKill(lineTime, killer, killed, weapon);
     if (loggingEnabled) print(`${killer.name.grey} killed ${killed.name.grey} with weapon ${weapon.magenta}`);
   } else if (isSuicide) {
     const nameString = buildKillerNameString(word, isSuicide);
@@ -539,7 +530,7 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, o
     if (!isWeapon(weapon)) {
       return;
     }
-    dataModel.addSuicide(lineTime, id, name, weapon);
+    if (onSuicide) onSuicide(lineTime, id, name, weapon);
     if (loggingEnabled) print(`${name.grey} has commit suicide with ${weapon.magenta}`);
   } else if (isHeadshot) {
     const killerNameString = buildKillerNameString(word, isHeadshot);
@@ -551,90 +542,90 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, o
     if (!name) {
       return;
     }
-    dataModel.addHeadshot(lineTime, id, name);
+    if (onHeadshot) onHeadshot(lineTime, id, name);
     if (loggingEnabled) print(`${name.grey} got a ` + `HEADSHOT!!`.magenta);
   } else if (isStats) {
-     // get important information
-    const killedNameString = buildKillerNameString(word, isStats - 1);
-    const name = getName(killedNameString);
-    const id3 = getID3(new SteamID(getID2(killedNameString)).getSteam3RenderedID());
-    // check variables have data
-    if (!id3) {
-      return;
-    }
-    if (!name) {
-      return;
-    }
-    for (let i = 0; i < word.length; i++) {
-      word[i] = word[i].replace('"', '').replace('(', '').replace(')', '').replace('"', '');
-    }
-    var weaponName = word[isStats + 2];
-    if (!isWeapon(weaponName)) {
-      return;
-    }
-    dataModel.addWeaponStats(lineTime, id3, name, {
-      name: weaponName,
-      shots: Number(word[isStats + 4]),
-      hits: Number(word[isStats + 6]),
-      hs: Number(word[isStats + 8]),
-      damage: Number(word[isStats + 14])
-    });
+    //  // get important information
+    // const killedNameString = buildKillerNameString(word, isStats - 1);
+    // const name = getName(killedNameString);
+    // const id3 = getID3(new SteamID(getID2(killedNameString)).getSteam3RenderedID());
+    // // check variables have data
+    // if (!id3) {
+    //   return;
+    // }
+    // if (!name) {
+    //   return;
+    // }
+    // for (let i = 0; i < word.length; i++) {
+    //   word[i] = word[i].replace('"', '').replace('(', '').replace(')', '').replace('"', '');
+    // }
+    // var weaponName = word[isStats + 2];
+    // if (!isWeapon(weaponName)) {
+    //   return;
+    // }
+    // dataModel.addWeaponStats(lineTime, id3, name, {
+    //   name: weaponName,
+    //   shots: Number(word[isStats + 4]),
+    //   hits: Number(word[isStats + 6]),
+    //   hs: Number(word[isStats + 8]),
+    //   damage: Number(word[isStats + 14])
+    // });
   } else if (isStats2) {
-    const killedNameString = buildKillerNameString(word, isStats2 - 1);
-    const name = getName(killedNameString);
-    const id = getID3(new SteamID(getID2(killedNameString)).getSteam3RenderedID());
-    if (!id) {
-      return;
-    }
-    if (!name) {
-      return;
-    }
-    // clean up extra chars
-    for (let i = 0; i < word.length; i++) {
-      word[i] = word[i].replace('"', '').replace('(', '').replace(')', '').replace('"', '');
-    }
-    let weaponName = word[isStats2 + 2];
-    if (!isWeapon(weaponName)) {
-      return;
-    }
-    var head = word[isStats2 + 4];
-    var chest = word[isStats2 + 6];
-    var stomach = word[isStats2 + 8];
-    var leftarm = word[isStats2 + 10];
-    var rightarm = word[isStats2 + 12];
-    var leftleg = word[isStats2 + 14];
-    var rightleg = word[isStats2 + 16];
-    if (!head) {
-      return;
-    }
-    if (!chest) {
-      return;
-    }
-    if (!stomach) {
-      return;
-    }
-    if (!leftarm) {
-      return;
-    }
-    if (!rightarm) {
-      return;
-    }
-    if (!leftleg) {
-      return;
-    }
-    if (!rightleg) {
-      return;
-    }
-    dataModel.addWeaponStats2(lineTime, id, name, {
-      name: weaponName,
-      head: head,
-      chest: chest,
-      stomach: stomach,
-      leftarm: leftarm,
-      rightarm: rightarm,
-      leftleg: leftleg,
-      rightleg: rightleg
-    });
+    // const killedNameString = buildKillerNameString(word, isStats2 - 1);
+    // const name = getName(killedNameString);
+    // const id = getID3(new SteamID(getID2(killedNameString)).getSteam3RenderedID());
+    // if (!id) {
+    //   return;
+    // }
+    // if (!name) {
+    //   return;
+    // }
+    // // clean up extra chars
+    // for (let i = 0; i < word.length; i++) {
+    //   word[i] = word[i].replace('"', '').replace('(', '').replace(')', '').replace('"', '');
+    // }
+    // let weaponName = word[isStats2 + 2];
+    // if (!isWeapon(weaponName)) {
+    //   return;
+    // }
+    // var head = word[isStats2 + 4];
+    // var chest = word[isStats2 + 6];
+    // var stomach = word[isStats2 + 8];
+    // var leftarm = word[isStats2 + 10];
+    // var rightarm = word[isStats2 + 12];
+    // var leftleg = word[isStats2 + 14];
+    // var rightleg = word[isStats2 + 16];
+    // if (!head) {
+    //   return;
+    // }
+    // if (!chest) {
+    //   return;
+    // }
+    // if (!stomach) {
+    //   return;
+    // }
+    // if (!leftarm) {
+    //   return;
+    // }
+    // if (!rightarm) {
+    //   return;
+    // }
+    // if (!leftleg) {
+    //   return;
+    // }
+    // if (!rightleg) {
+    //   return;
+    // }
+    // dataModel.addWeaponStats2(lineTime, id, name, {
+    //   name: weaponName,
+    //   head: head,
+    //   chest: chest,
+    //   stomach: stomach,
+    //   leftarm: leftarm,
+    //   rightarm: rightarm,
+    //   leftleg: leftleg,
+    //   rightleg: rightleg
+    // });
   } else if (isStart) {
     if (new Date().getTime() - startDebounceTime < 15000) {
       return;
@@ -656,13 +647,8 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, o
     var nameString = buildKillerNameString(word, hasDisconnected);
     var name = getName(nameString);
     var id = getID3(nameString);
-    dataModel.playerDisconnect(id).then(timeOnline => {
-      if (loggingEnabled && timeOnline) {
-        print(`${name.grey} disconnected after ${timeOnline.cyan} online`);
-      } else if (loggingEnabled) {
-        print(`${name.grey} disconnected after` + ' an unknown ammount of time'.cyan + ` online`);
-      }
-    });
+    var onlineFor = lineTime - playerTimes[id];
+    delete playerTimes[id];
     if (onDisconnect) onDisconnect({
       name: name,
       id: id,
@@ -670,6 +656,7 @@ function scanLine(line, dataModel, onJoin, onDisconnect, onMapStart, onMapEnd, o
       date: new Date(lineTime).getDate(),
       month: new Date(lineTime).getMonth(),
       year: new Date(lineTime).getFullYear(),
+      onlineFor: onlineFor
     });
   }
 }
