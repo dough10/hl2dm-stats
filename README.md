@@ -24,6 +24,9 @@ Requires Sourcemod and Superlogs Sourcemod plugin for weapon accuacy stat tracki
   - [modules/weaponsCheck/weaponsCheck-doc.md](modules/weaponsCheck/weaponsCheck-doc.md)
   - [modules/RconStats/rcon-doc.md](modules/RconStats/rcon-doc.md)
   - [modules/logUser/logUser-doc.md](modules/logUser/logUser-doc.md)
+  - [modules/incriment-version/incriment-version-doc.md](modules/incriment-version/incriment-version-doc.md)
+  - [modules/loadConfig/loadConfig-doc.md](modules/loadConfig/loadConfig-doc.md)
+  - [modules/init/init-doc.md](modules/init/init-doc.md)
 
 ## Install
 

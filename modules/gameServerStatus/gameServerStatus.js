@@ -19,6 +19,6 @@ const Gamedig = require('gamedig');                       // get data about game
 module.exports = () =>  new Promise((resolve, reject) => {
   Gamedig.query({
     type: 'hl2dm',
-    host: require('../loadConfig.js')().gameServerHostname
+    host: require('../loadConfig/loadConfig.js')().gameServerHostname
   }).then(resolve).catch(reject);
 });

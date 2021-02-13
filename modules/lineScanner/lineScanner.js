@@ -2,9 +2,9 @@
  * @module modules/lineScanner
  * @author Jimmy Doughten <https://github.com/dough10>
  * @requires steamid
- * @requires weaponsCheck.js
- * @requires printer.js
- * @exports scanLine 
+ * @requires modules/weaponsCheck
+ * @requires modules/printer
+ * @exports scanLine
  */
 const SteamID = require('steamid');
 const isWeapon = require('../weaponsCheck/weaponsCheck.js');
@@ -184,6 +184,16 @@ function isTime(str) {
  * @param {Number} end - index point of the end of the name string
  * 
  * @returns {String} returns killers name
+ * 
+ * @example <caption>Example usage of buildKillerNameString() function.</caption>
+ * var killer = buildKillerNameString([
+ *   'list',
+ *   'of',
+ *   'words',
+ *   'to',
+ *   'check',
+ *   '.'
+ * ], 6);
  */
 function buildKillerNameString(line, end)  {
   let name = '';
@@ -208,6 +218,16 @@ function buildKillerNameString(line, end)  {
  * @param {Number} start - index point of the start of the name string
  * 
  * @returns {String} returns killed player name string 
+ * 
+ * @example <caption>Example usage of buildKilledNameString() function.</caption>
+ * var killed = buildKilledNameString([
+ *   'list',
+ *   'of',
+ *   'words',
+ *   'to',
+ *   'check',
+ *   '.'
+ * ], 4);
  */
 function buildKilledNameString(line, start) {
   var end = 7;

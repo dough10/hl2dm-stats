@@ -1,7 +1,7 @@
 <a name="module_modules/lineScanner"></a>
 
 ## modules/lineScanner
-**Requires**: <code>module:steamid</code>, <code>module:weaponsCheck.js</code>, <code>module:printer.js</code>  
+**Requires**: <code>module:steamid</code>, <code>module:modules/weaponsCheck</code>, <code>module:modules/printer</code>  
 **Author**: Jimmy Doughten <https://github.com/dough10>  
 
 * [modules/lineScanner](#module_modules/lineScanner)
@@ -178,6 +178,17 @@ builds a name string if name was broken by .split()
 | line | <code>Array</code> | one line from a log file broken at spaces |
 | end | <code>Number</code> | index point of the end of the name string |
 
+**Example** *(Example usage of buildKillerNameString() function.)*  
+```js
+var killer = buildKillerNameString([
+  'list',
+  'of',
+  'words',
+  'to',
+  'check',
+  '.'
+], 6);
+```
 <a name="module_modules/lineScanner..buildKilledNameString"></a>
 
 ### modules/lineScanner~buildKilledNameString(line, start) ⇒ <code>String</code>
@@ -191,6 +202,17 @@ builds a name string if name was broken by .split()
 | line | <code>Array</code> | one line from a log file broken @ spaces |
 | start | <code>Number</code> | index point of the start of the name string |
 
+**Example** *(Example usage of buildKilledNameString() function.)*  
+```js
+var killed = buildKilledNameString([
+  'list',
+  'of',
+  'words',
+  'to',
+  'check',
+  '.'
+], 4);
+```
 <a name="module_modules/lineScanner..lineIsKill"></a>
 
 ### modules/lineScanner~lineIsKill(line) ⇒ <code>Boolean</code>

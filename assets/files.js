@@ -14,5 +14,8 @@ module.exports = [
   'modules/month-name/month-name',
   'modules/weaponsCheck/weaponsCheck',
   'modules/RconStats/rcon',
-  'modules/logUser/logUser'
+  'modules/logUser/logUser',
+  'modules/incriment-version/incriment-version',
+  'modules/loadConfig/loadConfig',
+  'modules/init/init'
 ];

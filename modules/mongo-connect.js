@@ -1,5 +1,5 @@
 const MongoClient = require('mongodb').MongoClient; 
-var config = require('./loadConfig.js')();
+var config = require('./loadConfig/loadConfig.js')();
 
 function connectMongo() {
   return new Promise((resolve, reject) => {
