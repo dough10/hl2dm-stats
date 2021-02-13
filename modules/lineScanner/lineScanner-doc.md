@@ -25,7 +25,7 @@
     * [~playerIsBanned(line)](#module_modules/lineScanner..playerIsBanned) ⇒ <code>Boolean</code>
     * [~playerHasDisconnected(line)](#module_modules/lineScanner..playerHasDisconnected) ⇒ <code>Boolean</code>
     * [~getLineTime(line)](#module_modules/lineScanner..getLineTime) ⇒ <code>Boolean</code>
-    * [~scanLine(line, onKill, onJoin, onDisconnect, onMapStart, onMapEnd, loggingEnabled)](#module_modules/lineScanner..scanLine)
+    * [~scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2, onJoin, onDisconnect, onMapStart, onMapEnd, loggingEnabled)](#module_modules/lineScanner..scanLine)
 
 <a name="module_modules/lineScanner..validateIPaddress"></a>
 
@@ -325,7 +325,7 @@ scans the line for time
 
 <a name="module_modules/lineScanner..scanLine"></a>
 
-### modules/lineScanner~scanLine(line, onKill, onJoin, onDisconnect, onMapStart, onMapEnd, loggingEnabled)
+### modules/lineScanner~scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2, onJoin, onDisconnect, onMapStart, onMapEnd, loggingEnabled)
 scans the line for usable data for the data-model   **update params**
 
 **Kind**: inner method of [<code>modules/lineScanner</code>](#module_modules/lineScanner)  
@@ -333,7 +333,12 @@ scans the line for usable data for the data-model   **update params**
 | Param | Type | Description |
 | --- | --- | --- |
 | line | <code>Array</code> | one line of the log file being parsed split at spaces |
-| onKill | <code>function</code> | - |
+| onKill | <code>function</code> | callback for when a player gets a kill |
+| onChat | <code>function</code> | callback for when a player chats |
+| onSuicide | <code>function</code> | callback for when a player killer themselves |
+| onHeadshot | <code>function</code> | callback for when a player gets a headshot |
+| onStats | <code>function</code> | callback for when a player stats is posted |
+| onStats2 | <code>function</code> | callback for when a player stats2 is posted |
 | onJoin | <code>function</code> | callback when player joins server @link api-doc.md#module_api..userConnected |
 | onDisconnect | <code>function</code> | callback when player leaves server @link api-doc.md#module_api..userDisconnected |
 | onMapStart | <code>function</code> | callback when the map begins @link api-doc.md#apimapstart |

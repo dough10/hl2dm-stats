@@ -61,7 +61,33 @@ var dashboard;
  * doStuff().then(doMoreStuff).catch(errorHandler);
  */
 function errorHandler(e) {
-  console.error(e.message.red);
+  console.error(`${new Date().toLocaleString().yellow} - ${e.message.red}`);
+}
+
+
+/**
+ * execued after main thread is blocked
+ * logs time in ms the thread was blocked / adds up total time and compares it to the current uptime
+ * @async
+ * @callback
+ * 
+ * @param {Number} ms milliseconds the thread was blocked.
+ * 
+ * @returns {Void} nothing
+ */
+function onBlocked(ms) {
+  blockLog.push(ms);
+  let total = 0;
+  for (let i = 0; i < blockLog.length; i++) {
+    total += blockLog[i];
+  }
+  // print(`Thread blocked: ${ms}ms`.red);
+  if (timer) clearTimeout(timer);
+  timer = setTimeout(_ => {
+    let uptime = new Date().getTime() - startTime;
+    print(`Application uptime: ${readableTime(uptime).cyan}`);
+    print(`Thread blocked for total of ${readableTime(total)} / ${((total / uptime) * 100).toFixed(2)}% of uptime`.red);
+  }, 10000);
 }
 
 /**
@@ -150,7 +176,7 @@ function mapStart(logId) {
  */
 function rconStats(stats) {
   appData.rconStats = stats;
-  if (dashboard) dashboard.send(JSON.stringify(stats), e => {});
+  if (dashboard) dashboard.send(JSON.stringify(stats), errorHandler);
 }
 
 /**
@@ -233,7 +259,7 @@ function statsLoop() {
   gameServerStatus().then(status => {
     appData.updateStatus(status);
     if (socket) {
-      socket.send(JSON.stringify(status), e => {});
+      socket.send(JSON.stringify(status), errorHandler);
     }
   }).catch(e => {
     errorHandler(e);
@@ -275,7 +301,9 @@ function parseLogs() {
               appData.addKill.bind(appData), 
               appData.addChat.bind(appData), 
               appData.addSuicide.bind(appData), 
-              appData.addHeadshot.bind(appData), 
+              appData.addHeadshot.bind(appData),
+              appData.addWeaponStats.bind(appData),
+              appData.addWeaponStats2.bind(appData),
               userConnected, 
               userDisconnected, 
               mapStart, 
@@ -308,12 +336,16 @@ function parseLogs() {
  * var string = readableTime(67541983);
  */
 function readableTime(ms) {
-  var seconds = ms / 1000;
-  var hours = parseInt( seconds / 3600 );
+  let line = '';
+  let seconds = ms / 1000;
+  let hours = parseInt( seconds / 3600 );
   seconds = seconds % 3600;
-  var minutes = parseInt( seconds / 60 );
+  let minutes = parseInt( seconds / 60 );
   seconds = Number((seconds % 60).toFixed(3));
-  return `${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+  if (hours) line += `${hours} hours `;
+  if (minutes) line += `${minutes} minutes `;
+  line += `${seconds} seconds`;
+  return line;
 }
 
 /**
@@ -833,7 +865,9 @@ var server = app.listen(config.port, _ => mongoConnect().then(database => {
           appData.addKill.bind(appData), 
           appData.addChat.bind(appData), 
           appData.addSuicide.bind(appData), 
-          appData.addHeadshot.bind(appData), 
+          appData.addHeadshot.bind(appData),
+          appData.addWeaponStats.bind(appData),
+          appData.addWeaponStats2.bind(appData),
           userConnected, 
           userDisconnected, 
           mapStart, 
@@ -862,27 +896,6 @@ process.on('SIGTERM', _ => {
 let blockLog = [];
 let timer;
 
-/**
- * execued after main thread is blocked
- * logs time in ms the thread was blocked / adds a total time and compares it to the current uptime
- * @param {Number} ms milliseconds the thread was blocked.
- * 
- * @returns {Void} nothing
- */
-function onBlocked(ms) {
-  blockLog.push(ms);
-  let total = 0;
-  for (let i = 0; i < blockLog.length; i++) {
-    total += blockLog[i];
-  }
-  print(`Thread blocked: ${ms}ms`.red);
-  if (timer) clearTimeout(timer);
-  timer = setTimeout(_ => {
-    let uptime = new Date().getTime() - startTime;
-    print(`Application uptime: ${readableTime(uptime).cyan}`);
-    print(`blocked for total of ${total}ms / ${((total / uptime) * 100).toFixed(2)}% of uptime`.red);
-  }, 10000);
-}
 
 blocked(onBlocked, {
   threshold: 10, 
