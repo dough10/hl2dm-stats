@@ -176,7 +176,7 @@ function mapStart(logId) {
  */
 function rconStats(stats) {
   appData.rconStats = stats;
-  if (dashboard) dashboard.send(JSON.stringify(stats), errorHandler);
+  if (dashboard) dashboard.send(JSON.stringify(stats), e => {});
 }
 
 /**
@@ -259,7 +259,7 @@ function statsLoop() {
   gameServerStatus().then(status => {
     appData.updateStatus(status);
     if (socket) {
-      socket.send(JSON.stringify(status), errorHandler);
+      socket.send(JSON.stringify(status), e => {});
     }
   }).catch(e => {
     errorHandler(e);
