@@ -38,7 +38,9 @@ var appData = new Datamodel();
     * [~calculatePrecent(small, big)](#module_data-model..calculatePrecent) ⇒ <code>Number</code>
     * [~calculateWeaponStats(weapon)](#module_data-model..calculateWeaponStats) ⇒ <code>Array</code>
     * [~sortWeapons(user)](#module_data-model..sortWeapons) ⇒ <code>Array</code>
+    * [~sortDeaths(user)](#module_data-model..sortDeaths) ⇒ <code>Array</code>
     * [~mergePhysicsKills(user)](#module_data-model..mergePhysicsKills) ⇒ <code>void</code>
+    * [~mergePhysicsDeaths(user)](#module_data-model..mergePhysicsDeaths) ⇒ <code>void</code>
 
 <a name="module_data-model..Data"></a>
 
@@ -492,6 +494,26 @@ bob['357'] = weaponObj();
 // got some kills 
 bob.weapons = sortWeapons();
 ```
+<a name="module_data-model..sortDeaths"></a>
+
+### data-model~sortDeaths(user) ⇒ <code>Array</code>
+sort by weapon that has killed the player the most times to the top
+
+**Kind**: inner method of [<code>data-model</code>](#module_data-model)  
+**Returns**: <code>Array</code> - array of weapons that the player was killed by  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| user | <code>Object</code> | user object |
+
+**Example** *(Example usage of sortDeaths() function.)*  
+```js
+var bob = playerObj('bob', '374586912', 1609123414390, '25.65.8.357');
+bob['357'] = weaponObj();
+// got some kills 
+bob.weapons = sortWeapons();
+bob.deathsBy = sortDeaths();
+```
 <a name="module_data-model..mergePhysicsKills"></a>
 
 ### data-model~mergePhysicsKills(user) ⇒ <code>void</code>
@@ -504,10 +526,30 @@ merge all physics kills, physbox & world kills to physics kills
 | --- | --- | --- |
 | user | <code>Object</code> | a user object |
 
-**Example** *(Example usage of sortWeapons() function.)*  
+**Example** *(Example usage of mergePhysicsKills() function.)*  
 ```js
 var bob = playerObj('bob', '374586912', 1609123414390, '25.65.8.357');
 bob['357'] = weaponObj();
 mergePhysicsKills(bob);
 bob.weapons = sortWeapons();
+```
+<a name="module_data-model..mergePhysicsDeaths"></a>
+
+### data-model~mergePhysicsDeaths(user) ⇒ <code>void</code>
+merge all physics deaths, physbox & world kills to physics deaths
+
+**Kind**: inner method of [<code>data-model</code>](#module_data-model)  
+**Returns**: <code>void</code> - Nothing  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| user | <code>Object</code> | a user object |
+
+**Example** *(Example usage of mergePhysicsDeaths() function.)*  
+```js
+var bob = playerObj('bob', '374586912', 1609123414390, '25.65.8.357');
+bob['357'] = weaponObj();
+mergePhysicsKills(bob);
+mergePhysicsDeaths(bob.deathsBy);
+bob.weapons = sortWeapons(bob);
 ```

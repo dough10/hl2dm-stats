@@ -193,8 +193,8 @@ function calculateWeaponStats(weaponsName, weapon) {
  * bob.weapons = sortWeapons();
  */
 function sortWeapons(user) {
-  var sortArr = [];
-  for (var weapon in user) {
+  let sortArr = [];
+  for (let weapon in user) {
     if (require('../weaponsCheck/weaponsCheck.js')(weapon)) {
       if (user[weapon].kills !== 0) {
         sortArr.push(calculateWeaponStats(weapon, user[weapon]));
@@ -202,7 +202,6 @@ function sortWeapons(user) {
       delete user[weapon];
     }
   }
-
   // sort array by kill count
   sortArr.sort((a, b) => {
     return a[1] - b[1];
@@ -213,13 +212,42 @@ function sortWeapons(user) {
 }
 
 /**
+ * sort by weapon that has killed the player the most times to the top
+ *
+ * @param {Object} user - user object
+ * 
+ * @returns {Array} array of weapons that the player was killed by
+ * 
+ * @example <caption>Example usage of sortDeaths() function.</caption>
+ * var bob = playerObj('bob', '374586912', 1609123414390, '25.65.8.357');
+ * bob['357'] = weaponObj();
+ * // got some kills 
+ * bob.weapons = sortWeapons();
+ * bob.deathsBy = sortDeaths();
+ */
+function sortDeaths(user) {
+  let killedby = [];
+
+  for (let weapon in user.deathsBy) {
+    killedby.push([
+      weapon, user.deathsBy[weapon]
+    ]);
+  }
+  killedby.sort((a, b) => {
+    return a[1] - b[1];
+  });
+  killedby.reverse();
+  return killedby;
+}
+
+/**
  * merge all physics kills, physbox & world kills to physics kills 
  *
  * @param {Object} user - a user object
  * 
  * @returns {void} Nothing
  * 
- * @example <caption>Example usage of sortWeapons() function.</caption>
+ * @example <caption>Example usage of mergePhysicsKills() function.</caption>
  * var bob = playerObj('bob', '374586912', 1609123414390, '25.65.8.357');
  * bob['357'] = weaponObj();
  * mergePhysicsKills(bob);
@@ -246,6 +274,39 @@ function mergePhysicsKills(u) {
   delete u.physbox;
   delete u.world;
   if (u.physics.kills === 0) {
+    delete u.physics;
+  }
+}
+
+/**
+ * merge all physics deaths, physbox & world kills to physics deaths 
+ *
+ * @param {Object} user - a user object
+ * 
+ * @returns {void} Nothing
+ * 
+ * @example <caption>Example usage of mergePhysicsDeaths() function.</caption>
+ * var bob = playerObj('bob', '374586912', 1609123414390, '25.65.8.357');
+ * bob['357'] = weaponObj();
+ * mergePhysicsKills(bob);
+ * mergePhysicsDeaths(bob.deathsBy);
+ * bob.weapons = sortWeapons(bob);
+ */
+function mergePhysicsDeaths(u) {
+  // merge physics kills
+  if (!u.physics) {
+    u.physics =  0;
+  }
+  if (!u.physbox) {
+    u.physbox = 0;
+  }
+  if (!u.world) {
+    u.world = 0;
+  }
+  u.physics = (u.physics + u.physbox) + u.world;
+  delete u.physbox;
+  delete u.world;
+  if (u.physics === 0) {
     delete u.physics;
   }
 }
@@ -403,7 +464,9 @@ class Data {
         try {
           var obj = JSON.parse(JSON.stringify(this.users[user]));
           mergePhysicsKills(obj);
+          mergePhysicsDeaths(obj.deathsBy);
           obj.weapons = sortWeapons(obj);
+          obj.deathsBy = sortDeaths(obj);
           arr.push(obj);
         } catch (e) {
           throw e;
