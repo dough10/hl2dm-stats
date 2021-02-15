@@ -172,7 +172,7 @@ function getID3(word) {
  * 
  * @returns {Boolean} true: string is a time string, false: is not time string
  * 
- * console.log(isTime('12:59:59'));
+ * console.log(isTime('12:59:59')); = true
  */
 function isTime(str) {
   return /^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d):$/.test(str);

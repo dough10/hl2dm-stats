@@ -72,6 +72,7 @@ function playerObj(name, id, time, ip) {
     suicide: {
       count:0
     },
+    deathsBy: {},
     updated: time,
     chat: []
   };
@@ -201,6 +202,7 @@ function sortWeapons(user) {
       delete user[weapon];
     }
   }
+
   // sort array by kill count
   sortArr.sort((a, b) => {
     return a[1] - b[1];
@@ -562,6 +564,12 @@ class Data {
 
     // add killer kill with weapon
     this.users[killer.id][weapon].kills++;
+
+    // add killed player death by weapon stat
+    if (!this.users[killed.id].deathsBy[weapon]) {
+      this.users[killed.id].deathsBy[weapon] = 0;
+    }
+    this.users[killed.id].deathsBy[weapon]++;
 
     // add server wide kill with weapon
     this.weapons[weapon].kills++;

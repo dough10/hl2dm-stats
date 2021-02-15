@@ -159,7 +159,7 @@ var steamid = getID3([
 if a string of text a time string
 
 **Kind**: inner method of [<code>modules/lineScanner</code>](#module_modules/lineScanner)  
-**Returns**: <code>Boolean</code> - true: string is a time string, false: is not time stringconsole.log(isTime('12:59:59'));  
+**Returns**: <code>Boolean</code> - true: string is a time string, false: is not time stringconsole.log(isTime('12:59:59')); = true  
 
 | Param | Type | Description |
 | --- | --- | --- |
