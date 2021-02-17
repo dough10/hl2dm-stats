@@ -101,7 +101,7 @@ returns the player name string
 
 **Example** *(Example usage of getName() function.)*  
 ```js
-var name = getName([
+let name = getName([
   'list',
   'of',
   'words',
@@ -123,7 +123,7 @@ returns the player steamID in format 2
 
 **Example** *(Example usage of getID2() function.)*  
 ```js
-var steamid = getID2([
+let steamid = getID2([
   'list',
   'of',
   'words',
@@ -145,7 +145,7 @@ returns the player steamID in format 3
 
 **Example** *(Example usage of getID3() function.)*  
 ```js
-var steamid = getID3([
+let steamid = getID3([
   'list',
   'of',
   'words',
@@ -180,7 +180,7 @@ builds a name string if name was broken by .split()
 
 **Example** *(Example usage of buildKillerNameString() function.)*  
 ```js
-var killer = buildKillerNameString([
+let killer = buildKillerNameString([
   'list',
   'of',
   'words',
@@ -204,7 +204,7 @@ builds a name string if name was broken by .split()
 
 **Example** *(Example usage of buildKilledNameString() function.)*  
 ```js
-var killed = buildKilledNameString([
+let killed = buildKilledNameString([
   'list',
   'of',
   'words',

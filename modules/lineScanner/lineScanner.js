@@ -9,7 +9,7 @@
 const SteamID = require('steamid');
 const isWeapon = require('../weaponsCheck/weaponsCheck.js');
 const print = require('../printer/printer.js');
-const playerTimes = {};
+let playerTimes = {};
 
 /**
  * check if ip  address is valid
@@ -40,7 +40,7 @@ function validateIPaddress(ip) {
  * ]);
  */
 function isFileStart(word) {
-  for (var i = 0 ; i < word.length; i++) {
+  for (let i = 0 ; i < word.length; i++) {
     if (word[i] === 'started' && word[i - 1] === 'file' && word[i - 2] === 'Log') {
       return i;
     }
@@ -64,7 +64,7 @@ function isFileStart(word) {
  * ]);
  */
 function isFileEnd(word) {
-  for (var i = 0; i < word.length; i++) {
+  for (let i = 0; i < word.length; i++) {
     if (word[i] === 'closed.' && word[i - 1] === 'file' && word[i - 2] === 'Log') {
       return i;
     }
@@ -79,7 +79,7 @@ function isFileEnd(word) {
  * @returns {String} players name
  * 
  * @example <caption>Example usage of getName() function.</caption>
- * var name = getName([
+ * let name = getName([
  *   'list',
  *   'of',
  *   'words',
@@ -92,9 +92,9 @@ function getName(word) {
     return false;
   }
   word = word.replace('"', '');
-  var end = word.search(/<([1-9][0-9]{0,2}|1000)></);
-  var str = '';
-  for (var i = 0; i < end; i++) {
+  let end = word.search(/<([1-9][0-9]{0,2}|1000)></);
+  let str = '';
+  for (let i = 0; i < end; i++) {
     str = str + word[i];
   }
   return str;
@@ -107,7 +107,7 @@ function getName(word) {
  * @returns {String} players steamid in steamid2 format
  * 
  * @example <caption>Example usage of getID2() function.</caption>
- * var steamid = getID2([
+ * let steamid = getID2([
  *   'list',
  *   'of',
  *   'words',
@@ -119,15 +119,15 @@ function getID2(word) {
   if (!word) {
     return false;
   }
-  const u = word.search(/STEAM_[0-1]:[0-1]:/g);
+  let u = word.search(/STEAM_[0-1]:[0-1]:/g);
   if (u < 0) {
     return false;
   }
-  const start = u;
+  let start = u;
   word = word.substring(start);
-  const end = word.search('>');
+  let end = word.search('>');
   let str = '';
-  for (var i = 0; i < end; i++) {
+  for (let i = 0; i < end; i++) {
     str = str + word[i];
   }
   return str;
@@ -140,7 +140,7 @@ function getID2(word) {
  * @returns {String} returns players SteamID in steamid3 format without [U:1:XXXXXXXXX] jsut the numbers
  * 
  * @example <caption>Example usage of getID3() function.</caption>
- * var steamid = getID3([
+ * let steamid = getID3([
  *   'list',
  *   'of',
  *   'words',
@@ -160,7 +160,7 @@ function getID3(word) {
   word = word.substring(start);
   let end = word.search(']');
   let str = '';
-  for (var i = 0; i < end; i++) {
+  for (let i = 0; i < end; i++) {
     str = str + word[i];
   }
   return str;
@@ -186,7 +186,7 @@ function isTime(str) {
  * @returns {String} returns killers name
  * 
  * @example <caption>Example usage of buildKillerNameString() function.</caption>
- * var killer = buildKillerNameString([
+ * let killer = buildKillerNameString([
  *   'list',
  *   'of',
  *   'words',
@@ -206,7 +206,7 @@ function buildKillerNameString(line, end)  {
   if (line[4] === 'Banid:') {
     start = 5;
   }
-  for (var i = start; i < end; i++) {
+  for (let i = start; i < end; i++) {
     name = `${name}${line[i]} `;
   }
   return name;
@@ -220,7 +220,7 @@ function buildKillerNameString(line, end)  {
  * @returns {String} returns killed player name string 
  * 
  * @example <caption>Example usage of buildKilledNameString() function.</caption>
- * var killed = buildKilledNameString([
+ * let killed = buildKilledNameString([
  *   'list',
  *   'of',
  *   'words',
@@ -230,13 +230,13 @@ function buildKillerNameString(line, end)  {
  * ], 4);
  */
 function buildKilledNameString(line, start) {
-  var end = 7;
-  for (var i = start; i < line.length; i++) {
+  let end = 7;
+  for (let i = start; i < line.length; i++) {
     if (line[i] === 'with') {
       end = i;
     }
   }
-  var name = '';
+  let name = '';
   for (let i = start; i < end; i++) {
     name = `${name}${line[i]} `;
   }
@@ -250,7 +250,7 @@ function buildKilledNameString(line, start) {
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function lineIsKill(line) {
-  for (var i = 0; i < line.length; i++) {
+  for (let i = 0; i < line.length; i++) {
     if (line[i] === 'killed') {
       return i;
     }
@@ -265,7 +265,7 @@ function lineIsKill(line) {
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function lineIsConnect(line) {
-  for (var i = 0; i < line.length; i++) {
+  for (let i = 0; i < line.length; i++) {
     if (line[i] === 'connected,') {
       return i;
     }
@@ -280,7 +280,7 @@ function lineIsConnect(line) {
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function lineIsSuicide(line) {
-  for (var i = 0; i < line.length; i++) {
+  for (let i = 0; i < line.length; i++) {
     if (line[i] === 'committed') {
       return i;
     }
@@ -295,7 +295,7 @@ function lineIsSuicide(line) {
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function lineIsChat(line) {
-  for (var i = 0; i < line.length; i++) {
+  for (let i = 0; i < line.length; i++) {
     if (line[i] === 'say') {
       return i;
     }
@@ -310,7 +310,7 @@ function lineIsChat(line) {
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function lineIsHeadshot(line) {
-  for (var i = 0; i < line.length; i++) {
+  for (let i = 0; i < line.length; i++) {
     if (line[i] === '"headshot"') {
       return i - 1;
     }
@@ -325,7 +325,7 @@ function lineIsHeadshot(line) {
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function lineIsStats(line) {
-  for (var i = 0; i < line.length; i++) {
+  for (let i = 0; i < line.length; i++) {
     if (line[i] === '"weaponstats"') {
       return i;
     }
@@ -340,7 +340,7 @@ function lineIsStats(line) {
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function lineIsStats2(line) {
-  for (var i = 0; i < line.length; i++) {
+  for (let i = 0; i < line.length; i++) {
     if (line[i] === '"weaponstats2"') {
       return i;
     }
@@ -356,8 +356,8 @@ function lineIsStats2(line) {
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function lineIsConsole(line) {
-  var ipstring = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):\d{4,5}$/;
-  for (var i = 0; i < line.length; i++) {
+  let ipstring = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):\d{4,5}$/;
+  for (let i = 0; i < line.length; i++) {
     let addr = line[i + 2];
     if (!addr) return false;
     if (line[i] === 'rcon' && line[i + 1] === 'from' && ipstring.test(line[i + 2].slice(0, -1).replace('"', '').replace('"', ''))) {
@@ -374,7 +374,7 @@ function lineIsConsole(line) {
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function playerIsBanned(line) {
-  for (var i = 0; i < line.length; i++) {
+  for (let i = 0; i < line.length; i++) {
     if (line[i] === 'banned') {
       return i - 1;
     }
@@ -389,7 +389,7 @@ function playerIsBanned(line) {
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function playerHasDisconnected(line) {
-  for (var i = 0; i < line.length; i++) {
+  for (let i = 0; i < line.length; i++) {
     if (line[i] === 'disconnected') {
       return i;
     }
@@ -404,7 +404,7 @@ function playerHasDisconnected(line) {
  * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
  */
 function getLineTime(line) {
-  for (var i = 0; i < line.length; i++) {
+  for (let i = 0; i < line.length; i++) {
     if (isTime(line[i])) {
       return new Date(`${line[i].slice(0, -1)} ${line[i - 2]}`).getTime();
     }
@@ -412,8 +412,8 @@ function getLineTime(line) {
   return false;
 }
 
-var startDebounceTime = 0;
-var endDebounceTime = 0;
+let startDebounceTime = 0;
+let endDebounceTime = 0;
 
 /**
  * scans the line for usable data for the data-model   **update params**
@@ -432,39 +432,39 @@ var endDebounceTime = 0;
  * @param {Boolean} loggingEnabled - log to console. (used to avoid spam when scanning logs when getting data from realtime from rcon logs)
  */
 function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2, onJoin, onDisconnect, onMapStart, onMapEnd, onBan, loggingEnabled) {
-  var word  = line.split(' ');  // array
-  var isKill = lineIsKill(word);
-  var isConnect = lineIsConnect(word);
-  var isSuicide = lineIsSuicide(word);
-  var isChat = lineIsChat(word);
-  var isHeadshot  = lineIsHeadshot(word);
-  var isStats = lineIsStats(word);
-  var isStats2 = lineIsStats2(word);
-  var isConsole = lineIsConsole(word);
-  var isBanned = playerIsBanned(word);
-  var isStart = isFileStart(word);
-  var isEnd = isFileEnd(word);
-  var hasDisconnected = playerHasDisconnected(word);
-  var lineTime = getLineTime(word);
+  let word  = line.split(' ');  // array
+  let isKill = lineIsKill(word);
+  let isConnect = lineIsConnect(word);
+  let isSuicide = lineIsSuicide(word);
+  let isChat = lineIsChat(word);
+  let isHeadshot  = lineIsHeadshot(word);
+  let isStats = lineIsStats(word);
+  let isStats2 = lineIsStats2(word);
+  let isConsole = lineIsConsole(word);
+  let isBanned = playerIsBanned(word);
+  let isStart = isFileStart(word);
+  let isEnd = isFileEnd(word);
+  let hasDisconnected = playerHasDisconnected(word);
+  let lineTime = getLineTime(word);
   if (isConsole) {
      return;
   } else if (isChat) {
     // important data
-    const nameString = buildKillerNameString(word, isChat);
-    const id = getID3(nameString);
-    const name = getName(nameString);
-    // check if variables have data
+    let nameString = buildKillerNameString(word, isChat);
+    let id = getID3(nameString);
+    let name = getName(nameString);
+    // check if letiables have data
     if (!id) {
       return;
     }
     if (!name) {
       return;
     }
-    for (var i = 0; i < word.length; i++) {
+    for (let i = 0; i < word.length; i++) {
       word[i] = word[i].replace('"', '').replace('"', '');
     }
     // log chat
-    var said = '';
+    let said = '';
     for (let i = isChat + 1; i < word.length; i++) {
       said = `${said}${word[i]} `;
     }
@@ -472,10 +472,10 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     if (loggingEnabled) print(`${name.grey} said ${said.magenta}`);
   } else if (isBanned) {
     // important data
-    const nameString = buildKillerNameString(word, isBanned);
-    // const name = getName(nameString);
-    const id = getID3(nameString);
-    // check if variables have data
+    let nameString = buildKillerNameString(word, isBanned);
+    // let name = getName(nameString);
+    let id = getID3(nameString);
+    // check if letiables have data
     if (!id) {
       return;
     }
@@ -483,10 +483,10 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     if (onBan) onBan(id);
   } else if (isConnect) {
     // get user details
-    const nameString = buildKillerNameString(word, isConnect);
-    const id = getID3(nameString);
-    const name = getName(nameString);
-    const ip = word[isConnect  + 2].replace('"', '').replace('"', '').replace(/:\d{4,5}$/, '');
+    let nameString = buildKillerNameString(word, isConnect);
+    let id = getID3(nameString);
+    let name = getName(nameString);
+    let ip = word[isConnect  + 2].replace('"', '').replace('"', '').replace(/:\d{4,5}$/, '');
     // check for important data
     if (!name) {
       return;
@@ -497,10 +497,7 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     if (!validateIPaddress(ip) || ip === 'none') {
       return;
     }
-    if (loggingEnabled) {
-      playerTimes[id] = lineTime;
-      print(`${name.grey} connected with IP address: ${ip.grey}`);
-    }
+    playerTimes[id] = lineTime;
     if (onJoin) {
       onJoin({
         name: name,
@@ -509,22 +506,28 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
         time: lineTime,
         date: new Date(lineTime).getDate(),
         month: new Date(lineTime).getMonth(),
-        year: new Date(lineTime).getFullYear()
+        year: new Date(lineTime).getFullYear(),
+        loggingEnabled: loggingEnabled
       });
     }
+    if (!lineTime) {
+      console.log(name, id, ip, lineTime);
+      playerTimes[id] = new Date().getTime();
+    }
+    if (loggingEnabled) console.log(playerTimes);
   } else if (isKill) {
     // get players details
-    const killerNameString = buildKillerNameString(word, isKill);  // isKill is the index after the last index of the player name
-    const killedNameString = buildKilledNameString(word, isKill + 1); // isKill + 1 is the index @ the beginning of the killed players name
-    const killer = {
+    let killerNameString = buildKillerNameString(word, isKill);  // isKill is the index after the last index of the player name
+    let killedNameString = buildKilledNameString(word, isKill + 1); // isKill + 1 is the index @ the beginning of the killed players name
+    let killer = {
       name: getName(killerNameString),
       id: getID3(killerNameString)
     };
-    const killed = {
+    let killed = {
       name: getName(killedNameString),
       id: getID3(killedNameString)
     };
-    const weapon = word[word.length - 1].replace('"', '').replace('"', '');
+    let weapon = word[word.length - 1].replace('"', '').replace('"', '');
     // check important data exists
     if (!killer.id) {
       return;
@@ -544,10 +547,10 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     if (onKill) onKill(lineTime, killer, killed, weapon);
     if (loggingEnabled) print(`${killer.name.grey} killed ${killed.name.grey} with weapon ${weapon.magenta}`);
   } else if (isSuicide) {
-    const nameString = buildKillerNameString(word, isSuicide);
-    const id = getID3(nameString);
-    const name = getName(nameString);
-    const weapon = word[word.length - 1].replace('"', '').replace('"', '');
+    let nameString = buildKillerNameString(word, isSuicide);
+    let id = getID3(nameString);
+    let name = getName(nameString);
+    let weapon = word[word.length - 1].replace('"', '').replace('"', '');
     if (!id) {
       return;
     }
@@ -560,9 +563,9 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     if (onSuicide) onSuicide(lineTime, id, name, weapon);
     if (loggingEnabled) print(`${name.grey} has commit suicide with ${weapon.magenta}`);
   } else if (isHeadshot) {
-    const killerNameString = buildKillerNameString(word, isHeadshot);
-    const name = getName(killerNameString);
-    const id = getID3(new SteamID(getID2(killerNameString)).getSteam3RenderedID());
+    let killerNameString = buildKillerNameString(word, isHeadshot);
+    let name = getName(killerNameString);
+    let id = getID3(new SteamID(getID2(killerNameString)).getSteam3RenderedID());
     if (!id) {
       return;
     }
@@ -573,10 +576,10 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     if (loggingEnabled) print(`${name.grey} got a ` + `HEADSHOT!!`.magenta);
   } else if (isStats) {
      // get important information
-    const killedNameString = buildKillerNameString(word, isStats - 1);
-    const name = getName(killedNameString);
-    const id3 = getID3(new SteamID(getID2(killedNameString)).getSteam3RenderedID());
-    // check variables have data
+    let killedNameString = buildKillerNameString(word, isStats - 1);
+    let name = getName(killedNameString);
+    let id3 = getID3(new SteamID(getID2(killedNameString)).getSteam3RenderedID());
+    // check letiables have data
     if (!id3) {
       return;
     }
@@ -586,7 +589,7 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     for (let i = 0; i < word.length; i++) {
       word[i] = word[i].replace('"', '').replace('(', '').replace(')', '').replace('"', '');
     }
-    var weaponName = word[isStats + 2];
+    let weaponName = word[isStats + 2];
     if (!isWeapon(weaponName)) {
       return;
     }
@@ -598,9 +601,9 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
       damage: Number(word[isStats + 14])
     });
   } else if (isStats2) {
-    const killedNameString = buildKillerNameString(word, isStats2 - 1);
-    const name = getName(killedNameString);
-    const id = getID3(new SteamID(getID2(killedNameString)).getSteam3RenderedID());
+    let killedNameString = buildKillerNameString(word, isStats2 - 1);
+    let name = getName(killedNameString);
+    let id = getID3(new SteamID(getID2(killedNameString)).getSteam3RenderedID());
     if (!id) {
       return;
     }
@@ -615,13 +618,13 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     if (!isWeapon(weaponName)) {
       return;
     }
-    var head = word[isStats2 + 4];
-    var chest = word[isStats2 + 6];
-    var stomach = word[isStats2 + 8];
-    var leftarm = word[isStats2 + 10];
-    var rightarm = word[isStats2 + 12];
-    var leftleg = word[isStats2 + 14];
-    var rightleg = word[isStats2 + 16];
+    let head = word[isStats2 + 4];
+    let chest = word[isStats2 + 6];
+    let stomach = word[isStats2 + 8];
+    let leftarm = word[isStats2 + 10];
+    let rightarm = word[isStats2 + 12];
+    let leftleg = word[isStats2 + 14];
+    let rightleg = word[isStats2 + 16];
     if (!head) {
       return;
     }
@@ -657,7 +660,7 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     if (new Date().getTime() - startDebounceTime < 15000) {
       return;
     }
-    var log = Number(word[isStart + 2].replace('"logs/L', '').replace('.log")', '')) + 1;
+    let log = Number(word[isStart + 2].replace('"logs/L', '').replace('.log")', '')) + 1;
     if (loggingEnabled) print(`Current log file ` + `L${log}.log`.green);
     if (onMapStart) onMapStart(`L${log}`);
     startDebounceTime = new Date().getTime();
@@ -671,11 +674,9 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
       endDebounceTime = new Date().getTime();
     }
   } else if (hasDisconnected) {
-    var nameString = buildKillerNameString(word, hasDisconnected);
-    var name = getName(nameString);
-    var id = getID3(nameString);
-    var onlineFor = lineTime - playerTimes[id];
-    delete playerTimes[id];
+    let nameString = buildKillerNameString(word, hasDisconnected);
+    let name = getName(nameString);
+    let id = getID3(nameString);
     if (onDisconnect) onDisconnect({
       name: name,
       id: id,
@@ -683,8 +684,11 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
       date: new Date(lineTime).getDate(),
       month: new Date(lineTime).getMonth(),
       year: new Date(lineTime).getFullYear(),
-      onlineFor: onlineFor
+      onlineFor: lineTime - playerTimes[id],
+      loggingEnabled: loggingEnabled
     });
+    delete playerTimes[id];
+    if (loggingEnabled) console.log(playerTimes);
   }
 }
 

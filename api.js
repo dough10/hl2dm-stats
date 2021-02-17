@@ -44,11 +44,11 @@ const config = require('./modules/loadConfig/loadConfig.js')();
 const RconStats = require('./modules/RconStats/rcon.js');
 const logFolder = path.join(config.gameServerDir, 'logs');
 const startTime = new Date().getTime();
-var receiver = new logReceiver.LogReceiver();
-var appData = new Datamodel();
-var db;
-var socket;
-var dashboard;
+let receiver = new logReceiver.LogReceiver();
+let appData = new Datamodel();
+let db;
+let socket;
+let dashboard;
 
 
 /**
@@ -102,8 +102,11 @@ function onBlocked(ms) {
  */
 function userConnected(u) {
   u.new = appData.playerConnect(u.time, u.id, u.name, u.ip);
+  if (u.loggingEnabled) print(`${u.name.grey} connected with IP address: ${u.ip.grey}`);
+  let n = '';
+  if (u.new) n += 'New User!!! '.red;
   appData.logUser(db, u).then(user => {
-    if (user) print(`${user.name.grey} connection at ${new Date(user.time).toLocaleString().yellow} was logged into database`);
+    if (user && u.loggingEnabled) print(`${n}${user.name.grey} connection at ${new Date(user.time).toLocaleString().yellow} was logged into database`);
   }).catch(e => console.error(e.message));
 }
 
@@ -117,7 +120,13 @@ function userConnected(u) {
  * scanner(.., .., .., .., userDisconnected, .., ..);
  */
 function userDisconnected(u) {
-  if (!isNaN(u.onlineFor)) print(`${u.name.gray} disconnected: ${readableTime(u.onlineFor)} online`);
+  if (u.loggingEnabled) {
+    if (!isNaN(u.onlineFor)) {
+      print(`${u.name.gray} disconnected: ${readableTime(u.onlineFor).cyan} online`);
+    } else {
+      print(`${u.name.gray} disconnected: ` + 'Unknown ammout of time'.cyan +  ` online`);
+    }
+  }
   appData.playerDisconnect(u.id);
 }
 
@@ -229,11 +238,11 @@ function getOldStatsList(month) {
         return;
       }
       month = Number(month);
-      for (var i = 0; i < files.length; i++) {
-        var date = path.basename(files[i], '.json');
-        var fileMonth = new Date(Number(date)).getMonth();
+      for (let i = 0; i < files.length; i++) {
+        let date = path.basename(files[i], '.json');
+        let fileMonth = new Date(Number(date)).getMonth();
         if (fileMonth === month) {
-          var data = require(`${__dirname}/old-top/${files[i]}`);
+          let data = require(`${__dirname}/old-top/${files[i]}`);
           return resolve(data);
         }
       }
@@ -282,7 +291,7 @@ function statsLoop() {
 function parseLogs() {
   return new Promise((resolve, reject) => {
     print(`Running log parser`);
-    var t = new Timer();
+    let t = new Timer();
     fs.readdir(logFolder, (err, files) => {
       if (err) {
         reject(`Unable to scan directory: ` + err);
@@ -333,7 +342,7 @@ function parseLogs() {
  * @returns {String} readable time string
  * 
  * @example <caption>Example usage of readableTime() function.</caption>
- * var string = readableTime(67541983);
+ * let string = readableTime(67541983);
  */
 function readableTime(ms) {
   let line = '';
@@ -359,7 +368,7 @@ function readableTime(ms) {
  * fourohfour(req, res);
  */
 function fourohfour(req, res) {
-  var reqadd = {
+  let reqadd = {
     protocol: req.protocol,
     host:req.get('host'),
     pathname:req.originalUrl
@@ -379,7 +388,7 @@ function fourohfour(req, res) {
  * fiveHundred(req, res);
  */
 function fiveHundred(req, res) {
-  var reqadd = {
+  let reqadd = {
     protocol: req.protocol,
     host:req.get('host'),
     pathname:req.originalUrl
@@ -418,7 +427,7 @@ app.get('/', (req, res) => {
  * @returns {JSON} websocket pipeline
  * 
  * @example <caption>Example usage of / api endpoint.</caption>
- * var socket = new WebSocket('http://localhost:3000/);
+ * let socket = new WebSocket('http://localhost:3000/);
  */
 app.ws('/', ws => {
   socket = ws;
@@ -469,9 +478,9 @@ app.get('/auth', oneOf([
 ]), (req, res) => {
   try {
     validationResult(req).throw();
-    var t = new Timer();
+    let t = new Timer();
     who(req, `is requesting authorization`);
-    var name = req.query.name;
+    let name = req.query.name;
     appData.authorize(db, name, req.query.k).then(authorized => {
       if (!authorized) {
         who(req, `failed to authorize as id ${name.grey} ` + `${t.end()[2]} seconds`.cyan + ` response time`);
@@ -512,7 +521,7 @@ app.get('/auth', oneOf([
  * });
  */
 app.get('/stats', (req, res) => {
-  var t = new Timer();
+  let t = new Timer();
   res.send([
     appData.generateTop(),
     appData.generateWeapons(),
@@ -538,7 +547,7 @@ app.get('/stats', (req, res) => {
  * }); 
  */
 app.get('/old-months', (req, res) => {
-  var t = new Timer();
+  let t = new Timer();
   getOldStatsList().then(stats => {
     who(req, `is viewing ` + '/old-months'.green + ' data' + ` ${t.end()[2]} seconds`.cyan + ` response time`);
     res.send(stats);
@@ -563,7 +572,7 @@ app.get('/old-months', (req, res) => {
  * });
  */
 app.get('/old-stats/:month', (req, res) => {
-  var t = new Timer();
+  let t = new Timer();
   getOldStatsList(req.params.month).then(stats => {
     who(req, `is viewing ` + '/old-stats'.green + ' data for ' + `${monthName(req.params.month).yellow}` + ` ${t.end()[2]} seconds`.cyan + ` response time`);
     res.send(stats);
@@ -587,9 +596,9 @@ app.get('/old-stats/:month', (req, res) => {
  * });
  */
 app.get('/playerList', (req, res) => {
-  var t = new Timer();
-  var arr = [];
-  for (var id in appData.users) {
+  let t = new Timer();
+  let arr = [];
+  for (let id in appData.users) {
     arr.push({
       name: appData.users[id].name,
       id: appData.users[id].id
@@ -617,8 +626,8 @@ app.get('/playerList', (req, res) => {
 app.get('/newPlayers/:date', oneOf([
   check('date').escape()
 ]), (req, res) => {
-  var t = new Timer();
-  var date = req.params.date;
+  let t = new Timer();
+  let date = req.params.date;
   appData.getNewUsers(db, date).then(users => {
     if (date === '0') {
       date = new Date().getDate();
@@ -646,8 +655,8 @@ app.get('/newPlayers/:date', oneOf([
  * });
  */
 app.get('/returnPlayers/:date', (req, res) => {
-  var t = new Timer();
-  var date = req.params.date;
+  let t = new Timer();
+  let date = req.params.date;
   appData.getReturnUsers(db, date).then(users => {
     if (date === '0') {
       date = new Date().getDate();
@@ -675,9 +684,9 @@ app.get('/returnPlayers/:date', (req, res) => {
  * });
  */
 app.get('/playerStats/:id', (req, res) => {
-  var t = new Timer();
-  var id = req.params.id;
-  var player = appData.generatePlayerStats(id);
+  let t = new Timer();
+  let id = req.params.id;
+  let player = appData.generatePlayerStats(id);
   if (typeof player !== 'object') {
     fourohfour(req, res);
     return;
@@ -698,8 +707,8 @@ app.get('/playerStats/:id', (req, res) => {
  * <a href="localhost:3000/download/auto-20210101-0649-dm_bellas_room_d1.dem"></a>
  */
 app.get('/download/:file', (req, res) => {
-  var t = new Timer();
-  var dl = path.join(config.gameServerDir, req.params.file);
+  let t = new Timer();
+  let dl = path.join(config.gameServerDir, req.params.file);
   if (!fs.existsSync(dl)){
     fourohfour(req, res);
     return;
@@ -720,8 +729,8 @@ app.get('/download/:file', (req, res) => {
  * <a href="localhost:3000/download/logs-zip/1609123414390.zip"></a>
  */
 app.get('/download/logs-zip/:file', (req, res) => {
-  var t = new Timer();
-  var dl = path.join(config.bulkStorage, 'logs', req.params.file);
+  let t = new Timer();
+  let dl = path.join(config.bulkStorage, 'logs', req.params.file);
   if (!fs.existsSync(dl)){
     fourohfour(req, res);
     return;
@@ -742,8 +751,8 @@ app.get('/download/logs-zip/:file', (req, res) => {
  * <a href="localhost:3000/download/demos-zip/1609123414390.zip"></a>
  */
 app.get('/download/demos-zip/:file', (req, res) => {
-  var t = new Timer();
-  var dl = path.join(config.bulkStorage, 'demos', req.params.file);
+  let t = new Timer();
+  let dl = path.join(config.bulkStorage, 'demos', req.params.file);
   if (!fs.existsSync(dl)){
     fourohfour(req, res);
     return;
@@ -767,33 +776,33 @@ app.get('/download/demos-zip/:file', (req, res) => {
  * });
  */
 app.get('/demos', (req, res) => {
-  var t = new Timer();
+  let t = new Timer();
   res.send(appData.demos);
   who(req, `is viewing ` + '/demos'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
 });
 
 /**
- * route to get list of hl2dm server cvar's
+ * route to get list of hl2dm server clet's
  * @function
- * @name /cvarlist
+ * @name /cletlist
  * 
- * @returns {Text} list of cvar commands 
+ * @returns {Text} list of clet commands 
  * 
- * @example <caption>Example usage of /cvarlist api endpoint.</caption>
- * fetch('http://localhost:3000/cvarlist').then(response => {
+ * @example <caption>Example usage of /cletlist api endpoint.</caption>
+ * fetch('http://localhost:3000/cletlist').then(response => {
  *   response.text().then(text => {
  *     console.log(text); // list of srcds conosle commands
  *   });
  * });
  */
-app.get('/cvarlist', (req, res) => {
-  var t = new Timer();
-  if (!fs.existsSync(`${__dirname}/assets/cvarlist.txt`)){
+app.get('/cletlist', (req, res) => {
+  let t = new Timer();
+  if (!fs.existsSync(`${__dirname}/assets/cletlist.txt`)){
     fourohfour(req, res);
     return;
   }
-  res.sendFile(`${__dirname}/assets/cvarlist.txt`);
-  who(req, `is viewing ` + '/cvarlist'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
+  res.sendFile(`${__dirname}/assets/cletlist.txt`);
+  who(req, `is viewing ` + '/cletlist'.green + ` data ` + `${t.end()[2]} seconds`.cyan + ` response time`);
 });
 
 /**
@@ -835,7 +844,7 @@ app.ws('/dashboard', ws => {
  * @returns {HTML} admin page
  */
 app.get('/admin', (req, res) => {
-  var t = new Timer();
+  let t = new Timer();
   res.send(pug.renderFile('./admin-assets/template.pug', {
     title: 'Lo-g Hoedown Admin',
     stats: appData.rconStats
@@ -847,7 +856,7 @@ app.get('*', fourohfour);
 
 init(logFolder);
 
-var server = app.listen(config.port, _ => mongoConnect().then(database => {
+let server = app.listen(config.port, _ => mongoConnect().then(database => {
   db = database;
   console.log(`MongoDB connected. URL: ${config.dbURL.green}`);
   console.log('Endpoints active on port: ' + `${config.port}`.red);

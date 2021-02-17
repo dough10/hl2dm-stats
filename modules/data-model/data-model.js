@@ -63,17 +63,17 @@ function playerObj(name, id, time, ip) {
   return {
     name: name,
     id: id,
-    ip: ip,
-    geo: geoip.lookup(ip),
+    updated: time,
+    banned: false,
     kills: 0,
     deaths: 0,
     kdr: 0,
-    banned: false,
+    ip: ip,
+    geo: geoip.lookup(ip),
     suicide: {
       count:0
     },
     deathsBy: {},
-    updated: time,
     chat: []
   };
 }
@@ -204,10 +204,8 @@ function sortWeapons(user) {
   }
   // sort array by kill count
   sortArr.sort((a, b) => {
-    return a[1] - b[1];
+    return b[1] - a[1];
   });
-  // reverse array cause i still can't javascript
-  sortArr.reverse();
   return sortArr;
 }
 
@@ -227,16 +225,14 @@ function sortWeapons(user) {
  */
 function sortDeaths(user) {
   let killedby = [];
-
   for (let weapon in user.deathsBy) {
     killedby.push([
       weapon, user.deathsBy[weapon]
     ]);
   }
   killedby.sort((a, b) => {
-    return a[1] - b[1];
+    return b[1] - a[1];
   });
-  killedby.reverse();
   return killedby;
 }
 
@@ -475,10 +471,8 @@ class Data {
     }
     // do the actual sorting
     arr.sort((a,b) => {
-      return a.kdr - b.kdr;
+      return b.kdr - a.kdr;
     });
-    // rever array cause i don't know how to javascript.
-    arr.reverse();
     return arr;
   }
 
