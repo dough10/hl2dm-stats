@@ -22,7 +22,7 @@ function getNewUsers(db, date) {
     if (date === 0) {
       date = undefined;
     }
-    db.collection("players").find({
+    db.collection("players").distinct("name", {
       date: date || now.getDate(),
       year: now.getFullYear(),
       month: now.getMonth(),
