@@ -686,6 +686,7 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
       onlineFor: lineTime - playerTimes[id],
       loggingEnabled: loggingEnabled
     });
+    delete playerTimes[id];
   }
 }
 
