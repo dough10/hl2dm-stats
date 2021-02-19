@@ -75,6 +75,7 @@ avaliable from <https://github.com/dough10/hl2dm-stats-ui>
 
 ## Dev Dependencies
 
+- electron-rebuild: ^2.3.5
 - jsdoc-to-markdown: ^6.0.1
 - jshint: ^2.12.0
 - version-incrementer: ^0.1.1

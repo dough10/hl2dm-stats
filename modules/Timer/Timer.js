@@ -16,8 +16,8 @@ class Timer {
    * @returns {Void} nothing
    * 
    * @example <caption>Example usage of Timer Class.</caption>
-   * var Timer = require('modules/Timer/Timer);
-   * var t = new Timer('thing');
+   * let Timer = require('modules/Timer/Timer);
+   * let t = new Timer('thing');
    */
   constructor(title) {
     if (title && typeof title !== 'string') {
@@ -32,18 +32,18 @@ class Timer {
    * @returns {Array} [0]hours, [1]mins, [2]seconds, [3]title/name
    * 
    * @example <caption>Example usage of end() function.</caption>
-   * var Timer = require('modules/Timer/Timer);
-   * var t = new Timer('thing');
+   * let Timer = require('modules/Timer/Timer);
+   * let t = new Timer('thing');
    * // do stuff you want to see how long it will take
    * console.log(t.end());
    * // returns [0, 10, 15.347, 'thing']
    */
   end() {
-    var ms = new Date().getTime() - this.startTime;
-    var seconds = ms / 1000;
-    var hours = parseInt( seconds / 3600 );
+    let ms = new Date().getTime() - this.startTime;
+    let seconds = ms / 1000;
+    let hours = parseInt( seconds / 3600 );
     seconds = seconds % 3600;
-    var minutes = parseInt( seconds / 60 );
+    let minutes = parseInt( seconds / 60 );
     seconds = Number((seconds % 60).toFixed(3));
     return [
       hours,
@@ -58,18 +58,26 @@ class Timer {
    * @returns {String} timer output
    * 
    * @example <caption>Example usage of endString() Function.</caption>
-   * var Timer = require('modules/Timer/Timer);
-   * var t = new Timer('thing');
+   * let Timer = require('modules/Timer/Timer);
+   * let t = new Timer('thing');
    * // do stuff you want to see how long it will take
    * console.log(t.endString());
    * // returns 'thing - 0 hours 10 minutes 15.347 seconds'
    */
   endString() {
-    var endTime = this.end();
-    if (!this.title) {
-      return `${endTime[0]} hours ${endTime[1]} minutes ${endTime[2]} seconds`.cyan;
+    let endTime = this.end();
+    let str = '';
+    if (endTime[0]) {
+      str += `${endTime[0]} hours `;
     }
-    return `${this.title} - ${endTime[0]} hours ${endTime[1]} minutes ${endTime[2]} seconds`.cyan;
+    if (endTime[1]) {
+      str += `${endTime[1]} minutes `;
+    }
+    str += `${endTime[2]} seconds`;
+    if (!this.title) {
+      return str.cyan;
+    }
+    return `${this.title} - ${str}`.cyan;
   }
 }
 

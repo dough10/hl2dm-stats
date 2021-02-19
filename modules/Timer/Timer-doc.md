@@ -33,8 +33,8 @@ Class for timing the duration of things
 
 **Example** *(Example usage of Timer Class.)*  
 ```js
-var Timer = require('modules/Timer/Timer);
-var t = new Timer('thing');
+let Timer = require('modules/Timer/Timer);
+let t = new Timer('thing');
 ```
 <a name="module_modules/Timer..Timer+end"></a>
 
@@ -45,8 +45,8 @@ ends the timer
 **Returns**: <code>Array</code> - [0]hours, [1]mins, [2]seconds, [3]title/name  
 **Example** *(Example usage of end() function.)*  
 ```js
-var Timer = require('modules/Timer/Timer);
-var t = new Timer('thing');
+let Timer = require('modules/Timer/Timer);
+let t = new Timer('thing');
 // do stuff you want to see how long it will take
 console.log(t.end());
 // returns [0, 10, 15.347, 'thing']
@@ -60,8 +60,8 @@ calls the end() method and formats into readable form
 **Returns**: <code>String</code> - timer output  
 **Example** *(Example usage of endString() Function.)*  
 ```js
-var Timer = require('modules/Timer/Timer);
-var t = new Timer('thing');
+let Timer = require('modules/Timer/Timer);
+let t = new Timer('thing');
 // do stuff you want to see how long it will take
 console.log(t.endString());
 // returns 'thing - 0 hours 10 minutes 15.347 seconds'
