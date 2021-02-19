@@ -514,7 +514,6 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
       console.log(name, id, ip, lineTime);
       playerTimes[id] = new Date().getTime();
     }
-    if (loggingEnabled) console.log(playerTimes);
   } else if (isKill) {
     // get players details
     let killerNameString = buildKillerNameString(word, isKill);  // isKill is the index after the last index of the player name
@@ -687,8 +686,6 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
       onlineFor: lineTime - playerTimes[id],
       loggingEnabled: loggingEnabled
     });
-    delete playerTimes[id];
-    if (loggingEnabled) console.log(playerTimes);
   }
 }
 
