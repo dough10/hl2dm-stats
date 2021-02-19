@@ -225,9 +225,9 @@ function sortWeapons(user) {
  */
 function sortDeaths(user) {
   let killedby = [];
-  for (let weapon in user.deathsBy) {
+  for (let weapon in user) {
     killedby.push([
-      weapon, user.deathsBy[weapon]
+      weapon, user[weapon]
     ]);
   }
   killedby.sort((a, b) => {
@@ -462,7 +462,8 @@ class Data {
           mergePhysicsKills(obj);
           mergePhysicsDeaths(obj.deathsBy);
           obj.weapons = sortWeapons(obj);
-          obj.deathsBy = sortDeaths(obj);
+          obj.deathsBy = sortDeaths(obj.deathsBy);
+          obj.suicide = sortDeaths(obj.suicide);
           arr.push(obj);
         } catch (e) {
           throw e;
