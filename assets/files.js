@@ -17,5 +17,6 @@ module.exports = [
   'modules/logUser/logUser',
   'modules/incriment-version/incriment-version',
   'modules/loadConfig/loadConfig',
-  'modules/init/init'
+  'modules/init/init',
+  'modules/mongo-connect/mongo-connect'
 ];

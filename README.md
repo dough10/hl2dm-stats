@@ -27,6 +27,7 @@ Requires Sourcemod and Superlogs Sourcemod plugin for weapon accuacy stat tracki
   - [modules/incriment-version/incriment-version-doc.md](modules/incriment-version/incriment-version-doc.md)
   - [modules/loadConfig/loadConfig-doc.md](modules/loadConfig/loadConfig-doc.md)
   - [modules/init/init-doc.md](modules/init/init-doc.md)
+  - [modules/mongo-connect/mongo-connect-doc.md](modules/mongo-connect/mongo-connect-doc.md)
 
 ## Install
 

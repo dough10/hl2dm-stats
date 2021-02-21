@@ -773,6 +773,9 @@ class Data {
       this.users[id].updated = time;
       this.users[id].name = name;
     }
+    if (this.users[id].chat) {
+      console.log(this.users[id]);
+    }
     this.users[id].chat.push(said);
   }
 
