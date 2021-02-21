@@ -773,8 +773,10 @@ class Data {
       this.users[id].updated = time;
       this.users[id].name = name;
     }
+    // ++ issues with crashing has come up 2-20-21 ++
     if (this.users[id].chat) {
       console.log(this.users[id]);
+      this.users[id].chat = [];
     }
     this.users[id].chat.push(said);
   }
