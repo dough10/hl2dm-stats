@@ -18,5 +18,6 @@ module.exports = [
   'modules/incriment-version/incriment-version',
   'modules/loadConfig/loadConfig',
   'modules/init/init',
-  'modules/mongo-connect/mongo-connect'
+  'modules/mongo-connect/mongo-connect',
+  'modules/streamKey'
 ];

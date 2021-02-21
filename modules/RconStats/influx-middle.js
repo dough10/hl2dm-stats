@@ -38,13 +38,13 @@ module.exports = {
           srcds: 'hl2dm' 
         },
         fields: {
-          cpu: 		stat[0],
-          inKB: 		stat[1],
-          outKB: 		stat[2],
-          uptime: 	stat[3],
-          map_change:	stat[4],
-          fps: 		stat[5],
-          players:	stat[6],
+          cpu: stat[0],
+          inKB: stat[1],
+          outKB: stat[2],
+          uptime: stat[3],
+          map_change: stat[4],
+          fps: stat[5],
+          players: stat[6],
           connects:	stat[7]
         }	
       }]).catch(err => { 

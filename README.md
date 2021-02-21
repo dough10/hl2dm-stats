@@ -28,6 +28,7 @@ Requires Sourcemod and Superlogs Sourcemod plugin for weapon accuacy stat tracki
   - [modules/loadConfig/loadConfig-doc.md](modules/loadConfig/loadConfig-doc.md)
   - [modules/init/init-doc.md](modules/init/init-doc.md)
   - [modules/mongo-connect/mongo-connect-doc.md](modules/mongo-connect/mongo-connect-doc.md)
+  - [modules/streamKey-doc.md](modules/streamKey-doc.md)
 
 ## Install
 
@@ -41,7 +42,7 @@ Requires Sourcemod and Superlogs Sourcemod plugin for weapon accuacy stat tracki
 
 ## Docker
 
-Alternativly you can install using docker 
+Alternativly you can install using docker
 
 1. clone repo `git clone https://github.com/dough10/hl2dm-stats.git`
 2. cd into directory `cd hl2dm-stats`

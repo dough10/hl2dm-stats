@@ -103,9 +103,9 @@ function processDocs() {
     renderDoc(files[i]);
     var str = `- [${files[i]}-doc.md](${files[i]}-doc.md)\n`;
     if (i <= 1) {
-      output = output + str;
+      output += str;
     } else {
-      output = output + `  ` + str;
+      output += `  ${str}`;
     }
   }
   return output;
