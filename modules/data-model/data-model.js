@@ -775,7 +775,7 @@ class Data {
     }
     // ++ issues with crashing has come up 2-20-21 ++
     if (!this.users[id].chat) {
-      console.log(this.users[id].name, lineTime);
+      console.log(this.users[id]);
       this.users[id].chat = [];
     }
     this.users[id].chat.push(said);
