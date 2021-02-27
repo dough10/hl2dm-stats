@@ -58,7 +58,7 @@ output dependencies from package.json to markdown unindexed list
 **Returns**: <code>String</code> - list of dependencies  
 **Example** *(Example usage of dependencies() function.)*  
 ```js
-var dep = dependencies();
+let dep = dependencies();
 ```
 <a name="make-docs.module_js..devDependencies"></a>
 
@@ -69,7 +69,7 @@ output dev dependencies from package.json to markdown unindexed list
 **Returns**: <code>String</code> - list of dev dependencies  
 **Example** *(Example usage of devDependencies() function.)*  
 ```js
-var dev = devDependencies();
+let dev = devDependencies();
 ```
 <a name="make-docs.module_js..processDocs"></a>
 
@@ -80,7 +80,7 @@ parse through files array and generate docs.
 **Returns**: <code>String</code> - list of files  
 **Example** *(Example usage of processDocs() function.)*  
 ```js
-var processedDocs = processDocs();
+let processedDocs = processDocs();
 ```
 <a name="make-docs.module_js..hulkSmash"></a>
 

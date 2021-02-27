@@ -582,64 +582,50 @@ class Data {
    * appData.addKill(1609123414390, {...}, {...}, '357');
    */
   addKill(time, killer, killed, weapon) {
-
     // killer object
     if (!this.users[killer.id]) {
       this.users[killer.id] = playerObj(killer.name, killer.id, time);
     }
-
     // killed object
     if (!this.users[killed.id]) {
       this.users[killed.id] = playerObj(killed.name, killed.id, time);
     }
-    
     // add weapon for killer if doesn't exist
     if (!this.users[killer.id][weapon]) {
       this.users[killer.id][weapon] = weaponObj();
     }
-    
     if (!this.weapons[weapon]) {
       this.weapons[weapon] = weaponObj();
     }
-    
     // update killer name
     if (time >= this.users[killer.id].updated) {
       this.users[killer.id].updated = time;
       this.users[killer.id].name = killer.name;
     }
-
     // update killed name
     if (time > this.users[killed.id].updated) {
       this.users[killed.id].updated = time;
       this.users[killed.id].name = killed.name;
     }
-
     // add killers kill
     this.users[killer.id].kills++;
-
     // add killed player death
     this.users[killed.id].deaths++;
-
     // add killer kill with weapon
     this.users[killer.id][weapon].kills++;
-
     // add killed player death by weapon stat
     if (!this.users[killed.id].deathsBy[weapon]) {
       this.users[killed.id].deathsBy[weapon] = 0;
     }
     this.users[killed.id].deathsBy[weapon]++;
-
     // add server wide kill with weapon
     this.weapons[weapon].kills++;
-
     // calculate killer KDR
     this.users[killer.id].kdr = Number((this.users[killer.id].kills / this.users[killer.id].deaths).toFixed(2));
-
     // if killer has not died KDR will be # of kills
     if (this.users[killer.id].kdr === Infinity) {
       this.users[killer.id].kdr = this.users[killer.id].kills;
     }
-
     // calculate killed KDR
     this.users[killed.id].kdr = Number((this.users[killed.id].kills / this.users[killed.id].deaths).toFixed(2));
   }

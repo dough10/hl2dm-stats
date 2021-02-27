@@ -51,9 +51,7 @@ function renderDoc(filename) {
   }
   jsdoc2md.render({ 
     files: `${filename}.js`
-  }).then(md => {
-    writeFile(`${filename}-doc.md`, md).then(console.log);
-  });
+  }).then(md => writeFile(`${filename}-doc.md`, md).then(console.log));
 }
 
 /**
@@ -61,13 +59,13 @@ function renderDoc(filename) {
  * @returns {String} list of dependencies
  * 
  * @example <caption>Example usage of dependencies() function.</caption>
- * var dep = dependencies();
+ * let dep = dependencies();
  */
 function dependencies() {
-  var dep = pack.dependencies;
-  var output = '## Dependencies\n\n';
-  for (var item in dep) {
-    output = output + `- ${item}: ${dep[item]}\n`;
+  let dep = pack.dependencies;
+  let output = '## Dependencies\n\n';
+  for (let item in dep) {
+    output += `- ${item}: ${dep[item]}\n`;
   }
   return output;
 }
@@ -77,13 +75,13 @@ function dependencies() {
  * @returns {String} list of dev dependencies
  * 
  * @example <caption>Example usage of devDependencies() function.</caption>
- * var dev = devDependencies();
+ * let dev = devDependencies();
  */
 function devDependencies() {
-  var dep = pack.devDependencies;
-  var output = '## Dev Dependencies\n\n';
-  for (var item in dep) {
-    output = output + `- ${item}: ${dep[item]}\n`;
+  let dep = pack.devDependencies;
+  let output = '## Dev Dependencies\n\n';
+  for (let item in dep) {
+    output += `- ${item}: ${dep[item]}\n`;
   }
   return output;
 }
@@ -94,14 +92,14 @@ function devDependencies() {
  * @returns {String} list of files
  * 
  * @example <caption>Example usage of processDocs() function.</caption>
- * var processedDocs = processDocs();
+ * let processedDocs = processDocs();
  */
 function processDocs() {
   let files = require('./assets/files.js');
-  var output = '\n## Documentation\n\n';
-  for (var i = 0; i < files.length; i++) {
+  let output = '\n## Documentation\n\n';
+  for (let i = 0; i < files.length; i++) {
     renderDoc(files[i]);
-    var str = `- [${files[i]}-doc.md](${files[i]}-doc.md)\n`;
+    let str = `- [${files[i]}-doc.md](${files[i]}-doc.md)\n`;
     if (i <= 1) {
       output += str;
     } else {
@@ -122,7 +120,7 @@ function processDocs() {
 function hulkSmash() {
   const head = fs.readFileSync('./assets/head.txt').toString();
   const foot = fs.readFileSync('./assets/foot.txt').toString();
-  return `# ${pack.name} V:${pack.version}\n${head}${processDocs()}\n${foot}\n${dependencies()}\n${devDependencies()}`;
+  return `# ${pack.name} V:${pack.version}\n${head}\n${processDocs()}\n${foot}\n${dependencies()}\n${devDependencies()}`;
 }
 
 writeFile('README.md', hulkSmash()).then(console.log);
