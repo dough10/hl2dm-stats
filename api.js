@@ -483,19 +483,19 @@ app.get('/auth', oneOf([
     let name = req.query.name;
     appData.authorize(db, name, req.query.k).then(authorized => {
       if (!authorized) {
-        who(req, `failed to authorize as id ${name.grey} ` + `${t.endString()} seconds`.cyan + ` response time`);
+        who(req, `failed to authorize as id ${name.grey} ` + `${t.endString()}`.cyan + ` response time`);
         return res.status(401).json({
           status: 401,
           authorized: authorized
         });
       }
-      who(req, `was successfully authorized as id ${name.grey} ` + `${t.endString()} seconds`.cyan + ` response time`);
+      who(req, `was successfully authorized as id ${name.grey} ` + `${t.endString()}`.cyan + ` response time`);
       res.status(200).json({
         status: 200,
         authorized: authorized
       });
     }).catch(e => {
-      who(req, `failed to authorize: ${e.message} ` + `${t.endString()} seconds`.cyan + ` response time`);
+      who(req, `failed to authorize: ${e.message} ` + `${t.endString()}`.cyan + ` response time`);
       return res.status(401).json({
         status: 401,
         authorized: false
@@ -529,7 +529,7 @@ app.get('/stats', (req, res) => {
     appData.generateBannedPlayerList(),
     new Date().getTime()
   ]);
-  who(req, `is viewing ` + '/stats'.green + ` data ` + `${t.endString()} seconds`.cyan + ` response time`);
+  who(req, `is viewing ` + '/stats'.green + ` data ` + `${t.endString()}`.cyan + ` response time`);
 });
 
 /**
@@ -605,7 +605,7 @@ app.get('/playerList', (req, res) => {
     });
   }
   res.send(arr);
-  who(req, `is viewing ` + '/playersList'.green + ` data of ` + `${arr.length} players `.grey + `${t.endString()} seconds`.cyan + ` response time`);
+  who(req, `is viewing ` + '/playersList'.green + ` data of ` + `${arr.length} players `.grey + `${t.endString()}`.cyan + ` response time`);
 });
 
 /**
@@ -713,7 +713,7 @@ app.get('/download/:file', (req, res) => {
     fourohfour(req, res);
     return;
   }
-  who(req, `qued download for file ${dl.green} ` + `${t.endString()} seconds`.cyan + ` response time`);
+  who(req, `qued download for file ${dl.green} ` + `${t.endString()}`.cyan + ` response time`);
   res.download(dl, req.params.file);
 });
 
@@ -735,7 +735,7 @@ app.get('/download/logs-zip/:file', (req, res) => {
     fourohfour(req, res);
     return;
   }
-  who(req, `qued download for file ${dl.green} ` + `${t.endString()} seconds`.cyan + ` response time`);
+  who(req, `qued download for file ${dl.green} ` + `${t.endString()}`.cyan + ` response time`);
   res.download(dl, req.params.file);
 });
 
@@ -757,7 +757,7 @@ app.get('/download/demos-zip/:file', (req, res) => {
     fourohfour(req, res);
     return;
   }
-  who(req, `qued download for file ${dl.green} ` + `${t.endString()} seconds`.cyan + ` response time`);
+  who(req, `qued download for file ${dl.green} ` + `${t.endString()}`.cyan + ` response time`);
   res.download(dl, req.params.file);
 });
 
@@ -778,7 +778,7 @@ app.get('/download/demos-zip/:file', (req, res) => {
 app.get('/demos', (req, res) => {
   let t = new Timer();
   res.send(appData.demos);
-  who(req, `is viewing ` + '/demos'.green + ` data ` + `${t.endString()} seconds`.cyan + ` response time`);
+  who(req, `is viewing ` + '/demos'.green + ` data ` + `${t.endString()}`.cyan + ` response time`);
 });
 
 /**
@@ -802,7 +802,7 @@ app.get('/cletlist', (req, res) => {
     return;
   }
   res.sendFile(`${__dirname}/assets/cletlist.txt`);
-  who(req, `is viewing ` + '/cletlist'.green + ` data ` + `${t.endString()} seconds`.cyan + ` response time`);
+  who(req, `is viewing ` + '/cletlist'.green + ` data ` + `${t.endString()}`.cyan + ` response time`);
 });
 
 /**
@@ -849,7 +849,7 @@ app.get('/admin', (req, res) => {
     title: 'Lo-g Hoedown Admin',
     stats: appData.rconStats
   }));
-  who(req, `is viewing ` + '/admin'.green + ` data ` + `${t.endString()} seconds`.cyan + ` response time`);
+  who(req, `is viewing ` + '/admin'.green + ` data ` + `${t.endString()}`.cyan + ` response time`);
 });
 
 app.get('*', fourohfour);
