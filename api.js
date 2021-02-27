@@ -549,7 +549,7 @@ app.get('/stats', (req, res) => {
 app.get('/old-months', (req, res) => {
   let t = new Timer();
   getOldStatsList().then(stats => {
-    who(req, `is viewing ` + '/old-months'.green + ' data' + ` ${t.endString()} seconds`.cyan + ` response time`);
+    who(req, `is viewing ` + '/old-months'.green + ' data' + ` ${t.endString()}`.cyan + ` response time`);
     res.send(stats);
   }).catch(e => {
     fiveHundred(req, res);
@@ -574,7 +574,7 @@ app.get('/old-months', (req, res) => {
 app.get('/old-stats/:month', (req, res) => {
   let t = new Timer();
   getOldStatsList(req.params.month).then(stats => {
-    who(req, `is viewing ` + '/old-stats'.green + ' data for ' + `${monthName(req.params.month).yellow}` + ` ${t.endString()} seconds`.cyan + ` response time`);
+    who(req, `is viewing ` + '/old-stats'.green + ' data for ' + `${monthName(req.params.month).yellow}` + ` ${t.endString()}`.cyan + ` response time`);
     res.send(stats);
   }).catch(e => {
     fiveHundred(req, res);
@@ -632,7 +632,7 @@ app.get('/newPlayers/:date', oneOf([
     if (date === '0') {
       date = new Date().getDate();
     }
-    who(req, `is viewing ` + `/newPlayers/${date}`.green + ` data on ` + `${monthName(new Date().getMonth())} ${suffix(date)} `.yellow + `${users.length} new players`.grey + ` ${t.endString()} seconds`.cyan + ` response time`);
+    who(req, `is viewing ` + `/newPlayers/${date}`.green + ` data on ` + `${monthName(new Date().getMonth())} ${suffix(date)} `.yellow + `${users.length} new players`.grey + ` ${t.endString()}`.cyan + ` response time`);
     res.send(users);
   }).catch(e => {
     fiveHundred(req, res);
@@ -661,7 +661,7 @@ app.get('/returnPlayers/:date', (req, res) => {
     if (date === '0') {
       date = new Date().getDate();
     }
-    who(req, `is viewing ` + `/returnPlayers/${date}`.green + ` data on ` + `${monthName(new Date().getMonth())} ${suffix(date)} `.yellow + `${users.length} new players`.grey + ` ${t.endString()} seconds`.cyan + ` response time`);
+    who(req, `is viewing ` + `/returnPlayers/${date}`.green + ` data on ` + `${monthName(new Date().getMonth())} ${suffix(date)} `.yellow + `${users.length} new players`.grey + ` ${t.endString()}`.cyan + ` response time`);
     res.send(users);
   }).catch(e => {
     fiveHundred(req, res);
@@ -691,7 +691,7 @@ app.get('/playerStats/:id', (req, res) => {
     fourohfour(req, res);
     return;
   }
-  who(req, `is viewing ` + `/playerStats/${id}`.green + ` data for player ` + `${player.name}`.grey + ` ${t.endString()} seconds`.cyan + ` response time`);
+  who(req, `is viewing ` + `/playerStats/${id}`.green + ` data for player ` + `${player.name}`.grey + ` ${t.endString()}`.cyan + ` response time`);
   res.send(player);
 });
 
