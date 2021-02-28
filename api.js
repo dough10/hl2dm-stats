@@ -141,7 +141,6 @@ function userDisconnected(u) {
  * scanner(.., .., .., .., playerBan, .., ..);
  */
 function playerBan(id) {
-  appData.addBanned.bind(appData);
   let player = appData.addBanned(id);
   appData.logBan(db, player).then(p => {
     if (p && p.name) print(`${p.name.grey} was saved to ban database`);
@@ -157,7 +156,6 @@ function playerBan(id) {
  * scanner(.., .., .., .., mapEnd, .., ..);
  */
 function mapEnd() {
-  appData.reset.bind(appData);
   appData.reset().then(m => {
     print(m);
     appData.cacheDemos();
@@ -526,7 +524,7 @@ app.get('/auth', oneOf([
  * });
  */
 app.get('/stats', (req, res) => {
-  var t = new Timer();
+  let t = new Timer();
   res.send([
     appData.generateTop(),
     appData.generateWeapons(),
@@ -787,27 +785,27 @@ app.get('/demos', (req, res) => {
 });
 
 /**
- * route to get list of hl2dm server clet's
+ * route to get list of hl2dm server cvar's
  * @function
- * @name /cletlist
+ * @name /cvarlist
  * 
- * @returns {Text} list of clet commands 
+ * @returns {Text} list of cvar commands 
  * 
- * @example <caption>Example usage of /cletlist api endpoint.</caption>
- * fetch('http://localhost:3000/cletlist').then(response => {
+ * @example <caption>Example usage of /cvarlist api endpoint.</caption>
+ * fetch('http://localhost:3000/cvarlist').then(response => {
  *   response.text().then(text => {
  *     console.log(text); // list of srcds conosle commands
  *   });
  * });
  */
-app.get('/cletlist', (req, res) => {
+app.get('/cvarlist', (req, res) => {
   let t = new Timer();
-  if (!fs.existsSync(`${__dirname}/assets/cletlist.txt`)){
+  if (!fs.existsSync(`${__dirname}/assets/cvarlist.txt`)){
     fourohfour(req, res);
     return;
   }
-  res.sendFile(`${__dirname}/assets/cletlist.txt`);
-  who(req, `is viewing ` + '/cletlist'.green + ` data ` + `${t.endString()}`.cyan + ` response time`);
+  res.sendFile(`${__dirname}/assets/cvarlist.txt`);
+  who(req, `is viewing ` + '/cvarlist'.green + ` data ` + `${t.endString()}`.cyan + ` response time`);
 });
 
 /**

@@ -641,7 +641,6 @@ class Data {
       this.users[killed.id].killedby[killer.name][weapon] = 0;
     }
     this.users[killed.id].killedby[killer.name][weapon]++;
-
     if (!this.users[killer.id].killed) return;
     if (!this.users[killer.id].killed[killed.name]) {
       this.users[killer.id].killed[killed.name] = {};
@@ -650,7 +649,6 @@ class Data {
       this.users[killer.id].killed[killed.name][weapon] = 0;
     }
     this.users[killer.id].killed[killed.name][weapon]++;
-
     // add server wide kill with weapon
     this.weapons[weapon].kills++;
     // calculate killer KDR
