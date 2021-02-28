@@ -55,6 +55,9 @@ Object.size = obj => {
  * //   suicide: {
  * //     count:0
  * //   },
+ * //   deathsBy: {},
+ * //   killedby: {},
+ * //   killed: {},
  * //   updated: 1609123414390,
  * //   chat: []
  * // }
@@ -74,6 +77,8 @@ function playerObj(name, id, time, ip) {
       count:0
     },
     deathsBy: {},
+    killedby: {},
+    killed: {},
     chat: []
   };
 }
@@ -289,6 +294,7 @@ function mergePhysicsKills(u) {
  * bob.weapons = sortWeapons(bob);
  */
 function mergePhysicsDeaths(u) {
+  if (!u) return;
   // merge physics kills
   if (!u.physics) {
     u.physics =  0;
@@ -305,6 +311,25 @@ function mergePhysicsDeaths(u) {
   if (u.physics === 0) {
     delete u.physics;
   }
+}
+
+/**
+ * prepare the player object to be sent to the frontend
+ * @param {Object} obj player stats object
+ * 
+ * @returns {Object} object with sorted and merged elements 
+ */
+function prepStats(obj) {
+  mergePhysicsKills(obj);
+  mergePhysicsDeaths(obj.deathsBy);
+  obj.weapons = sortWeapons(obj);
+  obj.deathsBy = sortDeaths(obj.deathsBy);
+  obj.suicide = sortDeaths(obj.suicide);
+  return obj;
+}
+
+function clone(obj) {
+  return JSON.parse(JSON.stringify(obj));
 }
 
 
@@ -458,13 +483,7 @@ class Data {
       // push non banned players with greater then or equal to 100 kills to "top" Array
       if (this.users[user].kills >= 100 && !this.users[user].banned) {
         try {
-          var obj = JSON.parse(JSON.stringify(this.users[user]));
-          mergePhysicsKills(obj);
-          mergePhysicsDeaths(obj.deathsBy);
-          obj.weapons = sortWeapons(obj);
-          obj.deathsBy = sortDeaths(obj.deathsBy);
-          obj.suicide = sortDeaths(obj.suicide);
-          arr.push(obj);
+          arr.push(prepStats(clone(this.users[user])));
         } catch (e) {
           throw e;
         }
@@ -487,7 +506,7 @@ class Data {
    */
   generateWeapons() {
     try {
-      let obj = JSON.parse(JSON.stringify(this.weapons));
+      let obj = clone(this.weapons);
       mergePhysicsKills(obj);
       return sortWeapons(obj);
     } catch(e) {
@@ -507,10 +526,7 @@ class Data {
     var arr = [];
     for (var player in this.bannedUsers) {
       try {
-        var obj = JSON.parse(JSON.stringify(this.bannedUsers[player]));
-        mergePhysicsKills(obj);
-        obj.weapons = sortWeapons(obj);
-        arr.push(obj);
+        arr.push(prepStats(clone(this.bannedUsers[player])));
       } catch(e) {
         throw e;
       }
@@ -530,10 +546,7 @@ class Data {
     for (var u in this.users) {
       if (playerId === u) {
         try {
-          var obj = JSON.parse(JSON.stringify(this.users[u]));
-          mergePhysicsKills(obj);
-          obj.weapons = sortWeapons(obj);
-          return obj;
+          return prepStats(clone(this.users[u]));
         } catch(e) {
           throw e;
         }
@@ -614,10 +627,30 @@ class Data {
     // add killer kill with weapon
     this.users[killer.id][weapon].kills++;
     // add killed player death by weapon stat
+    if (!this.users[killed.id].deathsBy) return;
     if (!this.users[killed.id].deathsBy[weapon]) {
       this.users[killed.id].deathsBy[weapon] = 0;
     }
     this.users[killed.id].deathsBy[weapon]++;
+    // track who killed who the most
+    if (!this.users[killed.id].killedby) return;
+    if (!this.users[killed.id].killedby[killer.name]) {
+      this.users[killed.id].killedby[killer.name] = {};
+    }
+    if (!this.users[killed.id].killedby[killer.name][weapon]) {
+      this.users[killed.id].killedby[killer.name][weapon] = 0;
+    }
+    this.users[killed.id].killedby[killer.name][weapon]++;
+
+    if (!this.users[killer.id].killed) return;
+    if (!this.users[killer.id].killed[killed.name]) {
+      this.users[killer.id].killed[killed.name] = {};
+    }
+    if (!this.users[killer.id].killed[killed.name][weapon]) {
+      this.users[killer.id].killed[killed.name][weapon] = 0;
+    }
+    this.users[killer.id].killed[killed.name][weapon]++;
+
     // add server wide kill with weapon
     this.weapons[weapon].kills++;
     // calculate killer KDR
@@ -713,8 +746,7 @@ class Data {
   addBanned(id) {
     if (!this.users[id]) {
       this.users[id] = {
-        id: id,
-        banned: true
+        id: id
       };
     }
     // mark player as banned
@@ -722,14 +754,7 @@ class Data {
     this.bannedUsers[id] = this.users[id];
     // data to be returned
     try {
-      var r = JSON.parse(JSON.stringify(this.bannedUsers[id]));
-      r.weapons = sortWeapons(r);
-      delete r.weapons;
-      delete r.banned;
-      delete r.kills;
-      delete r.deaths;
-      delete r.kdr;
-      delete r.suicide;
+      var r = clone(this.users[id]);
       return r;
     }  catch (e) {
       throw e;
@@ -759,10 +784,9 @@ class Data {
       this.users[id].updated = time;
       this.users[id].name = name;
     }
-    // ++ issues with crashing has come up 2-20-21 ++
+    // // ++ issues with crashing has come up 2-20-21 ++
     if (!this.users[id].chat) {
-      console.log(name, id, time, said);
-      this.users[id].chat = [];
+      return;
     }
     this.users[id].chat.push(said);
   }

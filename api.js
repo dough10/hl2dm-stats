@@ -141,6 +141,7 @@ function userDisconnected(u) {
  * scanner(.., .., .., .., playerBan, .., ..);
  */
 function playerBan(id) {
+  appData.addBanned.bind(appData);
   let player = appData.addBanned(id);
   appData.logBan(db, player).then(p => {
     if (p && p.name) print(`${p.name.grey} was saved to ban database`);
@@ -156,11 +157,12 @@ function playerBan(id) {
  * scanner(.., .., .., .., mapEnd, .., ..);
  */
 function mapEnd() {
+  appData.reset.bind(appData);
   appData.reset().then(m => {
     print(m);
     appData.cacheDemos();
     parseLogs().then(seconds => {
-      print(`Log parser complete in ` + `${seconds} seconds`.cyan);
+      print(`Log parser complete in ${seconds.cyan}`);
     }).catch(errorHandler);
   });
 }
@@ -347,13 +349,16 @@ function parseLogs() {
 function readableTime(ms) {
   let line = '';
   let seconds = ms / 1000;
-  let hours = parseInt( seconds / 3600 );
+  let days = Math.floor(seconds / 86400);
+  seconds = seconds % 86400;
+  let hours = Math.floor(seconds / 3600);
   seconds = seconds % 3600;
-  let minutes = parseInt( seconds / 60 );
-  seconds = Number((seconds % 60).toFixed(3));
+  let minutes = Math.floor(seconds / 60);
+  seconds = seconds % 60;
+  if (days) line += `${days} days `;
   if (hours) line += `${hours} hours `;
   if (minutes) line += `${minutes} minutes `;
-  line += `${seconds} seconds`;
+  line += `${seconds.toFixed(3)} seconds`;
   return line;
 }
 
@@ -521,7 +526,7 @@ app.get('/auth', oneOf([
  * });
  */
 app.get('/stats', (req, res) => {
-  let t = new Timer();
+  var t = new Timer();
   res.send([
     appData.generateTop(),
     appData.generateWeapons(),
@@ -866,7 +871,7 @@ let server = app.listen(config.port, _ => mongoConnect().then(database => {
   new RconStats(config.gameServerHostname, process.env.RCONPW, rconStats);
   appData.cacheDemos();
   parseLogs().then(seconds => {
-    print(`Log parser complete in ` + `${seconds} seconds`.cyan);
+    print(`Log parser complete in ${seconds.cyan}`);
     receiver.on("data", data => {
       if (data.isValid) {
         scanner(

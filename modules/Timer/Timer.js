@@ -2,9 +2,7 @@
  * @fileOverview Class for timing the duration of things
  * @module modules/Timer
  * @author Jimmy Doughten <https://github.com/dough10>
- * @requires colors
  */
-const colors = require('colors'); 
 
 class Timer {
   
@@ -39,16 +37,20 @@ class Timer {
    * // returns [0, 10, 15.347, 'thing']
    */
   end() {
-    let ms = new Date().getTime() - this.startTime;
-    let seconds = ms / 1000;
-    let hours = parseInt( seconds / 3600 );
+    var ms = new Date().getTime() - this.startTime;
+    // console.log(ms);
+    var seconds = ms / 1000;
+    var days = Math.floor(seconds / 86400);
+    seconds = seconds % 86400;
+    var hours = Math.floor(seconds / 3600);
     seconds = seconds % 3600;
-    let minutes = parseInt( seconds / 60 );
-    seconds = Number((seconds % 60).toFixed(3));
+    var minutes = Math.floor(seconds / 60);
+    seconds = seconds % 60;
     return [
+      days,
       hours,
       minutes,
-      seconds,
+      Number((seconds).toFixed(3)),
       this.title
     ];
   }
@@ -66,18 +68,22 @@ class Timer {
    */
   endString() {
     let endTime = this.end();
+    // console.log(endTime)
     let str = '';
     if (endTime[0]) {
-      str += `${endTime[0]} hours `;
+      str += `${endTime[0]} days `;
     }
     if (endTime[1]) {
-      str += `${endTime[1]} minutes `;
+      str += `${endTime[1]} hours `;
     }
-    str += `${endTime[2]} seconds`;
+    if (endTime[2]) {
+      str += `${endTime[2]} minutes `;
+    }
+    str += `${endTime[3]} seconds`;
     if (!this.title) {
-      return str.cyan;
+      return str;
     }
-    return `${this.title} - ${str}`.cyan;
+    return `${this.title} - ${str}`;
   }
 }
 

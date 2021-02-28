@@ -3,7 +3,6 @@
 ## modules/Timer
 Class for timing the duration of things
 
-**Requires**: <code>module:colors</code>  
 **Author**: Jimmy Doughten <https://github.com/dough10>  
 
 * [modules/Timer](#module_modules/Timer)

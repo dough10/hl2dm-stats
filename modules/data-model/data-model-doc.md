@@ -41,6 +41,7 @@ var appData = new Datamodel();
     * [~sortDeaths(user)](#module_data-model..sortDeaths) ⇒ <code>Array</code>
     * [~mergePhysicsKills(user)](#module_data-model..mergePhysicsKills) ⇒ <code>void</code>
     * [~mergePhysicsDeaths(user)](#module_data-model..mergePhysicsDeaths) ⇒ <code>void</code>
+    * [~prepStats(obj)](#module_data-model..prepStats) ⇒ <code>Object</code>
 
 <a name="module_data-model..Data"></a>
 
@@ -405,6 +406,9 @@ var bob = playerObj('bob', '374586912', 1609123414390, '25.65.8.357');
 //   suicide: {
 //     count:0
 //   },
+//   deathsBy: {},
+//   killedby: {},
+//   killed: {},
 //   updated: 1609123414390,
 //   chat: []
 // }
@@ -553,3 +557,15 @@ mergePhysicsKills(bob);
 mergePhysicsDeaths(bob.deathsBy);
 bob.weapons = sortWeapons(bob);
 ```
+<a name="module_data-model..prepStats"></a>
+
+### data-model~prepStats(obj) ⇒ <code>Object</code>
+prepare the player object to be sent to the frontend
+
+**Kind**: inner method of [<code>data-model</code>](#module_data-model)  
+**Returns**: <code>Object</code> - object with sorted and merged elements  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| obj | <code>Object</code> | player stats object |
+
