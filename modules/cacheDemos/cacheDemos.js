@@ -121,6 +121,9 @@ function cacheDemos() {
       for (var i = 0; i < demos.length; i++) {
         if (i !== demos.length - 1) {
           var filepath = path.join(config.gameServerDir, demos[i]);
+          if (!fs.existsSync(filepath)) {
+            return;
+          }
           arr.push([
             demos[i],
             bytesToSize(getFilesizeInBytes(filepath)),
