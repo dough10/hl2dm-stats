@@ -510,10 +510,6 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
         loggingEnabled: loggingEnabled
       });
     }
-    if (!lineTime) {
-      console.log(name, id, ip, lineTime);
-      playerTimes[id] = new Date().getTime();
-    }
   } else if (isKill) {
     // get players details
     let killerNameString = buildKillerNameString(word, isKill);  // isKill is the index after the last index of the player name

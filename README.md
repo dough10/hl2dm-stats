@@ -55,21 +55,21 @@ avaliable from <https://github.com/dough10/hl2dm-stats-ui>
 
 ## Dependencies
 
-- bcrypt: ^5.0.0
+- bcrypt: ^5.0.1
 - blocked: ^1.3.0
 - clear: ^0.1.0
 - colors: ^1.4.0
 - compression: ^1.7.4
 - express: ^4.17.1
-- express-validator: ^6.9.0
+- express-validator: ^6.10.0
 - express-ws: ^4.0.0
 - figlet: ^1.5.0
-- gamedig: ^2.0.23
+- gamedig: ^2.0.28
 - geoip-lite: ^1.4.2
-- influx: ^5.6.3
-- mongodb: ^3.6.3
-- node-schedule: ^1.3.2
-- pug: ^3.0.0
+- influx: ^5.7.0
+- mongodb: ^3.6.4
+- node-schedule: ^1.3.3
+- pug: ^3.0.2
 - readline: ^1.3.0
 - srcds-log-receiver: ^1.0.2
 - srcds-rcon: ^2.2.1
