@@ -866,7 +866,7 @@ let server = app.listen(config.port, _ => mongoConnect().then(database => {
   console.log('');
   print('Online. ' + 'o( ❛ᴗ❛ )o'.red);
   statsLoop();
-  new RconStats(config.gameServerHostname, process.env.RCONPW, rconStats);
+  // new RconStats(config.gameServerHostname, process.env.RCONPW, rconStats);
   appData.cacheDemos();
   parseLogs().then(seconds => {
     print(`Log parser complete in ${seconds.cyan}`);
