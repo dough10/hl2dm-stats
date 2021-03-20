@@ -41,7 +41,7 @@ const { check, oneOf, validationResult } = require('express-validator');
 const colors = require('colors');
 const blocked = require('blocked');
 const config = require('./modules/loadConfig/loadConfig.js')();
-// const RconStats = require('./modules/RconStats/rcon.js');
+const RconStats = require('./modules/RconStats/rcon.js');
 const logFolder = path.join(config.gameServerDir, 'logs');
 const startTime = new Date().getTime();
 let receiver = new logReceiver.LogReceiver();
@@ -61,7 +61,7 @@ let dashboard;
  * doStuff().then(doMoreStuff).catch(errorHandler);
  */
 function errorHandler(e) {
-  console.error(`${new Date().toLocaleString().yellow} - ${e.message.red}`);
+  console.error(`${new Date().toLocaleString().yellow} - ${e}`);
 }
 
 
@@ -866,7 +866,7 @@ let server = app.listen(config.port, _ => mongoConnect().then(database => {
   console.log('');
   print('Online. ' + 'o( ❛ᴗ❛ )o'.red);
   statsLoop();
-  // new RconStats(config.gameServerHostname, process.env.RCONPW, rconStats);
+  new RconStats(config.gameServerHostname, process.env.RCONPW, rconStats);
   appData.cacheDemos();
   parseLogs().then(seconds => {
     print(`Log parser complete in ${seconds.cyan}`);

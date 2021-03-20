@@ -34,18 +34,6 @@ function checkEntry(name) {
   });
 }
 
-function insertEntry(name, key) {
-  return new Promise((resolve, reject) => {
-    db.collection("stream-keys").insertOne({ 
-      name: name, 
-      key: hash 
-    }, (err, res) => {
-      if (err) return reject(err);
-    });
-  });
-}
-
-
 /**
  *  adds a user & password to the database
  * @param {String} name username / stream name 
