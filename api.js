@@ -271,7 +271,7 @@ function statsLoop() {
       socket.send(JSON.stringify(status), e => {});
     }
   }).catch(e => {
-    errorHandler(e);
+    // errorHandler(e);
     serverStatus = 'offline';
   });
 }
