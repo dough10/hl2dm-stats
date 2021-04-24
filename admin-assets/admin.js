@@ -52,6 +52,7 @@ function animateElement(el, transform, time, opacity, delay) {
 }
 
 function updateStats(stats) {
+  console.log(stats);
   try {
     stats = JSON.parse(stats);
   } catch(err) {

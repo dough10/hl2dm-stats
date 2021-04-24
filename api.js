@@ -184,6 +184,7 @@ function mapStart(logId) {
  * new RconStats('127.0.0.1', 'supersecurepassword', rconStats).ping();
  */
 function rconStats(stats) {
+  // console.log(stats);
   appData.rconStats = stats;
   if (dashboard) dashboard.send(JSON.stringify(stats), e => {});
 }
@@ -835,6 +836,7 @@ app.get('/testCleanup', (req, res) => {
  * @returns {JSON} RCON stats
  */
 app.ws('/dashboard', ws => {
+  console.log(ppData.rconStats, 'dash');
   dashboard = ws;
   dashbaord.send(appData.rconStats);
 });

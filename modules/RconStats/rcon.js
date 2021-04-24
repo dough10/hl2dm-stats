@@ -68,7 +68,7 @@ class RconStats {
    * RconStats._parseStats(res);
    */
   _parseStats(response) {
-    console.log(response);
+    // console.log(response);
     if (!response) return reject();
     var stat = response.split('\n')[1].split(" ");
     // Remove blank spaces
@@ -82,7 +82,7 @@ class RconStats {
       stat[i] = Number(stat[i]); 
       if (isNaN(stat[i])) return;
     }
-    // console.log('stats: ' + stat);
+    if (typeof stat !== 'object') return;
     influx.dbInsert(stat, this.db);
     if (this.onStats) this.onStats(stat);
   }
@@ -101,10 +101,12 @@ class RconStats {
     }, this.interval);
     try {
       this._getStats().then(this._parseStats.bind(this)).catch(e => {
-        console.error(e.message);
+        console.error(new Date().toLocaleString().yellow, '-'.yellow, 'RCON'.red, e.message.red);
+        console.count('promise');
       });
     } catch(e) {
-      console.error(e.message);
+      console.error(new Date().toLocaleString().yellow, '-'.yellow, 'RCON'.red, e.message.red);
+      console.count('try')
     }
   }
 }
