@@ -24,7 +24,7 @@ class RconStats {
     this.onStats = onStats;
     this.interval = 10000;
     this.db = "srcds_db";
-    this._ping();
+    this._connect().then(this._ping.bind(this));
   }
   /**
    * connects to the game server rcon
@@ -83,7 +83,6 @@ class RconStats {
     }
     // console.log('stats: ' + stat);
     influx.dbInsert(stat, this.db);
-    this.rcon.disconnect();
     if (this.onStats) this.onStats(stat);
   }
 
@@ -100,9 +99,7 @@ class RconStats {
       this._ping();
     }, this.interval);
     try {
-      this._connect()
-      .then(this._getStats.bind(this))
-      .then(this._parseStats.bind(this)).catch(e => {
+      this._getStats().then(this._parseStats).catch(e => {
         console.error(e.message);
       });
     } catch(e) {
