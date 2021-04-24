@@ -12,6 +12,9 @@ echo '\e[39mBackup Running...'
 
 MONTH=$(date +%b)
 
+echo "mounting NAS"
+mountpoint -q /mnt/nas && echo "mounted" || sudo mount -t cifs -o username=$1,password=$2 //192.168.86.2/Main /mnt/nas/
+
 echo "creating "$MONTH" folders"
 sudo mkdir -p -m 777 /mnt/nas/DM-backup/logs/$MONTH
 sudo mkdir -p -m 777 /mnt/nas/DM-backup/demos/$MONTH

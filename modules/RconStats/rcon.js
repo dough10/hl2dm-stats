@@ -68,6 +68,7 @@ class RconStats {
    * RconStats._parseStats(res);
    */
   _parseStats(response) {
+    console.log(response);
     if (!response) return reject();
     var stat = response.split('\n')[1].split(" ");
     // Remove blank spaces
@@ -99,7 +100,7 @@ class RconStats {
       this._ping();
     }, this.interval);
     try {
-      this._getStats().then(this._parseStats).catch(e => {
+      this._getStats().then(this._parseStats.bind(this)).catch(e => {
         console.error(e.message);
       });
     } catch(e) {
