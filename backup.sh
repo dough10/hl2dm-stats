@@ -7,12 +7,13 @@ echo '  \ \  \__\ \ \  \_\  \ \  \_\  \ \  \_\  \ \  \ \  \   \ \  \ \  \_\  \'
 echo '   \ \_______\ \_______\ \_______\ \_______\ \__\ \__\   \ \__\ \_______\'
 echo '    \|_______|\|_______|\|_______|\|_______|\|__|\|__|    \|__|\|_______|'
 echo '\e[33m'
-echo 'https://github.com/dough10/hl2dm-cfgs'
+echo 'https://github.com/dough10/hl2dm-stats'
 echo '\e[39mBackup Running...'
 
+STORAGE=/mnt/nas
 SERVER_LOC=/hoedown/hl2mp
 STATS_SERVER_LOC=/home/crumb/hl2dm-stats
-BACKUP_LOC=/mnt/nas/DM-backup
+BACKUP_LOC=$STORAGE/DM-backup
 MONTH=$(date +%b)
 
 echo "mounting NAS"
