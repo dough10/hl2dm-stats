@@ -106,7 +106,7 @@ class RconStats {
       });
     } catch(e) {
       console.error(new Date().toLocaleString().yellow, '-'.yellow, 'RCON'.red, e.message.red);
-      console.count('try')
+      console.count('try');
     }
   }
 }
