@@ -17,7 +17,7 @@ BACKUP_LOC=$STORAGE/DM-backup
 MONTH=$(date +%b)
 
 echo "mounting NAS"
-mountpoint -q /mnt/nas && echo "mounted" || sudo mount -t cifs -o username=$1,password=$2 //192.168.86.2/Main /mnt/nas/
+mountpoint -q $STORAGE && echo "mounted" || sudo mount -t cifs -o username=$1,password=$2 //192.168.86.2/Main $STORAGE
 
 echo "creating "$MONTH" folders"
 sudo mkdir -p -m 777 $BACKUP_LOC/logs/$MONTH
