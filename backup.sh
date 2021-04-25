@@ -17,7 +17,7 @@ STATS_SERVER_LOC=/home/crumb/hl2dm-stats
 BACKUP_LOC=$STORAGE/DM-backup
 MONTH=$(date +%b)
 
-echo "Mounting "$STORAGE
+echo "Mounting "$SMB" as "$STORAGE
 mountpoint -q $STORAGE && echo "mounted" || sudo mount -t cifs -o username=$1,password=$2 $SMB $STORAGE
 
 echo "Creating "$MONTH" folders"
