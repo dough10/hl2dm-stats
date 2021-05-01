@@ -95,7 +95,7 @@ function getName(word) {
   let end = word.search(/<([1-9][0-9]{0,2}|1000)></);
   let str = '';
   for (let i = 0; i < end; i++) {
-    str = str + word[i];
+    str += word[i];
   }
   return str;
 }
@@ -128,7 +128,7 @@ function getID2(word) {
   let end = word.search('>');
   let str = '';
   for (let i = 0; i < end; i++) {
-    str = str + word[i];
+    str += word[i];
   }
   return str;
 }
@@ -161,7 +161,7 @@ function getID3(word) {
   let end = word.search(']');
   let str = '';
   for (let i = 0; i < end; i++) {
-    str = str + word[i];
+    str += word[i];
   }
   return str;
 }
@@ -207,7 +207,7 @@ function buildKillerNameString(line, end)  {
     start = 5;
   }
   for (let i = start; i < end; i++) {
-    name = `${name}${line[i]} `;
+    name = `${name}${line[i]} `; // formated like this to keep spaces in names
   }
   return name;
 }
@@ -238,7 +238,7 @@ function buildKilledNameString(line, start) {
   }
   let name = '';
   for (let i = start; i < end; i++) {
-    name = `${name}${line[i]} `;
+    name = `${name}${line[i]} `; // formated like this to keep spaces in names
   }
   return name;
 }
@@ -421,7 +421,7 @@ let endDebounceTime = 0;
  * @param {Array} line - one line of the log file being parsed split at spaces
  * @param {Function} onKill - callback for when a player gets a kill
  * @param {Function} onChat - callback for when a player chats
- * @param {Function} onSuicide - callback for when a player killer themselves
+ * @param {Function} onSuicide - callback for when a player kills themselves
  * @param {Function} onHeadshot - callback for when a player gets a headshot 
  * @param {Function} onStats - callback for when a player stats is posted
  * @param {Function} onStats2 - callback for when a player stats2 is posted
@@ -449,11 +449,9 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
   if (isConsole) {
      return;
   } else if (isChat) {
-    // important data
     let nameString = buildKillerNameString(word, isChat);
     let id = getID3(nameString);
     let name = getName(nameString);
-    // check if letiables have data
     if (!id) {
       return;
     }
@@ -463,7 +461,6 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     for (let i = 0; i < word.length; i++) {
       word[i] = word[i].replace('"', '').replace('"', '');
     }
-    // log chat
     let said = '';
     for (let i = isChat + 1; i < word.length; i++) {
       said = `${said}${word[i]} `;
@@ -471,23 +468,18 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     if (onChat) onChat(lineTime, id, name, `${new Date(lineTime).toLocaleString()} - ${said}`);
     if (loggingEnabled) print(`${name.grey} said ${said.magenta}`);
   } else if (isBanned) {
-    // important data
     let nameString = buildKillerNameString(word, isBanned);
     // let name = getName(nameString);
     let id = getID3(nameString);
-    // check if letiables have data
     if (!id) {
       return;
     }
-    // add the ban
     if (onBan) onBan(id);
   } else if (isConnect) {
-    // get user details
     let nameString = buildKillerNameString(word, isConnect);
     let id = getID3(nameString);
     let name = getName(nameString);
     let ip = word[isConnect  + 2].replace('"', '').replace('"', '').replace(/:\d{4,5}$/, '');
-    // check for important data
     if (!name) {
       return;
     }
@@ -511,7 +503,6 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
       });
     }
   } else if (isKill) {
-    // get players details
     let killerNameString = buildKillerNameString(word, isKill);  // isKill is the index after the last index of the player name
     let killedNameString = buildKilledNameString(word, isKill + 1); // isKill + 1 is the index @ the beginning of the killed players name
     let killer = {
@@ -523,7 +514,6 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
       id: getID3(killedNameString)
     };
     let weapon = word[word.length - 1].replace('"', '').replace('"', '');
-    // check important data exists
     if (!killer.id) {
       return;
     }
@@ -570,11 +560,9 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     if (onHeadshot) onHeadshot(lineTime, id, name);
     if (loggingEnabled) print(`${name.grey} got a ` + `HEADSHOT!!`.magenta);
   } else if (isStats) {
-     // get important information
     let killedNameString = buildKillerNameString(word, isStats - 1);
     let name = getName(killedNameString);
     let id3 = getID3(new SteamID(getID2(killedNameString)).getSteam3RenderedID());
-    // check letiables have data
     if (!id3) {
       return;
     }

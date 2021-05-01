@@ -159,9 +159,7 @@ let steamid = getID3([
 if a string of text a time string
 
 **Kind**: inner method of [<code>modules/lineScanner</code>](#module_modules/lineScanner)  
-**Returns**: <code>Boolean</code> - true: string is a time string, false: is not time string
-
-console.log(isTime('12:59:59')); = true  
+**Returns**: <code>Boolean</code> - true: string is a time string, false: is not time stringconsole.log(isTime('12:59:59')); = true  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -359,7 +357,7 @@ scans the line for usable data for the data-model   **update params**
 | line | <code>Array</code> | one line of the log file being parsed split at spaces |
 | onKill | <code>function</code> | callback for when a player gets a kill |
 | onChat | <code>function</code> | callback for when a player chats |
-| onSuicide | <code>function</code> | callback for when a player killer themselves |
+| onSuicide | <code>function</code> | callback for when a player kills themselves |
 | onHeadshot | <code>function</code> | callback for when a player gets a headshot |
 | onStats | <code>function</code> | callback for when a player stats is posted |
 | onStats2 | <code>function</code> | callback for when a player stats2 is posted |
