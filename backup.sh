@@ -19,14 +19,14 @@ BACKUP_LOC=$STORAGE/DM-backup
 MONTH=$(date +%b)
 
 echo "Mounting "$SMB" as "$STORAGE
-mountpoint -q $STORAGE && echo "mounted" || sudo mount -t cifs -o username=$1,password=$2 $SMB $STORAGE
+mountpoint -q $STORAGE && echo "mounted" || mount -t cifs -o username=$1,password=$2 $SMB $STORAGE
 
 echo "Creating "$MONTH" folders"
-sudo mkdir -p -m 777 $BACKUP_LOC/logs/$MONTH
-sudo mkdir -p -m 777 $BACKUP_LOC/demos/$MONTH
+mkdir -p -m 777 $BACKUP_LOC/logs/$MONTH
+mkdir -p -m 777 $BACKUP_LOC/demos/$MONTH
 
 echo "Copying files"
-sudo cp -r -u -v -p $SERVER_LOC/logs/* $BACKUP_LOC/logs/$MONTH
-sudo cp -r -u -v -p $SERVER_LOC/*.dem $BACKUP_LOC/demos/$MONTH 
-sudo cp -r -u -v -p $STATS_SERVER_LOC/old-top/* $BACKUP_LOC/old-top
-sudo cp -r -u -v -p $STATS_SERVER_LOC/old-stats/* $BACKUP_LOC/old-stats
+cp -r -u -v -p $SERVER_LOC/logs/* $BACKUP_LOC/logs/$MONTH
+cp -r -u -v -p $SERVER_LOC/*.dem $BACKUP_LOC/demos/$MONTH 
+cp -r -u -v -p $STATS_SERVER_LOC/old-top/* $BACKUP_LOC/old-top
+cp -r -u -v -p $STATS_SERVER_LOC/old-stats/* $BACKUP_LOC/old-stats
