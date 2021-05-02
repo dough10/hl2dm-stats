@@ -227,7 +227,7 @@ function who(req, message) {
  * //]
  * });
  */
-function getOldStatsList(month) {
+function getOldStatsList(month, year) {
   return new Promise((resolve, reject) => {
     fs.readdir(path.join(__dirname, 'old-top'), (err, files) => {
       if (err) {
@@ -239,10 +239,12 @@ function getOldStatsList(month) {
         return;
       }
       month = Number(month);
+      year = Number(year);
       for (let i = 0; i < files.length; i++) {
-        let date = path.basename(files[i], '.json');
-        let fileMonth = new Date(Number(date)).getMonth();
-        if (fileMonth === month) {
+        let date = Number(path.basename(files[i], '.json'));
+        let fileMonth = new Date(date).getMonth();
+        let fileYear = new Date(date).getFullYear();
+        if (fileMonth === month && fileYear === year) {
           let data = require(`${__dirname}/old-top/${files[i]}`);
           return resolve(data);
         }
@@ -563,21 +565,22 @@ app.get('/old-months', (req, res) => {
 /**
  * route for getting a old months stats data
  * @function
- * @name /old-stats/:month
+ * @name /old-stats/:month/:year
  * @param {Number} req.query.month - index number of the months data
+ * @param {Number} req.params.year - year
  * 
  * @returns {JSON | HTML} statistics from a previous month | 500
  * 
  * @example <caption>Example usage of /old-stats/:month api endpoint.</caption>
- * fetch('http://localhost:3000/old-stats/11').then(response => {
+ * fetch('http://localhost:3000/old-stats/11/2020').then(response => {
  *   response.json().then(json => {
  *     console.log(json); // statistics for the month of December
  *   });
  * });
  */
-app.get('/old-stats/:month', (req, res) => {
+app.get('/old-stats/:month/:year', (req, res) => {
   let t = new Timer();
-  getOldStatsList(req.params.month).then(stats => {
+  getOldStatsList(req.params.month, req.params.year).then(stats => {
     who(req, `is viewing ` + '/old-stats'.green + ' data for ' + `${monthName(req.params.month).yellow}` + ` ${t.endString()}`.cyan + ` response time`);
     res.send(stats);
   }).catch(e => {
