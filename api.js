@@ -581,7 +581,7 @@ app.get('/old-months', (req, res) => {
 app.get('/old-stats/:month/:year', (req, res) => {
   let t = new Timer();
   getOldStatsList(req.params.month, req.params.year).then(stats => {
-    who(req, `is viewing ` + '/old-stats'.green + ' data for ' + `${monthName(req.params.month).yellow}` + ` ${t.endString()}`.cyan + ` response time`);
+    who(req, `is viewing ` + '/old-stats'.green + ' data for ' + `${monthName(req.params.month).yellow} ${req.params.year.yellow}` + ` ${t.endString()}`.cyan + ` response time`);
     res.send(stats);
   }).catch(e => {
     fiveHundred(req, res);
