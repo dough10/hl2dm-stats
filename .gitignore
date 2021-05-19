@@ -7,3 +7,4 @@
 config-win.json
 /test/
 .jshintrc
+/old-top/
