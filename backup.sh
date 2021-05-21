@@ -17,16 +17,20 @@ SERVER_LOC=/hoedown/hl2mp
 STATS_SERVER_LOC=/home/crumb/hl2dm-stats
 BACKUP_LOC=$STORAGE/DM-backup
 MONTH=$(date +%b)
-U=$1
-P=$2
 
-if [ -z ${U+x} ]; 
+if [ -z ${1+x} ] 
   then 
     read -p 'Username: ' U
-    read -sp 'Password: ' P
+  else
+    U=$1
 fi
 
-
+if [ -z ${2+x} ] 
+  then
+    read -sp 'Password: ' P
+  else
+    P=$2
+fi
 
 echo "Mounting "$SMB" as "$STORAGE
 mountpoint -q $STORAGE && echo "mounted" || mount -t cifs -o username=$U,password=$P $SMB $STORAGE
