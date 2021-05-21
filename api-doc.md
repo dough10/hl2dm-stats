@@ -458,8 +458,7 @@ admin portal
 <a name="module_api..onBlocked"></a>
 
 ### api~onBlocked ⇒ <code>Void</code>
-execued after main thread is blocked
-logs time in ms the thread was blocked / adds up total time and compares it to the current uptime
+execued after main thread is blockedlogs time in ms the thread was blocked / adds up total time and compares it to the current uptime
 
 **Kind**: inner typedef of [<code>api</code>](#module_api)  
 **Returns**: <code>Void</code> - nothing  
