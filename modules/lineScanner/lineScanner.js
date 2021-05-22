@@ -645,8 +645,7 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
       return;
     }
     let log = Number(word[isStart + 2].replace('"logs/L', '').replace('.log")', '')) + 1;
-    if (loggingEnabled) print(`Current log file ` + `L${log}.log`.green);
-    if (onMapStart) onMapStart(`L${log}`);
+    if (loggingEnabled && onMapStart) onMapStart(`L${log}`);
     startDebounceTime = new Date().getTime();
   } else if (isEnd) {
     if (loggingEnabled) {
