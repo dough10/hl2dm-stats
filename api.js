@@ -162,10 +162,6 @@ function mapEnd() {
     parseLogs().then(seconds => {
       print(`Log parser complete in ${seconds.cyan}`);
     }).catch(errorHandler);
-    if (!appData.playersPlayed) {
-      console.log('delete demo');
-      // fs.unlinkSync(filename);
-    }
   });
 }
 
@@ -177,6 +173,20 @@ function mapEnd() {
  * scanner(.., .., .., .., mapStart, .., ..);
  */
 function mapStart(logId) {
+  if (!appData.playersPlayed) {
+    let now = new Date();
+    let y = now.getFullYear();
+    let m = now.getMonth() + 1;
+    if (m < 10) m = `0${m}`;
+    let d = now.getDate();
+    if (d < 10) d = `0${d}`;
+    let h = now.getHours();
+    if (h < 10) h = `0${h}`;
+    let min = now.getMinutes();
+    if (min < 10) min = `0${min}`;
+    console.log(`${config.gameServerDir}/auto-${y}${m}${d}-${h}${min}-dm_bellas_room_d1.dem`);
+    // fs.unlinkSync(filename);
+  }
   appData.playersPlayed = false;
 }
 
