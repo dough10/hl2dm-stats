@@ -432,7 +432,7 @@ let endDebounceTime = 0;
  * @param {Boolean} loggingEnabled - log to console. (used to avoid spam when scanning logs when getting data from realtime from rcon logs)
  */
 function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2, onJoin, onDisconnect, onMapStart, onMapEnd, onBan, loggingEnabled) {
-  console.log(line);
+  if (loggingEnabled) console.log(line);
   let word  = line.split(' ');  // array
   let isKill = lineIsKill(word);
   let isConnect = lineIsConnect(word);
