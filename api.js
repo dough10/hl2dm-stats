@@ -162,6 +162,10 @@ function mapEnd() {
     parseLogs().then(seconds => {
       print(`Log parser complete in ${seconds.cyan}`);
     }).catch(errorHandler);
+    if (!appData.playersPlayed) {
+      console.log('delete demo');
+      // fs.unlinkSync(filename);
+    }
   });
 }
 
@@ -173,7 +177,7 @@ function mapEnd() {
  * scanner(.., .., .., .., mapStart, .., ..);
  */
 function mapStart(logId) {
-
+  appData.playersPlayed = false;
 }
 
 /**
