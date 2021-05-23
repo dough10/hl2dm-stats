@@ -174,7 +174,7 @@ function mapEnd() {
  */
 function mapStart(logId) {
   print(`Current log file ` + `L${logId}.log`.green);
-  if (appData.playersPlayed === false) {
+  if (!appData.playersPlayed) {
     let now = new Date();
     let y = now.getFullYear();
     let m = now.getMonth() + 1;
@@ -186,7 +186,8 @@ function mapStart(logId) {
     let min = now.getMinutes();
     if (min < 10) min = `0${min}`;
     if (appData.demoName && fs.existsSync(appData.demoName)) {
-      fs.unlinkSync(appData.demoName);
+      console.log(appData.demoName);
+      // fs.unlinkSync(appData.demoName);
     }
   }
   appData.demoName = path.join(config.gameServerDir, `auto-${y}${m}${d}-${h}${min}-dm_bellas_room_d1.dem`);
