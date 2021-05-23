@@ -22,7 +22,7 @@ function init(logFolder) {
   })));
   console.log(`Legend: ` + 'Local Time, '.yellow + ' Timers,'.cyan + ' Important,'.red + ' People / IP\'s,'.grey + ' Files / Paths,'.green + ' Weapons / Chat'.magenta);
   console.log(`API Version: ` + `${pack.version}`.red);
-  console.log(`Log folder = ${logFolder.green}`);
+  console.log(`Log folder: ${logFolder.green}`);
 }
 
 module.exports = init;
