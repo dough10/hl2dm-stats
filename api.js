@@ -42,6 +42,7 @@ const colors = require('colors');
 const blocked = require('blocked');
 const config = require('./modules/loadConfig/loadConfig.js')();
 const RconStats = require('./modules/RconStats/rcon.js');
+const { Console } = require('console');
 const logFolder = path.join(config.gameServerDir, 'logs');
 const startTime = new Date().getTime();
 let receiver = new logReceiver.LogReceiver();
@@ -184,7 +185,10 @@ function mapStart(logId) {
   if (h < 10) h = `0${h}`;
   let min = now.getMinutes();
   if (min < 10) min = `0${min}`;
-  console.log("appData.playersPlayed", appData.playersPlayed, "appData.demoName", appData.demoName, "fs.existsSync(appData.demoName)", fs.existsSync(appData.demoName));
+  console.log("appData.playersPlayed", appData.playersPlayed);
+  console.log("appData.demoName", appData.demoName);
+  console.log("fs.existsSync(appData.demoName)", fs.existsSync(appData.demoName));
+  console.log("Will delete file?: ", !appData.playersPlayed && appData.demoName && fs.existsSync(appData.demoName));
   if (!appData.playersPlayed && appData.demoName && fs.existsSync(appData.demoName)) {
     fs.unlinkSync(appData.demoName);
   }
