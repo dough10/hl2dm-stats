@@ -17,6 +17,7 @@ class RconStats {
   constructor(address, password, onStats) {
     if (!address) return console.error('address required');
     if (!password) return console.error('password required');
+    console.log(`${new Date().toLocaleString().yellow} - Getting RCON stats from ${address.magenta} with password ${password.magenta}`)
     this.rcon = RCON({
       address: address,
       password: password
@@ -97,10 +98,10 @@ class RconStats {
    */
   _ping() {
     setTimeout(_ => {
-      this._ping();
+      this._connect().then(this._ping.bind(this));
     }, this.interval);
     try {
-      this._getStats().then(this._parseStats.bind(this)).catch(e => {
+      this._getStats().then(this._parseStats.bind(this)).then(this.rcon.disconnect).catch(e => {
         console.error(new Date().toLocaleString().yellow, '-'.yellow, 'RCON'.red, e.message.red);
         console.count('promise');
       });
