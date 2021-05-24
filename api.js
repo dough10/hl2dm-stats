@@ -185,10 +185,10 @@ function mapStart(logId) {
   if (h < 10) h = `0${h}`;
   let min = now.getMinutes();
   if (min < 10) min = `0${min}`;
-  console.log("appData.playersPlayed: ", appData.playersPlayed);
-  console.log("appData.demoName: ", appData.demoName.green);
-  console.log("fs.existsSync(appData.demoName): ", fs.existsSync(appData.demoName));
-  console.log("Will delete file?: ", !appData.playersPlayed && appData.demoName && fs.existsSync(appData.demoName));
+  // console.log("appData.playersPlayed: ", appData.playersPlayed);
+  // console.log("appData.demoName: ", appData.demoName.green);
+  // console.log("fs.existsSync(appData.demoName): ", fs.existsSync(appData.demoName));
+  // console.log("Will delete file?: ", !appData.playersPlayed && appData.demoName && fs.existsSync(appData.demoName));
   if (!appData.playersPlayed && appData.demoName && fs.existsSync(appData.demoName)) {
     fs.unlinkSync(appData.demoName);
     print(`${appData.demoName.green} deleted. Inactive map.`);
