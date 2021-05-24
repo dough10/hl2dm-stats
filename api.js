@@ -192,6 +192,8 @@ function mapStart(logId) {
   if (!appData.playersPlayed && appData.demoName && fs.existsSync(appData.demoName)) {
     fs.unlinkSync(appData.demoName);
     print(`${appData.demoName.green} deleted. Inactive map.`);
+  } else if (appData.demoName && !fs.existsSync(appData.demoName)) {
+    print(`${appData.demoName.green} does not match a demo filename`);
   }
   appData.demoName = path.join(config.gameServerDir, `auto-${y}${m}${d}-${h}${min}-dm_bellas_room_d1.dem`);
   appData.playersPlayed = false;
