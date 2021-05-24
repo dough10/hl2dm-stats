@@ -353,7 +353,7 @@ class Data {
     this.gameStatus = {};
     this.rconStats = [];
     this.playersPlayed = false;     // have users been in the server. true to prevent error on first load will set false on first map
-    this.demoName = '';
+    this.demoName;
     // imported function
     this.getNewUsers = require('../getNewUsers/getNewUsers.js');
     this.getReturnUsers = require('../getReturnUsers/getReturnUsers.js');
