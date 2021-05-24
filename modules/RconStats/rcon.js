@@ -17,7 +17,7 @@ class RconStats {
   constructor(address, password, onStats) {
     if (!address) return console.error('address required');
     if (!password) return console.error('password required');
-    console.log(`${new Date().toLocaleString().yellow} - Getting RCON stats from ${address.magenta} with password ${password.magenta}`)
+    console.log(`${new Date().toLocaleString().yellow} - Getting RCON stats from ${address.magenta} with password ${password.magenta}`);
     this.rcon = RCON({
       address: address,
       password: password
