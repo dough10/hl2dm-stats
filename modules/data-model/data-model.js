@@ -353,7 +353,7 @@ class Data {
     this.gameStatus = {};
     this.rconStats = [];
     this.playersPlayed = false;     // have users been in the server. true to prevent error on first load will set false on first map
-    this.demoName;
+    this.demoName = '';
     // imported function
     this.getNewUsers = require('../getNewUsers/getNewUsers.js');
     this.getReturnUsers = require('../getReturnUsers/getReturnUsers.js');
@@ -596,8 +596,8 @@ class Data {
    * @example <caption>Example usage of addKill() function.</caption>
    * appData.addKill(1609123414390, {...}, {...}, '357');
    */
-  addKill(time, killer, killed, weapon) {
-    this.playersPlayed = true;
+  addKill(time, killer, killed, weapon, logging) {
+    if (logging) this.playersPlayed = true;
     // killer object
     if (!this.users[killer.id]) {
       this.users[killer.id] = playerObj(killer.name, killer.id, time);

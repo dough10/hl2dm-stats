@@ -530,7 +530,7 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     if (!isWeapon(weapon)) {
       return;
     }
-    if (onKill) onKill(lineTime, killer, killed, weapon);
+    if (onKill) onKill(lineTime, killer, killed, weapon, loggingEnabled);
     if (loggingEnabled) print(`${killer.name.grey} killed ${killed.name.grey} with weapon ${weapon.magenta}`);
   } else if (isSuicide) {
     let nameString = buildKillerNameString(word, isSuicide);
