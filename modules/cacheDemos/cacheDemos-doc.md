@@ -26,7 +26,7 @@ returns created date of a file
 
 **Example** *(Example usage of createdDate() function.)*  
 ```js
-var created = createdDate('somedemo.dem');
+const created = createdDate('somedemo.dem');
 // console.log(created); = '2020-12-29T07:45:12.737Z'
 ```
 <a name="module_modules/cacheDemos..getFilesizeInBytes"></a>
@@ -43,7 +43,7 @@ returns file size in bytes
 
 **Example** *(Example usage of getFilesileInBytes() function.)*  
 ```js
-var bytes = getFilesileInBytes('somedemo.dem');
+const bytes = getFilesileInBytes('somedemo.dem');
 // console.log(bytes); = 14567809
 ```
 <a name="module_modules/cacheDemos..bytesToSize"></a>
@@ -60,7 +60,7 @@ converts bytes to a readable string
 
 **Example** *(Example usage of bytesToSize() function.)*  
 ```js
-var size = bytesToSize('somedemo.dem');
+const size = bytesToSize('somedemo.dem');
 // console.log(size); = '13MB'
 ```
 <a name="module_modules/cacheDemos..getDemos"></a>

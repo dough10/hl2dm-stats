@@ -15,7 +15,6 @@ const colors = require('colors');                         // colorize text
 const print = require('../printer/printer.js');
 const Timer = require('../Timer/Timer.js');
 
-
 /**
  * returns created date of a file
  *
@@ -24,11 +23,11 @@ const Timer = require('../Timer/Timer.js');
  * @returns {String} date file was modified
  * 
  * @example <caption>Example usage of createdDate() function.</caption>
- * var created = createdDate('somedemo.dem');
+ * const created = createdDate('somedemo.dem');
  * // console.log(created); = '2020-12-29T07:45:12.737Z'
  */
-function createdDate(file) {
-  const stats = fs.statSync(file);
+function createdDate(filename) {
+  const stats = fs.statSync(filename);
   return stats.mtime;
 }
 
@@ -40,12 +39,12 @@ function createdDate(file) {
  * @returns {Number} file size in bytes
  * 
  * @example <caption>Example usage of getFilesileInBytes() function.</caption>
- * var bytes = getFilesileInBytes('somedemo.dem');
+ * const bytes = getFilesileInBytes('somedemo.dem');
  * // console.log(bytes); = 14567809
  */
 function getFilesizeInBytes(filename) {
-  var stats = fs.statSync(filename);
-  var fileSizeInBytes = stats.size;
+  const stats = fs.statSync(filename);
+  const fileSizeInBytes = stats.size;
   return fileSizeInBytes;
 }
 
@@ -57,11 +56,11 @@ function getFilesizeInBytes(filename) {
  * @returns {String} readable file size
  * 
  * @example <caption>Example usage of bytesToSize() function.</caption>
- * var size = bytesToSize('somedemo.dem');
+ * const size = bytesToSize('somedemo.dem');
  * // console.log(size); = '13MB'
  */
 function bytesToSize(bytes) {
-   var sizes = [
+   const sizes = [
      'Bytes',
      'KB',
      'MB',
@@ -71,7 +70,7 @@ function bytesToSize(bytes) {
    if (bytes === 0) {
      return '0 Byte';
    }
-   var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+   const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
    return `${Math.round(bytes / Math.pow(1024, i), 2)} ${sizes[i]}`;
 }
 
@@ -87,13 +86,13 @@ function bytesToSize(bytes) {
  */
 function getDemos() {
   return new Promise((resolve, reject) => {
-    var demos = [];
+    const demos = [];
     fs.readdir(config.gameServerDir, (err, files) => {
       if (err) {
         reject('Unable to scan directory', err);
         return;
       }
-      for (var i = 0; i < files.length; i++) {
+      for (let i = 0; i < files.length; i++) {
         if (path.extname(files[i]) === '.dem') {
           demos.push(files[i]);
         }
@@ -115,18 +114,22 @@ function getDemos() {
  */
 function cacheDemos() {
   return new Promise((resolve, reject) => {
-    var t = new Timer();
-    var arr = [];
+    const t = new Timer();
+    const arr = [];
     getDemos().then(demos => {
-      for (var i = 0; i < demos.length; i++) {
+      for (let i = 0; i < demos.length; i++) {
         if (i !== demos.length - 1) {
-          var filepath = path.join(config.gameServerDir, demos[i]);
+          const filepath = path.join(config.gameServerDir, demos[i]);
           if (!fs.existsSync(filepath)) {
+            return;
+          }
+          const size = getFilesizeInBytes(filepath);
+          if (size < 1000000) {
             return;
           }
           arr.push([
             demos[i],
-            bytesToSize(getFilesizeInBytes(filepath)),
+            bytesToSize(size),
             createdDate(filepath)
           ]);
         }
