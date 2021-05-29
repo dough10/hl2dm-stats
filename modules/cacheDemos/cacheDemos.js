@@ -124,7 +124,6 @@ function cacheDemos() {
             return;
           }
           const size = getFilesizeInBytes(filepath);
-          console.log(size < 1000000, size);
           // if (size < 1000000) {
           //   return;
           // }
