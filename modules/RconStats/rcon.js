@@ -25,7 +25,9 @@ class RconStats {
     this.onStats = onStats;
     this.interval = 10000;
     this.db = "srcds_db";
-    this._connect().then(this._ping.bind(this));
+    setInterval(_ => {
+      this._connect().then(this._ping.bind(this));
+    }, this.interval);
   }
   /**
    * connects to the game server rcon
@@ -38,8 +40,8 @@ class RconStats {
    * });
    */
   _connect() {
-    return new Promise((resolve, reject) => {
-      this.rcon.connect().then(resolve).catch(reject);
+    return new Promise(resolve => {
+      this.rcon.connect().then(resolve).catch(this._error);
     });
   }
 
@@ -54,8 +56,8 @@ class RconStats {
    * });
    */
   _getStats() {
-    return new Promise((resolve, reject) => {
-      this.rcon.command('stats').then(resolve).catch(reject);
+    return new Promise(resolve => {
+      this.rcon.command('stats').then(resolve).catch(this._error);
     });
   }
 
@@ -69,7 +71,7 @@ class RconStats {
    * RconStats._parseStats(res);
    */
   _parseStats(response) {
-    console.log(response);
+    // console.log(response);
     if (!response) return reject();
     var stat = response.split('\n')[1].split(" ");
     // Remove blank spaces
@@ -101,11 +103,10 @@ class RconStats {
    * RconStats._ping();
    */
   _ping() {
-    setTimeout(_ => {
-      this._ping.bind(this);
-    }, this.interval);
     try {
-      this._getStats().then(this._parseStats.bind(this)).then(this.rcon.disconnect).catch(this._error);
+      this._getStats().then(stats => {
+        this._parseStats(stats);
+      }).catch(this._error);
     } catch(e) {
       this._error(e);
     }
