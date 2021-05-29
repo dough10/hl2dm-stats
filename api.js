@@ -208,7 +208,7 @@ function mapStart(logId) {
 function rconStats(stats) {
   // console.log(stats);
   appData.rconStats = stats;
-  if (dashboard) dashboard.send(JSON.stringify(stats), e => {});
+  if (dashboard) dashboard.send(JSON.stringify(stats), console.log);
 }
 
 /**
@@ -861,9 +861,8 @@ app.get('/testCleanup', (req, res) => {
  * @returns {JSON} RCON stats
  */
 app.ws('/dashboard', ws => {
-  console.log(ppData.rconStats, 'dash');
   dashboard = ws;
-  dashbaord.send(appData.rconStats);
+  ws.send(appData.rconStats);
 });
 
 /**
