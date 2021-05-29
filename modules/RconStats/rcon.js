@@ -104,9 +104,7 @@ class RconStats {
    */
   _ping() {
     try {
-      this._getStats().then(stats => {
-        this._parseStats(stats);
-      }).catch(this._error);
+      this._getStats().then(this._parseStats.bind(this)).catch(this._error);
     } catch(e) {
       this._error(e);
     }
