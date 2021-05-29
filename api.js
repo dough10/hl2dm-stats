@@ -206,7 +206,7 @@ function mapStart(logId) {
  * new RconStats('127.0.0.1', 'supersecurepassword', rconStats).ping();
  */
 function rconStats(stats) {
-  console.log(stats);
+  // console.log(stats);
   appData.rconStats = stats;
   if (dashboard) dashboard.send(JSON.stringify(stats), e => {});
 }
