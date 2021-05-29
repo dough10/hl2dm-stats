@@ -69,7 +69,7 @@ class RconStats {
    * RconStats._parseStats(res);
    */
   _parseStats(response) {
-    // console.log(response);
+    console.log(response);
     if (!response) return reject();
     var stat = response.split('\n')[1].split(" ");
     // Remove blank spaces
@@ -88,6 +88,10 @@ class RconStats {
     if (this.onStats) this.onStats(stat);
   }
 
+  _error(e) {
+    console.error(new Date().toLocaleString().yellow, '-'.yellow, 'RCON'.red, e.message.red);
+  }
+
   /**
    * loop to get data at a preset interval
    * 
@@ -98,16 +102,12 @@ class RconStats {
    */
   _ping() {
     setTimeout(_ => {
-      this._connect().then(this._ping.bind(this));
+      this._ping.bind(this);
     }, this.interval);
     try {
-      this._getStats().then(this._parseStats.bind(this)).then(this.rcon.disconnect).catch(e => {
-        console.error(new Date().toLocaleString().yellow, '-'.yellow, 'RCON'.red, e.message.red);
-        console.count('promise');
-      });
+      this._getStats().then(this._parseStats.bind(this)).then(this.rcon.disconnect).catch(this._error);
     } catch(e) {
-      console.error(new Date().toLocaleString().yellow, '-'.yellow, 'RCON'.red, e.message.red);
-      console.count('try');
+      this._error(e);
     }
   }
 }

@@ -42,7 +42,6 @@ const colors = require('colors');
 const blocked = require('blocked');
 const config = require('./modules/loadConfig/loadConfig.js')();
 const RconStats = require('./modules/RconStats/rcon.js');
-const { Console } = require('console');
 const logFolder = path.join(config.gameServerDir, 'logs');
 const startTime = new Date().getTime();
 let receiver = new logReceiver.LogReceiver();
@@ -268,7 +267,7 @@ function getOldStatsList(month, year) {
         let fileMonth = new Date(date).getMonth();
         let fileYear = new Date(date).getFullYear();
         if (fileMonth === month && fileYear === year) {
-          let data = require(`${__dirname}/old-top/${files[i]}`);
+          let data = require(path.join(__dirname, 'old-top', files[i]));
           return resolve(data);
         }
       }
