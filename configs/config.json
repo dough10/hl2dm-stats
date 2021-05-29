@@ -1,7 +1,7 @@
 {
   "port": 3000,
   "dbURL": "mongodb://192.168.86.2:27017/",
-  "gameServerHostname": "hl2dm.dough10.me",
+  "gameServerHostname": "192.168.86.26",
   "gameServerDir": "/hoedown/hl2mp",
   "bulkStorage": "/home/crumb/hl2dm-stats/old-stats"
 }
