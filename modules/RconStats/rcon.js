@@ -41,7 +41,7 @@ class RconStats {
    */
   _connect() {
     return new Promise(resolve => {
-      this.rcon.connect().then(resolve).catch(this._error);
+      this.rcon.connect().then(resolve).catch(e => {});
     });
   }
 
