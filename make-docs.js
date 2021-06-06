@@ -67,6 +67,11 @@ function dependencies() {
   for (let item in dep) {
     output += `- ${item}: ${dep[item]}\n`;
   }
+  console.log(!dep || Object.keys(dep).length === 0)
+  if (!dep || Object.keys(dep).length === 0) {
+    output += "No Dependencies\n";
+  }
+  console.log(output)
   return output;
 }
 
@@ -82,6 +87,9 @@ function devDependencies() {
   let output = '## Dev Dependencies\n\n';
   for (let item in dep) {
     output += `- ${item}: ${dep[item]}\n`;
+  }
+  if (!dep) {
+    output += "No Dev Dependencies\n";
   }
   return output;
 }
@@ -100,7 +108,7 @@ function processDocs() {
   for (let i = 0; i < files.length; i++) {
     renderDoc(files[i]);
     let str = `- [${files[i]}-doc.md](${files[i]}-doc.md)\n`;
-    if (i <= 1) {
+    if (i <= 0) {
       output += str;
     } else {
       output += `  ${str}`;
