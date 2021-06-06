@@ -67,11 +67,9 @@ function dependencies() {
   for (let item in dep) {
     output += `- ${item}: ${dep[item]}\n`;
   }
-  console.log(!dep || Object.keys(dep).length === 0)
   if (!dep || Object.keys(dep).length === 0) {
     output += "No Dependencies\n";
   }
-  console.log(output)
   return output;
 }
 
