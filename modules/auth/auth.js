@@ -33,7 +33,11 @@ function auth(db, name, pass) {
       if (err) {
         reject(err);
         return;
-      } 
+      }
+    if (!result) {
+      reject("doesn't exist");
+      return;
+    }
       bcrypt.compare(pass, result.key, (err, match) => {
         if (err) reject(err);
         resolve(match);
