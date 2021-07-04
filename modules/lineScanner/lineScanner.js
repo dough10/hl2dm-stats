@@ -466,7 +466,7 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     for (let i = isChat + 1; i < word.length; i++) {
       said = `${said}${word[i]} `;
     }
-    if (onChat) onChat(lineTime, id, name, said);
+    if (onChat) onChat(lineTime, id, name, said, loggingEnabled);
     if (loggingEnabled) print(`${name.grey} said ${said.magenta}`);
   } else if (isBanned) {
     let nameString = buildKillerNameString(word, isBanned);

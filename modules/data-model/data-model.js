@@ -777,7 +777,7 @@ class Data {
    * @example <caption>Example usage of addChat() function.</caption>
    * appData.addChat(1609123414390, '374586912', 'bob', 'nice shot!');
    */
-  async addChat(time, id, name, said) {
+  async addChat(time, id, name, said, loggingEnabled) {
     // create user object if it doesn't exist
     if (!this.users[id]) {
       this.users[id] = playerObj(name, id, time);
@@ -792,7 +792,7 @@ class Data {
       return;
     }
     this.users[id].chat.push(`${new Date(time).toLocaleString()} - ${said}`);
-    if (await checkPhrase(said)) {
+    if (loggingEnabled && await checkPhrase(said)) {
       console.log(`${new Date(time).toLocaleString()} - ${this.users[id].name} U:1:${this.users[id].id} spend another $5 bitch`);
     }
   }
