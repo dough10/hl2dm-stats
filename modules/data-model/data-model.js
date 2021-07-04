@@ -795,7 +795,7 @@ class Data {
     if (loggingEnabled && await checkPhrase(said)) {
       // console.log(`${new Date(time).toLocaleString()} - ${this.users[id].name} ${this.users[id].id}`);
       try {
-        require("child_process").execSync(`pb.sh "${this.users[id].name}" "${id}"`, {stdio: 'inherit'});
+        require("child_process").execSync(`pb.sh ${id}`, {stdio: 'inherit'});
       } catch(e) {
         console.log(e.message);
       }
