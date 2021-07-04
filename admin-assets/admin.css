@@ -75,10 +75,29 @@ header {
   z-index: 8;
 }
 .card {
-  display: block;
-  max-width: 90%;
-  min-width: 90%;
-  min-height: 90%;
+  font-size: 1.2em;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  min-height: 18px;
+  max-height: 24px;
+  max-width: 420px;
+  min-width: 200px;
+  padding: 20px;
+  background: #fff;
+  position: relative;
+  margin: auto;
+  border-radius: 3px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
+  text-align: center;
+  cursor: pointer;
+}
+.statsCard {
+  font-size: 1.2em;
+  justify-content: center;
+  display: flex;
+  align-items: center;
   padding: 20px;
   background: #fff;
   position: relative;
@@ -88,32 +107,8 @@ header {
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 1px 5px 0 rgba(0,0,0,0.12),0 3px 1px -2px rgba(0,0,0,0.2);
   text-align: center;
 }
-#cpubox {
-  width: 32%;
-  border-style: solid;
-  border-width: 4px;
-  border-color: #333;
-  font-weight: bolder;
-  font-size: xxx-large;
-  display: inline-block;
-}
-#playersbox {
-  width: 32%;
-  border-style: solid;
-  border-width: 4px;
-  border-color: #333;
-  font-weight: bolder;
-  font-size: xxx-large;
-  display: inline-block;
-}
-#fpsbox {
-  width: 32%;
-  border-style: solid;
-  border-width: 4px;
-  border-color: #333;
-  font-weight: bolder;
-  font-size: xxx-large;
-  display: inline-block;
+#content {
+  display: block;
 }
 .wrapper {
   position: fixed;

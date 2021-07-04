@@ -875,8 +875,7 @@ app.ws('/dashboard', ws => {
 app.get('/admin', (req, res) => {
   let t = new Timer();
   res.send(pug.renderFile('./admin-assets/template.pug', {
-    title: 'Lo-g Hoedown Admin',
-    stats: appData.rconStats
+    title: 'Lo-g Hoedown Admin'
   }));
   who(req, `is viewing ` + '/admin'.green + ` data ` + `${t.endString()}`.cyan + ` response time`);
 });

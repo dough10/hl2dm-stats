@@ -1,3 +1,16 @@
+  
+HTMLElement.prototype.onClick = function(cb) {
+  this.addEventListener('click', cb, false);
+};
+
+function qs(selector, scope) {
+  return (scope || document).querySelector(selector);
+}
+
+function qsa(selector, scope) {
+  return (scope || document).querySelectorAll(selector);
+}
+
 function whichTransitionEvent() {
   let t;
   const el = document.createElement('fakeelement');
@@ -51,31 +64,112 @@ function animateElement(el, transform, time, opacity, delay) {
   });
 }
 
-function updateStats(stats) {
-  console.log(stats);
-  try {
-    stats = JSON.parse(stats);
-  } catch(err) {
-    return console.error(err.message.red);
+function fadeOut(el, time) {
+  return new Promise(resolve => {
+    if (!el) {
+      return resolve();
+    }
+    if (el.style.opacity === 0) {
+      return resolve();
+    }
+    if (!time) {
+      time = 200;
+    }
+    var animationEnd = _ => {
+      el.removeEventListener(transitionEvent, animationEnd);
+      el.style.willChange = 'initial';
+      el.style.transition = 'initial';
+      requestAnimationFrame(resolve);
+    };
+    el.addEventListener(transitionEvent, animationEnd, true);
+    el.style.willChange = 'opacity';
+    el.style.transition = `opacity ${time}ms cubic-bezier(.33,.17,.85,1.1) 0s`;
+    requestAnimationFrame(_ => {
+      el.style.opacity = 0;
+    });
+  });
+}
+
+function fadeIn(el, time) {
+  return new Promise(resolve => {
+    if (!el) {
+      return resolve();
+    }
+    if (el.style.opacity === 1) {
+      return resolve();
+    }
+    if (!time) {
+      time = 200;
+    }
+    const animationEnd = _ => {
+      el.removeEventListener(transitionEvent, animationEnd);
+      el.style.willChange = 'initial';
+      el.style.transition = 'initial';
+      requestAnimationFrame(resolve);
+    };
+    el.addEventListener(transitionEvent, animationEnd, true);
+    el.style.willChange = 'opacity';
+    el.style.transition = `opacity ${time}ms cubic-bezier(.33,.17,.85,1.1) 0s`;
+    requestAnimationFrame(_ => {
+      el.style.opacity = 1;
+    });
+
+  });
+}
+
+async function purgeContent(container) {
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
   }
-  let cbox = document.querySelector('#cpubox');
-  let pbox = document.querySelector('#playersbox');
-  let fbox = document.querySelector('#fpsbox');
-  cbox.textContent = `CPU: ${stats[0]}`;
-  pbox.textContent = `Players: ${stats[6]}`;
-  fbox.textContent = `FPS: ${stats[5]}`;
 }
 
-function connectDashboard() {
-  setTimeout(_ => animateElement(document.querySelector('#loader'),  'translateY(-102%)', 350), 1000);
-  let socket = new WebSocket(`ws://${window.location.host}/dashboard`);
-  socket.onmessage = m => updateStats(m.data);
-  socket.onerror = err => {
-    console.log(err.message);
-    socket.close();
-  };
-  socket.onclose = setTimeout(connectDashboard, 2000);
+async function cardClicked(e) {
+  let playerID = e.target.id;
+  let container = qs('#content');
+  await fadeOut(container, 400);
+  purgeContent(container);
+  let response = await fetch(`/playerStats/${playerID}`);
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  let stats = await response.json();
+  let card = document.createElement('div');
+  card.classList.add('statsCard');
+  card.textContent = JSON.stringify(stats, null, 2);
+  container.appendChild(card);
+  fadeIn(container);
 }
 
+function playerEl(player) {
+  let name = player.name;
+  let id = player.id;
+  if (!name) return;
+  let container = qs('#content');
+  let card = document.createElement('div');
+  card.classList.add('card');
+  let pn = document.createElement('div');
+  pn.style.pointerEvents = 'none';
+  pn.textContent = name;
+  card.appendChild(pn);
+  let pid = document.createElement('div');
+  pid.style.pointerEvents = 'none';
+  pid.textContent = `U:1:${id}`;
+  card.appendChild(pid);
+  card.id = id;
+  container.appendChild(card);
+  card.onClick(cardClicked);
+} 
 
-window.onload = connectDashboard();
+async function getPlayers() {
+  let response = await fetch('/playerList');
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  let players = await response.json();
+  for (let i = 0; i < players.length; i++) {
+    playerEl(players[i]);
+  }
+  animateElement(document.querySelector('#loader'),  'translateY(-102%)', 350);
+}
+
+window.onload = getPlayers();
