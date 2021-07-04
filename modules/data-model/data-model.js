@@ -793,9 +793,9 @@ class Data {
     }
     this.users[id].chat.push(`${new Date(time).toLocaleString()} - ${said}`);
     if (loggingEnabled && await checkPhrase(said)) {
-      console.log(`${new Date(time).toLocaleString()} --- ${this.users[id].name} ${this.users[id].id} --- `)
+      console.log(`${new Date(time).toLocaleString()} --- ${this.users[id].name} ${this.users[id].id} --- `);
       try {
-        require("child_process").execSync(`pb.sh '${this.users[id].name}' '${this.users[id].id}'`);
+        require("child_process").execSync(`pb.sh '${this.users[id].name}' '${this.users[id].id}'`, {stdio: 'inherit'});
       } catch(e) {
         console.log(e.message);
       }
