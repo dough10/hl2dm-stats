@@ -794,9 +794,7 @@ class Data {
     this.users[id].chat.push(`${new Date(time).toLocaleString()} - ${said}`);
     if (loggingEnabled && await checkPhrase(said)) {
       try {
-        require("child_process").execSync(`pb.sh '${this.users[id].name}' '${this.users[id].id}'`, {
-          cmd: '/'
-        });
+        require("child_process").execSync(`pb.sh '${this.users[id].name}' '${this.users[id].id}'`);
       } catch(e) {
         console.log(e.message);
       }
