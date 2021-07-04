@@ -15,6 +15,8 @@
  */
 const geoip = require('geoip-lite');
 const Timer = require('../Timer/Timer.js');
+const checkPhrase = require('../chatPhrase/chatPhrase.js');
+
 
 /** 
  * get the length / size of a object
@@ -353,7 +355,7 @@ class Data {
     this.gameStatus = {};
     this.rconStats = [];
     this.playersPlayed = false;     // have users been in the server. true to prevent error on first load will set false on first map
-    this.demoName;
+    this.demoName = '';
     // imported function
     this.getNewUsers = require('../getNewUsers/getNewUsers.js');
     this.getReturnUsers = require('../getReturnUsers/getReturnUsers.js');
@@ -775,7 +777,7 @@ class Data {
    * @example <caption>Example usage of addChat() function.</caption>
    * appData.addChat(1609123414390, '374586912', 'bob', 'nice shot!');
    */
-  addChat(time, id, name, said) {
+  async addChat(time, id, name, said) {
     // create user object if it doesn't exist
     if (!this.users[id]) {
       this.users[id] = playerObj(name, id, time);
@@ -789,7 +791,10 @@ class Data {
     if (!this.users[id].chat) {
       return;
     }
-    this.users[id].chat.push(said);
+    this.users[id].chat.push(`${new Date(time).toLocaleString()} - ${said}`);
+    if (await checkPhrase(said)) {
+      console.log(`${new Date(time).toLocaleString()} - ${this.users[id].name} U:1:${this.users[id].id} spend another $5 bitch`);
+    }
   }
 
   /**
