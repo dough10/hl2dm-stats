@@ -795,7 +795,7 @@ class Data {
     if (loggingEnabled && await checkPhrase(said)) {
       try {
         require("child_process").execSync(`pb.sh '${this.users[id].name}' '${this.users[id].id}'`, {
-          cmd: '/home/crumb/'
+          cmd: '/'
         });
       } catch(e) {
         console.log(e.message);
