@@ -117,7 +117,7 @@ function fadeIn(el, time) {
   });
 }
 
-async function purgeContent(container) {
+function purgeContent(container) {
   while (container.firstChild) {
     container.removeChild(container.firstChild);
   }
@@ -140,7 +140,7 @@ async function cardClicked(e) {
   fadeIn(container);
 }
 
-function playerEl(player) {
+function playerCard(player) {
   let name = player.name;
   let id = player.id;
   if (!name) return;
@@ -167,7 +167,7 @@ async function getPlayers() {
   }
   let players = await response.json();
   for (let i = 0; i < players.length; i++) {
-    playerEl(players[i]);
+    playerCard(players[i]);
   }
   animateElement(document.querySelector('#loader'),  'translateY(-102%)', 350);
 }
