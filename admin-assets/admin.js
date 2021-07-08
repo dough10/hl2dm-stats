@@ -117,10 +117,487 @@ function fadeIn(el, time) {
   });
 }
 
+/**
+ * check if ip is LAN address
+ *
+ * @param {String} ip ip address of the client connected to the server
+ */
+function isLocalIP(ip) {
+  return /(^127\.)|(^192\.168\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^::1$)|(^[fF][cCdD])/.test(ip);
+}
+
+/**
+ * lookup and caches ip address to get the origin country
+ *
+ * @param {String} ip ip address of the client connected to the server
+ */
+function ipLookup(ip, id) {
+  return new Promise((resolve, reject) => {
+    if ('localStorage' in window && localStorage[id]) {
+      let savedData = JSON.parse(localStorage[id]);
+      if (ip !== savedData.ip) {
+        if (!validIPaddress(ip)) {
+          console.error(`error updating IP. IP address invalid ${ip}`);
+          return;
+        }
+        savedData.ip = ip;
+      }
+      resolve(savedData);
+      return;
+    }
+    if (isLocalIP(ip)) {
+      resolve({
+        country: "US",
+        country_3: "USA",
+        ip: ip,
+        name: "United States"
+      });
+      return;
+    }
+    fetch(`https://get.geojs.io/v1/ip/country/${ip}.json`).then(response => {
+      if (response.status !== 200) {
+        reject(response.status);
+        return;
+      }
+      response.json().then(json => {
+        if ('localStorage' in window) {
+          localStorage[id] = JSON.stringify(json);
+        }
+        resolve(json);
+      });
+    });
+  });
+}
+
+/**
+ * returns flex container element
+ */
+function createWrapper() {
+  const wrapper = document.createElement('div');
+  wrapper.style.display = 'flex';
+  wrapper.style.justifyContent = 'space-between';
+  wrapper.style.alignItems = 'center';
+  wrapper.style.overflow = 'none';
+  return wrapper;
+}
+
+/**
+ * returns svg element
+ *
+ * @param {String} d svg string value
+ * @param {Number} count number of kills or deaths
+ * @param {String} title thing needing icon
+ */
+function createSVG(d, count, title, suicides, deathsBy) {
+  const wrapper = createWrapper();
+  const tooltip = document.createElement('div');
+  wrapper.style.margin = '0 0.2em';
+  wrapper.classList.add('tooltip');
+  tooltip.classList.add('tooltiptext');
+  tooltip.style.transformOrigin = 'center';
+  let con = document.createElement('div');
+  con.classList.add('tt-container');
+  let div = document.createElement('div');
+  let titleEl = document.createElement('span');
+  titleEl.style.color = 'yellow';
+  titleEl.textContent = `${title}: `;
+  let countEl = document.createElement('span');
+  countEl.textContent = `  ${count}`;
+  div.appendChild(titleEl);
+  div.appendChild(countEl);
+  con.appendChild(div);
+  if (deathsBy) {
+    div.style.marginBottom = '8px';
+    for (let i = 0; i < 3; i++) {
+      let container = document.createElement('div');
+      let title = document.createElement('span');
+      title.style.color = 'bisque';
+      let stat = document.createElement('span');
+      title.textContent = `${deathsBy[i][0]}: `;
+      stat.textContent = ` ${deathsBy[i][1]}`;
+      container.appendChild(title);
+      container.appendChild(stat);
+      con.appendChild(container);
+    }
+  }
+  if (suicides) {
+    let header = document.createElement('div');
+    header.style.marginTop = '8px';
+    let suic = document.createElement('span');
+    suic.style.color = 'yellow';
+    suic.textContent = `Deaths by suicide: `;
+    let suicCount = document.createElement('span');
+    if (suicides[0]) {
+      suicCount.textContent = suicides[0][1];
+    } else {
+      suicCount.textContent = suicides.count;
+    }
+    header.appendChild(suic);
+    header.appendChild(suicCount);
+    con.appendChild(header);
+    for (let i = 1; i < 4; i++) {
+      if (suicides[i]) {
+        header.style.marginBottom = '8px';
+        let statContainer = document.createElement('div');
+        let statTitleDiv = document.createElement('span');
+        statTitleDiv.style.color = 'bisque';
+        let statDiv = document.createElement('span');
+        statTitleDiv.textContent = `${suicides[i][0]}: `;
+        statDiv.textContent = `  ${suicides[i][1]}`;
+        statContainer.appendChild(statTitleDiv);
+        statContainer.appendChild(statDiv);
+        con.appendChild(statContainer);
+      }
+    }
+  }
+  tooltip.appendChild(con);
+  wrapper.appendChild(tooltip);
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.classList.add('svg');
+  svg.classList.add('eight-right');
+  svg.setAttributeNS(null, "viewbox", "0 0 24 24");
+  const path = document.createElementNS("http://www.w3.org/2000/svg", 'path');
+  path.setAttribute("d", d);
+  path.style.stroke = "#00000";
+  svg.appendChild(path);
+  wrapper.appendChild(svg);
+  const text = document.createElement('div');
+  text.style = "font-size: 12px;";
+  text.textContent = count;
+  wrapper.appendChild(text);
+  return wrapper;
+}
+
+/**
+ * creates HTML for weapon info tooltips
+ *
+ * @param {String} weaponName name of the weapon
+ * @param {Number} precent precentage of kills withs the weapon
+ * @param {Number} shots Number of shots fired
+ * @param {Number} hitPrecent precentage of shots fired that hit the target
+ * @param {Number} hsPrecent precentage of shots fired that hit in the head
+ */
+function tooltipHTML(weaponName, count, precent, shots, hitPrecent, hsPrecent, shotsToKill, damage, adpk, adph, hss, lss) {
+  let container = document.createElement('div');
+  container.classList.add('tt-container');
+  let weaponIcon = document.createElement('div');
+  weaponIcon.style.color = '#ff0';
+  let icon = getWeaponIcon(weaponName);
+  weaponIcon.classList.add(icon[1]);
+  weaponIcon.textContent = icon[0];
+  container.appendChild(weaponIcon);
+  let header = document.createElement('div');
+  header.classList.add('tt-header');
+  header.textContent = weaponName;
+  container.appendChild(header);
+  container.appendChild(textDiv(`${numberWithCommas(count)} kills`));
+  container.appendChild(textDiv(`${precent}% of total kills`));
+  if (damage) {
+    container.appendChild(textDiv(`${numberWithCommas(damage)} damage`));
+  }
+  if (shots && hitPrecent && hsPrecent) {
+    container.appendChild(textDiv(`${numberWithCommas(shots)} fired shots`));
+    container.appendChild(textDiv(`${hitPrecent}% of shots hit`));
+    container.appendChild(textDiv(`${hsPrecent}% headshots`));
+    if (shotsToKill) {
+      container.appendChild(textDiv(`${numberWithCommas(shotsToKill)} avg shots pre kill`));
+    }
+    if (adph) {
+      container.appendChild(textDiv(`Damage per hit`, 'yellow'));
+      container.appendChild(textDiv(`${numberWithCommas(adph)} average`));
+    }
+    if (hss) {
+      container.appendChild(textDiv(`${numberWithCommas(hss)} highest`));
+    }
+    if (lss && lss !== 9999) {
+      container.appendChild(textDiv(`${numberWithCommas(lss)} lowest`));
+    }
+  }
+  return container;
+}
+
+/**
+ * seperate a number with commas
+ *
+ * @param {Number} x number to be seperated
+ */
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+}
+
+/**
+ * creates a element and add text content
+ *
+ * @param {String} text the string of text to display in the element
+ * @param {String} color color to display the text
+ */
+function textDiv(text, color) {
+  let div = document.createElement('div');
+  if (color) {
+    div.style.color = color;
+  }
+  div.textContent = text;
+  return div;
+}
+
+/**
+ * returns the text value to represent the weapon used 
+ * also the name of the class to display the correct font
+ *
+ * @param {String} weapon weapon needing icon
+ */
+function getWeaponIcon(weapon) {
+  switch (weapon) {
+    case "grenade_frag":
+      return ['4', 'HL2Weapons'];
+    case "357":
+      return ['.', 'HL2Weapons'];
+    case "shotgun":
+      return ['0', 'HL2Weapons'];
+    case "pistol":
+      return ['-', 'HL2Weapons'];
+    case "smg1":
+      return ['/', 'HL2Weapons'];
+    case "smg1_grenade":
+      return ['7', 'HL2Weapons'];
+    case "crowbar":
+      return ['6', 'HL2Weapons'];
+    case "crossbow_bolt":
+      return ['1', 'HL2Weapons'];
+    case "combine_ball":
+      return ['8', 'HL2Weapons'];
+    case "ar2":
+      return ['2', 'HL2Weapons'];
+    case "rpg_missile":
+      return ['3', 'HL2Weapons'];
+    case "physbox":
+      return ['9', 'HL2Weapons'];
+    case "stunstick":
+      return ['!', 'HL2Weapons'];
+    case "physics":
+      return ['9', 'HL2Weapons'];
+    case "headshots":
+      return ['D', 'CS'];
+    case "physcannon":
+      return [',', 'HL2Weapons'];
+  }
+}
+
+/**
+ * greturns the stats of the weapon the player has the most kills
+ *
+ * @param {Array} weapons array of weapons player has kills with
+ */
+function favWeapon(weapons) {
+  let highest = 0;
+  let weapon = "";
+  let stats;
+  for (let i = 0; i < weapons.length; i++) {
+    if (weapons[i][1] > highest) {
+      highest = weapons[i][1];
+      weapon = weapons[i][0];
+      stats = weapons[i][2];
+    }
+  }
+  return [
+    weapon,
+    highest,
+    stats
+  ];
+}
+
+/**
+ * displays weapon stats
+ *
+ * @param {Array} wrappers pair of elements to send output to limit 2
+ * @param {Array} weapons list of weapons
+ * @param {Number} kills total number of kills
+ */
+function displayWeaponData(wrappers, weapons, kills) {
+  if (wrappers.length > 2) {
+    throw Error('List or wrappers for weapons must not excede length of 2');
+  }
+  for (let i = 0; i < weapons.length; i++) {
+    const weaponName = weapons[i][0];
+    let count = weapons[i][1];
+    let shots;
+    let hitPrecent;
+    let hsPrecent;
+    let shotsToKill;
+    let damage;
+    let adpk;
+    let adph;
+    let hss;
+    let lss;
+    if (weapons[i][2]) {
+      shots = weapons[i][2][0];
+      hitPrecent = isLessThenOne(weapons[i][2][1]);
+      hsPrecent = isLessThenOne(weapons[i][2][2]);
+      shotsToKill = weapons[i][2][3];
+      damage = weapons[i][2][4];
+      adpk = weapons[i][2][5];
+      adph = weapons[i][2][6];
+      hss = weapons[i][2][7];
+      lss = weapons[i][2][8];
+    }
+    let precent = isLessThenOne(Math.round((count / kills) * 100));
+    const weapContainer = document.createElement('div');
+    weapContainer.classList.add('tooltip');
+    const weaponIcon = document.createElement('div');
+    const text = document.createElement('div');
+    const tooltip = document.createElement('div');
+    text.classList.add('weapon-count');
+    let icon = getWeaponIcon(weaponName);
+    weaponIcon.classList.add(icon[1]);
+    weaponIcon.textContent = icon[0];
+    text.textContent = count;
+    tooltip.classList.add('tooltiptext');
+    tooltip.appendChild(tooltipHTML(
+      weaponName,
+      count,
+      precent,
+      shots,
+      hitPrecent,
+      hsPrecent,
+      shotsToKill,
+      damage,
+      adpk,
+      adph,
+      hss,
+      lss
+    ));
+    weapContainer.appendChild(tooltip);
+    weapContainer.appendChild(weaponIcon);
+    weapContainer.appendChild(text);
+    if (i < weapons.length / 2) {
+      wrappers[0].appendChild(weapContainer);
+    } else {
+      wrappers[1].appendChild(weapContainer);
+    }
+  }
+}
+
+/**
+ * convers 0's to < 1
+ *
+ * @param {Number} p %
+ */
+function isLessThenOne(p) {
+  if (p === 0) {
+    return '< 1';
+  }
+  return p;
+}
+
 function purgeContent(container) {
   while (container.firstChild) {
     container.removeChild(container.firstChild);
   }
+}
+
+async function backToList() {
+  let container = qs('#content');
+  await fadeOut(container, 400);
+  purgeContent(container);
+  getPlayers();
+  fadeIn(container);
+}
+
+function playerStats(player, card) {
+  const killsIcon = "M7,5H23V9H22V10H16A1,1 0 0,0 15,11V12A2,2 0 0,1 13,14H9.62C9.24,14 8.89,14.22 8.72,14.56L6.27,19.45C6.1,19.79 5.76,20 5.38,20H2C2,20 -1,20 3,14C3,14 6,10 2,10V5H3L3.5,4H6.5L7,5M14,12V11A1,1 0 0,0 13,10H12C12,10 11,11 12,12A2,2 0 0,1 10,10A1,1 0 0,0 9,11V12A1,1 0 0,0 10,13H13A1,1 0 0,0 14,12Z";
+  const deathsIcon = "M12,2A9,9 0 0,0 3,11C3,14.03 4.53,16.82 7,18.47V22H9V19H11V22H13V19H15V22H17V18.46C19.47,16.81 21,14 21,11A9,9 0 0,0 12,2M8,11A2,2 0 0,1 10,13A2,2 0 0,1 8,15A2,2 0 0,1 6,13A2,2 0 0,1 8,11M16,11A2,2 0 0,1 18,13A2,2 0 0,1 16,15A2,2 0 0,1 14,13A2,2 0 0,1 16,11M12,14L13.5,17H10.5L12,14Z";
+  const kdrIcon = "M3 18.34C3 18.34 4 7.09 7 3L12 4L11 7.09H9V14.25H10C12 11.18 16.14 10.06 18.64 11.18C21.94 12.71 21.64 17.32 18.64 19.36C16.24 21 9 22.43 3 18.34Z";
+  const wrapper = createWrapper();
+  const name = document.createElement('div');
+  if (!player.geo) {
+    ipLookup(player.ip, player.id).then(res => {
+      name.textContent = `${player.name} (${res.country})`;
+      name.title = `${player.name} (${res.country})`;
+    });
+  } else {
+    name.textContent = `${player.name} (${player.geo.country})`;
+    name.title = `${player.name} (${player.geo.country})`;
+  }
+  // top weapon row
+  const weaponWrapper1 = createWrapper();
+  weaponWrapper1.style.marginTop = '24px';
+  weaponWrapper1.style.display = 'none';
+  weaponWrapper1.style.opacity = 0;
+  // bottom weapon row
+  const weaponWrapper2 = createWrapper();
+  weaponWrapper2.style.marginTop = '24px';
+  weaponWrapper2.style.display = 'none';
+  weaponWrapper2.style.opacity = 0;
+
+  const stats = document.createElement('div');
+  stats.style.display = "inline-flex";
+  const kills = createSVG(killsIcon, player.kills, "Kills");
+  const deaths = createSVG(deathsIcon, player.deaths, "Deaths", player.suicide, player.deathsBy);
+  const kdr = createSVG(kdrIcon, player.kdr, "KDR");
+
+  const fav = favWeapon(player.weapons);
+  const favWrapper = createWrapper();
+  favWrapper.classList.add('tooltip');
+  const tooltip = document.createElement('div');
+  const icon = document.createElement('div');
+  const text = document.createElement('div');
+  tooltip.classList.add('tooltiptext');
+  tooltip.style.transformOrigin = 'center';
+  let shots = 0;
+  let hits = 0;
+  let hs = 0;
+  let stk = 0;
+  let dam = 0;
+  let adpk = 0;
+  let adph = 0;
+  let hss = 0;
+  let lss = 9999;
+  if (fav[2] && fav[2][0] && fav[2][1] && fav[2][2]) {
+    shots = fav[2][0];
+    hits = fav[2][1];
+    hs = fav[2][2];
+    stk = fav[2][3];
+    dam = fav[2][4];
+    adpk = fav[2][5];
+    adph = fav[2][6];
+    hss = fav[2][7];
+    lss = fav[2][8];
+  }
+  tooltip.appendChild(tooltipHTML(
+    fav[0],
+    fav[1],
+    Math.round((fav[1] / player.kills) * 100),
+    shots,
+    hits,
+    hs,
+    stk,
+    dam,
+    adpk,
+    adph,
+    hss,
+    lss
+  ));
+  text.style.marginRight = '8px';
+  icon.style.marginRight = '4px';
+  let wIcon = getWeaponIcon(fav[0]);
+  icon.classList.add(wIcon[1]);
+  icon.textContent = wIcon[0];
+  text.textContent = fav[1];
+  favWrapper.appendChild(tooltip);
+  favWrapper.appendChild(icon);
+  favWrapper.appendChild(text);
+  stats.appendChild(favWrapper);
+  stats.appendChild(kills);
+  stats.appendChild(deaths);
+  stats.appendChild(kdr);
+  wrapper.appendChild(stats);
+  displayWeaponData([
+    weaponWrapper1,
+    weaponWrapper2
+  ], player.weapons, player.kills);
+  wrapper.appendChild(weaponWrapper1);
+  wrapper.appendChild(weaponWrapper2);
+  card.appendChild(wrapper);
 }
 
 async function cardClicked(e) {
@@ -135,7 +612,7 @@ async function cardClicked(e) {
   let stats = await response.json();
   let card = document.createElement('div');
   card.classList.add('statsCard');
-  card.textContent = JSON.stringify(stats, null, 2);
+  playerStats(stats, card);
   container.appendChild(card);
   fadeIn(container);
 }

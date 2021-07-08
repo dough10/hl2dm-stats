@@ -403,7 +403,7 @@ class Data {
    * });
    */
   reset() {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       this.users = {};
       this.bannedUsers = {};
       this.totalPlayers = 0;
@@ -902,10 +902,8 @@ class Data {
    * @example <caption>Example usage of cacheDemos() function.</caption>
    * appData.cacheDemos();
    */
-  cacheDemos() {
-    require('../cacheDemos/cacheDemos.js')().then(demos => {
-      this.demos = demos;
-    });
+  async cacheDemos() {
+    this.demos = await require('../cacheDemos/cacheDemos.js')();
   }
 
   /**
