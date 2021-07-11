@@ -11,6 +11,34 @@
     url('../fonts/roboto-v15-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
     url('../fonts/roboto-v15-latin-regular.svg#Roboto') format('svg'); /* Legacy iOS */
 }
+@font-face {
+  font-family: "HL2";
+  src: url("https://hl2dm.dough10.me/fonts/halflife2.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: "HL2Weapons";
+  src: url("https://hl2dm.dough10.me/fonts/hl2mp.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: "CS";
+  src: url("https://hl2dm.dough10.me/fonts/csd.ttf");
+  font-display: swap;
+}
+.HL2 {
+  font-family: "HL2"
+}
+.HL2Weapons {
+  font-family: "HL2Weapons";
+  font-size: 34px;
+  height: 18px;
+}
+.CS {
+  font-family: "CS";
+  font-size: 34px;
+  height: 18px;
+}
 html {
   scroll-behavior: smooth;
 }
@@ -161,4 +189,43 @@ header {
 }
 .tooltip:hover + .card {
   z-index: -1;
+}
+.or0 {
+  background-color: #ecdc8b;
+}
+.or1 {
+  background-color: #beec8b;
+}
+.or2 {
+  background-color: #ecb98b;
+}
+.or3 {
+  background-color: #ec8b8f;
+}
+.or4 {
+  background-color: #8becb6;
+}
+.or5 {
+  background-color: #b58bec;
+}
+.or6 {
+  background-color: #8b9bec;
+}
+.weapon-count {
+  margin-top: 8px;
+}
+.player-weapons {
+  margin-top: 24px;
+  display: none;
+  opacity: 0;
+}
+.lil-space {
+  min-height: 35px;
+}
+.svg {
+  width:24px;
+  height:24px;
+}
+.eight-right {
+  margin-right:8px;
 }
