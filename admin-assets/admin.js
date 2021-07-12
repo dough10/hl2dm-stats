@@ -546,14 +546,14 @@ async function playerStats(player, card) {
   name.onClick(backToList);
   wrapper.appendChild(name);
   let address = document.createElement('div');
-  address.textContent = `IP Address: U:1:${player.ip}`;
+  address.textContent = `IP Address: ${player.ip}`;
   address.style.marginBottom = '16px';
   address.title = address.textContent;
   address.style.fontSize = '1.5em';
   wrapper.appendChild(address);
   let idEL = document.createElement('div');
   idEL.style.marginBottom = '16px';
-  idEL.textContent = `Steam ID: ${player.id}`;
+  idEL.textContent = `Steam ID: U:1:${player.id}`;
   idEL.style.fontSize = '1.5em';
   wrapper.appendChild(idEL);
   const stats = document.createElement('div');
