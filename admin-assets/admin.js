@@ -521,7 +521,7 @@ async function backToList() {
   fadeIn(container);
 }
 
-function playerStats(player, card) {
+async function playerStats(player, card) {
   const killsIcon = "M7,5H23V9H22V10H16A1,1 0 0,0 15,11V12A2,2 0 0,1 13,14H9.62C9.24,14 8.89,14.22 8.72,14.56L6.27,19.45C6.1,19.79 5.76,20 5.38,20H2C2,20 -1,20 3,14C3,14 6,10 2,10V5H3L3.5,4H6.5L7,5M14,12V11A1,1 0 0,0 13,10H12C12,10 11,11 12,12A2,2 0 0,1 10,10A1,1 0 0,0 9,11V12A1,1 0 0,0 10,13H13A1,1 0 0,0 14,12Z";
   const deathsIcon = "M12,2A9,9 0 0,0 3,11C3,14.03 4.53,16.82 7,18.47V22H9V19H11V22H13V19H15V22H17V18.46C19.47,16.81 21,14 21,11A9,9 0 0,0 12,2M8,11A2,2 0 0,1 10,13A2,2 0 0,1 8,15A2,2 0 0,1 6,13A2,2 0 0,1 8,11M16,11A2,2 0 0,1 18,13A2,2 0 0,1 16,15A2,2 0 0,1 14,13A2,2 0 0,1 16,11M12,14L13.5,17H10.5L12,14Z";
   const kdrIcon = "M3 18.34C3 18.34 4 7.09 7 3L12 4L11 7.09H9V14.25H10C12 11.18 16.14 10.06 18.64 11.18C21.94 12.71 21.64 17.32 18.64 19.36C16.24 21 9 22.43 3 18.34Z";
@@ -530,11 +530,11 @@ function playerStats(player, card) {
   const name = document.createElement('div');
   name.style.fontSize = '3em';
   name.style.fontWeight = 'bold';
+  name.style.marginBottom = '24px';
   if (!player.geo) {
-    ipLookup(player.ip, player.id).then(res => {
-      name.textContent = `${player.name} (${res.country})`;
-      name.title = `${player.name} (${res.country})`;
-    });
+    let response = await ipLookup(player.ip, player.id);
+    name.textContent = `${player.name} (${response.country})`;
+    name.title = `${player.name} (${response.country})`;
   } else {
     name.textContent = `${player.name} (${player.geo.country})`;
     name.title = `${player.name} (${player.geo.country})`;
@@ -543,7 +543,19 @@ function playerStats(player, card) {
     name.textContent += `:  Banned`;
     name.style.color = 'rgb(185, 73, 73)';
   }
+  name.onClick(backToList);
   wrapper.appendChild(name);
+  let address = document.createElement('div');
+  address.textContent = `IP Address: U:1:${player.ip}`;
+  address.style.marginBottom = '16px';
+  address.title = address.textContent;
+  address.style.fontSize = '1.5em';
+  wrapper.appendChild(address);
+  let idEL = document.createElement('div');
+  idEL.style.marginBottom = '16px';
+  idEL.textContent = `Steam ID: ${player.id}`;
+  idEL.style.fontSize = '1.5em';
+  wrapper.appendChild(idEL);
   const stats = document.createElement('div');
   stats.style.width = '100%';
   stats.style.justifyContent = 'space-between';
@@ -552,60 +564,6 @@ function playerStats(player, card) {
   const deaths = createSVG(deathsIcon, player.deaths, "Deaths", player.suicide, player.deathsBy);
   const kdr = createSVG(kdrIcon, player.kdr, "KDR");
 
-  const fav = favWeapon(player.weapons);
-  const favWrapper = createWrapper();
-  favWrapper.classList.add('tooltip');
-  const tooltip = document.createElement('div');
-  const icon = document.createElement('div');
-  const text = document.createElement('div');
-  tooltip.classList.add('tooltiptext');
-  tooltip.style.transformOrigin = 'center';
-  let shots = 0;
-  let hits = 0;
-  let hs = 0;
-  let stk = 0;
-  let dam = 0;
-  let adpk = 0;
-  let adph = 0;
-  let hss = 0;
-  let lss = 9999;
-  if (fav[2] && fav[2][0] && fav[2][1] && fav[2][2]) {
-    shots = fav[2][0];
-    hits = fav[2][1];
-    hs = fav[2][2];
-    stk = fav[2][3];
-    dam = fav[2][4];
-    adpk = fav[2][5];
-    adph = fav[2][6];
-    hss = fav[2][7];
-    lss = fav[2][8];
-  }
-  tooltip.appendChild(tooltipHTML(
-    fav[0],
-    fav[1],
-    Math.round((fav[1] / player.kills) * 100),
-    shots,
-    hits,
-    hs,
-    stk,
-    dam,
-    adpk,
-    adph,
-    hss,
-    lss
-  ));
-  text.style.marginRight = '8px';
-  icon.style.marginRight = '4px';
-  let wIcon = getWeaponIcon(fav[0]);
-  if (wIcon) {
-    icon.classList.add(wIcon[1]);
-    icon.textContent = wIcon[0];
-  }
-  text.textContent = fav[1];
-  favWrapper.appendChild(tooltip);
-  favWrapper.appendChild(icon);
-  favWrapper.appendChild(text);
-  stats.appendChild(favWrapper);
   stats.appendChild(kills);
   stats.appendChild(deaths);
   stats.appendChild(kdr);
