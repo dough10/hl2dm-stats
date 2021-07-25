@@ -443,7 +443,7 @@ app.use(express.static('admin-assets', { maxAge: ((1000 * 60) * 60) * 24 }));
  * @returns {Void} redirect
  */
 app.get('/', (req, res) => {
-  res.redirect('/admin');
+  res.redirect('admin');
   who(req, `is being redirected to ` + '/admin'.green + ` portal`);
 });
 
