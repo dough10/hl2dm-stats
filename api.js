@@ -628,8 +628,13 @@ app.get('/playerList', (req, res) => {
   let t = new Timer();
   let arr = [];
   for (let id in appData.users) {
+    let country = 'US';
+    if (appData.users[id].geo) {
+      country = appData.users[id].geo.country;
+    }
     arr.push({
       name: appData.users[id].name,
+      country: country,
       id: appData.users[id].id
     });
   }

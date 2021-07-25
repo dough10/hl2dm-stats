@@ -528,7 +528,7 @@ async function playerStats(player, card) {
   const wrapper = createBlockWrapper();
   wrapper.style.width = '90%';
   const name = document.createElement('div');
-  name.style.fontSize = '3em';
+  name.style.fontSize = '2.5em';
   name.style.fontWeight = 'bold';
   name.style.marginBottom = '24px';
   if (!player.geo) {
@@ -605,13 +605,14 @@ async function cardClicked(e) {
 function playerCard(player) {
   let name = player.name;
   let id = player.id;
+  let country = player.country;
   if (!name) return;
   let container = qs('#content');
   let card = document.createElement('div');
   card.classList.add('card');
   let pn = document.createElement('div');
   pn.style.pointerEvents = 'none';
-  pn.textContent = name;
+  pn.textContent = `${name} (${country})`;
   card.appendChild(pn);
   let pid = document.createElement('div');
   pid.style.pointerEvents = 'none';
