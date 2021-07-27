@@ -288,17 +288,17 @@ function getOldStatsList(month, year) {
  * @example <caption>Example usage of statsLoop() function.</caption>
  * statsLoop(); // it will run every 5 seconds after being called
  */
-function statsLoop() {
+async function statsLoop() {
   setTimeout(statsLoop, 5000);
-  gameServerStatus().then(status => {
+  try{
+    let status = await gameServerStatus();
     appData.updateStatus(status);
     if (socket) {
       socket.send(JSON.stringify(status), e => {});
     }
-  }).catch(e => {
-    // errorHandler(e);
+  } catch(e) {
     serverStatus = 'offline';
-  });
+  }
 }
 
 /**
@@ -329,23 +329,21 @@ function parseLogs() {
             input: fs.createReadStream(path.join(logFolder, file)),
             crlfDelay: Infinity
           });
-          rl.on('line', line => {
-            scanner(
-              line, 
-              appData.addKill.bind(appData), 
-              appData.addChat.bind(appData), 
-              appData.addSuicide.bind(appData), 
-              appData.addHeadshot.bind(appData),
-              appData.addWeaponStats.bind(appData),
-              appData.addWeaponStats2.bind(appData),
-              userConnected, 
-              userDisconnected, 
-              mapStart, 
-              mapEnd, 
-              playerBan, 
-              false
-            );
-          });
+          rl.on('line', line => scanner(
+            line, 
+            appData.addKill.bind(appData), 
+            appData.addChat.bind(appData), 
+            appData.addSuicide.bind(appData), 
+            appData.addHeadshot.bind(appData),
+            appData.addWeaponStats.bind(appData),
+            appData.addWeaponStats2.bind(appData),
+            userConnected, 
+            userDisconnected, 
+            mapStart, 
+            mapEnd, 
+            playerBan, 
+            false
+          ));
           rl.on('close', _ => {
             totalFiles--;
             if (totalFiles === 0) {
@@ -659,18 +657,19 @@ app.get('/playerList', (req, res) => {
  */
 app.get('/newPlayers/:date', oneOf([
   check('date').escape()
-]), (req, res) => {
+]), async (req, res) => {
   let t = new Timer();
   let date = req.params.date;
-  appData.getNewUsers(db, date).then(users => {
+  try {
+    let users = await appData.getNewUsers(db, date);
     if (date === '0') {
       date = new Date().getDate();
     }
     who(req, `is viewing ` + `/newPlayers/${date}`.green + ` data on ` + `${monthName(new Date().getMonth())} ${suffix(date)} `.yellow + `${users.length} new players`.grey + ` ${t.endString()}`.cyan + ` response time`);
     res.send(users);
-  }).catch(e => {
+  } catch(e) {
     fiveHundred(req, res);
-  });
+  }
 });
 
 /**
@@ -688,18 +687,19 @@ app.get('/newPlayers/:date', oneOf([
  *   });
  * });
  */
-app.get('/returnPlayers/:date', (req, res) => {
+app.get('/returnPlayers/:date', async (req, res) => {
   let t = new Timer();
   let date = req.params.date;
-  appData.getReturnUsers(db, date).then(users => {
+  try {
+    let users = await appData.getReturnUsers(db, date);
     if (date === '0') {
       date = new Date().getDate();
     }
-    who(req, `is viewing ` + `/returnPlayers/${date}`.green + ` data on ` + `${monthName(new Date().getMonth())} ${suffix(date)} `.yellow + `${users.length} new players`.grey + ` ${t.endString()}`.cyan + ` response time`);
+    who(req, `is viewing ` + `/returnPlayers/${date}`.green + ` data for ` + `${monthName(new Date().getMonth())} ${suffix(date)} `.yellow + `${users.length} players`.grey + ` ${t.endString()}`.cyan + ` response time`);
     res.send(users);
-  }).catch(e => {
+  } catch(e) {
     fiveHundred(req, res);
-  });
+  }
 });
 
 /**
@@ -939,8 +939,8 @@ let blockLog = [];
 let timer;
 
 
-blocked(onBlocked, {
-  threshold: 10, 
-  interval: 1000, 
-  trimFalsePositives:true
-});
+// blocked(onBlocked, {
+//   threshold: 10, 
+//   interval: 1000, 
+//   trimFalsePositives:true
+// });

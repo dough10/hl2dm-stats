@@ -1,5 +1,5 @@
 /**
- * @fileOverview query demo files from drive to cache for 
+ * @fileOverview query demo files from drive to cache
  * @module modules/cacheDemos
  * @requires path
  * @requires fs
@@ -92,11 +92,16 @@ function getDemos() {
         reject('Unable to scan directory', err);
         return;
       }
-      for (let i = 0; i < files.length; i++) {
-        if (path.extname(files[i]) === '.dem') {
-          demos.push(files[i]);
+      files.map(file => {
+        if (path.extname(file) === '.dem') {
+          demos.push(file);
         }
-      }
+      });
+      // for (let i = 0; i < files.length; i++) {
+      //   if (path.extname(files[i]) === '.dem') {
+      //     demos.push(files[i]);
+      //   }
+      // }
       resolve(demos);
     });
   });
@@ -113,31 +118,43 @@ function getDemos() {
  * });
  */
 function cacheDemos() {
-  return new Promise((resolve, reject) => {
-    const t = new Timer();
-    const arr = [];
-    getDemos().then(demos => {
-      for (let i = 0; i < demos.length; i++) {
-        if (i !== demos.length - 1) {
-          const filepath = path.join(config.gameServerDir, demos[i]);
-          if (!fs.existsSync(filepath)) {
-            return;
-          }
-          const size = getFilesizeInBytes(filepath);
-          // if (size < 1000000) {
-          //   return;
-          // }
-          arr.push([
-            demos[i],
-            bytesToSize(size),
-            createdDate(filepath)
-          ]);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const t = new Timer();
+      const arr = [];
+      let demos = await getDemos();
+      demos.map(demo => {
+        const filepath = path.join(config.gameServerDir, demo);
+        if (!fs.existsSync(filepath)) {
+          return;
         }
-      }
+        const size = getFilesizeInBytes(filepath);
+        arr.push([
+          demos,
+          bytesToSize(size),
+          createdDate(filepath)
+        ]);
+      });
+      // for (let i = 0; i < demos.length; i++) {
+      //   if (i !== demos.length - 1) {
+      //     const filepath = path.join(config.gameServerDir, demos[i]);
+      //     if (!fs.existsSync(filepath)) {
+      //       return;
+      //     }
+      //     const size = getFilesizeInBytes(filepath);
+      //     arr.push([
+      //       demos[i],
+      //       bytesToSize(size),
+      //       createdDate(filepath)
+      //     ]);
+      //   }
+      // }
       arr.reverse();
       resolve(arr);
       print(`demo file list cached ${t.endString().cyan} to complete`);
-    }).catch(reject);
+    } catch(e) {
+      reject(e);
+    }
   });
 }
 

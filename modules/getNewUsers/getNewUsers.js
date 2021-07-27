@@ -27,16 +27,12 @@ function getNewUsers(db, date) {
       year: now.getFullYear(),
       month: now.getMonth(),
       new: true
-    }).toArray((err, res) => {
+    }, (err, res) => {
       if (err) {
         reject(err);
         return;
       }
-      var arr = [];
-      for (var i = 0; i < res.length; i++) {
-        arr.push(res[i].name);
-      }
-      resolve(arr);
+      resolve(res);
     });
   });
 }

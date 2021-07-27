@@ -1,7 +1,7 @@
 <a name="module_modules/cacheDemos"></a>
 
 ## modules/cacheDemos
-query demo files from drive to cache for
+query demo files from drive to cache
 
 **Requires**: <code>module:path</code>, <code>module:fs</code>, <code>module:colors</code>, <code>module:modules/printer</code>, <code>module:modules/Timer</code>  
 

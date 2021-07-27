@@ -14,7 +14,7 @@
  * // call some functions
  */
 const geoip = require('geoip-lite');
-const Timer = require('../Timer/Timer.js');
+// const Timer = require('../Timer/Timer.js');
 const checkPhrase = require('../chatPhrase/chatPhrase.js');
 
 
@@ -163,10 +163,10 @@ function calculateWeaponStats(weaponsName, weapon) {
   var shots = weapon.shots || 0;
   var acc = calculatePrecent(weapon.hits, weapon.shots) || 0;
   var hs = calculatePrecent(weapon.headshots, weapon.shots) || 0;
-  var shotsToKill = Math.floor(weapon.shots / weapon.kills) || 0;
+  var shotsToKill = Math.round(weapon.shots / weapon.kills) || 0;
   var damage = weapon.damage || 0;
-  var adpk = Math.floor(weapon.damage / weapon.kills) || 0;
-  var adph = Math.floor(weapon.damage / weapon.hits) || 0;
+  var adpk = Math.round(weapon.damage / weapon.kills) || 0;
+  var adph = Math.round(weapon.damage / weapon.hits) || 0;
   var hss = weapon.hss || 0;
   var lss = weapon.lss || 0;
   return [
@@ -273,7 +273,7 @@ function mergePhysicsKills(u) {
       kills: 0
     };
   }
-  u.physics.kills = (u.physics.kills + u.physbox.kills) + u.world.kills;
+  u.physics.kills = Math.abs((u.physics.kills + u.physbox.kills) + u.world.kills);
   delete u.physbox;
   delete u.world;
   if (u.physics.kills === 0) {
@@ -307,7 +307,7 @@ function mergePhysicsDeaths(u) {
   if (!u.world) {
     u.world = 0;
   }
-  u.physics = (u.physics + u.physbox) + u.world;
+  u.physics = Math.abs((u.physics + u.physbox) + u.world);
   delete u.physbox;
   delete u.world;
   if (u.physics === 0) {
@@ -547,16 +547,11 @@ class Data {
    * var playerStats = appData.generatePlayerStats();
    */
   generatePlayerStats(playerId) {
-    for (var u in this.users) {
-      if (playerId === u) {
-        try {
-          return prepStats(clone(this.users[u]));
-        } catch(e) {
-          throw e;
-        }
-      }
+    try {
+      return prepStats(clone(this.users[playerId]));
+    } catch(e) {
+      throw e;
     }
-    return;
   }
 
   /**
@@ -571,12 +566,9 @@ class Data {
    * // console.log(who) = 'bob'
    */
   who(ip) {
-    var i = ip;
-    for (var id in this.users)  {
-      if (this.users[id].ip === i) {
-        i = this.users[id].name;
-      }
-    }
+    let i = ip;
+    const index = Object.values(this.users).indexOf(ip);
+    if (index > -1) i = this.user[index].name;
     if (i === '::1') i = 'LAN User';
     return i;
   }
@@ -757,8 +749,7 @@ class Data {
     this.bannedUsers[id] = this.users[id];
     // data to be returned
     try {
-      var r = clone(this.users[id]);
-      return r;
+      return clone(this.users[id]);
     }  catch (e) {
       throw e;
     }
