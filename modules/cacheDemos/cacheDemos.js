@@ -130,7 +130,7 @@ function cacheDemos() {
         }
         const size = getFilesizeInBytes(filepath);
         arr.push([
-          demos,
+          demo,
           bytesToSize(size),
           createdDate(filepath)
         ]);
