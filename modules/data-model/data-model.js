@@ -565,10 +565,13 @@ class Data {
    * var who = appData.who('24.564.76.24');
    * // console.log(who) = 'bob'
    */
-  who(ip) {
-    let i = ip;
-    const index = Object.values(this.users).indexOf(ip);
-    if (index > -1) i = this.user[index].name;
+   who(ip) {
+    var i = ip;
+    for (var id in this.users)  {
+      if (this.users[id].ip === i) {
+        i = this.users[id].name;
+      }
+    }
     if (i === '::1') i = 'LAN User';
     return i;
   }

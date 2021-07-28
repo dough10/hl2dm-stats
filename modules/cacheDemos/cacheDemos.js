@@ -135,20 +135,6 @@ function cacheDemos() {
           createdDate(filepath)
         ]);
       });
-      // for (let i = 0; i < demos.length; i++) {
-      //   if (i !== demos.length - 1) {
-      //     const filepath = path.join(config.gameServerDir, demos[i]);
-      //     if (!fs.existsSync(filepath)) {
-      //       return;
-      //     }
-      //     const size = getFilesizeInBytes(filepath);
-      //     arr.push([
-      //       demos[i],
-      //       bytesToSize(size),
-      //       createdDate(filepath)
-      //     ]);
-      //   }
-      // }
       arr.reverse();
       resolve(arr);
       print(`demo file list cached ${t.endString().cyan} to complete`);
