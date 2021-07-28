@@ -629,9 +629,7 @@ async function getPlayers() {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
   let players = await response.json();
-  for (let i = 0; i < players.length; i++) {
-    playerCard(players[i]);
-  }
+  players.map(playerCard);
   animateElement(document.querySelector('#loader'),  'translateY(-102%)', 350);
 }
 

@@ -39,17 +39,14 @@ const app = express();
 const expressWs = require('express-ws')(app);
 const { check, oneOf, validationResult } = require('express-validator');
 const colors = require('colors');
-const blocked = require('blocked');
 const config = require('./modules/loadConfig/loadConfig.js')();
 const RconStats = require('./modules/RconStats/rcon.js');
 const logFolder = path.join(config.gameServerDir, 'logs');
-const startTime = new Date().getTime();
 let receiver = new logReceiver.LogReceiver();
 let appData = new Datamodel();
 let db;
 let socket;
 let dashboard;
-
 
 /**
  * prints error message to console
@@ -62,32 +59,6 @@ let dashboard;
  */
 function errorHandler(e) {
   console.error(`${new Date().toLocaleString().yellow} - ${e}`);
-}
-
-
-/**
- * execued after main thread is blocked
- * logs time in ms the thread was blocked / adds up total time and compares it to the current uptime
- * @async
- * @callback
- * 
- * @param {Number} ms milliseconds the thread was blocked.
- * 
- * @returns {Void} nothing
- */
-function onBlocked(ms) {
-  blockLog.push(ms);
-  let total = 0;
-  for (let i = 0; i < blockLog.length; i++) {
-    total += blockLog[i];
-  }
-  // print(`Thread blocked: ${ms}ms`.red);
-  if (timer) clearTimeout(timer);
-  timer = setTimeout(_ => {
-    let uptime = new Date().getTime() - startTime;
-    print(`Application uptime: ${readableTime(uptime).cyan}`);
-    print(`Thread blocked for total of ${readableTime(total)} / ${((total / uptime) * 100).toFixed(2)}% of uptime`.red);
-  }, 10000);
 }
 
 /**
@@ -889,7 +860,7 @@ app.get('*', fourohfour);
 
 init(logFolder);
 
-let server = app.listen(config.port, _ => mongoConnect().then(database => {
+app.listen(config.port, _ => mongoConnect().then(database => {
   db = database;
   console.log(`MongoDB connected. URL: ${config.dbURL.green}`);
   console.log('Endpoints active on port: ' + `${config.port}`.red);
@@ -921,26 +892,3 @@ let server = app.listen(config.port, _ => mongoConnect().then(database => {
     });
   }).catch(errorHandler);
 }));
-
-process.on('SIGTERM', _ => {
-  // db.close();
-  let total = 0;
-  for (let i = 0; i < blockLog.length; i++) {
-    total += blockLog[i];
-  }
-  console.log(`Thread blocked for ${readableTime(total).cyan}`);
-  server.close(_ => {
-    console.log('Process terminated');
-  });
-});
-
-
-let blockLog = [];
-let timer;
-
-
-// blocked(onBlocked, {
-//   threshold: 10, 
-//   interval: 1000, 
-//   trimFalsePositives:true
-// });
