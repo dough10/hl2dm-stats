@@ -572,7 +572,7 @@ class Data {
         i = this.users[id].name;
       }
     }
-    if (i === '::1') i = 'LAN User';
+    if (i.substring(0,2) === '::') i = 'LAN User';
     return i;
   }
 
