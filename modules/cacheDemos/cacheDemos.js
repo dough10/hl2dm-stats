@@ -97,11 +97,6 @@ function getDemos() {
           demos.push(file);
         }
       });
-      // for (let i = 0; i < files.length; i++) {
-      //   if (path.extname(files[i]) === '.dem') {
-      //     demos.push(files[i]);
-      //   }
-      // }
       resolve(demos);
     });
   });

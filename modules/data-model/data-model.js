@@ -201,14 +201,14 @@ function calculateWeaponStats(weaponsName, weapon) {
  */
 function sortWeapons(user) {
   let sortArr = [];
-  for (let weapon in user) {
+  Object.keys(user).map(weapon => {
     if (require('../weaponsCheck/weaponsCheck.js')(weapon)) {
       if (user[weapon].kills !== 0) {
         sortArr.push(calculateWeaponStats(weapon, user[weapon]));
       }
       delete user[weapon];
-    }
-  }
+    }    
+  });
   // sort array by kill count
   sortArr.sort((a, b) => {
     return b[1] - a[1];
@@ -232,11 +232,11 @@ function sortWeapons(user) {
  */
 function sortDeaths(user) {
   let killedby = [];
-  for (let weapon in user) {
+  Object.keys(user).map(weapon => {
     killedby.push([
       weapon, user[weapon]
     ]);
-  }
+  });
   killedby.sort((a, b) => {
     return b[1] - a[1];
   });
@@ -483,7 +483,7 @@ class Data {
   generateTop() {
     var arr = [];
     this.totalPlayers = Object.size(this.users);   // total # of players to have joined the server
-    for (var user in this.users) {
+    Object.keys(this.users).map(user => {
       // push non banned players with greater then or equal to 100 kills to "top" Array
       if (this.users[user].kills >= 100 && !this.users[user].banned) {
         try {
@@ -492,7 +492,7 @@ class Data {
           throw e;
         }
       }
-    }
+    });
     // do the actual sorting
     arr.sort((a,b) => {
       return b.kdr - a.kdr;
@@ -528,13 +528,13 @@ class Data {
    */
   generateBannedPlayerList() {
     var arr = [];
-    for (var player in this.bannedUsers) {
+    this.bannedUsers.map(player => {
       try {
         arr.push(prepStats(clone(this.bannedUsers[player])));
       } catch(e) {
         throw e;
       }
-    }
+    });
     return arr;
   }
 
@@ -567,11 +567,11 @@ class Data {
    */
    who(ip) {
     var i = ip;
-    for (var id in this.users)  {
+    Object.keys(this.users).map(id => {
       if (this.users[id].ip === i) {
         i = this.users[id].name;
       }
-    }
+    });
     if (i.substring(0,2) === '::') i = 'LAN User';
     return i;
   }

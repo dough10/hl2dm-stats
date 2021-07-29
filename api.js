@@ -596,7 +596,7 @@ app.get('/old-stats/:month/:year', (req, res) => {
 app.get('/playerList', (req, res) => {
   let t = new Timer();
   let arr = [];
-  for (let id in appData.users) {
+  Object.keys(appData.users).map(id => {
     let country = 'US';
     if (appData.users[id].geo) {
       country = appData.users[id].geo.country;
@@ -606,7 +606,7 @@ app.get('/playerList', (req, res) => {
       country: country,
       id: appData.users[id].id
     });
-  }
+  });
   res.send(arr);
   who(req, `is viewing ` + '/playersList'.green + ` data of ` + `${arr.length} players `.grey + `${t.endString()}`.cyan + ` response time`);
 });
