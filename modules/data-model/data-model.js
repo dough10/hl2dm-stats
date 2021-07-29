@@ -232,7 +232,9 @@ function sortWeapons(user) {
  */
 function sortDeaths(user) {
   let killedby = [];
+  console.log(user);
   for (let weapon in user) {
+    console.log(weapon)
     killedby.push([
       weapon, user[weapon]
     ]);
