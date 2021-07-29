@@ -528,7 +528,7 @@ class Data {
    */
   generateBannedPlayerList() {
     var arr = [];
-    this.bannedUsers.map(player => {
+    Object.keys(this.bannedUsers).map(player => {
       try {
         arr.push(prepStats(clone(this.bannedUsers[player])));
       } catch(e) {
