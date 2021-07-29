@@ -232,11 +232,11 @@ function sortWeapons(user) {
  */
 function sortDeaths(user) {
   let killedby = [];
-  Object.keys(user).map(weapon => {
+  for (let weapon in user) {
     killedby.push([
       weapon, user[weapon]
     ]);
-  });
+  }
   killedby.sort((a, b) => {
     return b[1] - a[1];
   });
