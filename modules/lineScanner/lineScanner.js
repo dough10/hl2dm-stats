@@ -243,6 +243,16 @@ function buildKilledNameString(line, start) {
   return name;
 }
 
+function lineIsKillAsync(line) {
+  return new Promise(resolve => {
+    line.map((word, index) => {
+      if (word === 'killed') {
+        resolve(index);
+      }
+    });
+  });
+}
+
 /**
  * scans the line for player kill
  * @param {Array} line - one line of the log file being parsed
