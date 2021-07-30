@@ -517,7 +517,8 @@ async function backToList() {
   let container = qs('#content');
   await fadeOut(container, 400);
   purgeContent(container);
-  getPlayers();
+  await getPlayers();
+  container.parentNode.scrollTop = pos;
   fadeIn(container);
 }
 
@@ -588,6 +589,7 @@ async function playerStats(player, card) {
 async function cardClicked(e) {
   let playerID = e.target.id;
   let container = qs('#content');
+  pos = container.parentNode.scrollTop;
   await fadeOut(container, 400);
   purgeContent(container);
   let response = await fetch(`/playerStats/${playerID}`);
@@ -633,4 +635,5 @@ async function getPlayers() {
   animateElement(document.querySelector('#loader'),  'translateY(-102%)', 350);
 }
 
+let pos = 0;
 window.onload = getPlayers();

@@ -17,22 +17,6 @@ const geoip = require('geoip-lite');
 // const Timer = require('../Timer/Timer.js');
 const checkPhrase = require('../chatPhrase/chatPhrase.js');
 
-
-/** 
- * get the length / size of a object
- * @returns {Number} count of items in the object
- * 
- * @example <caption>Example usage of Object.size() function.</caption>
- * var totalPlayers = Object.size(users); 
- */
-Object.size = obj => {
-  var size = 0, key;
-  for (key in obj) {
-    if (obj.hasOwnProperty(key)) size++;
-  }
-  return size;
-};
-
 /**
  * returns a player object
  *
@@ -231,14 +215,13 @@ function sortWeapons(user) {
  * bob.deathsBy = sortDeaths();
  */
 function sortDeaths(user) {
+  if (!user) return;
   let killedby = [];
-  console.log(user);
-  for (let weapon in user) {
-    console.log(weapon)
+  Object.keys(user).map(weapon => {
     killedby.push([
       weapon, user[weapon]
     ]);
-  }
+  });
   killedby.sort((a, b) => {
     return b[1] - a[1];
   });
@@ -484,7 +467,7 @@ class Data {
    */
   generateTop() {
     var arr = [];
-    this.totalPlayers = Object.size(this.users);   // total # of players to have joined the server
+    this.totalPlayers = Object.keys(this.users).length;   // total # of players to have joined the server
     Object.keys(this.users).map(user => {
       // push non banned players with greater then or equal to 100 kills to "top" Array
       if (this.users[user].kills >= 100 && !this.users[user].banned) {
@@ -629,13 +612,19 @@ class Data {
     // add killer kill with weapon
     this.users[killer.id][weapon].kills++;
     // add killed player death by weapon stat
-    if (!this.users[killed.id].deathsBy) return;
+    if (!this.users[killed.id].deathsBy) {
+      this.users[killed.id].deathsBy = {
+        count: 0
+      };
+    }
     if (!this.users[killed.id].deathsBy[weapon]) {
       this.users[killed.id].deathsBy[weapon] = 0;
     }
     this.users[killed.id].deathsBy[weapon]++;
     // track who killed who the most
-    if (!this.users[killed.id].killedby) return;
+    if (!this.users[killed.id].killedby) {
+      this.users[killed.id].killedby = {};
+    }
     if (!this.users[killed.id].killedby[killer.name]) {
       this.users[killed.id].killedby[killer.name] = {};
     }
@@ -643,7 +632,9 @@ class Data {
       this.users[killed.id].killedby[killer.name][weapon] = 0;
     }
     this.users[killed.id].killedby[killer.name][weapon]++;
-    if (!this.users[killer.id].killed) return;
+    if (!this.users[killer.id].killed) {
+      this.users[killer.id].killed = {};
+    }
     if (!this.users[killer.id].killed[killed.name]) {
       this.users[killer.id].killed[killed.name] = {};
     }
@@ -751,10 +742,10 @@ class Data {
     }
     // mark player as banned
     this.users[id].banned = true;
-    this.bannedUsers[id] = this.users[id];
     // data to be returned
     try {
-      return clone(this.users[id]);
+      this.bannedUsers[id] = clone(this.users[id]);
+      return this.bannedUsers[id];
     }  catch (e) {
       throw e;
     }
