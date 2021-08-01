@@ -570,15 +570,22 @@ async function nameBlock(player) {
   return name;
 }
 
-function createMap(ll) {
+function createMap(ll, username) {
+  let loc = { lat:ll[0], lng: ll[1] };
   let map = document.createElement('div');
   map.style.height = '200px';
   map.style.width = '400px';
   map.id = 'map'; 
-  new google.maps.Map(map, {
-    center: { lat:ll[0], lng: ll[1] },
-    zoom: 10,
+  let mInstance = new google.maps.Map(map, {
+    center: loc,
+    zoom: 7,
+    disableDefaultUI: true,
   });
+  let marker = new google.maps.Marker({
+    position: loc,
+    title: username,
+  });
+  marker.setMap(mInstance);
   return map;
 }
 
@@ -594,7 +601,7 @@ async function playerStats(player, card) {
   wrapper.appendChild(head);
   l.appendChild(textBlock(`Steam ID: U:1:${player.id}`));
   if (player.geo) {
-    head.appendChild(createMap(player.geo.ll));
+    head.appendChild(createMap(player.geo.ll, player.name));
     l.appendChild(textBlock(`Location: ${player.geo.city}, ${player.geo.region}`));
   } else {
     head.appendChild(createMap([
@@ -667,9 +674,6 @@ async function getPlayers() {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
   let players = await response.json();
-  players.sort((a, b) => {
-    return b[1] - a[1];
-  });
   players.map(playerCard);
   animateElement(document.querySelector('#loader'),  'translateY(-102%)', 350);
 }
