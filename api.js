@@ -76,6 +76,9 @@ function userConnected(u) {
   if (u.loggingEnabled) print(`${u.name.grey} connected with IP address: ${u.ip.grey}`);
   let n = '';
   if (u.new) n += 'New User!!! '.red;
+  u.date = new Date(u.time).getDate();
+  u.month = new Date(u.time).getMonth();
+  u.year = new Date(u.time).getFullYear();
   appData.logUser(db, u).then(user => {
     if (user && u.loggingEnabled) print(`${n}${user.name.grey} connection at ${new Date(user.time).toLocaleString().yellow} was logged into database`);
   }).catch(e => console.error(e.message));

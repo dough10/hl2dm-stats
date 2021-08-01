@@ -507,9 +507,6 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
         id: id,
         ip: ip,
         time: lineTime,
-        date: new Date(lineTime).getDate(),
-        month: new Date(lineTime).getMonth(),
-        year: new Date(lineTime).getFullYear(),
         loggingEnabled: loggingEnabled
       });
     }

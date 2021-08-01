@@ -315,6 +315,12 @@ function prepStats(obj) {
   return obj;
 }
 
+/**
+ * clones a object so it can be edited.
+ * @param {Object} obj - the object to be copied
+ *  
+ * @returns {Object} editable copy of the object
+ */
 function clone(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
@@ -448,8 +454,8 @@ class Data {
    * });
    */
   playerDisconnect(id) {
-    return new Promise((resolve, reject) => {
-      return ;
+    return new Promise(resolve => {
+      resolve(this.users[id]);
     });
   }
 
@@ -478,7 +484,6 @@ class Data {
         }
       }
     });
-    // do the actual sorting
     arr.sort((a,b) => {
       return b.kdr - a.kdr;
     });

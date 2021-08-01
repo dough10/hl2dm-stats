@@ -42,6 +42,7 @@ var appData = new Datamodel();
     * [~mergePhysicsKills(user)](#module_data-model..mergePhysicsKills) ⇒ <code>void</code>
     * [~mergePhysicsDeaths(user)](#module_data-model..mergePhysicsDeaths) ⇒ <code>void</code>
     * [~prepStats(obj)](#module_data-model..prepStats) ⇒ <code>Object</code>
+    * [~clone(obj)](#module_data-model..clone) ⇒ <code>Object</code>
 
 <a name="module_data-model..Data"></a>
 
@@ -568,4 +569,16 @@ prepare the player object to be sent to the frontend
 | Param | Type | Description |
 | --- | --- | --- |
 | obj | <code>Object</code> | player stats object |
+
+<a name="module_data-model..clone"></a>
+
+### data-model~clone(obj) ⇒ <code>Object</code>
+clones a object so it can be edited.
+
+**Kind**: inner method of [<code>data-model</code>](#module_data-model)  
+**Returns**: <code>Object</code> - editable copy of the object  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| obj | <code>Object</code> | the object to be copied |
 
