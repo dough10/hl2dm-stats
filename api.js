@@ -72,15 +72,17 @@ function errorHandler(e) {
  * scanner(.., .., .., .., userConnected, .., ..);
  */
 function userConnected(u) {
+  let loggingEnabled = u.loggingEnabled;
+  delete u.loggingEnabled;
   u.new = appData.playerConnect(u.time, u.id, u.name, u.ip);
-  if (u.loggingEnabled) print(`${u.name.grey} connected with IP address: ${u.ip.grey}`);
+  if (loggingEnabled) print(`${u.name.grey} connected with IP address: ${u.ip.grey}`);
   let n = '';
   if (u.new) n += 'New User!!! '.red;
   u.date = new Date(u.time).getDate();
   u.month = new Date(u.time).getMonth();
   u.year = new Date(u.time).getFullYear();
   appData.logUser(db, u).then(user => {
-    if (user && u.loggingEnabled) print(`${n}${user.name.grey} connection at ${new Date(user.time).toLocaleString().yellow} was logged into database`);
+    if (user && loggingEnabled) print(`${n}${user.name.grey} connection at ${new Date(user.time).toLocaleString().yellow} was logged into database`);
   }).catch(e => console.error(e.message));
 }
 
@@ -94,7 +96,9 @@ function userConnected(u) {
  * scanner(.., .., .., .., userDisconnected, .., ..);
  */
 function userDisconnected(u) {
-  if (u.loggingEnabled) {
+  let loggingEnabled = u.loggingEnabled;
+  delete u.loggingEnabled;
+  if (loggingEnabled) {
     if (!isNaN(u.onlineFor)) {
       print(`${u.name.gray} disconnected: ${readableTime(u.onlineFor).cyan} online`);
     } else {
@@ -116,6 +120,7 @@ function userDisconnected(u) {
  */
 function playerBan(id) {
   let player = appData.addBanned(id);
+  delete player.loggingEnabled;
   appData.logBan(db, player).then(p => {
     if (p && p.name) print(`${p.name.grey} was saved to ban database`);
   });
