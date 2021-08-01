@@ -868,35 +868,43 @@ app.get('*', fourohfour);
 
 init(logFolder);
 
-app.listen(config.port, _ => mongoConnect().then(database => {
-  db = database;
-  console.log(`MongoDB connected. URL: ${config.dbURL.green}`);
-  console.log('Endpoints active on port: ' + `${config.port}`.red);
-  console.log('');
-  print('Online. ' + 'o( ❛ᴗ❛ )o'.red);
-  statsLoop();
-  new RconStats(config.gameServerHostname, process.env.RCONPW, rconStats);
-  appData.cacheDemos();
-  parseLogs().then(seconds => {
-    print(`Log parser complete in ${seconds.cyan}`);
-    receiver.on("data", data => {
-      if (data.isValid) {
-        scanner(
-          data.message,
-          appData.addKill.bind(appData), 
-          appData.addChat.bind(appData), 
-          appData.addSuicide.bind(appData), 
-          appData.addHeadshot.bind(appData),
-          appData.addWeaponStats.bind(appData),
-          appData.addWeaponStats2.bind(appData),
-          userConnected, 
-          userDisconnected, 
-          mapStart, 
-          mapEnd, 
-          playerBan, 
-          true
-        );
-      }
-    });
-  }).catch(errorHandler);
-}));
+app.listen(config.port, async _ => {
+  try {
+    db = await mongoConnect();
+    console.log(`MongoDB connected. URL: ${config.dbURL.green}`);
+    console.log('Endpoints active on port: ' + `${config.port}`.red);
+    console.log('');
+    print('Online. ' + 'o( ❛ᴗ❛ )o'.red);
+    statsLoop();
+    new RconStats(config.gameServerHostname, process.env.RCONPW, rconStats);
+    appData.cacheDemos();
+    try {
+      let seconds = await parseLogs();
+      print(`Log parser complete in ${seconds.cyan}`);
+      receiver.on("data", data => {
+        if (data.isValid) {
+          scanner(
+            data.message,
+            appData.addKill.bind(appData), 
+            appData.addChat.bind(appData), 
+            appData.addSuicide.bind(appData), 
+            appData.addHeadshot.bind(appData),
+            appData.addWeaponStats.bind(appData),
+            appData.addWeaponStats2.bind(appData),
+            userConnected, 
+            userDisconnected, 
+            mapStart, 
+            mapEnd, 
+            playerBan, 
+            true
+          );
+        }
+      });
+    } catch (e) {
+      errorHandler(e);
+    }
+  } catch(e) {
+    errorHandler(e);
+    setTimeout(process.exit, 15000);
+  }
+});

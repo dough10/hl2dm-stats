@@ -522,12 +522,35 @@ async function backToList() {
   fadeIn(container);
 }
 
-async function playerStats(player, card) {
+function textBlock(text) {
+  let block = document.createElement('div');
+  block.textContent = text;
+  block.style.marginBottom = '16px';
+  block.title = block.textContent;
+  block.style.fontSize = '1.5em';
+  return block;
+}
+
+function KDRBlock(player) {
   const killsIcon = "M7,5H23V9H22V10H16A1,1 0 0,0 15,11V12A2,2 0 0,1 13,14H9.62C9.24,14 8.89,14.22 8.72,14.56L6.27,19.45C6.1,19.79 5.76,20 5.38,20H2C2,20 -1,20 3,14C3,14 6,10 2,10V5H3L3.5,4H6.5L7,5M14,12V11A1,1 0 0,0 13,10H12C12,10 11,11 12,12A2,2 0 0,1 10,10A1,1 0 0,0 9,11V12A1,1 0 0,0 10,13H13A1,1 0 0,0 14,12Z";
   const deathsIcon = "M12,2A9,9 0 0,0 3,11C3,14.03 4.53,16.82 7,18.47V22H9V19H11V22H13V19H15V22H17V18.46C19.47,16.81 21,14 21,11A9,9 0 0,0 12,2M8,11A2,2 0 0,1 10,13A2,2 0 0,1 8,15A2,2 0 0,1 6,13A2,2 0 0,1 8,11M16,11A2,2 0 0,1 18,13A2,2 0 0,1 16,15A2,2 0 0,1 14,13A2,2 0 0,1 16,11M12,14L13.5,17H10.5L12,14Z";
   const kdrIcon = "M3 18.34C3 18.34 4 7.09 7 3L12 4L11 7.09H9V14.25H10C12 11.18 16.14 10.06 18.64 11.18C21.94 12.71 21.64 17.32 18.64 19.36C16.24 21 9 22.43 3 18.34Z";
-  const wrapper = createBlockWrapper();
-  wrapper.style.width = '90%';
+  const stats = document.createElement('div');
+  stats.style.width = '100%';
+  stats.style.justifyContent = 'space-between';
+  stats.style.display = "inline-flex";
+  stats.style.marginTop = '48px';
+  stats.style.marginBottom = '48px';
+  const kills = createSVG(killsIcon, player.kills, "Kills");
+  const deaths = createSVG(deathsIcon, player.deaths, "Deaths", player.suicide, player.deathsBy);
+  const kdr = createSVG(kdrIcon, player.kdr, "KDR");
+  stats.appendChild(kills);
+  stats.appendChild(deaths);
+  stats.appendChild(kdr);
+  return stats;
+}
+
+async function nameBlock(player) {
   const name = document.createElement('div');
   name.style.fontSize = '2.5em';
   name.style.fontWeight = 'bold';
@@ -544,31 +567,44 @@ async function playerStats(player, card) {
     name.textContent += `:  Banned`;
     name.style.color = 'rgb(185, 73, 73)';
   }
-  name.onClick(backToList);
-  wrapper.appendChild(name);
-  let address = document.createElement('div');
-  address.textContent = `IP Address: ${player.ip}`;
-  address.style.marginBottom = '16px';
-  address.title = address.textContent;
-  address.style.fontSize = '1.5em';
-  wrapper.appendChild(address);
-  let idEL = document.createElement('div');
-  idEL.style.marginBottom = '16px';
-  idEL.textContent = `Steam ID: U:1:${player.id}`;
-  idEL.style.fontSize = '1.5em';
-  wrapper.appendChild(idEL);
-  const stats = document.createElement('div');
-  stats.style.width = '100%';
-  stats.style.justifyContent = 'space-between';
-  stats.style.display = "inline-flex";
-  const kills = createSVG(killsIcon, player.kills, "Kills");
-  const deaths = createSVG(deathsIcon, player.deaths, "Deaths", player.suicide, player.deathsBy);
-  const kdr = createSVG(kdrIcon, player.kdr, "KDR");
+  return name;
+}
 
-  stats.appendChild(kills);
-  stats.appendChild(deaths);
-  stats.appendChild(kdr);
-  wrapper.appendChild(stats);
+function createMap(ll) {
+  let map = document.createElement('div');
+  map.style.height = '200px';
+  map.style.width = '400px';
+  map.id = 'map'; 
+  new google.maps.Map(map, {
+    center: { lat:ll[0], lng: ll[1] },
+    zoom: 10,
+  });
+  return map;
+}
+
+async function playerStats(player, card) {
+  const wrapper = createBlockWrapper();
+  wrapper.style.width = '90%';
+  const head = createWrapper();
+  const name = await nameBlock(player);
+  const l = document.createElement('div');
+  l.appendChild(name);
+  name.onClick(backToList);
+  head.appendChild(l);
+  wrapper.appendChild(head);
+  l.appendChild(textBlock(`Steam ID: U:1:${player.id}`));
+  if (player.geo) {
+    head.appendChild(createMap(player.geo.ll));
+    l.appendChild(textBlock(`Location: ${player.geo.city}, ${player.geo.region}`));
+  } else {
+    head.appendChild(createMap([
+      35.614342,
+      -88.819382
+    ]));
+    l.appendChild(textBlock(`Location: LAN`));
+  }
+  l.appendChild(textBlock(`IP Address: ${player.ip}`));
+  wrapper.appendChild(KDRBlock(player));
   // top weapon row
   const weaponWrapper1 = createWrapper();
   weaponWrapper1.style.marginTop = '24px';
@@ -631,9 +667,17 @@ async function getPlayers() {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
   let players = await response.json();
+  players.sort((a, b) => {
+    return b[1] - a[1];
+  });
   players.map(playerCard);
   animateElement(document.querySelector('#loader'),  'translateY(-102%)', 350);
 }
 
 let pos = 0;
 window.onload = getPlayers();
+
+
+function initMap() {
+
+}

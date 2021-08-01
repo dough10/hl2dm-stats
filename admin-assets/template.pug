@@ -15,6 +15,7 @@ html
   link(rel="preload" href="https://hl2dm.dough10.me/fonts/halflife2.ttf" as="font" type="font/ttf" crossorigin)
   title #{title}
   link(rel='stylesheet', href='admin.css')
+  script(src="https://polyfill.io/v3/polyfill.min.js?features=default")
   body
     div#loader
     header
@@ -22,5 +23,6 @@ html
     div.wrapper
       div#content
   body/
-  script(src='admin.js')
+  script(async src='admin.js')
+  script(async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQ_QjdPnVkW9qnnhoQQg4fwJCIeJ4_Ba8&callback=initMap")
 html/
