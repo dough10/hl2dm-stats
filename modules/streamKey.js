@@ -3,6 +3,7 @@
  * @module modules/streamKey
  * @author Jimmy Doughten <https://github.com/dough10>
  * @requires bcrypt
+ * @requires colors
  * 
  * @example <caption>Example usage of streamKey file.</caption>
  * node modules/streamKey.js
@@ -14,8 +15,13 @@ const rl = readline.createInterface({
 });
 const mongoConnect = require('./mongo-connect/mongo-connect.js');
 const bcrypt = require('bcrypt');
+const colors = require('colors');
 var db;
 
+function eHandler(e) {
+  console.error(e.red);
+  process.exit(0);
+}
 
 /**
  * checks if a entry exists
@@ -28,7 +34,10 @@ function checkEntry(name) {
     db.collection("stream-keys").findOne({
       name: name
     }, (err, result) => {
-      if (err) return reject(err);
+      if (err) {
+        reject(err);
+        return;
+      }
       resolve(result);
     });
   });
@@ -41,31 +50,38 @@ function checkEntry(name) {
  * 
  * @returns {Void} nothing
  */
-function createUser(name, key) {
+async function createUser(name, key) {
   if (!name) throw Error("stream name is required");
   if (!key) throw Error("stream key is required");
-  mongoConnect().then(connection => {
-    db = connection;
-    checkEntry(name).then(_ => {
+  try {
+    db = await mongoConnect();
+    try {
+      let exists = await checkEntry(name);
+      if (exists) {
+        throw 'Entry Exists'.red;
+      }
       bcrypt.hash(key, 10, (err, hash) => {
         if (err) throw err;
         db.collection("stream-keys").insertOne({ 
           name: name, 
           key: hash 
-        }, (err, res) => {
-          if (err) throw err;
-          checkEntry(name).then(_ => {
-            console.log(`${name}: ${hash} saved to db`);
+        }, async er => {
+          if (er) eHandler(er);
+          try {
+            await checkEntry(name);
+            console.log(`User ${name.yellow} with key ${key.magenta} saved to db`);
             process.exit(0);
-          }).catch(e => {
-            throw e;
-          });
+          } catch(e) {
+            eHandler(e);
+          }
         });
       });
-    }).catch(e => {
-      throw e;
-    });
-  });
+    } catch (e) {
+      eHandler(e);
+    }
+  } catch (e) {
+    eHandler(e);
+  }
 }
 
 rl.question("stream name ? ", name => {

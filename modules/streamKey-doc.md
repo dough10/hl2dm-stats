@@ -3,7 +3,7 @@
 ## modules/streamKey
 command line account creation tool
 
-**Requires**: <code>module:bcrypt</code>  
+**Requires**: <code>module:bcrypt</code>, <code>module:colors</code>  
 **Author**: Jimmy Doughten <https://github.com/dough10>  
 **Example** *(Example usage of streamKey file.)*  
 ```js
