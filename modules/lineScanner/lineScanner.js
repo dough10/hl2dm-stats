@@ -500,7 +500,7 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     if (!validateIPaddress(ip) || ip === 'none') {
       return;
     }
-    playerTimes[id] = lineTime;
+    if (loggingEnabled) playerTimes[id] = lineTime;
     if (onJoin) {
       onJoin({
         name: name,
@@ -667,17 +667,18 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     let nameString = buildKillerNameString(word, hasDisconnected);
     let name = getName(nameString);
     let id = getID3(nameString);
+    let onlineFor; 
+    if (loggingEnabled) {
+      onlineFor = lineTime - playerTimes[id];
+      delete playerTimes[id];
+    }
     if (onDisconnect) onDisconnect({
       name: name,
       id: id,
       time: lineTime,
-      date: new Date(lineTime).getDate(),
-      month: new Date(lineTime).getMonth(),
-      year: new Date(lineTime).getFullYear(),
-      onlineFor: lineTime - playerTimes[id],
+      onlineFor: onlineFor,
       loggingEnabled: loggingEnabled
     });
-    delete playerTimes[id];
   }
 }
 

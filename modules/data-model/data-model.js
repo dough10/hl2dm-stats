@@ -454,9 +454,7 @@ class Data {
    * });
    */
   playerDisconnect(id) {
-    return new Promise(resolve => {
-      resolve(this.users[id]);
-    });
+    return this.users[id];
   }
 
   /**
