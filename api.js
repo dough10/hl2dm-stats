@@ -551,14 +551,15 @@ app.get('/stats', (req, res) => {
  *   });
  * }); 
  */
-app.get('/old-months', (req, res) => {
+app.get('/old-months', async (req, res) => {
   let t = new Timer();
-  getOldStatsList().then(stats => {
+  try {
+    const stats = getOldStatsList();
     who(req, `is viewing ` + '/old-months'.green + ' data' + ` ${t.endString()}`.cyan + ` response time`);
     res.send(stats);
-  }).catch(e => {
+  } catch(e) {
     fiveHundred(req, res);
-  });
+  }
 });
 
 /**
@@ -577,14 +578,15 @@ app.get('/old-months', (req, res) => {
  *   });
  * });
  */
-app.get('/old-stats/:month/:year', (req, res) => {
+app.get('/old-stats/:month/:year', async (req, res) => {
   let t = new Timer();
-  getOldStatsList(req.params.month, req.params.year).then(stats => {
+  try {
+    const stats = getOldStatsList(req.params.month, req.params.year);
     who(req, `is viewing ` + '/old-stats'.green + ' data for ' + `${monthName(req.params.month).yellow} ${req.params.year.yellow}` + ` ${t.endString()}`.cyan + ` response time`);
     res.send(stats);
-  }).catch(e => {
+  } catch(e) {
     fiveHundred(req, res);
-  });
+  }
 });
 
 /**
@@ -605,6 +607,7 @@ app.get('/playerList', (req, res) => {
   let t = new Timer();
   let arr = [];
   Object.keys(appData.users).map(id => {
+    if (!appData.users[id].name) return;
     let country = 'US';
     if (appData.users[id].geo) {
       country = appData.users[id].geo.country;
