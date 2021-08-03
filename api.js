@@ -554,7 +554,7 @@ app.get('/stats', (req, res) => {
 app.get('/old-months', async (req, res) => {
   let t = new Timer();
   try {
-    const stats = getOldStatsList();
+    const stats = await getOldStatsList();
     who(req, `is viewing ` + '/old-months'.green + ' data' + ` ${t.endString()}`.cyan + ` response time`);
     res.send(stats);
   } catch(e) {
@@ -581,7 +581,7 @@ app.get('/old-months', async (req, res) => {
 app.get('/old-stats/:month/:year', async (req, res) => {
   let t = new Timer();
   try {
-    const stats = getOldStatsList(req.params.month, req.params.year);
+    const stats = await getOldStatsList(req.params.month, req.params.year);
     who(req, `is viewing ` + '/old-stats'.green + ' data for ' + `${monthName(req.params.month).yellow} ${req.params.year.yellow}` + ` ${t.endString()}`.cyan + ` response time`);
     res.send(stats);
   } catch(e) {
