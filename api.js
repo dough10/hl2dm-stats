@@ -48,6 +48,10 @@ let db;
 let socket;
 let dashboard;
 
+function logError(error) {
+  console.log(`${new Date().toLocaleString().yellow} - ` + `ERROR!!!`.red + error);
+}
+
 /**
  * prints error message to console
  * @param {Object} e error object
@@ -241,16 +245,27 @@ function getOldStatsList(month, year) {
       }
       month = Number(month);
       year = Number(year);
-      for (let i = 0; i < files.length; i++) {
-        let date = Number(path.basename(files[i], '.json'));
-        let fileMonth = new Date(date).getMonth();
-        let fileYear = new Date(date).getFullYear();
-        if (fileMonth === month && fileYear === year) {
-          let data = require(path.join(__dirname, 'old-top', files[i]));
-          return resolve(data);
-        }
+      if (!year) {
+        reject('Year is required to fetch old stats');
+        return;
       }
-      reject();
+      if (isNaN(month)) {
+        reject('Month must be a number');
+        return;
+      }
+      if (isNaN(year)){
+        reject('Year must be a number');
+        return;
+      }
+      files.map(file => {
+        let time = Number(path.basename(file, '.json'));
+        let fileMonth = new Date(time).getMonth();
+        let fileYear = new Date(time).getFullYear();
+        if (fileMonth === month && fileYear === year) {
+          return resolve(require(path.join(__dirname, 'old-top', file)));
+        }
+      });
+      reject('File not found');
     });
   });
 }
@@ -302,7 +317,7 @@ function parseLogs() {
         return ;
       }
       totalFiles = files.length;
-      files.forEach(file => {
+      files.map(file => {
         try {
           const rl = readline.createInterface({
             input: fs.createReadStream(path.join(logFolder, file)),
@@ -558,6 +573,7 @@ app.get('/old-months', async (req, res) => {
     who(req, `is viewing ` + '/old-months'.green + ' data' + ` ${t.endString()}`.cyan + ` response time`);
     res.send(stats);
   } catch(e) {
+    logError(e);
     fiveHundred(req, res);
   }
 });
@@ -585,6 +601,7 @@ app.get('/old-stats/:month/:year', async (req, res) => {
     who(req, `is viewing ` + '/old-stats'.green + ' data for ' + `${monthName(req.params.month).yellow} ${req.params.year.yellow}` + ` ${t.endString()}`.cyan + ` response time`);
     res.send(stats);
   } catch(e) {
+    logError(e);
     fiveHundred(req, res);
   }
 });

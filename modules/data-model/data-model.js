@@ -427,19 +427,16 @@ class Data {
       this.users[id] = playerObj(name, id, time, ip);
       newUser = true;
     }
-    if (!this.users[id].ip) {
-      this.users[id].ip = ip;
-    }
-    this.users[id].geo = geoip.lookup(ip);
     // update user name if changed
     if (time >= this.users[id].updated && this.users[id].name !== name) {
       this.users[id].updated = time;
       this.users[id].name = name;
     }
-    // update address
+    // update address / location
     if (time >= this.users[id].updated && this.users[id].ip !== ip) {
       this.users[id].updated = time;
       this.users[id].ip = ip;
+      this.users[id].geo = geoip.lookup(ip);
     }
     return newUser;
   }
