@@ -429,14 +429,17 @@ class Data {
     }
     if (!this.users[id].ip) {
       this.users[id].ip = ip;
-      this.users[id].geo = geoip.lookup(ip);
     }
-    if (time >= this.users[id].updated) {
-      // update address
-      this.users[id].ip = ip;
-      // update user name if changed
+    this.users[id].geo = geoip.lookup(ip);
+    // update user name if changed
+    if (time >= this.users[id].updated && this.users[id].name !== name) {
       this.users[id].updated = time;
       this.users[id].name = name;
+    }
+    // update address
+    if (time >= this.users[id].updated && this.users[id].ip !== ip) {
+      this.users[id].updated = time;
+      this.users[id].ip = ip;
     }
     return newUser;
   }
@@ -599,53 +602,67 @@ class Data {
       this.weapons[weapon] = weaponObj();
     }
     // update killer name
-    if (time >= this.users[killer.id].updated) {
+    if (time >= this.users[killer.id].updated && this.users[killer.id].name !== killer.name) {
       this.users[killer.id].updated = time;
       this.users[killer.id].name = killer.name;
     }
-    // update killed name
-    if (time > this.users[killed.id].updated) {
+    // update victim name
+    if (time > this.users[killed.id].updated && this.users[killed.id].name !== killed.name) {
       this.users[killed.id].updated = time;
       this.users[killed.id].name = killed.name;
     }
-    // add killers kill
+    // add kill
     this.users[killer.id].kills++;
-    // add killed player death
+    // add death
     this.users[killed.id].deaths++;
-    // add killer kill with weapon
+    // add weapon stat for killer
     this.users[killer.id][weapon].kills++;
-    // add killed player death by weapon stat
+    // add weapon stat for victim
     if (!this.users[killed.id].deathsBy) {
       this.users[killed.id].deathsBy = {
         count: 0
       };
     }
+    // victim deaths to specific weapons
     if (!this.users[killed.id].deathsBy[weapon]) {
       this.users[killed.id].deathsBy[weapon] = 0;
     }
     this.users[killed.id].deathsBy[weapon]++;
-    // track who killed who the most
+    // kills / death against specific players
+    // victim
     if (!this.users[killed.id].killedby) {
       this.users[killed.id].killedby = {};
     }
-    if (!this.users[killed.id].killedby[killer.name]) {
-      this.users[killed.id].killedby[killer.name] = {};
+    if (!this.users[killed.id].killedby[killer.id]) {
+      this.users[killed.id].killedby[killer.id] = {
+        name: killer.name
+      };
     }
-    if (!this.users[killed.id].killedby[killer.name][weapon]) {
-      this.users[killed.id].killedby[killer.name][weapon] = 0;
+    if (!this.users[killed.id].killedby[killer.id][weapon]) {
+      this.users[killed.id].killedby[killer.id][weapon] = 0;
     }
-    this.users[killed.id].killedby[killer.name][weapon]++;
+    this.users[killed.id].killedby[killer.id][weapon]++;
+    // killer
     if (!this.users[killer.id].killed) {
       this.users[killer.id].killed = {};
     }
-    if (!this.users[killer.id].killed[killed.name]) {
-      this.users[killer.id].killed[killed.name] = {};
+    if (!this.users[killer.id].killed[killed.id]) {
+      this.users[killer.id].killed[killed.id] = {
+        name: killed.name
+      };
     }
-    if (!this.users[killer.id].killed[killed.name][weapon]) {
-      this.users[killer.id].killed[killed.name][weapon] = 0;
+    if (!this.users[killer.id].killed[killed.id][weapon]) {
+      this.users[killer.id].killed[killed.id][weapon] = 0;
     }
-    this.users[killer.id].killed[killed.name][weapon]++;
-    // add server wide kill with weapon
+    this.users[killer.id].killed[killed.id][weapon]++;
+    // update names
+    if (this.users[killer.id].killed[killed.id].name !== killed.name) {
+      this.users[killer.id].killed[killed.id].name = killed.name;
+    }
+    if (this.users[killed.id].killedby[killer.id].name !== killer.name) {
+      this.users[killed.id].killedby[killer.id].name = killer.name;
+    }
+    // add weapon to server stats
     this.weapons[weapon].kills++;
     // calculate killer KDR
     this.users[killer.id].kdr = Number((this.users[killer.id].kills / this.users[killer.id].deaths).toFixed(2));
@@ -674,7 +691,7 @@ class Data {
     if (!this.users[id]) {
       this.users[id] = playerObj(name, id, time);
     }
-    if (time >= this.users[id].updated) {
+    if (time >= this.users[id].updated && this.users[id].name !== name) {
       this.users[id].updated = time;
       this.users[id].name = name;
     }
@@ -709,16 +726,16 @@ class Data {
     if (!this.users[id]) {
       this.users[id] = playerObj(name, id, time);
     }
+    if (time >= this.users[id].updated && this.users[id].name !== name) {
+      this.users[id].updated = time;
+      this.users[id].name = name;
+    }
     if (!this.users[id].headshots) {
       this.users[id].headshots = {
         kills:0
       };
     }
     this.users[id].headshots.kills++;
-    if (time >= this.users[id].updated) {
-      this.users[id].updated = time;
-      this.users[id].name = name;
-    }
     if (!this.weapons.headshots) {
       this.weapons.headshots = {
         kills:0
@@ -773,7 +790,7 @@ class Data {
       this.users[id] = playerObj(name, id, time);
     }
     // update player name if it has changed
-    if (time >= this.users[id].updated) {
+    if (time >= this.users[id].updated && this.users[id].name !== name) {
       this.users[id].updated = time;
       this.users[id].name = name;
     }
