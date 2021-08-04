@@ -48,8 +48,17 @@ let db;
 let socket;
 let dashboard;
 
+/**
+ * logs srror string to console w/ colors
+ * @param {String} error error message 
+ * 
+ * @returns {Void} nothing
+ * 
+ * @example <caption>Example usage of logError() function.</caption>
+ * logError('Shit is broke');
+ */
 function logError(error) {
-  console.log(`${new Date().toLocaleString().yellow} - ` + `ERROR!!!`.red + error);
+  console.log(`${new Date().toLocaleString().yellow} - ` + `ERROR!!! `.red + error.red);
 }
 
 /**
@@ -67,7 +76,6 @@ function errorHandler(e) {
 
 /**
  * callback for when a player joins server
- * @async
  * @callback
  * 
  * @param {Object} u user object with name, id, time, date, month, year, and if user is new to server
@@ -75,11 +83,16 @@ function errorHandler(e) {
  * @example <caption>Example usage of userConnected() function.</caption>
  * scanner(.., .., .., .., userConnected, .., ..);
  */
-function userConnected(u) {
+async function userConnected(u) {
   let loggingEnabled = u.loggingEnabled;
   delete u.loggingEnabled;
   u.new = appData.playerConnect(u.time, u.id, u.name, u.ip);
-  if (loggingEnabled) print(`${u.name.grey} connected with IP address: ${u.ip.grey}`);
+  if (loggingEnabled) {
+    print(`${u.name.grey} connected with IP address: ${u.ip.grey}`);
+    if (await require('./modules/vpn_check/vpn_check.js')(u.ip)) {
+      print(`${u.name.grey}'s connection is behind a know vpn ip address`);
+    }
+  }
   let n = '';
   if (u.new) n += 'New User!!! '.red;
   u.date = new Date(u.time).getDate();
@@ -115,7 +128,6 @@ function userDisconnected(u) {
 /**
  * callback for when a player is banned
  * @callback
- * @async
  * 
  * @param {Object} player user object of the banned player
  * 
@@ -132,7 +144,6 @@ function playerBan(id) {
 
 /**
  * callback for when a round / map has ended
- * @async
  * @callback
  * 
  * @example <caption>Example usage of mapEnd() function.</caption>
@@ -176,6 +187,8 @@ function mapStart(logId) {
     print(`${appData.demoName.green} deleted. Inactive map.`);
   } else if (appData.demoName && !fs.existsSync(appData.demoName)) {
     print(`${appData.demoName.green} does not match a demo filename`);
+  } else {
+    print(`Things broke looking for ${appData.demoName.green}`);
   }
   appData.demoName = path.join(config.gameServerDir, `auto-${y}${m}${d}-${h}${min}-dm_bellas_room_d1.dem`);
   appData.playersPlayed = false;
@@ -189,7 +202,6 @@ function mapStart(logId) {
  * new RconStats('127.0.0.1', 'supersecurepassword', rconStats).ping();
  */
 function rconStats(stats) {
-  // console.log(stats);
   appData.rconStats = stats;
   if (dashboard) dashboard.send(JSON.stringify(stats), e => {});
 }
@@ -212,7 +224,6 @@ function who(req, message) {
 
 /**
  * grabs stats object from json file for a given month
- * @async
  *
  * @param {Number} month number of the month 0 - 11 **optional**
  * 
@@ -257,12 +268,13 @@ function getOldStatsList(month, year) {
         reject('Year must be a number');
         return;
       }
-      files.map(file => {
+      files.some(file => {
         let time = Number(path.basename(file, '.json'));
         let fileMonth = new Date(time).getMonth();
         let fileYear = new Date(time).getFullYear();
         if (fileMonth === month && fileYear === year) {
-          return resolve(require(path.join(__dirname, 'old-top', file)));
+          resolve(require(path.join(__dirname, 'old-top', file)));
+          return true;
         }
       });
       reject('File not found');
@@ -297,7 +309,6 @@ async function statsLoop() {
 
 /**
  * parse folder of logs 1 line @ a time. dumping each line into the scanner
- * @async
  * @see <a href=modules/lineScanner/lineScanner.js>lineScanner.js</a>
  * 
  * @returns {Promise<String>} duration for task to complete
@@ -476,6 +487,7 @@ app.get('/status', (req, res) => {
  * login system
  * @function
  * @name /auth
+ * @async
  * 
  * @see <a href=modules/auth/auth-doc.md#module_modules/auth..auth>auth-doc.md</a>
  * 
@@ -495,33 +507,36 @@ app.get('/status', (req, res) => {
 app.get('/auth', oneOf([
   check('name').exists().escape().stripLow(),
   check('k').exists().escape().stripLow()
-]), (req, res) => {
+]), async (req, res) => {
   try {
     validationResult(req).throw();
     let t = new Timer();
     who(req, `is requesting authorization`);
     let name = req.query.name;
-    appData.authorize(db, name, req.query.k).then(authorized => {
+    try {
+      const authorized = await appData.authorize(db, name, req.query.k);
       if (!authorized) {
         who(req, `failed to authorize as id ${name.grey} ` + `${t.endString()}`.cyan + ` response time`);
-        return res.status(401).json({
+        res.status(401).json({
           status: 401,
           authorized: authorized
         });
+        return;
       }
       who(req, `was successfully authorized as id ${name.grey} ` + `${t.endString()}`.cyan + ` response time`);
       res.status(200).json({
         status: 200,
         authorized: authorized
       });
-    }).catch(e => {
+    } catch(e) {
       who(req, `failed to authorize: ${e.message} ` + `${t.endString()}`.cyan + ` response time`);
       return res.status(401).json({
         status: 401,
         authorized: false
       });
-    });
+    }
   } catch (err) {
+    logError(err);
     fiveHundred(req, res);
   }
 });
@@ -667,6 +682,7 @@ app.get('/newPlayers/:date', oneOf([
     who(req, `is viewing ` + `/newPlayers/${date}`.green + ` data on ` + `${monthName(new Date().getMonth())} ${suffix(date)} `.yellow + `${users.length} new players`.grey + ` ${t.endString()}`.cyan + ` response time`);
     res.send(users);
   } catch(e) {
+    logError(e);
     fiveHundred(req, res);
   }
 });
@@ -697,6 +713,7 @@ app.get('/returnPlayers/:date', async (req, res) => {
     who(req, `is viewing ` + `/returnPlayers/${date}`.green + ` data for ` + `${monthName(new Date().getMonth())} ${suffix(date)} `.yellow + `${users.length} players`.grey + ` ${t.endString()}`.cyan + ` response time`);
     res.send(users);
   } catch(e) {
+    logError(e);
     fiveHundred(req, res);
   }
 });
