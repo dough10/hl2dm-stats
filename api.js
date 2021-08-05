@@ -89,7 +89,9 @@ async function userConnected(u) {
   u.new = appData.playerConnect(u.time, u.id, u.name, u.ip);
   if (loggingEnabled) {
     print(`${u.name.grey} connected with IP address: ${u.ip.grey}`);
-    if (await require('./modules/vpn_check/vpn_check.js')(u.ip)) {
+    const vpnCheck = require('./modules/vpn_check/vpn_check.js');
+    let vpn = await vpnCheck(u.ip);
+    if (vpn) {
       print(`${u.name.grey}'s connection is behind a know vpn ip address`);
     }
   }

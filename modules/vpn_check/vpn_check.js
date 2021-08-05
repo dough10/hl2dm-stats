@@ -24,7 +24,7 @@ async function processIPs() {
 module.exports = async ip => {
   return processIPs().then(list => {
     if (!validateIPaddress(ip)) {
-      console.log(ip);
+      console.log(`${new Date().toLocaleString()} - Invalid IP address ${ip}`);
       return false;
     }
     return list.includes(ip);
