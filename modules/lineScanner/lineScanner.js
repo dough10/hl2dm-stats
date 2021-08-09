@@ -28,7 +28,7 @@ function validateIPaddress(ip) {
  * scans the line for file start
  * @param {Array} line - one line of the log file being parsed
  * 
- * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
+ * @returns {Boolean} result of Array.indexOf();
  * 
  * @example <caption>Example usage of isFileStart() function.</caption>
  * isFileStart([
@@ -52,7 +52,7 @@ function isFileStart(word) {
  * scans the line for file end
  * @param {Array} line - one line of the log file being parsed
  * 
- * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
+ * @returns {Boolean} result of Array.indexOf();
  * 
  * @example <caption>Example usage of isFileEnd() function.</caption>
  * isFileEnd([
@@ -243,119 +243,74 @@ function buildKilledNameString(line, start) {
   return name;
 }
 
-function lineIsKillAsync(line) {
-  return new Promise(resolve => {
-    line.map((word, index) => {
-      if (word === 'killed') {
-        resolve(index);
-      }
-    });
-  });
-}
-
 /**
  * scans the line for player kill
  * @param {Array} line - one line of the log file being parsed
  * 
- * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
+ * @returns {Number} result of Array.indexOf();
  */
 function lineIsKill(line) {
-  for (let i = 0; i < line.length; i++) {
-    if (line[i] === 'killed') {
-      return i;
-    }
-  }
-  return false;
+  return line.indexOf('killed');
 }
 
 /**
  * scans the line for player connection
  * @param {Array} line - one line of the log file being parsed
  * 
- * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
+ * @returns {Boolean} result of Array.indexOf();
  */
 function lineIsConnect(line) {
-  for (let i = 0; i < line.length; i++) {
-    if (line[i] === 'connected,') {
-      return i;
-    }
-  }
-  return false;
+  return line.indexOf('connected,');
 }
 
 /**
  * scans the line for suicide
  * @param {Array} line - one line of the log file being parsed
  * 
- * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
+ * @returns {Boolean} result of Array.indexOf();
  */
 function lineIsSuicide(line) {
-  for (let i = 0; i < line.length; i++) {
-    if (line[i] === 'committed') {
-      return i;
-    }
-  }
-  return false;
+  return line.indexOf('committed');
 }
 
 /**
  * scans the line for chat
  * @param {Array} line - one line of the log file being parsed
  * 
- * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
+ * @returns {Boolean} result of Array.indexOf();
  */
 function lineIsChat(line) {
-  for (let i = 0; i < line.length; i++) {
-    if (line[i] === 'say') {
-      return i;
-    }
-  }
-  return false;
+  return line.indexOf('say');
 }
 
 /**
  * scans the line for headshot
  * @param {Array} line - one line of the log file being parsed
  * 
- * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
+ * @returns {Boolean} result of Array.indexOf();
  */
 function lineIsHeadshot(line) {
-  for (let i = 0; i < line.length; i++) {
-    if (line[i] === '"headshot"') {
-      return i - 1;
-    }
-  }
-  return false;
+  return line.indexOf('"headshot"');
 }
 
 /**
  * scans the line for weaponstats
  * @param {Array} line - one line of the log file being parsed
  * 
- * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
+ * @returns {Boolean} result of Array.indexOf();
  */
 function lineIsStats(line) {
-  for (let i = 0; i < line.length; i++) {
-    if (line[i] === '"weaponstats"') {
-      return i;
-    }
-  }
-  return false;
+  return line.indexOf('"weaponstats"');
 }
 
 /**
  * scans the line for weaponstats2
  * @param {Array} line - one line of the log file being parsed
  * 
- * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
+ * @returns {Boolean} result of Array.indexOf();
  */
 function lineIsStats2(line) {
-  for (let i = 0; i < line.length; i++) {
-    if (line[i] === '"weaponstats2"') {
-      return i;
-    }
-  }
-  return false;
+  return line.indexOf('"weaponstats"');
 }
 
 
@@ -363,7 +318,7 @@ function lineIsStats2(line) {
  * scans the line for console message
  * @param {Array} line - one line of the log file being parsed
  * 
- * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
+ * @returns {Boolean} result of Array.indexOf();
  */
 function lineIsConsole(line) {
   let ipstring = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):\d{4,5}$/;
@@ -381,37 +336,27 @@ function lineIsConsole(line) {
  * scans the line for ban
  * @param {Array} line - one line of the log file being parsed
  * 
- * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
+ * @returns {Boolean} result of Array.indexOf();
  */
 function playerIsBanned(line) {
-  for (let i = 0; i < line.length; i++) {
-    if (line[i] === 'banned') {
-      return i - 1;
-    }
-  }
-  return false;
+  return line.indexOf('banned');
 }
 
 /**
  * scans the line for player disconnect
  * @param {Array} line - one line of the log file being parsed
  * 
- * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
+ * @returns {Boolean} result of Array.indexOf();
  */
 function playerHasDisconnected(line) {
-  for (let i = 0; i < line.length; i++) {
-    if (line[i] === 'disconnected') {
-      return i;
-    }
-  }
-  return false;
+  return line.indexOf('disconnected');
 }
 
 /**
  * scans the line for time
  * @param {Array} line - one line of the log file being parsed
  * 
- * @returns {Boolean} reads as Boolean value. true: is the index of the landmark word, false: word was not present
+ * @returns {Boolean} result of Array.indexOf();
  */
 function getLineTime(line) {
   for (let i = 0; i < line.length; i++) {
@@ -424,6 +369,7 @@ function getLineTime(line) {
 
 let startDebounceTime = 0;
 let endDebounceTime = 0;
+
 
 /**
  * scans the line for usable data for the data-model   **update params**
@@ -442,27 +388,26 @@ let endDebounceTime = 0;
  * @param {Boolean} loggingEnabled - log to console. (used to avoid spam when scanning logs when getting data from realtime from rcon logs)
  */
 function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2, onJoin, onDisconnect, onMapStart, onMapEnd, onBan, loggingEnabled) {
-  // if (loggingEnabled) console.log(line);
-  let word  = line.split(' ');  // array
-  let isKill = lineIsKill(word);
-  let isConnect = lineIsConnect(word);
-  let isSuicide = lineIsSuicide(word);
-  let isChat = lineIsChat(word);
-  let isHeadshot  = lineIsHeadshot(word);
-  let isStats = lineIsStats(word);
-  let isStats2 = lineIsStats2(word);
-  let isConsole = lineIsConsole(word);
-  let isBanned = playerIsBanned(word);
-  let isStart = isFileStart(word);
-  let isEnd = isFileEnd(word);
-  let hasDisconnected = playerHasDisconnected(word);
-  let lineTime = getLineTime(word);
+  const word  = line.split(' ');  // array
+  const isKill = lineIsKill(word);
+  const isConnect = lineIsConnect(word);
+  const isSuicide = lineIsSuicide(word);
+  const isChat = lineIsChat(word);
+  const isHeadshot  = lineIsHeadshot(word);
+  const isStats = lineIsStats(word);
+  const isStats2 = lineIsStats2(word);
+  const isConsole = lineIsConsole(word);
+  const isBanned = playerIsBanned(word);
+  const isStart = isFileStart(word);
+  const isEnd = isFileEnd(word);
+  const hasDisconnected = playerHasDisconnected(word);
+  const lineTime = getLineTime(word);
   if (isConsole) {
      return;
-  } else if (isChat) {
-    let nameString = buildKillerNameString(word, isChat);
-    let id = getID3(nameString);
-    let name = getName(nameString);
+  } else if (isChat > -1) {
+    const nameString = buildKillerNameString(word, isChat);
+    const id = getID3(nameString);
+    const name = getName(nameString);
     if (!id) {
       return;
     }
@@ -478,19 +423,19 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     }
     if (onChat) onChat(lineTime, id, name, said, loggingEnabled);
     if (loggingEnabled) print(`${name.grey} said ${said.magenta}`);
-  } else if (isBanned) {
-    let nameString = buildKillerNameString(word, isBanned);
-    // let name = getName(nameString);
-    let id = getID3(nameString);
+  } else if (isBanned > -1) {
+    const nameString = buildKillerNameString(word, isBanned);
+    // const name = getName(nameString);
+    const id = getID3(nameString);
     if (!id) {
       return;
     }
     if (onBan) onBan(id);
-  } else if (isConnect) {
-    let nameString = buildKillerNameString(word, isConnect);
-    let id = getID3(nameString);
-    let name = getName(nameString);
-    let ip = word[isConnect  + 2].replace('"', '').replace('"', '').replace(/:\d{4,5}$/, '');
+  } else if (isConnect > -1) {
+    const nameString = buildKillerNameString(word, isConnect);
+    const id = getID3(nameString);
+    const name = getName(nameString);
+    const ip = word[isConnect  + 2].replace('"', '').replace('"', '').replace(/:\d{4,5}$/, '');
     if (!name) {
       return;
     }
@@ -501,27 +446,25 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
       return;
     }
     if (loggingEnabled) playerTimes[id] = lineTime;
-    if (onJoin) {
-      onJoin({
-        name: name,
-        id: id,
-        ip: ip,
-        time: lineTime,
-        loggingEnabled: loggingEnabled
-      });
-    }
-  } else if (isKill) {
-    let killerNameString = buildKillerNameString(word, isKill);  // isKill is the index after the last index of the player name
-    let killedNameString = buildKilledNameString(word, isKill + 1); // isKill + 1 is the index @ the beginning of the killed players name
-    let killer = {
+    if (onJoin) onJoin({
+      name: name,
+      id: id,
+      ip: ip,
+      time: lineTime,
+      loggingEnabled: loggingEnabled
+    });
+  } else if (isKill > -1) {
+    const killerNameString = buildKillerNameString(word, isKill);  // isKill is the index after the last index of the player name
+    const killer = {
       name: getName(killerNameString),
       id: getID3(killerNameString)
     };
-    let killed = {
+    const killedNameString = buildKilledNameString(word, isKill + 1); // isKill + 1 is the index @ the beginning of the killed players name
+    const killed = {
       name: getName(killedNameString),
       id: getID3(killedNameString)
     };
-    let weapon = word[word.length - 1].replace('"', '').replace('"', '');
+    const weapon = word[word.length - 1].replace('"', '').replace('"', '');
     if (!killer.id) {
       return;
     }
@@ -539,11 +482,11 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     }
     if (onKill) onKill(lineTime, killer, killed, weapon, loggingEnabled);
     if (loggingEnabled) print(`${killer.name.grey} killed ${killed.name.grey} with weapon ${weapon.magenta}`);
-  } else if (isSuicide) {
-    let nameString = buildKillerNameString(word, isSuicide);
-    let id = getID3(nameString);
-    let name = getName(nameString);
-    let weapon = word[word.length - 1].replace('"', '').replace('"', '');
+  } else if (isSuicide > -1) {
+    const nameString = buildKillerNameString(word, isSuicide);
+    const id = getID3(nameString);
+    const name = getName(nameString);
+    const weapon = word[word.length - 1].replace('"', '').replace('"', '');
     if (!id) {
       return;
     }
@@ -555,10 +498,10 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     }
     if (onSuicide) onSuicide(lineTime, id, name, weapon);
     if (loggingEnabled) print(`${name.grey} has commit suicide with ${weapon.magenta}`);
-  } else if (isHeadshot) {
-    let killerNameString = buildKillerNameString(word, isHeadshot);
-    let name = getName(killerNameString);
-    let id = getID3(new SteamID(getID2(killerNameString)).getSteam3RenderedID());
+  } else if (isHeadshot > -1) {
+    const killerNameString = buildKillerNameString(word, isHeadshot);
+    const name = getName(killerNameString);
+    const id = getID3(new SteamID(getID2(killerNameString)).getSteam3RenderedID());
     if (!id) {
       return;
     }
@@ -567,10 +510,10 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     }
     if (onHeadshot) onHeadshot(lineTime, id, name);
     if (loggingEnabled) print(`${name.grey} got a ` + `HEADSHOT!!`.magenta);
-  } else if (isStats) {
-    let killedNameString = buildKillerNameString(word, isStats - 1);
-    let name = getName(killedNameString);
-    let id3 = getID3(new SteamID(getID2(killedNameString)).getSteam3RenderedID());
+  } else if (isStats > -1) {
+    const killedNameString = buildKillerNameString(word, isStats - 1);
+    const name = getName(killedNameString);
+    const id3 = getID3(new SteamID(getID2(killedNameString)).getSteam3RenderedID());
     if (!id3) {
       return;
     }
@@ -580,7 +523,7 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     for (let i = 0; i < word.length; i++) {
       word[i] = word[i].replace('"', '').replace('(', '').replace(')', '').replace('"', '');
     }
-    let weaponName = word[isStats + 2];
+    const weaponName = word[isStats + 2];
     if (!isWeapon(weaponName)) {
       return;
     }
@@ -591,10 +534,10 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
       hs: Number(word[isStats + 8]),
       damage: Number(word[isStats + 14])
     });
-  } else if (isStats2) {
-    let killedNameString = buildKillerNameString(word, isStats2 - 1);
-    let name = getName(killedNameString);
-    let id = getID3(new SteamID(getID2(killedNameString)).getSteam3RenderedID());
+  } else if (isStats2 > -1) {
+    const killedNameString = buildKillerNameString(word, isStats2 - 1);
+    const name = getName(killedNameString);
+    const id = getID3(new SteamID(getID2(killedNameString)).getSteam3RenderedID());
     if (!id) {
       return;
     }
@@ -609,13 +552,13 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     if (!isWeapon(weaponName)) {
       return;
     }
-    let head = word[isStats2 + 4];
-    let chest = word[isStats2 + 6];
-    let stomach = word[isStats2 + 8];
-    let leftarm = word[isStats2 + 10];
-    let rightarm = word[isStats2 + 12];
-    let leftleg = word[isStats2 + 14];
-    let rightleg = word[isStats2 + 16];
+    const head = word[isStats2 + 4];
+    const chest = word[isStats2 + 6];
+    const stomach = word[isStats2 + 8];
+    const leftarm = word[isStats2 + 10];
+    const rightarm = word[isStats2 + 12];
+    const leftleg = word[isStats2 + 14];
+    const rightleg = word[isStats2 + 16];
     if (!head) {
       return;
     }
@@ -651,7 +594,7 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     if (new Date().getTime() - startDebounceTime < 15000) {
       return;
     }
-    let log = Number(word[isStart + 2].replace('"logs/L', '').replace('.log")', '')) + 1;
+    const log = Number(word[isStart + 2].replace('"logs/L', '').replace('.log")', '')) + 1;
     if (loggingEnabled && onMapStart) onMapStart(`L${log}`);
     startDebounceTime = new Date().getTime();
   } else if (isEnd) {
@@ -663,10 +606,10 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
       if (onMapEnd) onMapEnd();
       endDebounceTime = new Date().getTime();
     }
-  } else if (hasDisconnected) {
-    let nameString = buildKillerNameString(word, hasDisconnected);
-    let name = getName(nameString);
-    let id = getID3(nameString);
+  } else if (hasDisconnected > -1) {
+    const nameString = buildKillerNameString(word, hasDisconnected);
+    const name = getName(nameString);
+    const id = getID3(nameString);
     let onlineFor; 
     if (loggingEnabled) {
       onlineFor = lineTime - playerTimes[id];

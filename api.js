@@ -90,8 +90,7 @@ async function userConnected(u) {
   if (loggingEnabled) {
     print(`${u.name.grey} connected with IP address: ${u.ip.grey}`);
     const vpnCheck = require('./modules/vpn_check/vpn_check.js');
-    let vpn = await vpnCheck(u.ip);
-    if (vpn) {
+    if (await vpnCheck(u.ip)) {
       print(`${u.name.grey}'s connection is behind a know vpn ip address`);
     }
   }

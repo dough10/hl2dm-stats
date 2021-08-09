@@ -14,7 +14,7 @@
     * [~isTime(str)](#module_modules/lineScanner..isTime) ⇒ <code>Boolean</code>
     * [~buildKillerNameString(line, end)](#module_modules/lineScanner..buildKillerNameString) ⇒ <code>String</code>
     * [~buildKilledNameString(line, start)](#module_modules/lineScanner..buildKilledNameString) ⇒ <code>String</code>
-    * [~lineIsKill(line)](#module_modules/lineScanner..lineIsKill) ⇒ <code>Boolean</code>
+    * [~lineIsKill(line)](#module_modules/lineScanner..lineIsKill) ⇒ <code>Number</code>
     * [~lineIsConnect(line)](#module_modules/lineScanner..lineIsConnect) ⇒ <code>Boolean</code>
     * [~lineIsSuicide(line)](#module_modules/lineScanner..lineIsSuicide) ⇒ <code>Boolean</code>
     * [~lineIsChat(line)](#module_modules/lineScanner..lineIsChat) ⇒ <code>Boolean</code>
@@ -49,7 +49,7 @@ console.log(validateIPaddress('192.168.0.1')); = true
 scans the line for file start
 
 **Kind**: inner method of [<code>modules/lineScanner</code>](#module_modules/lineScanner)  
-**Returns**: <code>Boolean</code> - reads as Boolean value. true: is the index of the landmark word, false: word was not present  
+**Returns**: <code>Boolean</code> - result of Array.indexOf();  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -71,7 +71,7 @@ isFileStart([
 scans the line for file end
 
 **Kind**: inner method of [<code>modules/lineScanner</code>](#module_modules/lineScanner)  
-**Returns**: <code>Boolean</code> - reads as Boolean value. true: is the index of the landmark word, false: word was not present  
+**Returns**: <code>Boolean</code> - result of Array.indexOf();  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -215,11 +215,11 @@ let killed = buildKilledNameString([
 ```
 <a name="module_modules/lineScanner..lineIsKill"></a>
 
-### modules/lineScanner~lineIsKill(line) ⇒ <code>Boolean</code>
+### modules/lineScanner~lineIsKill(line) ⇒ <code>Number</code>
 scans the line for player kill
 
 **Kind**: inner method of [<code>modules/lineScanner</code>](#module_modules/lineScanner)  
-**Returns**: <code>Boolean</code> - reads as Boolean value. true: is the index of the landmark word, false: word was not present  
+**Returns**: <code>Number</code> - result of Array.indexOf();  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -231,7 +231,7 @@ scans the line for player kill
 scans the line for player connection
 
 **Kind**: inner method of [<code>modules/lineScanner</code>](#module_modules/lineScanner)  
-**Returns**: <code>Boolean</code> - reads as Boolean value. true: is the index of the landmark word, false: word was not present  
+**Returns**: <code>Boolean</code> - result of Array.indexOf();  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -243,7 +243,7 @@ scans the line for player connection
 scans the line for suicide
 
 **Kind**: inner method of [<code>modules/lineScanner</code>](#module_modules/lineScanner)  
-**Returns**: <code>Boolean</code> - reads as Boolean value. true: is the index of the landmark word, false: word was not present  
+**Returns**: <code>Boolean</code> - result of Array.indexOf();  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -255,7 +255,7 @@ scans the line for suicide
 scans the line for chat
 
 **Kind**: inner method of [<code>modules/lineScanner</code>](#module_modules/lineScanner)  
-**Returns**: <code>Boolean</code> - reads as Boolean value. true: is the index of the landmark word, false: word was not present  
+**Returns**: <code>Boolean</code> - result of Array.indexOf();  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -267,7 +267,7 @@ scans the line for chat
 scans the line for headshot
 
 **Kind**: inner method of [<code>modules/lineScanner</code>](#module_modules/lineScanner)  
-**Returns**: <code>Boolean</code> - reads as Boolean value. true: is the index of the landmark word, false: word was not present  
+**Returns**: <code>Boolean</code> - result of Array.indexOf();  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -279,7 +279,7 @@ scans the line for headshot
 scans the line for weaponstats
 
 **Kind**: inner method of [<code>modules/lineScanner</code>](#module_modules/lineScanner)  
-**Returns**: <code>Boolean</code> - reads as Boolean value. true: is the index of the landmark word, false: word was not present  
+**Returns**: <code>Boolean</code> - result of Array.indexOf();  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -291,7 +291,7 @@ scans the line for weaponstats
 scans the line for weaponstats2
 
 **Kind**: inner method of [<code>modules/lineScanner</code>](#module_modules/lineScanner)  
-**Returns**: <code>Boolean</code> - reads as Boolean value. true: is the index of the landmark word, false: word was not present  
+**Returns**: <code>Boolean</code> - result of Array.indexOf();  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -303,7 +303,7 @@ scans the line for weaponstats2
 scans the line for console message
 
 **Kind**: inner method of [<code>modules/lineScanner</code>](#module_modules/lineScanner)  
-**Returns**: <code>Boolean</code> - reads as Boolean value. true: is the index of the landmark word, false: word was not present  
+**Returns**: <code>Boolean</code> - result of Array.indexOf();  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -315,7 +315,7 @@ scans the line for console message
 scans the line for ban
 
 **Kind**: inner method of [<code>modules/lineScanner</code>](#module_modules/lineScanner)  
-**Returns**: <code>Boolean</code> - reads as Boolean value. true: is the index of the landmark word, false: word was not present  
+**Returns**: <code>Boolean</code> - result of Array.indexOf();  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -327,7 +327,7 @@ scans the line for ban
 scans the line for player disconnect
 
 **Kind**: inner method of [<code>modules/lineScanner</code>](#module_modules/lineScanner)  
-**Returns**: <code>Boolean</code> - reads as Boolean value. true: is the index of the landmark word, false: word was not present  
+**Returns**: <code>Boolean</code> - result of Array.indexOf();  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -339,7 +339,7 @@ scans the line for player disconnect
 scans the line for time
 
 **Kind**: inner method of [<code>modules/lineScanner</code>](#module_modules/lineScanner)  
-**Returns**: <code>Boolean</code> - reads as Boolean value. true: is the index of the landmark word, false: word was not present  
+**Returns**: <code>Boolean</code> - result of Array.indexOf();  
 
 | Param | Type | Description |
 | --- | --- | --- |
