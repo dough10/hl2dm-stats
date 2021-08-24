@@ -56,7 +56,6 @@ avaliable from <https://github.com/dough10/hl2dm-stats-ui>
 ## Dependencies
 
 - bcrypt: ^5.0.1
-- blocked: ^1.3.0
 - clear: ^0.1.0
 - colors: ^1.4.0
 - compression: ^1.7.4
