@@ -25,9 +25,7 @@ class RconStats {
     this.onStats = onStats;
     this.interval = 10000;
     this.db = "srcds_db";
-    setInterval(_ => {
-      this._connect().then(this._ping.bind(this));
-    }, this.interval);
+    setInterval(_ => this._connect().then(this._ping.bind(this)), this.interval);
   }
   /**
    * connects to the game server rcon

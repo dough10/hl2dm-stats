@@ -571,7 +571,7 @@ async function nameBlock(player) {
 }
 
 function createMap(ll, username) {
-  let loc = { lat:ll[0], lng: ll[1] };
+  let loc = { lat: ll[0], lng: ll[1] };
   let map = document.createElement('div');
   map.style.height = '200px';
   map.style.width = '400px';
@@ -682,6 +682,4 @@ let pos = 0;
 window.onload = getPlayers();
 
 
-function initMap() {
-
-}
+const initMap = () => {};
