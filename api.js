@@ -201,6 +201,9 @@ function mapStart(logId) {
  * new RconStats('127.0.0.1', 'supersecurepassword', rconStats).ping();
  */
 function rconStats(stats) {
+  if (stats.fps < 90) {
+    print(`FPS droped to ${stats.fps}. Restart recomended`);
+  }
   appData.rconStats = stats;
   if (dashboard) dashboard.send(JSON.stringify(stats), e => {});
 }

@@ -132,7 +132,7 @@ function isLocalIP(ip) {
  * @param {String} ip ip address of the client connected to the server
  */
 function ipLookup(ip, id) {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     if ('localStorage' in window && localStorage[id]) {
       let savedData = JSON.parse(localStorage[id]);
       if (ip !== savedData.ip) {
@@ -154,18 +154,16 @@ function ipLookup(ip, id) {
       });
       return;
     }
-    fetch(`https://get.geojs.io/v1/ip/country/${ip}.json`).then(response => {
-      if (response.status !== 200) {
-        reject(response.status);
-        return;
-      }
-      response.json().then(json => {
-        if ('localStorage' in window) {
-          localStorage[id] = JSON.stringify(json);
-        }
-        resolve(json);
-      });
-    });
+    const response = await fetch(`https://get.geojs.io/v1/ip/country/${ip}.json`);
+    if (response.status !== 200) {
+      reject(response.status);
+      return;
+    }
+    const json = await response.json();
+    if ('localStorage' in window) {
+      localStorage[id] = JSON.stringify(json);
+    }
+    resolve(json);
   });
 }
 
