@@ -42,6 +42,7 @@ const colors = require('colors');
 const config = require('./modules/loadConfig/loadConfig.js')();
 const RconStats = require('./modules/RconStats/rcon.js');
 const logFolder = path.join(config.gameServerDir, 'logs');
+const vpnCheck = require('./modules/vpn_check/vpn_check.js');
 let receiver = new logReceiver.LogReceiver();
 let appData = new Datamodel();
 let db;
@@ -89,8 +90,9 @@ async function userConnected(u) {
   u.new = appData.playerConnect(u.time, u.id, u.name, u.ip);
   if (loggingEnabled) {
     print(`${u.name.grey} connected with IP address: ${u.ip.grey}`);
-    const vpnCheck = require('./modules/vpn_check/vpn_check.js');
-    if (await vpnCheck(u.ip)) {
+    const vpn = await vpnCheck(u.ip);
+    console.log(u.name, vpn);
+    if (vpn) {
       print(`${u.name.grey}'s connection is behind a know vpn ip address`);
     }
   }
@@ -179,10 +181,6 @@ function mapStart(logId) {
   if (h < 10) h = `0${h}`;
   let min = now.getMinutes();
   if (min < 10) min = `0${min}`;
-  // console.log("appData.playersPlayed: ", appData.playersPlayed);
-  // console.log("appData.demoName: ", appData.demoName.green);
-  // console.log("fs.existsSync(appData.demoName): ", fs.existsSync(appData.demoName));
-  // console.log("Will delete file?: ", !appData.playersPlayed && appData.demoName && fs.existsSync(appData.demoName));
   if (!appData.playersPlayed && appData.demoName && fs.existsSync(appData.demoName)) {
     fs.unlinkSync(appData.demoName);
     print(`${appData.demoName.green} deleted. Inactive map.`);
@@ -200,9 +198,13 @@ function mapStart(logId) {
  * @example <caption>Example usage of rconStats() function.</caption>
  * new RconStats('127.0.0.1', 'supersecurepassword', rconStats).ping();
  */
+let dropCount = 0;
 function rconStats(stats) {
-  if (stats.fps < 90) {
-    print(`FPS droped to ${stats.fps}. Restart recomended`);
+  if (stats[5] <= 90) dropCount++;
+  if (stats[5] >= 90) dropCount = 0;
+  if (dropCount > 4) {
+    dropCount = 0;
+    print(`FPS droped to ${stats[5]}. **Restart recomended**`.red);
   }
   appData.rconStats = stats;
   if (dashboard) dashboard.send(JSON.stringify(stats), e => {});
@@ -299,7 +301,7 @@ function getOldStatsList(month, year) {
 async function statsLoop() {
   setTimeout(statsLoop, 5000);
   try{
-    let status = await gameServerStatus();
+    const status = await gameServerStatus();
     appData.updateStatus(status);
     if (socket) {
       socket.send(JSON.stringify(status), e => {});

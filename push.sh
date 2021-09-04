@@ -1,10 +1,5 @@
 #!/bin/sh
-if [ "$2" == "+" ]
-  then
-    v=$(node modules/incriment-version/incriment-version.js);
-  else
-    v=$(node -p "require('./package.json').version");
-fi
+v=$(node modules/incriment-version/incriment-version.js);
 echo "$1, V: $v";
 node make-docs
 git add .;

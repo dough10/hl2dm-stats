@@ -408,43 +408,29 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     const nameString = buildKillerNameString(word, isChat);
     const id = getID3(nameString);
     const name = getName(nameString);
-    if (!id) {
-      return;
-    }
-    if (!name) {
-      return;
-    }
+    if (!id) return;
+    if (!name) return;
     for (let i = 0; i < word.length; i++) {
       word[i] = word[i].replace('"', '').replace('"', '');
     }
     let said = '';
-    for (let i = isChat + 1; i < word.length; i++) {
-      said = `${said}${word[i]} `;
-    }
+    for (let i = isChat + 1; i < word.length; i++) said = `${said}${word[i]} `;
     if (onChat) onChat(lineTime, id, name, said, loggingEnabled);
     if (loggingEnabled) print(`${name.grey} said ${said.magenta}`);
   } else if (isBanned > -1) {
     const nameString = buildKillerNameString(word, isBanned);
     // const name = getName(nameString);
     const id = getID3(nameString);
-    if (!id) {
-      return;
-    }
+    if (!id) return;
     if (onBan) onBan(id);
   } else if (isConnect > -1) {
     const nameString = buildKillerNameString(word, isConnect);
     const id = getID3(nameString);
     const name = getName(nameString);
     const ip = word[isConnect  + 2].replace('"', '').replace('"', '').replace(/:\d{4,5}$/, '');
-    if (!name) {
-      return;
-    }
-    if (!id) {
-      return;
-    }
-    if (!validateIPaddress(ip) || ip === 'none') {
-      return;
-    }
+    if (!name) return;
+    if (!id) return;
+    if (!validateIPaddress(ip) || ip === 'none') return; // none = hltv bot
     if (loggingEnabled) playerTimes[id] = lineTime;
     if (onJoin) onJoin({
       name: name,
@@ -465,21 +451,11 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
       id: getID3(killedNameString)
     };
     const weapon = word[word.length - 1].replace('"', '').replace('"', '');
-    if (!killer.id) {
-      return;
-    }
-    if (!killer.name) {
-      return;
-    }
-    if (!killed.id) {
-      return;
-    }
-    if (!killed.name) {
-      return;
-    }
-    if (!isWeapon(weapon)) {
-      return;
-    }
+    if (!killer.id) return;
+    if (!killer.name) return;
+    if (!killed.id) return;
+    if (!killed.name) return;
+    if (!isWeapon(weapon)) return;
     if (onKill) onKill(lineTime, killer, killed, weapon, loggingEnabled);
     if (loggingEnabled) print(`${killer.name.grey} killed ${killed.name.grey} with weapon ${weapon.magenta}`);
   } else if (isSuicide > -1) {
@@ -487,46 +463,30 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     const id = getID3(nameString);
     const name = getName(nameString);
     const weapon = word[word.length - 1].replace('"', '').replace('"', '');
-    if (!id) {
-      return;
-    }
-    if (!name) {
-      return;
-    }
-    if (!isWeapon(weapon)) {
-      return;
-    }
+    if (!id) return;
+    if (!name) return;
+    if (!isWeapon(weapon)) return;
     if (onSuicide) onSuicide(lineTime, id, name, weapon);
     if (loggingEnabled) print(`${name.grey} has commit suicide with ${weapon.magenta}`);
   } else if (isHeadshot > -1) {
     const killerNameString = buildKillerNameString(word, isHeadshot);
     const name = getName(killerNameString);
     const id = getID3(new SteamID(getID2(killerNameString)).getSteam3RenderedID());
-    if (!id) {
-      return;
-    }
-    if (!name) {
-      return;
-    }
+    if (!id) return;
+    if (!name) return;
     if (onHeadshot) onHeadshot(lineTime, id, name);
     if (loggingEnabled) print(`${name.grey} got a ` + `HEADSHOT!!`.magenta);
   } else if (isStats > -1) {
     const killedNameString = buildKillerNameString(word, isStats - 1);
     const name = getName(killedNameString);
     const id3 = getID3(new SteamID(getID2(killedNameString)).getSteam3RenderedID());
-    if (!id3) {
-      return;
-    }
-    if (!name) {
-      return;
-    }
+    if (!id3) return;
+    if (!name) return;
     for (let i = 0; i < word.length; i++) {
       word[i] = word[i].replace('"', '').replace('(', '').replace(')', '').replace('"', '');
     }
     const weaponName = word[isStats + 2];
-    if (!isWeapon(weaponName)) {
-      return;
-    }
+    if (!isWeapon(weaponName)) return;
     if (onStats) onStats(lineTime, id3, name, {
       name: weaponName,
       shots: Number(word[isStats + 4]),
@@ -538,20 +498,14 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     const killedNameString = buildKillerNameString(word, isStats2 - 1);
     const name = getName(killedNameString);
     const id = getID3(new SteamID(getID2(killedNameString)).getSteam3RenderedID());
-    if (!id) {
-      return;
-    }
-    if (!name) {
-      return;
-    }
+    if (!id) return;
+    if (!name) return;
     // clean up extra chars
     for (let i = 0; i < word.length; i++) {
       word[i] = word[i].replace('"', '').replace('(', '').replace(')', '').replace('"', '');
     }
     let weaponName = word[isStats2 + 2];
-    if (!isWeapon(weaponName)) {
-      return;
-    }
+    if (!isWeapon(weaponName)) return;
     const head = word[isStats2 + 4];
     const chest = word[isStats2 + 6];
     const stomach = word[isStats2 + 8];
@@ -559,27 +513,13 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
     const rightarm = word[isStats2 + 12];
     const leftleg = word[isStats2 + 14];
     const rightleg = word[isStats2 + 16];
-    if (!head) {
-      return;
-    }
-    if (!chest) {
-      return;
-    }
-    if (!stomach) {
-      return;
-    }
-    if (!leftarm) {
-      return;
-    }
-    if (!rightarm) {
-      return;
-    }
-    if (!leftleg) {
-      return;
-    }
-    if (!rightleg) {
-      return;
-    }
+    if (!head) return;
+    if (!chest) return;
+    if (!stomach) return;
+    if (!leftarm) return;
+    if (!rightarm) return;
+    if (!leftleg) return;
+    if (!rightleg) return;
     if (onStats2) onStats2(lineTime, id, name, {
       name: weaponName,
       head: head,
@@ -591,17 +531,13 @@ function scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2
       rightleg: rightleg
     });
   } else if (isStart) {
-    if (new Date().getTime() - startDebounceTime < 15000) {
-      return;
-    }
+    if (new Date().getTime() - startDebounceTime < 15000) return;
     const log = Number(word[isStart + 2].replace('"logs/L', '').replace('.log")', '')) + 1;
     if (loggingEnabled && onMapStart) onMapStart(`L${log}`);
     startDebounceTime = new Date().getTime();
   } else if (isEnd) {
     if (loggingEnabled) {
-      if (new Date().getTime() - endDebounceTime < 15000) {
-        return;
-      }
+      if (new Date().getTime() - endDebounceTime < 15000) return;
       print(`Map reset.`);
       if (onMapEnd) onMapEnd();
       endDebounceTime = new Date().getTime();

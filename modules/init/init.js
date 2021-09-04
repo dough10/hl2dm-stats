@@ -20,7 +20,7 @@ function init(logFolder) {
   console.log(colors.magenta(figlet.textSync(pack.name, {
     horizontalLayout: 'default'
   })));
-  console.log(`Legend: ` + 'Current Time, '.yellow + ' Timers,'.cyan + ' Important,'.red + ' People / IP\'s,'.grey + ' Files / Paths,'.green + ' Weapons / Chat'.magenta);
+  console.log(`Legend: ` + 'Event Time,'.yellow + ' Timers,'.cyan + ' Important,'.red + ' People / IP\'s,'.grey + ' Files / Paths,'.green + ' Weapons / Chat'.magenta);
   console.log(`API Version: ` + `${pack.version}`.red);
   console.log(`Log folder: ${logFolder.green}`);
 }
