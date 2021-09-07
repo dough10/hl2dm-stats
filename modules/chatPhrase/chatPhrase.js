@@ -22,8 +22,8 @@ function processPhrases() {
 }
 
 async function checkPhrases(phrase) {
-  let list = await processPhrases();
-  let trimmed = phrase.trim();
+  const list = await processPhrases();
+  const trimmed = phrase.trim();
   return list.includes(trimmed);
 }
 

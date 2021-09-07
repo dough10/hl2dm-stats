@@ -24,7 +24,7 @@
     * [~lineIsConsole(line)](#module_modules/lineScanner..lineIsConsole) ⇒ <code>Boolean</code>
     * [~playerIsBanned(line)](#module_modules/lineScanner..playerIsBanned) ⇒ <code>Boolean</code>
     * [~playerHasDisconnected(line)](#module_modules/lineScanner..playerHasDisconnected) ⇒ <code>Boolean</code>
-    * [~getLineTime(line)](#module_modules/lineScanner..getLineTime) ⇒ <code>Boolean</code>
+    * [~getLineTime(line)](#module_modules/lineScanner..getLineTime) ⇒ <code>String</code>
     * [~scanLine(line, onKill, onChat, onSuicide, onHeadshot, onStats, onStats2, onJoin, onDisconnect, onMapStart, onMapEnd, loggingEnabled)](#module_modules/lineScanner..scanLine)
 
 <a name="module_modules/lineScanner..validateIPaddress"></a>
@@ -335,11 +335,11 @@ scans the line for player disconnect
 
 <a name="module_modules/lineScanner..getLineTime"></a>
 
-### modules/lineScanner~getLineTime(line) ⇒ <code>Boolean</code>
+### modules/lineScanner~getLineTime(line) ⇒ <code>String</code>
 scans the line for time
 
 **Kind**: inner method of [<code>modules/lineScanner</code>](#module_modules/lineScanner)  
-**Returns**: <code>Boolean</code> - result of Array.indexOf();  
+**Returns**: <code>String</code> - timestring;  
 
 | Param | Type | Description |
 | --- | --- | --- |

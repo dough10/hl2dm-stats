@@ -356,7 +356,7 @@ function playerHasDisconnected(line) {
  * scans the line for time
  * @param {Array} line - one line of the log file being parsed
  * 
- * @returns {Boolean} result of Array.indexOf();
+ * @returns {String} timestring;
  */
 function getLineTime(line) {
   for (let i = 0; i < line.length; i++) {

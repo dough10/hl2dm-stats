@@ -91,7 +91,6 @@ async function userConnected(u) {
   if (loggingEnabled) {
     print(`${u.name.grey} connected with IP address: ${u.ip.grey}`);
     const vpn = await vpnCheck(u.ip);
-    console.log(u.name, vpn);
     if (vpn) {
       print(`${u.name.grey}'s connection is behind a know vpn ip address`);
     }
@@ -191,6 +190,8 @@ function mapStart(logId) {
   appData.playersPlayed = false;
 }
 
+let dropCount = 0;
+
 /**
  * callback server statistics
  * @callback
@@ -198,7 +199,6 @@ function mapStart(logId) {
  * @example <caption>Example usage of rconStats() function.</caption>
  * new RconStats('127.0.0.1', 'supersecurepassword', rconStats).ping();
  */
-let dropCount = 0;
 function rconStats(stats) {
   if (stats[5] <= 90) dropCount++;
   if (stats[5] >= 90) dropCount = 0;

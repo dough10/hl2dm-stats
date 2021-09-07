@@ -14,7 +14,6 @@
  * // call some functions
  */
 const geoip = require('geoip-lite');
-// const Timer = require('../Timer/Timer.js');
 const checkPhrase = require('../chatPhrase/chatPhrase.js');
 
 /**
