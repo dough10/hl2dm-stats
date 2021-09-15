@@ -40,18 +40,14 @@ function animateElement(el, transform, time, opacity, delay) {
       resolve();
       return;
     }
+    if (!time) time = 300;
+    if (!delay) delay = 0;
     const animationEnd = _ => {
       el.removeEventListener(transitionEvent, animationEnd);
       el.style.willChange = 'initial';
       el.style.transition = 'initial';
       requestAnimationFrame(resolve);
     };
-    if (!time) {
-      time = 300;
-    }
-    if (!delay) {
-      delay = 0;
-    }
     el.addEventListener(transitionEvent, animationEnd, true);
     el.style.willChange = 'auto';
     el.style.transition = `all ${time}ms cubic-bezier(.33,.17,.85,1.1) ${delay}ms`;
@@ -67,14 +63,14 @@ function animateElement(el, transform, time, opacity, delay) {
 function fadeOut(el, time) {
   return new Promise(resolve => {
     if (!el) {
-      return resolve();
+      resolve();
+      return;
     }
     if (el.style.opacity === 0) {
-      return resolve();
+      resolve();
+      return; 
     }
-    if (!time) {
-      time = 200;
-    }
+    if (!time) time = 200;
     var animationEnd = _ => {
       el.removeEventListener(transitionEvent, animationEnd);
       el.style.willChange = 'initial';
@@ -98,9 +94,7 @@ function fadeIn(el, time) {
     if (el.style.opacity === 1) {
       return resolve();
     }
-    if (!time) {
-      time = 200;
-    }
+    if (!time) time = 200;
     const animationEnd = _ => {
       el.removeEventListener(transitionEvent, animationEnd);
       el.style.willChange = 'initial';

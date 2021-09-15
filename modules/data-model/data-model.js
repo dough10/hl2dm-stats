@@ -437,6 +437,12 @@ class Data {
       this.users[id].ip = ip;
       this.users[id].geo = geoip.lookup(ip);
     }
+    // if the user Object was created by a kill and not by a connection there will not be a ip present in the object and will require updating
+    if (ip && !this.users[id].ip) {
+      this.users[id].updated = time;
+      this.users[id].ip = ip;
+      this.users[id].geo = geoip.lookup(ip);
+    }
     return newUser;
   }
 
@@ -666,7 +672,7 @@ class Data {
     if (this.users[killer.id].kdr === Infinity) {
       this.users[killer.id].kdr = this.users[killer.id].kills;
     }
-    // calculate killed KDR
+    // calculate victim KDR
     this.users[killed.id].kdr = Number((this.users[killed.id].kills / this.users[killed.id].deaths).toFixed(2));
   }
 

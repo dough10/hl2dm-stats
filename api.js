@@ -202,7 +202,7 @@ let dropCount = 0;
 function rconStats(stats) {
   if (stats[5] <= 90) dropCount++;
   if (stats[5] >= 90) dropCount = 0;
-  if (dropCount > 4) {
+  if (dropCount > 5) {
     dropCount = 0;
     print(`FPS droped to ${stats[5]}. **Restart recomended**`.red);
   }
