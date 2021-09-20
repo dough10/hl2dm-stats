@@ -100,9 +100,12 @@ async function userConnected(u) {
   u.date = new Date(u.time).getDate();
   u.month = new Date(u.time).getMonth();
   u.year = new Date(u.time).getFullYear();
-  appData.logUser(db, u).then(user => {
+  try {
+    const user = await appData.logUser(db, u);
     if (user && loggingEnabled) print(`${n}${user.name.grey} connection at ${new Date(user.time).toLocaleString().yellow} was logged into database`);
-  }).catch(e => console.error(e.message));
+  } catch(e) {
+    errorHandler(e);
+  }
 }
 
 /**
@@ -136,12 +139,15 @@ function userDisconnected(u) {
  * @example <caption>Example usage of playerBan() function.</caption>
  * scanner(.., .., .., .., playerBan, .., ..);
  */
-function playerBan(id) {
+async function playerBan(id) {
   let player = appData.addBanned(id);
   delete player.loggingEnabled;
-  appData.logBan(db, player).then(p => {
+  try {
+    const p = await appData.logBan(db, player);
     if (p && p.name) print(`${p.name.grey} was saved to ban database`);
-  });
+  } catch(e) {
+    errorHandler(e);
+  }
 }
 
 /**
@@ -151,14 +157,16 @@ function playerBan(id) {
  * @example <caption>Example usage of mapEnd() function.</caption>
  * scanner(.., .., .., .., mapEnd, .., ..);
  */
-function mapEnd() {
-  appData.reset().then(m => {
-    print(m);
-    appData.cacheDemos();
-    parseLogs().then(seconds => {
-      print(`Log parser complete in ${seconds.cyan}`);
-    }).catch(errorHandler);
-  });
+async function mapEnd() {
+  const m = await appData.reset();
+  print(m);
+  appData.cacheDemos();
+  try {
+    const seconds = await parseLogs();
+    print(`Log parser complete in ${seconds.cyan}`);
+  } catch (e) {
+    errorHandler(e);
+  }
 }
 
 /**

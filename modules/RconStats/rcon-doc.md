@@ -6,7 +6,7 @@ push RCON stats to influx
 **Kind**: global class  
 
 * [RconStats](#RconStats)
-    * [new RconStats()](#new_RconStats_new)
+    * [new RconStats(address, password, onStats)](#new_RconStats_new)
     * [._connect()](#RconStats+_connect) ⇒ <code>Promise.&lt;Void&gt;</code>
     * [._getStats()](#RconStats+_getStats) ⇒ <code>Promise.&lt;String&gt;</code>
     * [._parseStats(response)](#RconStats+_parseStats) ⇒ <code>CallableFunction.&lt;Object&gt;</code>
@@ -14,8 +14,15 @@ push RCON stats to influx
 
 <a name="new_RconStats_new"></a>
 
-### new RconStats()
+### new RconStats(address, password, onStats)
 run RCON stats and log response in influxdb to be graphed in grafana
+
+
+| Param | Type |
+| --- | --- |
+| address | <code>String</code> | 
+| password | <code>String</code> | 
+| onStats | <code>function</code> | 
 
 **Example** *(Example usage of RconStats Class.)*  
 ```js

@@ -9,6 +9,10 @@ class RconStats {
    * run RCON stats and log response in influxdb to be graphed in grafana
    * @constructor
    * 
+   * @param {String} address 
+   * @param {String} password
+   * @param {Function} onStats
+   * 
    * @example <caption>Example usage of RconStats Class.</caption>
    * new RconStats('127.0.0.1', 'suspersecurepassword', stats => {
    * // stats object that was logged to database
@@ -95,14 +99,16 @@ class RconStats {
   /**
    * loop to get data at a preset interval
    * 
+   * @async
+   * 
    * @returns {Void} nothing
    * 
    * @example <caption>Example usage of _ping() function.</caption>
    * RconStats._ping();
    */
-  _ping() {
+  async _ping() {
     try {
-      this._getStats().then(this._parseStats.bind(this)).catch(this._error);
+      this._parseStats(await this._getStats());
     } catch(e) {
       this._error(e);
     }
