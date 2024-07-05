@@ -8,3 +8,5 @@ config-win.json
 /test/
 .jshintrc
 /old-top/
+/log.ansi
+/private.pem
