@@ -1,41 +1,26 @@
 #!/bin/bash
-. /home/crumb/.bashrc
-echo '\e[36m ________  ________  ___  ___  ________  ___  ___    _____  ________'
-echo '|\   ___ \|\   __  \|\  \|\  \|\   ____\|\  \|\  \  / __  \|\   __  \'
-echo '\ \  \ |\ \ \  \|\  \ \  \ \  \ \  \___|\ \  \_\  \|\/_|\  \ \  \|\  \'
-echo ' \ \  \  \ \ \  \ \  \ \  \ \  \ \  \  __\ \   __  \|/ \ \  \ \  \ \  \'
-echo '  \ \  \__\ \ \  \_\  \ \  \_\  \ \  \_\  \ \  \ \  \   \ \  \ \  \_\  \'
-echo '   \ \_______\ \_______\ \_______\ \_______\ \__\ \__\   \ \__\ \_______\'
-echo '    \|_______|\|_______|\|_______|\|_______|\|__|\|__|    \|__|\|_______|'
-echo '\e[33m'
+
+echo -e '\e[36m ________  ________  ___  ___  ________  ___  ___    _____  ________'
+echo -e '|\   ___ \|\   __  \|\  \|\  \|\   ____\|\  \|\  \  / __  \|\   __  \'
+echo -e '\ \  \ |\ \ \  \|\  \ \  \ \  \ \  \___|\ \  \_\  \|\/_|\  \ \  \|\  \'
+echo -e ' \ \  \  \ \ \  \ \  \ \  \ \  \ \  \  __\ \   __  \|/ \ \  \ \  \ \  \'
+echo -e '  \ \  \__\ \ \  \_\  \ \  \_\  \ \  \_\  \ \  \ \  \   \ \  \ \  \_\  \'
+echo -e '   \ \_______\ \_______\ \_______\ \_______\ \__\ \__\   \ \__\ \_______\'
+echo -e '    \|_______|\|_______|\|_______|\|_______|\|__|\|__|    \|__|\|_______|'
+echo -e '\e[33m'
 echo 'https://github.com/dough10/hl2dm-stats'
-echo '\e[39mBackup Running...'
+echo -e '\e[39mBackup Running...'
 
 SMB=//192.168.86.2/Main
 STORAGE=/mnt/nas
 SERVER_LOC=/hoedown/hl2mp
-STATS_SERVER_LOC=/home/crumb/hl2dm-stats
-BACKUP_LOC=$STORAGE/DM-backup
+STATS_SERVER_LOC=home/crumb/hl2dm-stats
+BACKUP_LOC=home/crumb/DM-backup
 MONTH=$(date +%b)
 
-if [ -z ${1+x} ] 
-  then 
-    read -p 'Username: ' U
-  else
-    U=$1
-fi
 
-if [ -z ${2+x} ] 
-  then
-    read -sp 'Password: ' P
-  else
-    P=$2
-fi
 
-echo "Mounting "$SMB" as "$STORAGE
-mountpoint -q $STORAGE && echo "mounted" || mount -t cifs -o username=$U,password=$P $SMB $STORAGE
-
-echo "Creating "$MONTH" folders"
+echo "Creating $MONTH folders"
 mkdir -p -m 777 $BACKUP_LOC/logs/$MONTH
 mkdir -p -m 777 $BACKUP_LOC/demos/$MONTH
 
