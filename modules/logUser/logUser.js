@@ -18,15 +18,19 @@
  */
 function entryExists(db, data) {
   return new Promise((resolve, reject) => {
-    db.collection("players").findOne({
-      time: data.time
-    }, (err, result) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve(result);
-    });
+    try {
+      db.collection("players").findOne({
+        time: data.time
+      }, (err, result) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve(result);
+      });
+    } catch(e) {
+      reject(e);
+    }
   });
 }
 
@@ -42,21 +46,25 @@ function entryExists(db, data) {
  */
 function insertPlayer(db, data) {
   return new Promise((resolve, reject) => {
-    db.collection("players").insertOne(data, err => {
-      if (err) {
-        reject(err);
-        return;
-      } 
-      db.collection("players").findOne({
-        time: data.time
-      }, (err, res) => {
+    try {
+      db.collection("players").insertOne(data, err => {
         if (err) {
           reject(err);
           return;
         } 
-        resolve(res);
-      });
-    });
+        db.collection("players").findOne({
+          time: data.time
+        }, (err, res) => {
+          if (err) {
+            reject(err);
+            return;
+          } 
+          resolve(res);
+        });
+      }); 
+    } catch(e) {
+      reject(e);
+    }
   });
 }
 
