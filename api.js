@@ -208,7 +208,7 @@ let dropCount = 0;
  * new RconStats('127.0.0.1', 'supersecurepassword', rconStats).ping();
  */
 function rconStats(stats) {
-  if (stats[5] <= 90) dropCount++;
+  if (stats[5] <= 50) dropCount++;
   if (stats[5] >= 90) dropCount = 0;
   if (dropCount > 5) {
     dropCount = 0;
