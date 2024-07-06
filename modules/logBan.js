@@ -19,6 +19,7 @@
  */
 function entryExists(db, data) {
   return new Promise((resolve, reject) => {
+    if (!db) reject();
     db.collection("banned").findOne({
       id: data.id
     }, (err, result) => {
@@ -40,15 +41,20 @@ function entryExists(db, data) {
  */
 function getDetails(db, data) {
   return new Promise((resolve, reject) => {
-    db.collection("players").findOne({
-      id: data.id
-    }, (err, result) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve(result);
-    });
+    try {
+      if (!db) reject();
+      db.collection("players").findOne({
+        id: data.id
+      }, (err, result) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve(result);
+      });
+    } catch(e) {
+      reject(e);
+    }
   });
 }
 
@@ -67,6 +73,7 @@ function getDetails(db, data) {
  */
 function insertPlayer(db, data) {
   return new Promise((resolve, reject) => {
+    if (!db) reject();
     db.collection("banned").insertOne(data, err => {
       if (err) {
         reject(err);
