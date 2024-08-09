@@ -88,7 +88,11 @@ class RconStats {
       if (isNaN(stat[i])) return;
     }
     if (typeof stat !== 'object') return;
-    // influx.dbInsert(stat, this.db);
+    try {
+      influx.dbInsert(stat, this.db);
+    } catch(e) {
+      // console.error(e);
+    }
     if (this.onStats) this.onStats(stat);
   }
 

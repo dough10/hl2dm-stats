@@ -315,7 +315,7 @@ async function statsLoop() {
       socket.send(JSON.stringify(status), e => {});
     }
   } catch(e) {
-    serverStatus = 'offline';
+    appData.updateStatus('offline');
   }
 }
 
@@ -925,7 +925,7 @@ app.listen(config.port, async _ => {
     console.log('');
     print('Online. ' + 'o( ❛ᴗ❛ )o'.red);
     statsLoop();
-    new RconStats(config.gameServerHostname, process.env.RCONPW, rconStats);
+    // new RconStats(config.gameServerHostname, process.env.RCONPW, rconStats);
     appData.cacheDemos();
     try {
       let seconds = await parseLogs();
