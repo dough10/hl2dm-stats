@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/dough10/hl2dm-stats#readme",
   "dependencies": {
-    "bcrypt": "^5.0.1",
+    "bcrypt": "^6.0.0",
     "clear": "^0.1.0",
     "colors": "^1.4.0",
     "compression": "^1.8.1",
